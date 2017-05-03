@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<script type="text/javascript" src='./jquery-3.2.0.min.js'></script>
+	<style type="text/css">
+		body{
+			text-align: center;
+
+		}
+		#container{
+			width: 70%;
+			margin-left: 15%;
+		}
+		.course{
+			width: 100%
+		}
+		#submit{
+			width: 200px;
+			height: 40px;
+			margin: 0 auto;
+			text-align: center;
+			margin-top: 50px;
+			border-width: 1px;
+			border-color: red;
+			background-color: orange;
+			font-size: 28px;
+		}
+	</style>
+</head>
+<body>
+
+<div id='container'>
+	<p>title-----请输入课程的标题</p>
+	<input class='course' id='course_title' type='text'>
+	<p>author-----请输入课程的作者</p>
+	<input class='course' id='course_author' type='text'>
+	<p>content-----请输入课程的简介</p>
+	<textarea class='course' id='course_content' rows="3" cols="20"></textarea>
+	<div id='submit'>
+		<p>提交课程信息</p>
+	</div>
+</div>
+<script type="text/javascript">
+	
+$(document).ready(function(){
+	$('#submit').click(function(){
+		var title = $('#course_title').val();
+		var content = $('#course_content').val();
+		var author = $('#course_author').val();
+		if(title == null || title == undefined || title == ''){
+			alert('请输入课程标题');
+			return;
+		}
+		if(content == null || content == undefined || content == ''){
+			alert('请输入课程内容');
+			return;
+		}
+		if(author == null || author == undefined || author == ''){
+			alert('请输入课程作者');
+			return;
+		}
+		$.post('http://192.168.1.181:3000/adddb',{
+			title:title,
+			content:content,
+			author:author
+		}, function(data, status){
+			if(status == 'success'){
+				$('#course_title').val('');
+				$('#course_content').val('');
+				$('#course_author').val('');
+			}else{
+				alert('失败！');
+			}
+		})
+	})
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>云谷慧</title>
+    <link rel="stylesheet" href="../stylesheets/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="../stylesheets/weui.min.css" type="text/css">-->
+    <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body style="margin: 0; padding: 0;">
+<div id="container"></div>
+<script>
+    REMOTE_WEIXIN_USER_ID = "<%= user_id %>";
+    REMOTE_WEIXIN_ACCESS_TOKEN = "<%= access_token %>";
+</script>
+<div id="main-container"></div>
+<script src="../output/js/view/main/index.bundle.js"></script>
+</body>
+</html>
