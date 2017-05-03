@@ -28,8 +28,8 @@ class MainPage extends React.Component{
         this.state = {
             courses: [],
             isMember:false,//需从服务端获取用户的会员信息,
-            // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
-            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
+            userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
+            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
             courseId:0,
             show:'course_list'
         }
