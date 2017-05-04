@@ -28,8 +28,8 @@ class MainPage extends React.Component{
         this.state = {
             courses: [],
             isMember:false,//需从服务端获取用户的会员信息,
-            userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
+            // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
             courseId:0,
             show:'course_list'
         }
@@ -117,14 +117,14 @@ class MainPage extends React.Component{
                                             }} id={cell_id}  href="javascript:;" key={i}>
                                                 <CellBody>
                                                     <div style={{float:'left', marginRight:'28px'}}>
-                                                        <img src={OneDrop.res_ip+item.background_image} width="200px" height="200px"/>
+                                                        <img src={OneDrop.res_ip+item.background_image} width="300px" height="300px"/>
                                                     </div>
-                                                    <div style={{float:'clear'}}>
-                                                        <p style={{fontSize:'1.5em', color:'black', fontWeight:'bold'}}>{item.title}</p>
-                                                        <p style={{fontSize:'1.2em', color: 'black'}}>{item.author}</p>
-                                                        <p style={{float:'clear',marginLeft:'28px', fontSize:'1.2em', color:'rgb(87,87,87)'}}
+                                                    <div style={{}}>
+                                                        <p style={{fontSize:'2.2em', color:'black', fontWeight:'bold'}}>{item.title}</p>
+                                                        <p style={{fontSize:'1.8em', color: 'black'}}>{item.author}</p>
+                                                        <p style={{marginLeft:'28px', fontSize:'1.8em', color:'rgb(87,87,87)'}}
                                                            >{item.introduction}</p>
-                                                        <p style={{float:'right', fontSize:'1.2em', color:'rgb(255,66,0)'}}>{'￥'+item.price}</p>
+                                                        <p style={{float:'right', fontSize:'1.8em', color:'rgb(255,66,0)'}}>{'￥'+item.price}</p>
                                                     </div>
                                                 </CellBody>
                                                 <CellFooter/>

@@ -113,13 +113,13 @@ export default class Introduction extends React.Component{
                             <img src={OneDrop.res_ip+detail_bg_image} width="100%" height="400px"/>
                             <div>
                                 <div style={{marginTop:'26px'}}>
-                                    <img src="../../../img/weike/desc/course_des.png" style={{marginLeft:'30px'}}/>
+                                    <img src="../../../img/weike/desc/course_des.png" style={{marginLeft:'60px'}}/>
                                     <div style={{backgroundColor:'white'}}>
-                                        <p style={{paddingTop: '18px',paddingBottom:'18px', marginBottom:'18px', fontSize:'1.8em'}}>
+                                        <p style={{paddingTop: '18px',paddingBottom:'18px', marginBottom:'18px', fontSize:'2.2em', paddingLeft: '30px', paddingRight:'30px'}}>
                                             {introduction}
                                         </p>
                                     </div>
-                                    <img src="../../../img/weike/desc/chapter_des.png" style={{marginLeft:'30px'}}/>
+                                    <img src="../../../img/weike/desc/chapter_des.png" style={{marginLeft:'60px'}}/>
 
                                     {
                                         this.state.chapters.map(function (chapter, index) {
@@ -128,13 +128,13 @@ export default class Introduction extends React.Component{
                                             })
                                             return (
                                                 <div key={index} style={{backgroundColor:'white', marginTop:'0px', paddingTop:'18px'}}>
-                                                    <CellsTitle style={{backgroundColor:'white', fontSize:'28px', fontWeight:'bold'}}>{'第'+chapter[0].chapter_num+'章: '+chapter[0].chapter_name}</CellsTitle>
+                                                    <CellsTitle style={{backgroundColor:'white', fontSize:'35px', fontWeight:'bold'}}>{'第'+chapter[0].chapter_num+'章: '+chapter[0].chapter_name}</CellsTitle>
                                                     <Cells>
                                                         {
                                                             chapter.map(function (section, index) {
                                                                 return(
                                                                     <Cell key={index} href="javascript:;" style={{paddingLeft:'90px', color:'black'}}>
-                                                                        <CellBody style={{fontSize:'24px'}}>
+                                                                        <CellBody style={{fontSize:'32px'}}>
                                                                             {'第'+section.section_num+'节: '+section.section_name}
                                                                         </CellBody>
                                                                     </Cell>

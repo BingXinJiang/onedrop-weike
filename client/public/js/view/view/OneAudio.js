@@ -31,7 +31,7 @@ export default class OneAudio extends React.Component{
 
     render(){
         return(
-            <div style={{width: '600px', height:'120px', backgroundColor:'white', borderWidth:'2px', borderRadius:'10px', marginLeft:'18%'}}>
+            <div style={{width: '800px', height:'120px', backgroundColor:'white', borderWidth:'2px', borderRadius:'10px', marginLeft:'8.5%'}}>
                 <audio ref="section_audio" src={this.props.audioUrl}>
                     您的浏览器不支持audio
                 </audio>
@@ -49,12 +49,12 @@ export default class OneAudio extends React.Component{
                             playing:false
                         })
                     }
-                }} style={{width:'80%', height:'100%', marginLeft:'30px'
+                }} style={{width:'90%', height:'100%', marginLeft:'30px'
                 }}>
                     <img style={{float:'left', width:'80px', height:'80px', marginTop:'20px', marginLeft:'10px', marginRight:'30px'}}
                          src="../../../img/weike/detail/voice.png"/>
                     <div style={{marginLeft:'30px'}}>
-                        <p style={{fontSize:'35px', marginTop:'20px'}}>{this.props.title}</p>
+                        <p style={{fontSize:'35px', marginTop:'20px',height:'60px', overflow:'hidden'}}>{this.props.title}</p>
                         <p style={{fontSize:'35px', marginTop:'10px', float:'left'}}>{this.props.author}</p>
                         <p style={{fontSize:'25px', marginTop:'10px', float:'right'}}>{this.state.curTime+'s/'+this.state.duration+'s'}</p>
                     </div>

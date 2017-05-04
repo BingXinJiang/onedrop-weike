@@ -720,7 +720,10 @@ router.post('/main/section/learn', function (req, res, next) {
     var course_section_id = req.body.course_section_id;
 
     var search_sql = "select * from course_schedule where user_id='"+user_id+"' and course_id="+course_id;
+    var search2_sql = "select * from schedule_learn where user_id='"+user_id+"' and section_id = "+course_section_id;
     var learn_sql = "update course_schedule set course_section_id="+course_section_id+" where user_id='"+user_id+"' and course_id="+course_id;
+    var insert_sql = "insert into schedule_learn values('"+user_id+"',"+course_section_id+",1,Now())";
+
     query(search_sql, function (qerr, valls, fields) {
         if(qerr){
             var response = {
@@ -730,8 +733,7 @@ router.post('/main/section/learn', function (req, res, next) {
                 }
             }
         }else{
-            var section = valls[0];
-            if(section.course_section_id >= course_section_id){
+            if(valls.length<=0){
                 var response = {
                     status:1,
                     data:{
@@ -750,13 +752,25 @@ router.post('/main/section/learn', function (req, res, next) {
                         }
                         res.json(response);
                     }else{
-                        var response = {
-                            status:1,
-                            data:{
-                                msg:'数据更新成功!'
+                        query(insert_sql, function (qerr, valls, fields) {
+                            if(qerr){
+                                var response = {
+                                    status:0,
+                                    data:{
+                                        msg:'获取数据失败!'
+                                    }
+                                }
+                                res.json(response);
+                            }else {
+                                var response = {
+                                    status:1,
+                                    data:{
+                                        msg:'数据更新成功!'
+                                    }
+                                }
+                                res.json(response);
                             }
-                        }
-                        res.json(response);
+                        })
                     }
                 })
             }

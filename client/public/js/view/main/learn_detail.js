@@ -75,7 +75,7 @@ export default class Learn extends React.Component{
                 {
                     section != null ?
                         <div style={{marginBottom:'120px'}}>
-                            <h1 style={{paddingTop:'30px', paddingLeft:'30px'}}>{section.section_name}</h1>
+                            <h1 style={{paddingTop:'30px', paddingLeft:'30px', fontSize:'40px'}}>{section.section_name}</h1>
 
                             <div style={{width: '100%', alignItems:'center', alignContent:'center', marginTop:'30px', marginBottom:'50px'}}>
                                 <OneAudio audioUrl={section.section_voice}
@@ -84,7 +84,7 @@ export default class Learn extends React.Component{
                                 />
                             </div>
 
-                            <p style={{paddingLeft:'30px', paddingRight:'30px', backgroundColor:'white'}}>{section.section_des}</p>
+                            <p style={{paddingLeft:'30px', paddingRight:'30px', backgroundColor:'white', fontSize:'35px'}}>{section.section_des}</p>
                             <img style={{marginTop:'30px',marginLet:'80px', width:'200px', height:'auto'}} src="../../../img/weike/detail/comment.png"/>
                             <Cells style={{marginTop:'0'}}>
                                 {
