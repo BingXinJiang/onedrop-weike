@@ -2,5 +2,8 @@
  * Created by jiangsong on 2017/4/6.
  */
 module.exports = {
-    base_ip:'http://localhost:3000/'
+    // base_ip:'http://localhost:3000/'
+
+    base_ip:'http://192.168.2.100:3000/'
+
 }

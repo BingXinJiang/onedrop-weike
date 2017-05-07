@@ -28,8 +28,9 @@ class MainPage extends React.Component{
         this.state = {
             courses: [],
             isMember:false,//需从服务端获取用户的会员信息,
-            userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
+            // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',//嵩
+            // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
             courseId:0,
             show:'course_list'
         }
@@ -120,11 +121,11 @@ class MainPage extends React.Component{
                                                         <img src={OneDrop.res_ip+item.background_image} width="300px" height="300px"/>
                                                     </div>
                                                     <div style={{}}>
-                                                        <p style={{fontSize:'2.2em', color:'black', fontWeight:'bold'}}>{item.title}</p>
-                                                        <p style={{fontSize:'1.8em', color: 'black'}}>{item.author}</p>
-                                                        <p style={{marginLeft:'28px', fontSize:'1.8em', color:'rgb(87,87,87)'}}
+                                                        <p style={{fontSize:'32px', color:'black', fontWeight:'bold'}}>{item.title}</p>
+                                                        <p style={{fontSize:'28px', color: 'black'}}>{item.author}</p>
+                                                        <p style={{marginLeft:'28px', fontSize:'28px', color:'rgb(87,87,87)'}}
                                                            >{item.introduction}</p>
-                                                        <p style={{float:'right', fontSize:'1.8em', color:'rgb(255,66,0)'}}>{'￥'+item.price}</p>
+                                                        <p style={{float:'right', fontSize:'28px', color:'rgb(255,66,0)', marginRight:'30px'}}>{'￥'+item.price}</p>
                                                     </div>
                                                 </CellBody>
                                                 <CellFooter/>
@@ -213,7 +214,7 @@ class MainPage extends React.Component{
                                                 }
                                             })
                                 }} src="../../../img/weike/home/be_member_back.png" style={{width: '100%', height:'80px'}}/>
-                            <p style={{position: 'absolute', top: '20px', left:'35%', fontSize:'2em'}}>
+                            <p style={{position: 'absolute', top: '18px', left:'30%', fontSize:'32px'}}>
                                 成为会员(￥980元/年)</p>
                         </div>
                 }

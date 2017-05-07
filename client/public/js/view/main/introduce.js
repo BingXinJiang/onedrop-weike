@@ -243,7 +243,7 @@ export default class Introduction extends React.Component{
                                                           }
                                                         }
                                                     })
-                                                }} style={{ position: 'absolute', top: '12px', left: '27%', fontSize:'35px', fontWeight:'bold'}}>购买课程</p>
+                                                }} style={{ position: 'absolute', top: '7px', left: '18%', fontSize:'32px', fontWeight:'bold'}}>购买课程</p>
                                             </div>
                                             <div style={{position:'absolute', width:'30%', right:'10%'}}>
                                                 <img style={{position:'absolute', top:'0', left:'0', width:'100%'}} src="../../../img/weike/desc/button_bg.png"/>
@@ -315,7 +315,7 @@ export default class Introduction extends React.Component{
                                                           }
                                                         }
                                                     })
-                                                }} style={{position: 'absolute', top: '12px', left: '27%', fontSize:'35px', fontWeight:'bold'}}>加入会员</p>
+                                                }} style={{position: 'absolute', top: '7px', left: '18%', fontSize:'32px', fontWeight:'bold'}}>加入会员</p>
                                             </div>
                                         </div>
                                 }

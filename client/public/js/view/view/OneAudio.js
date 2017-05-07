@@ -2,6 +2,7 @@
  * Created by jiangsong on 2017/4/28.
  */
 import React from 'react';
+import OneDrop from '../../const/onedrop';
 
 export default class OneAudio extends React.Component{
     constructor(props){
@@ -30,9 +31,17 @@ export default class OneAudio extends React.Component{
     }
 
     render(){
+        var mp3_url = this.props.audioUrl;
+        var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
+        var ogg_url = preUrl + '-ogg.ogg';
+        var wav_url = preUrl + '-wav.wav';
+        
         return(
-            <div style={{width: '800px', height:'120px', backgroundColor:'white', borderWidth:'2px', borderRadius:'10px', marginLeft:'8.5%'}}>
-                <audio ref="section_audio" src={this.props.audioUrl}>
+            <div style={{width: '80%', height:'120px', backgroundColor:'white', borderWidth:'2px', borderRadius:'10px', marginLeft:'8.5%'}}>
+                <audio ref="section_audio" preload="auto" autoplay="true">
+                    <source src={ogg_url} type="audio/ogg"/>
+                    <source src={wav_url} type="audio/wav"/>
+                    <source src={mp3_url} type="audio/mpeg"/>
                     您的浏览器不支持audio
                 </audio>
                 <div onClick={()=>{

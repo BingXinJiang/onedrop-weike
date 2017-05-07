@@ -96,6 +96,9 @@ export default class Learn extends React.Component{
                             userId={this.props.userId}
                             courseId={this.props.courseId}
                             courseSectionId={this.state.selectSection}
+                            callback={()=>{
+                                
+                            }}
                         />
                         :
                         <div id="learn">
