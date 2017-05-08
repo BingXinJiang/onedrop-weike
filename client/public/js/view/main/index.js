@@ -218,6 +218,10 @@ class MainPage extends React.Component{
                                 成为会员(￥980元/年)</p>
                         </div>
                 }
+                <div>
+                    <p>一滴课堂</p>
+                    <p>问答</p>
+                </div>
             </div>
         )
     }
