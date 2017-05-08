@@ -15,6 +15,34 @@
 <script>
     REMOTE_WEIXIN_USER_ID = "<%= user_id %>";
     REMOTE_WEIXIN_ACCESS_TOKEN = "<%= access_token %>";
+    function setCookie(c_name,value,expiredays)
+    {
+        var exdate=new Date()
+        exdate.setDate(exdate.getDate()+expiredays)
+        document.cookie=c_name+ "=" +escape(value)+
+                ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+    }
+    function getCookie(c_name)
+    {
+        if (document.cookie.length>0)
+        {
+            c_start=document.cookie.indexOf(c_name + "=")
+            if (c_start!=-1)
+            {
+                c_start=c_start + c_name.length+1
+                c_end=document.cookie.indexOf(";",c_start)
+                if (c_end==-1) c_end=document.cookie.length
+                return unescape(document.cookie.substring(c_start,c_end))
+            }
+        }
+        return ""
+    }
+    if(REMOTE_WEIXIN_USER_ID != null && REMOTE_WEIXIN_USER_ID != undefined){
+        setCookie('user_id', REMOTE_WEIXIN_USER_ID, 24);
+    }else{
+        REMOTE_WEIXIN_USER_ID = getCookie('user_id');
+    }
+
 </script>
 <div id="main-container"></div>
 <script src="../output/js/view/main/index.bundle.js"></script>
