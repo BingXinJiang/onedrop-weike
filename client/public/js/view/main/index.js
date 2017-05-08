@@ -37,6 +37,13 @@ class MainPage extends React.Component{
     }
 
     componentDidMount() {
+        if(REMOTE_WEIXIN_USER_ID != undefined){
+            localstorage.setItem('user_id', REMOTE_WEIXIN_USER_ID);
+        }else{
+            this.setState({
+                userId:localstorage.getItem('user_id')
+            })
+        }
         var self = this;
         var after = after_done(2, function (results) {
             self.setState({
