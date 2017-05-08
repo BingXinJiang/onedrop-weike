@@ -60,7 +60,7 @@ class MainPage extends React.Component{
                 user_id:self.state.userId
             },
             success:function(data) {
-                alert(JSON.parse(data));
+                alert(data+',,,');
                 if(data.data.is_member === 0){
                     after('isMember', false);
                 }else if(data.data.is_member === 1){
