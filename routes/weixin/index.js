@@ -272,7 +272,7 @@ router.get('/main/getcourse', function (req, res, next) {
  * */
 router.post('/main/user/is_member', function (req, res, next) {
     var user_id = req.body.user_id;
-
+    console.log('user_id:', user_id);
     var ismember_sql = "select * from user where user_id = '" + user_id +"'";
     query(ismember_sql, function (qerr, valls, fields) {
         if(qerr){
@@ -286,9 +286,9 @@ router.post('/main/user/is_member', function (req, res, next) {
         }else{
             if(valls.length<=0){
                 var response = {
-                    status:1,
+                    status:0,
                     data:{
-                        msg:'数据异常'
+                        msg:'数据库异常'
                     }
                 }
                 res.json(response);
