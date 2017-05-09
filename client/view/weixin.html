@@ -17,12 +17,13 @@
     REMOTE_WEIXIN_ACCESS_TOKEN = "<%= access_token %>";
     window.onload = function () {
         alert(REMOTE_WEIXIN_USER_ID);
-        if(REMOTE_WEIXIN_USER_ID != null && REMOTE_WEIXIN_USER_ID != undefined){
-            sessionStorage.setItem('onedrop_user_id', REMOTE_WEIXIN_USER_ID);
-        }else{
+        if(typeof REMOTE_WEIXIN_USER_ID === 'undefined'){
+            alert('123');
             alert(REMOTE_WEIXIN_USER_ID);
             REMOTE_WEIXIN_USER_ID = sessionStorage.getItem('onedrop_user_id');
             alert(REMOTE_WEIXIN_USER_ID);
+        }else{
+            sessionStorage.setItem('onedrop_user_id', REMOTE_WEIXIN_USER_ID);
         }
     }
     /*
