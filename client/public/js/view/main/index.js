@@ -37,13 +37,14 @@ class MainPage extends React.Component{
     }
 
     componentDidMount() {
-        // if(REMOTE_WEIXIN_USER_ID != undefined){
-        //     localstorage.setItem('user_id', REMOTE_WEIXIN_USER_ID);
-        // }else{
-        //     this.setState({
-        //         userId:localstorage.getItem('user_id')
-        //     })
-        // }
+        if(REMOTE_WEIXIN_USER_ID === undefined || REMOTE_WEIXIN_USER_ID === null || REMOTE_WEIXIN_USER_ID === '' || REMOTE_WEIXIN_USER_ID === 'undefined'){
+            this.setState({
+                userId:localstorage.getItem('user_id')
+            })
+        }else{
+            localstorage.setItem('user_id', REMOTE_WEIXIN_USER_ID);
+        }
+        
         var self = this;
         var after = after_done(2, function (results) {
             self.setState({
