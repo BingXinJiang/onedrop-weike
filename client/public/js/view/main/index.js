@@ -22,7 +22,7 @@ const SHOW_PAGE = ['course_list',
     'course_learn'
 ]
 
-class MainPage extends React.Component{
+export default class MainPage extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -233,7 +233,7 @@ class MainPage extends React.Component{
     }
 }
 
-ReactDOM.render(
-    <MainPage/>,
-    document.getElementById('main-container')
-)
+// ReactDOM.render(
+//     <MainPage/>,
+//     document.getElementById('main-container')
+// )

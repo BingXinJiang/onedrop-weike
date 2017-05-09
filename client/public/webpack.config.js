@@ -5,7 +5,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry:{
-        'view/main/index':'./js/view/main/index.js'
+        'view/main/index':'./js/view/home/main.js'
     },
     output:{
         path:__dirname + '/output/js/',
