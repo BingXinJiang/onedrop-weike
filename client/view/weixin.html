@@ -16,9 +16,11 @@
     REMOTE_WEIXIN_USER_ID = "<%= user_id %>";
     REMOTE_WEIXIN_ACCESS_TOKEN = "<%= access_token %>";
     if(REMOTE_WEIXIN_USER_ID != null && REMOTE_WEIXIN_USER_ID != undefined){
+        alert(REMOTE_WEIXIN_USER_ID);
         localStorage.setItem('user_id', REMOTE_WEIXIN_USER_ID);
     }else{
         REMOTE_WEIXIN_USER_ID = localStorage.getItem('user_id');
+        alert(REMOTE_WEIXIN_USER_ID);
     }
     /*
     function setCookie(c_name,value,expiredays)
