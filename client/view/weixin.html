@@ -15,6 +15,12 @@
 <script>
     REMOTE_WEIXIN_USER_ID = "<%= user_id %>";
     REMOTE_WEIXIN_ACCESS_TOKEN = "<%= access_token %>";
+    if(REMOTE_WEIXIN_USER_ID != null && REMOTE_WEIXIN_USER_ID != undefined){
+        localStorage.setItem('user_id', REMOTE_WEIXIN_USER_ID);
+    }else{
+        REMOTE_WEIXIN_USER_ID = localStorage.getItem('user_id');
+    }
+    /*
     function setCookie(c_name,value,expiredays)
     {
         var exdate=new Date()
@@ -41,6 +47,7 @@
     }else{
         REMOTE_WEIXIN_USER_ID = getCookie('user_id');
     }
+    */
 </script>
 <div id="main-container"></div>
 <script src="../output/js/view/main/index.bundle.js"></script>
