@@ -37,14 +37,16 @@ class MainPage extends React.Component{
     }
 
     componentDidMount() {
-        if(REMOTE_WEIXIN_USER_ID === undefined || REMOTE_WEIXIN_USER_ID === null || REMOTE_WEIXIN_USER_ID === '' || REMOTE_WEIXIN_USER_ID === 'undefined'){
+        var my_id = this.state.userId;
+        if(my_id === undefined || my_id === null || my_id === '' || my_id === 'undefined'){
+            my_id = localStorage.getItem('onedrop_user_id');
             this.setState({
-                userId:localStorage.getItem('user_id')
+                userId:localStorage.getItem('onedrop_user_id')
             })
         }else{
-            localStorage.setItem('user_id', REMOTE_WEIXIN_USER_ID);
+            localStorage.setItem('onedrop_user_id', my_id);
         }
-        
+
         var self = this;
         var after = after_done(2, function (results) {
             self.setState({
@@ -65,7 +67,7 @@ class MainPage extends React.Component{
             dataType:'json',
             method:'POST',
             data:{
-                user_id:self.state.userId
+                user_id:my_id
             },
             success:function(data) {
                 if(data.data.is_member === 0){
