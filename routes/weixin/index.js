@@ -1190,4 +1190,82 @@ router.post('/main/real/pay/member_back', function (req, res, next) {
     res.send(xmlData);
 })
 
+/**
+ * 判断用户的状态，
+ *   member_status  1.兴业员工，
+ *                  2、非兴业员工
+ *                  3、第一次登陆
+ * */
+router.post('/onedrop/xingye', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var query_sql = "select is_xingye_member, phone_num from user where user_id = '"+user_id+"'";
+    query(query_sql, function (qerr, valls, fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var member_status = 0;
+            var member = valls[0];
+            var is_xingye_member = member.is_xingye_member;
+            var xingye_num = member.xingye_num;
+
+            if(is_xingye_member == null || xingye_num == null){
+                member_status = 3; //第一次登陆，需要判断录入用户信息
+            }else if(is_xingye_member === 0){
+                member_status = 2; //非兴业员工
+            }else if(is_xingye_member === 1){
+                member_status = 1; //兴业员工
+            }else{
+                member_status = 0;
+            }
+
+            var response = {
+                status:1,
+                data:{
+                    member_status:member_status
+                }
+            }
+
+            res.send(response);
+        }
+    })
+})
+
+/**
+ * 兴业员工或者非兴业员工录入个人的编号
+ *          参数： 1、user_id
+ *                2、is_xingye_member //0或者1
+ *                3、xingye_num //0或者具体的值(有效的电话号码)，
+ *
+ * */
+router.post('/onedrop/user_info', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var is_xingye_member = req.body.is_xingye_member;
+    var phone_num = req.body.phone_num;
+    var update_sql = "update table user set is_xingye_member = "+is_xingye_member+", phone_num="+phone_num+" where user_id = '"+usr_id+"'";
+    query(update_sql, function (qerr, valls, fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:{
+                    msg:'数据更新成功'
+                }
+            }
+            res.send(response);
+        }
+    })
+
+})
+
+function responseDataErr(res) {
+    var response = {
+        status:0,
+        data:{
+            msg:'数据库执行错误'
+        }
+    }
+    res.send(response);
+}
+
 module.exports = router;
