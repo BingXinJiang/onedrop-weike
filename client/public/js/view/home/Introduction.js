@@ -5,6 +5,7 @@
 import React from 'react';
 
 import Tool from '../../Tool/Tool';
+import OneDrop from '../../const/onedrop';
 
 var ScreenW = document.body.clientWidth;
 var ScreenH = document.body.clientHeight;
@@ -26,20 +27,23 @@ export default class Introduction extends React.Component{
                 <div>
                     手机号码：<input id="phone_num"/>
                 </div>
-                <div onClick={()=>{
+                <div style={{display:'flex', marginTop:'120px'}} onClick={()=>{
                     let user_id = REMOTE_WEIXIN_USER_ID;
                     let is_xingye_member = 0;
                     let phone_num = '';
-                    if($('#is_xingye_member').attr('checked')){
+                    if($("#is_xingye_member").attr('checked')){
                         is_xingye_member = 1;
                     }
                     if($('#no_xingye_member').attr('checked')){
                         is_xingye_member = 0;
                     }
+                    console.log('--------');
+                    console.log($('#is_xingye_member').attr('checked'));
+                    console.log($('#no_xingye_member').attr('checked'));
                     let phoneNum = $('#phone_num').val()+'';
                     let isPhoneNum = Tool.isTel(phoneNum);
                     if(isPhoneNum){
-                        phone_num = Number(phoneNum);
+                        phone_num = phoneNum;
                         $.ajax({
                             url:OneDrop.base_ip+'/onedrop/user_info',
                             dataType:'json',

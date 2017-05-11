@@ -1241,20 +1241,24 @@ router.post('/onedrop/user_info', function (req, res, next) {
     var user_id = req.body.user_id;
     var is_xingye_member = req.body.is_xingye_member;
     var phone_num = req.body.phone_num;
-    var update_sql = "update table user set is_xingye_member = "+is_xingye_member+", phone_num="+phone_num+" where user_id = '"+usr_id+"'";
-    query(update_sql, function (qerr, valls, fields) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            var response = {
-                status:1,
-                data:{
-                    msg:'数据更新成功'
-                }
-            }
-            res.send(response);
-        }
-    })
+    console.log(phone_num);
+
+    var my_update_sql = "update table user set is_xingye_member = " +is_xingye_member+ ", phone_num=" +phone_num+" where user_id = '"+usr_id+"'";
+    console.log('update_sql:', my_update_sql);
+    // query(my_update_sql, function (qerr, valls, fields) {
+    //     if(qerr){
+    //         console.log('数据查询失败');
+    //         responseDataErr(res);
+    //     }else{
+    //         var response = {
+    //             status:1,
+    //             data:{
+    //                 msg:'数据更新成功'
+    //             }
+    //         }
+    //         res.send(response);
+    //     }
+    // })
 
 })
 

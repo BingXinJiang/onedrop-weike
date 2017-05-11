@@ -10,5 +10,8 @@ module.exports = {
         }else{
             return false;
         }
+    },
+    getAudio:function (src) {
+        return 0
     }
 }
