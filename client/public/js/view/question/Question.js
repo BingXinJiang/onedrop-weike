@@ -8,8 +8,12 @@ export default class Question extends React.Component{
         super(props);
     }
     render(){
-        return <div>
-            这是问答的界面
-        </div>
+        return (
+            <div>
+                <div>
+                    
+                </div>
+            </div>
+        )
     }
 }

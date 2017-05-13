@@ -16,5 +16,10 @@ module.exports = {
     // base_ip:'http://www.cvwisdom.com/weixin',
     // res_ip:'http://www.cvwisdom.com',
     
-    appId:'wxcb05ae4237186327'
+    appId:'wxcb05ae4237186327',
+
+    JS_ScreenW:document.body.clientWidth,//屏幕宽度
+    JS_ScreenH:screen.height,
+    JS_WindowH:document.body.clientHeight,
+
 }

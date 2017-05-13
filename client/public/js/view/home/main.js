@@ -15,18 +15,17 @@ import Onedrop from '../drop/Onedrop';
 import Evaluation from '../evalution/Evaluation';
 import Question from '../question/Question';
 import Course from '../main/index';
+import Answer from '../answer/Answer';
 
 import Introduction from './Introduction';
-
-var ScreenW = document.body.clientWidth;
 
 class Main extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-
             isFirst:false,
-
+            selectedTab:'onedrop',
+            showQuestion:false,
             // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
             userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
@@ -55,6 +54,7 @@ class Main extends React.Component{
             },
             success:function(data) {
                 if(data.status === 1){
+                    console.log('data:', data);
                     if(data.data.member_status === 1){//兴业员工
 
                     }else if(data.data.member_status === 2){//非兴业员工
@@ -71,8 +71,18 @@ class Main extends React.Component{
         })
     }
     render(){
-        var tabBtnW = ScreenW/4 + 'px';
-        console.log('屏幕宽度:', ScreenW);
+        var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';
+        var oneDrop_src = '../../../img/weike/main/onedrop.png';
+        var oneDrop_selected_src = '../../../img/weike/main/onedrop_selected.png';
+        var course_src = '../../../img/weike/main/course.png';
+        var course_selected_src = '../../../img/weike/main/course_selected.png';
+        var answer_src = '../../../img/weike/main/answer.png';
+        var answer_selected_src = '../../../img/weike/main/answer_selected.png';
+        var ceping_src = '../../../img/weike/main/ceping.png';
+        var ceping_selected_src = '../../../img/weike/main/ceping_selected.png';
+        console.log(OneDrop.JS_ScreenH);
+        console.log(OneDrop.JS_ScreenW);
+        console.log(OneDrop.JS_WindowH);
         return (
             <div>
                 {
@@ -86,39 +96,94 @@ class Main extends React.Component{
                         <div>
                             <Route exact path='/weixin/main/' component={Onedrop}/>
                             <Route path='/weixin/main/courses' component={Course}/>
-                            <Route path='/weixin/main/question' component={Question}/>
+                            <Route path='/weixin/main/question' component={Answer}/>
                             <Route path='/weixin/main/evaluation' component={Evaluation}/>
 
-                            <ul style={{}}>
-                                <li style={{float:'left',width:tabBtnW,
-                                    textAlign:'center',listStyleType:'none'
-                                }}>
-                                    <Link style={{backgroundColor:'red'
+                            <div style={{position:'fixed', bottom:'0px',backgroundColor:'white'}}>
+                                <div style={{width:OneDrop.JS_ScreenW, height:'2px',
+                                    backgroundColor:'rgb(235,235,235)'
+                                }}/>
+                                <ul style={{marginTop:'20px', backgroundColor:'white'}}>
+                                    <li style={{float:'left',width:tabBtnW,
+                                        textAlign:'center',listStyleType:'none'
+                                    }} onClick={()=>{
+                                        this.setState({
+                                            selectedTab:'onedrop'
+                                        })
+                                    }}>
+                                        <Link style={{
 
-                                    }} to="/weixin/main/">一滴</Link>
-                                </li>
-                                <li style={{float:'left',width:tabBtnW,
-                                    textAlign:'center',listStyleType:'none'
-                                }}>
-                                    <Link style={{
+                                        }} to="/weixin/main/">
+                                            <img src={this.state.selectedTab === 'onedrop' ? oneDrop_selected_src : oneDrop_src}/>
+                                        </Link>
+                                    </li>
+                                    <li style={{float:'left',width:tabBtnW,
+                                        textAlign:'center',listStyleType:'none'
+                                    }} onClick={()=>{
+                                        this.setState({
+                                            selectedTab:'course'
+                                        })
+                                    }}>
+                                        <Link style={{
 
-                                    }} to="/weixin/main/courses">课程</Link>
-                                </li>
-                                <li style={{float:'left',width:tabBtnW,
-                                    textAlign:'center',listStyleType:'none'
-                                }}>
-                                    <Link style={{
+                                        }} to="/weixin/main/courses">
+                                            <img src={this.state.selectedTab === 'course' ? course_selected_src : course_src}/>
+                                        </Link>
+                                    </li>
 
-                                    }} to="/weixin/main/question">问答</Link>
-                                </li>
-                                <li style={{float:'left',width:tabBtnW,
-                                    textAlign:'center',listStyleType:'none'
-                                }}>
-                                    <Link style={{
+                                    <li style={{float:'left',width:tabBtnW,
+                                        textAlign:'center',listStyleType:'none',
+                                        marginTop:'-65px'
+                                    }} onClick={()=>{
+                                        this.setState({
+                                            showQuestion:true
+                                        })
+                                    }}>
+                                        <img style={{
+                                            width:tabBtnW,
+                                        }} src="../../../img/weike/main/question.png"/>
+                                    </li>
 
-                                    }} to="/weixin/main/evaluation">测评</Link>
-                                </li>
-                            </ul>
+                                    <li style={{float:'right',width:tabBtnW,
+                                        textAlign:'center',listStyleType:'none'
+                                    }} onClick={()=>{
+                                        this.setState({
+                                            selectedTab:'ceping'
+                                        })
+                                    }}>
+                                        <Link style={{
+
+                                        }} to="/weixin/main/evaluation">
+                                            <img src={this.state.selectedTab === 'ceping' ? ceping_selected_src : ceping_src}/>
+                                        </Link>
+                                    </li>
+                                    <li style={{float:'right',width:tabBtnW,
+                                        textAlign:'center',listStyleType:'none'
+                                    }} onClick={()=>{
+                                        this.setState({
+                                            selectedTab:'answer'
+                                        })
+                                    }}>
+                                        <Link style={{
+
+                                        }} to="/weixin/main/question">
+                                            <img src={this.state.selectedTab === 'answer' ? answer_selected_src : answer_src}/>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                            {
+                                this.state.showQuestion ?
+                                    <div style={{position:'fixed', top:'0', left:'0',
+                                        width:OneDrop.JS_ScreenW,
+                                        height:OneDrop.JS_ScreenH*2,
+                                        backgroundColor:'red'
+                                    }}>
+
+                                    </div>
+                                    :
+                                    null
+                            }
                         </div>
                 }
             </div>

@@ -12,6 +12,7 @@ import {
     CellBody,
     CellFooter
 } from 'react-weui';
+import OneDrop from '../../const/onedrop';
 
 export default class Onedrop extends React.Component{
     constructor(props){
@@ -19,19 +20,35 @@ export default class Onedrop extends React.Component{
     }
     render(){
         return (
-            <div>
+            <div style={{backgroundColor:'rgb(235, 235, 235)'}}>
                 <div>
-                    <img src="../../../img/weike/onedrop/banner.png"/>
+                    <img style={{width:OneDrop.JS_ScreenW}} src="../../../img/weike/onedrop/banner.png"/>
                 </div>
                 <div>
-                    <CellsTitle>今日课程</CellsTitle>
+                    <div style={{
+                        width:OneDrop.JS_ScreenW,
+                        height:'90px',
+                        backgroundColor:'white'
+                    }}>
+                        <div style={{float:'left', marginTop:'30px'}}>
+                            <div style={{display:'block',
+                                backgroundColor:'rgb(27,138,229)',
+                                width:'10px',
+                                height:'30px',
+                                float:'left'
+                            }}/>
+                            <p style={{float:'left', fontSize:'24px', marginLeft:'20px'}}>今日课程</p>
+                        </div>
+                    </div>
                     <Cells>
                         <Cell>
                             <div>
                                 <img src="../../../img/weike/onedrop/audio_3.png"/>
                             </div>
                             <div>
-                                <p>管理者用人的100个细节</p>
+                                <p style={{
+                                    fontSize:'35px'
+                                }}>管理者用人的100个细节</p>
                                 <p>李伟：知名教授</p>
                                 <p>
                                     你是一位优秀的管理者吗？你知道怎么与下属相处融洽吗？你知道怎么样
