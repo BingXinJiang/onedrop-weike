@@ -80,9 +80,6 @@ class Main extends React.Component{
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var ceping_src = '../../../img/weike/main/ceping.png';
         var ceping_selected_src = '../../../img/weike/main/ceping_selected.png';
-        console.log(OneDrop.JS_ScreenH);
-        console.log(OneDrop.JS_ScreenW);
-        console.log(OneDrop.JS_WindowH);
         return (
             <div>
                 {
@@ -140,7 +137,7 @@ class Main extends React.Component{
                                         })
                                     }}>
                                         <img style={{
-                                            width:tabBtnW,
+                                            width:tabBtnW
                                         }} src="../../../img/weike/main/question.png"/>
                                     </li>
 
@@ -177,9 +174,13 @@ class Main extends React.Component{
                                     <div style={{position:'fixed', top:'0', left:'0',
                                         width:OneDrop.JS_ScreenW,
                                         height:OneDrop.JS_ScreenH*2,
-                                        backgroundColor:'red'
+                                        backgroundColor:'white'
                                     }}>
-
+                                        <Question callback={()=>{
+                                            this.setState({
+                                                showQuestion:false
+                                            })
+                                        }}/>
                                     </div>
                                     :
                                     null
