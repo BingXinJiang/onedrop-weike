@@ -23,7 +23,7 @@ export default class Question extends React.Component{
 
                 }}>
                    <span style={{height:'60px',
-                            width:'80%',
+                            width:'85%',
                             marginTop:'10px',
                             textAlign:'right'
                    }} onClick={()=>{
@@ -51,7 +51,7 @@ export default class Question extends React.Component{
                     display:'flex',
                     flexDirection:'column',
                     backgroundColor:'white',
-                    marginTop:'20px',
+                    marginTop:'0',
                     alignItems:'center',
                     height:'900px'
                 }}>
