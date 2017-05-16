@@ -393,7 +393,86 @@ router.post('/report', function (req, res, next) {
  * */
 router.post('/get_report', function (req, res, next) {
     var report = req.body;
+    function returnMsg(status) {
+        var response = {
+            status:status,
+            data:report
+        }
+        res.json(response);
+    }
+    if(report){
+        var request_unique_id = report.request_unique_id;
+        var individualReportLinks = report.IndividualReportLinks;
+        if(individualReportLinks && individualReportLinks.length>0){
+            var individualReportLink = individualReportLinks[0];
+            var report_uid = individualReportLink.ReportUid;
+            var reportLinks = individualReportLink.ReportLinks;
+            if(reportLinks && reportLinks.length>0){
+                var reportLink = reportLinks[0];
+                var respondent_uid = reportLink.RespondentUid;
+                var report_link = reportLink.ReportLink;
+                //存入数据库
+                var update_sql = "update report set report_link=" +
+                    "'"+report_link+"',report_uid=" +
+                    "'"+report_uid+"',respondent_uid=" +
+                    "'"+respondent_uid+"' where request_unique_id=" +
+                    "'"+request_unique_id+"'";
+                query(update_sql, function (qerr, valls, fields) {
+                    if(qerr){
+                        responseDataErr(res);
+                    }else{
+                        returnMsg(1);
+                    }
+                })
+            }else{
+                returnMsg(0);
+            }
+        }else{
+            returnMsg(0);
+        }
+    }else{
+        returnMsg(0);
+    }
+})
+/**
+ * 用户查看报告
+ * 参数: respondent_uid
+ *      request_unique_id
+ *      user_id
+ * */
+router.post('look_report', function (req, res, next) {
+    var respondent_uid = req.body.respondent_uid;
+    var request_unique_id = req.body.request_unique_id;
+    var user_id = req.body.user_id;
 
+    var query_sql = "select * from report where respondent_uid=" +
+        "'"+respondent_uid+"'";
+    query(query_sql, function (qerr, valls, next) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            function returnReportMsg(status, msg) {
+                var response = {
+                    status:status,
+                    data:{
+                        msg:msg
+                    }
+                }
+                res.json(response);
+            }
+            if(valls.length<=0){
+                returnReportMsg(0, '请先申请报告然后查看报告');
+            }else{
+                var report = valls[0];
+                var report_link = report.report_link;
+                if(report_link){
+                    returnReportMsg(1, '请点击:'+report_link);
+                }else{
+                    returnReportMsg(0, '请稍后,报告正在赶来...');
+                }
+            }
+        }
+    })
 })
 
 module.exports = router;
