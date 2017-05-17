@@ -149,14 +149,14 @@ router.post('/question/detail', function (req, res, next) {
 })
 /**
  * 查看某一问题对应的所有答案，按时间倒序排列
- * 参数：question_id
+ * 参数：question_id  149500987801845931
  * */
 router.post('/question/answers', function (req, res, next) {
     var question_id = req.body.question_id;
 
-    var query_sql = "select answer_id,answer_desc,user_id,answer_time,answer_voice from answer where question_id = " +
-        "'"+question_id+"' left join select nickname,headimgurl from user where user_id='" +
-        "(select user_id from answer where question_id='"+question_id+"')'";
+    var query_sql = "select a.answer_id,a.answer_desc,a.user_id,a.answer_time,a.answer_voice,b.nickname,b.headimgurl"+
+    "from (select * from answer where question_id='"+question_id+"')a left join (select * from user)b on a.user_id = b.user_id;"
+
     query(query_sql, function (qerr, valls, next) {
         if(qerr){
             responseDataErr(res);
