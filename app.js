@@ -12,6 +12,8 @@ var courses = require('./routes/courses');
 var adddb = require('./routes/db/db_add');
 var weixin = require('./routes/weixin/index');
 var ceping = require('./routes/weixin/ceping');
+var onedrop = require('./routes/weixin/onedrop');
+var answer = require('./routes/weixin/answer');
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use('/courses', courses);
 app.use('/adddb', adddb);
 app.use('/weixin', weixin);
 app.use('/ceping', ceping);
+app.use('/onedrop', onedrop);
+app.use('/answer', answer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

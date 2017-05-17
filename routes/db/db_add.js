@@ -5,6 +5,16 @@ var OneDrop = require('../../db/onedrop');
 
 /* GET home page. */
 
+function responseDataErr(res) {
+    var response = {
+        status:0,
+        data:{
+            msg:'数据库执行错误'
+        }
+    }
+    res.json(response);
+}
+
 router.post('/', function(req, res, next) {
   	var title = req.body.title;
   	var content = req.body.content;
@@ -203,6 +213,54 @@ router.post('/add_section', function (req, res, next) {
 		}
 	})
 
+})
+/**
+ * 添加一滴首页active内容
+ * 参数：category 默认传0
+ * 	    title 没有就穿空字符串
+ * 	    describution  没有就穿空字符串
+ * 	    active_type : 1：课程  2：三件事  3：测评
+ * */
+router.post('/add_active', function (req, res, next) {
+	var active_id = ''; // 生成
+	var category = req.body.category;
+	var title = req.body.title;
+	var describution = req.body.describution;
+	var bg_img = ''; //生成
+	var active_type = req.body.active_type;
+
+	active_id = (new Date()).valueOf() + '' +  parseInt(Math.random()*10000);
+	bg_img = '/weixin/images/active/active_'+active_id+'.jpg';
+
+	var insert_sql = "insert into active values(" +
+		"'"+active_id+"'," + category + "," +
+		"'"+title+"'," +
+		"'"+describution+"',Now()," +
+		"'"+bg_img+"',"+active_type+")";
+
+	var query_sql = "select * from active where active_id = '"+active_id+"'";
+
+	query(insert_sql, function (qerr, valls, fields) {
+		if(qerr){
+			responseDataErr(res);
+		}else{
+			query(query_sql, function (qerr, valls, fields) {
+				if(qerr){
+					responseDataErr(res);
+				}else{
+					if(valls.length<=0){
+						responseDataErr(res);
+					}else{
+						var response = {
+							status:1,
+							data:valls[0]
+						}
+						res.json(response);
+					}
+				}
+            })
+		}
+    })
 })
 
 module.exports = router;
