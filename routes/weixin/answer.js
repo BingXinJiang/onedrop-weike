@@ -65,9 +65,15 @@ router.post('/questions', function (req, res, next) {
     var key_id = req.body.key_id;
     var query_sql = "";
     if(page === 1){
-        query_sql = "select * from question order by key_id desc limit 0,10";
+        // query_sql = "select * from question order by key_id desc limit 0,10";
+        query_sql = "select a.*,b.nickname,b.headimgurl from " +
+            "(select * from question order by key_id desc limit 0,10)a left join " +
+            "(select * from user)b on a.user_id=b.user_id";
     }else{
-        query_sql = "select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc";
+        // query_sql = "select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc";
+        query_sql = "select a.*,b.nickname,b.headimgurl from " +
+            "(select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc)a " +
+            "left join (select * from user)b on a.user_id=b.user_id";
     }
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){
@@ -129,7 +135,9 @@ router.post('/reply', function (req, res, next) {
 router.post('/question/detail', function (req, res, next) {
     var question_id = req.body.question_id;
 
-    var query_sql = "select * from question where question_id='"+question_id+"'";
+    var query_sql = "select a.question_id,a.question_desc,a.user_id,a.up_time,b.nickname,b.headimgurl from " +
+            "(select * from question where question_id='"+question_id+"')a left join " +
+        "(select * from user)b on a.user_id=b.user_id";
 
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){

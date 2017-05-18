@@ -18,11 +18,16 @@ export default class Onedrop extends React.Component{
     constructor(props){
         super(props);
     }
+
+    componentDidMount(){
+
+    }
+
     render(){
         return (
             <div style={{backgroundColor:'rgb(235, 235, 235)'}}>
                 <div>
-                    <img style={{width:OneDrop.JS_ScreenW}} src="../../../img/weike/onedrop/banner.png"/>
+                    <img style={{width:OneDrop.JS_ScreenW}} src="../../../img/weike/onedrop/zhanwei.jpg"/>
                 </div>
                 <div>
                     <div style={{
