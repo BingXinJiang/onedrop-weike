@@ -55,14 +55,28 @@ router.get('/active', function (req, res, next) {
  * */
 router.post('/section', function (req, res, next) {
     var user_id = req.body.user_id;
+    console.log('user_id:', user_id);
+    // var query_sql = "select course_id,section_id,course_author,section_name,section_des,open_date from course_section where open_date<Now() " +
+    //     "and open_date != 0";
 
-    var query_sql = "select course_id,section_id,course_author,section_name,section_des,open_date from course_section where open_date<Now() " +
-        "and open_date != 0";
+    // var query_sql = "select year(open_date)year,month(open_date)month,day(open_date)day," +
+    //     "course_id,section_id,course_author,section_name,section_des,open_date from course_section " +
+    //     "where open_date<Now() and open_date != 0 " +
+    //     "group by year,month,day";
 
+    var query_sql = "select year(open_date)year,month(open_date)month,day(open_date)day," +
+        "course_id,section_id,course_author,section_name,section_des,open_date from course_section " +
+        "where open_date<Now() and open_date != 0 order by open_date desc "
+        // "group by year,month,day";
+
+
+    console.log('query_sql:',query_sql);
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);
         }else{
+            console.log('-----------');
+            console.log(valls);
             if(valls.length<=0){
                 responseDataErr(res);
             }else{

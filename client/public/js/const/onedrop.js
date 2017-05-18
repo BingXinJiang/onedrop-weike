@@ -4,6 +4,7 @@
 
 module.exports = {
     base_ip:'http://localhost:3000/weixin',
+    base_url:'http://localhost:3000',
     res_ip:'http://localhost:3000',
     // base_ip:'http://192.168.1.181:3000/weixin',
     // res_ip:'http://192.168.1.181:3000',

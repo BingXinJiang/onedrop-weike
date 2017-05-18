@@ -4,19 +4,56 @@
 import React from 'React';
 
 import Solve from './Solve';
+import OneDrop from '../../const/onedrop';
 
 export default class Answer extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            showAnswer:true
+            showAnswer:false,
+            questions:[],
+            page:1,
+            key_id:0,
+            question_id:0
         }
+        this.getQuestions = (self, page, key_id)=>{
+            $.ajax({
+                url:OneDrop.base_url+'/answer/questions',
+                dataType:'json',
+                method:'POST',
+                data:{
+                    page:page,
+                    key_id:key_id
+                },
+                success:function (data) {
+                    if(data.status === 1){
+                        if(data.data.length<=0){
+                            alert('没有更多问题了...');
+                        }else{
+                            var lastOne = data.data[data.data.length-1];
+                            var lastKeyId = lastOne.key_id;
+                            self.setState({
+                                questions:self.state.questions.concat(data.data),
+                                key_id:lastKeyId,
+                                page:self.state.page+1
+                            })
+                        }
+                    }else{
+                        alert('数据错误');
+                    }
+                }
+            })
+        }
+    }
+
+    componentDidMount() {
+        this.getQuestions(this, 1, 0);
     }
     render(){
         const Question =
         <div>
             {
-                ['1','2','3'].map((content, index)=>{
+                this.state.questions.map((content, index)=>{
                     return (
                         <div key={index} style={{
                                     paddingLeft:'30px',
@@ -34,35 +71,37 @@ export default class Answer extends React.Component{
                                             borderRadius:'45px',
                                             float:'left',
                                             marginRight:'16px'
-                                        }} src="http://wx.qlogo.cn/mmopen/vGr0icmOt61otib1wVxO7KLE0tVZsFI6aXSS8Nw4mia3YnicDq6KQo5D5MfhiclvsicWclYf4aoiayIr2kX5lFGpibZ1fTE9SLMTxHwj/0"/>
+                                        }} src={content.headimgurl}/>
                                 <div style={{
                                             display:'block'
                                         }}>
                                     <p style={{
                                                 color:'rgb(127,127,127)',
                                                 fontSize:'28px'
-                                            }}>大樟树</p>
+                                            }}>{content.nickname}</p>
                                     <p style={{
                                                 color:'rgb(169,169,169)',
                                                 fontSize:'26px'
-                                            }}>昨天15:30</p>
+                                            }}>{content.up_time}</p>
                                 </div>
                             </div>
                             <p style={{
                                        fontSize:'28px',
                                        marginTop:'24px'
                                    }}>
-                                我是一个完美主义者,在工作中常常要求下属做的工作符合我的要求,
-                                常常要改好多遍才行,我觉得很累,下属也觉得很累,该怎么办呢
-                                我国第三方会感受到克己奉公,世纪东方供货商的快感,
-                                时光隧道供货商的快感和,时代光华速度快感受到
+                                {content.question_desc}
                             </p>
                             <div style={{
                                        width:'100%',
                                        height:'90px',
                                        marginTop:'36px'
                                    }}>
-                                <p style={{
+                                <p onClick={()=>{
+                                    this.setState({
+                                        question_id:content.question_id,
+                                        showAnswer:true
+                                    })
+                                }} style={{
                                            width:'260px',
                                            height:'60px',
                                            fontSize:'36px',
@@ -82,6 +121,19 @@ export default class Answer extends React.Component{
                     )
                 })
             }
+            <div onClick={()=>{
+                this.getQuestions(this, this.state.page, this.state.key_id);
+            }} style={{
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center',
+                textAlign:'center',
+                fontSize:'32px',
+                width:'100%',
+                height:'80px',
+                backgroundColor:'rgb(235,235,235)',
+                marginBottom:'40px'
+            }}>下一页</div>
         </div>
         return (
             <div style={{
@@ -93,7 +145,11 @@ export default class Answer extends React.Component{
                 marginBottom:'120px'
             }}>
                 {
-                    this.state.showAnswer ? <Solve/> : Question
+                    this.state.showAnswer ? <Solve callback={()=>{
+                        this.setState({
+                            showAnswer:false
+                        })
+                    }} question_id={this.state.question_id}/> : Question
                 }
 
             </div>

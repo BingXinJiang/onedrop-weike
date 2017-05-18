@@ -22,7 +22,8 @@ export default class Evaluation extends React.Component{
             fontSize:'30px',
             borderColor:'rgb(235,235,235)',
             borderWidth:'2px',
-            width:'75%'
+            width:'75%',
+            padding:'5px'
         };
         return (
             <div style={{
@@ -111,46 +112,31 @@ export default class Evaluation extends React.Component{
                     <span style={{
                         ...wordStyle
                     }}>选择：</span>
-                    <p style={{
-                        ...wordStyle,
-                        height:'60px',
-                        width:'75%',
-                        borderWidth:'2px',
-                        borderColor:'rgb(235,235,235)',
-                        color:'rgb(187,187,187)'
-                    }}>选择您想要参与的测评</p>
+                    <input placeholder="选择您想要参与的测评"
+                           onFocus={()=>{
+                                console.log('这个东东获得了焦点!')
+                           }}
+                           style={{
+                                ...inputStyle
+                    }}/>
                 </div>
 
-
                 <div style={{
-                    ...contannerStyle,
-                    height:'90px',
-                    width:'100%',
-                    backgroundColor:'orange'
+                    display:'flex',
+                    flexDirection:'column',
+                    marginTop:'40px',
+                    alignItems:'center'
                 }}>
-                    <p style={{
-                        ...wordStyle,
-                        width:'240px',
-                        height:'72px',
-                        color:'white',
-                        backgroundColor:'rgb(28,166,248)',
-                        borderRadius:'45px',
-                        textAlign:'center',
-                        paddingTop:'18px',
-                        fontSize:'35px'
-                    }}>申请</p>
-                </div>
+                    <div style={{
 
-
-                <div style={{
-                    ...contannerStyle
-                }}>
-                    <p style={{
-                        ...wordStyle
-                    }}>查看测评链接</p>
-                    <p style={{
-                        ...wordStyle
-                    }}>查看测评结果</p>
+                    }}>
+                        <p>申请测评</p>
+                        <p>查看测评链接</p>
+                    </div>
+                    <div>
+                        <p>申请报告</p>
+                        <p>查看报告链接</p>
+                    </div>
                 </div>
             </div>
         )

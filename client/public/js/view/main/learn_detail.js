@@ -71,7 +71,9 @@ export default class Learn extends React.Component{
         var section = this.state.section;
         var self = this;
         return(
-            <div style={{backgroundColor:'rgb(229,230,231)', width:'100%'}} id="learn_detail">
+            <div style={{backgroundColor:'rgb(229,230,231)',
+             marginBottom:'90px',
+             width:'100%'}} id="learn_detail">
                 {
                     section != null ?
                         <div style={{marginBottom:'120px'}}>

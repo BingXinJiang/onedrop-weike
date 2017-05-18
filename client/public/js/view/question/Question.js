@@ -9,6 +9,7 @@ export default class Question extends React.Component{
         super(props);
     }
     render(){
+        var self = this;
         return (
             <div style={{width:'100%', height:'100%',
                 backgroundColor:'rgb(235,235,235)'
@@ -60,7 +61,7 @@ export default class Question extends React.Component{
                         fontWeight:'bold',
                         marginTop:'32px'
                     }}>问题描述</p>
-                    <textarea placeholder="请输入您要问的内容..."
+                    <textarea id="question_ask_commit" placeholder="请输入您要问的内容..."
                               style={{
                               width:OneDrop.JS_ScreenW - 60 + 'px',
                               height:'300px',
@@ -77,9 +78,38 @@ export default class Question extends React.Component{
                         width:'100%',
                         height:'80px',
                         justifyContent:'center',
-                        marginTop:'62px',
+                        marginTop:'62px'
                     }}>
-                        <p style={{
+                        <p onClick={()=>{
+                            var question_des = $('#question_ask_commit').val();
+                            if(question_des){
+                                if(question_des.length>0){
+                                    //发起post请求,提交问题
+                                    $.ajax({
+                                        url:OneDrop.base_url+'/answer/ask',
+                                        dataType:'json',
+                                        method:'POST',
+                                        data:{
+                                            user_id:REMOTE_WEIXIN_USER_ID,
+                                            question_des:question_des
+                                        },
+                                        success:function(data) {
+                                            if(data.status === 1){
+                                                alert('您的问题提交成功,请耐心等待回答!');
+                                                self.props.callback();
+                                            }else{
+                                                alert('网络错误,请重新提交!!!');
+                                            }
+                                        }
+
+                                    })
+                                }else{
+                                    alert('请先输入您的问题...');
+                                }
+                            }else{
+                                alert('请先输入您的问题...');
+                            }
+                        }} style={{
                             backgroundColor:'rgb(18,144,249)',
                             fontSize:'34px',
                             color:'white',

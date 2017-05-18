@@ -89,7 +89,7 @@ export default class Learn extends React.Component{
     render(){
         var self = this;
         return(
-            <div>
+            <div style={{marginBottom:'90px'}}>
                 {
                     this.state.toLearnDetail ?
                         <LearnDetail

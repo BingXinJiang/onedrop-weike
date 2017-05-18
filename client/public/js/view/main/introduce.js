@@ -106,7 +106,7 @@ export default class Introduction extends React.Component{
             introduction = course.introduction;
         }
         return (
-            <div id="introduce" style={{backgroundColor:'rgb(229,230,231)'}}>
+            <div id="introduce" style={{backgroundColor:'rgb(229,230,231)', marginBottom:'60px'}}>
                 {
                     (this.state.progress === 0 && !this.state.toLearn) ?
                         <div>

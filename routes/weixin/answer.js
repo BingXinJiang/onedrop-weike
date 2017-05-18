@@ -61,27 +61,26 @@ router.post('/ask', function (req, res, next) {
  *       key_id 记录主键，第一页传0， 当第二页时传第一页获取到的最小主键
  * */
 router.post('/questions', function (req, res, next) {
-    var page = req.body.page;
-    var key_id = req.body.key_id;
+    var page = Number(req.body.page);
+    var key_id = Number(req.body.key_id);
     var query_sql = "";
     if(page === 1){
-        // query_sql = "select * from question order by key_id desc limit 0,10";
         query_sql = "select a.*,b.nickname,b.headimgurl from " +
             "(select * from question order by key_id desc limit 0,10)a left join " +
             "(select * from user)b on a.user_id=b.user_id";
     }else{
-        // query_sql = "select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc";
         query_sql = "select a.*,b.nickname,b.headimgurl from " +
             "(select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc)a " +
             "left join (select * from user)b on a.user_id=b.user_id";
     }
+    // console.log(query_sql);
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);
         }else{
             var data = null;
             if(valls.length<=0){
-                data = '没有更多问题了...';
+                data = [];
             }else{
                 data = valls;
             }
@@ -162,9 +161,9 @@ router.post('/question/detail', function (req, res, next) {
 router.post('/question/answers', function (req, res, next) {
     var question_id = req.body.question_id;
 
-    var query_sql = "select a.answer_id,a.answer_desc,a.user_id,a.answer_time,a.answer_voice,b.nickname,b.headimgurl"+
-    "from (select * from answer where question_id='"+question_id+"')a left join (select * from user)b on a.user_id = b.user_id;"
-
+    var query_sql = "select a.answer_id,a.answer_desc,a.user_id,a.answer_time,a.answer_voice,b.nickname,b.headimgurl "+
+    "from (select * from answer where question_id='"+question_id+"' order by answer_time desc)a left join (select * from user)b on a.user_id = b.user_id;"
+    // console.log('query_sql:', query_sql);
     query(query_sql, function (qerr, valls, next) {
         if(qerr){
             responseDataErr(res);

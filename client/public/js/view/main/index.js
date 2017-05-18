@@ -105,7 +105,7 @@ export default class MainPage extends React.Component{
     render(){
         var self = this;
         return (
-            <div id="container">
+            <div style={{marginBottom:'90px'}} id="container">
                 {
                     this.state.show === 'course_list' ?
                         <div style={{
