@@ -14,13 +14,17 @@ import {
 } from 'react-weui';
 import OneDrop from '../../const/onedrop';
 import async from 'async';
+import LearnDetail from '../main/learn_detail';
 
 export default class Onedrop extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             active:null,
-            courses:[]
+            courses:[],
+            showDetail:false,
+            course_id:0,
+            section_id:0
         }
     }
 
@@ -84,81 +88,90 @@ export default class Onedrop extends React.Component{
         }
         console.log(this.state.courses);
         return (
-            <div style={{backgroundColor:'rgb(235, 235, 235)'}}>
-                <div>
-                    <img style={{width:OneDrop.JS_ScreenW, height:'400px'}} src={bannerSrc}/>
-                </div>
-                <div>
-                    <div style={{
-                        width:OneDrop.JS_ScreenW,
-                        height:'90px',
-                        backgroundColor:'white'
-                    }}>
-                        <div style={{float:'left', marginTop:'30px'}}>
-                            <div style={{display:'block',
-                                backgroundColor:'rgb(27,138,229)',
-                                width:'10px',
-                                height:'30px',
-                                float:'left'
-                            }}/>
-                            <p style={{float:'left', fontSize:'24px', marginLeft:'20px'}}>今日课程</p>
+            <div>
+                {
+                    !this.state.showDetail ?
+                        <div style={{backgroundColor:'rgb(235, 235, 235)', paddingBottom:'140px'}}>
+                            <div>
+                                <img style={{width:OneDrop.JS_ScreenW, height:'400px'}} src={bannerSrc}/>
+                            </div>
+                            {
+                                this.state.courses.map((content, index)=>{
+                                    return (
+                                        <div key={index} style={{
+                                            marginTop:'20px'
+                                        }}>
+                                            <div style={{
+                                                width:OneDrop.JS_ScreenW,
+                                                height:'90px',
+                                                backgroundColor:'white'
+                                            }}>
+                                                <div style={{float:'left', marginTop:'30px'}}>
+                                                    <div style={{display:'block',
+                                                        backgroundColor:'rgb(27,138,229)',
+                                                        width:'10px',
+                                                        height:'30px',
+                                                        float:'left'
+                                                    }}/>
+                                                    <p style={{float:'left', fontSize:'24px',
+                                                        marginLeft:'20px'
+                                                    }}>{content[0].calender_time}</p>
+                                                </div>
+                                            </div>
+                                            <Cells style={{
+                                                marginTop:'5px'
+                                            }}>
+                                                {
+                                                    content.map((content, index)=>{
+                                                        return (
+                                                            <Cell key={index}>
+                                                                <div style={{
+                                                                    marginRight:'30px'
+                                                                }}>
+                                                                    <img src="../../../img/weike/onedrop/audio_3.png"/>
+                                                                </div>
+                                                                <div onClick={()=>{
+                                                                    this.setState({
+                                                                        course_id:content.course_id,
+                                                                        section_id:content.section_id,
+                                                                        showDetail:true
+                                                                    })
+                                                                }}>
+                                                                    <p style={{
+                                                                        fontSize:'32px'
+                                                                    }}>{content.section_name}</p>
+                                                                    <p style={{
+                                                                        fontSize:'22px'
+                                                                    }}>{content.course_author}</p>
+                                                                    <p style={{
+                                                                        fontSize:'24px',
+                                                                        height:'100px',
+                                                                        overflow:'hidden'
+                                                                    }}>
+                                                                        {content.section_des}
+                                                                    </p>
+                                                                </div>
+                                                            </Cell>
+                                                        )
+                                                    })
+                                                }
+                                            </Cells>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
-                    </div>
-                    <Cells>
-                        <Cell>
-                            <div>
-                                <img src="../../../img/weike/onedrop/audio_3.png"/>
-                            </div>
-                            <div>
-                                <p style={{
-                                    fontSize:'35px'
-                                }}>管理者用人的100个细节</p>
-                                <p>李伟：知名教授</p>
-                                <p>
-                                    你是一位优秀的管理者吗？你知道怎么与下属相处融洽吗？你知道怎么样
-                                    激励员工吗？你是一位优秀的管理者吗？你知道怎么与下属相处融洽吗？你知道
-                                    怎样激励员工吗？
-                                </p>
-                            </div>
-                        </Cell>
-                    </Cells>
-                </div>
-                <div>
-                    <div style={{
-                        width:OneDrop.JS_ScreenW,
-                        height:'90px',
-                        backgroundColor:'white',
-                        marginTop: '20px'
-                    }}>
-                        <div style={{float:'left', marginTop:'30px'}}>
-                            <div style={{display:'block',
-                                backgroundColor:'rgb(27,138,229)',
-                                width:'10px',
-                                height:'30px',
-                                float:'left'
-                            }}/>
-                            <p style={{float:'left', fontSize:'24px', marginLeft:'20px'}}>今日课程</p>
-                        </div>
-                    </div>
-                    <Cells>
-                        <Cell>
-                            <div>
-                                <img src="../../../img/weike/onedrop/audio_3.png"/>
-                            </div>
-                            <div>
-                                <p style={{
-                                    fontSize:'35px'
-                                }}>管理者用人的100个细节</p>
-                                <p>李伟：知名教授</p>
-                                <p>
-                                    你是一位优秀的管理者吗？你知道怎么与下属相处融洽吗？你知道怎么样
-                                    激励员工吗？你是一位优秀的管理者吗？你知道怎么与下属相处融洽吗？你知道
-                                    怎样激励员工吗？
-                                </p>
-                            </div>
-                        </Cell>
-                    </Cells>
-                </div>
+                        :
+                        <LearnDetail userId={REMOTE_WEIXIN_USER_ID}
+                                     courseId={this.state.course_id}
+                                     courseSectionId={this.state.section_id}
+                                     callback={()=>{
+                                         this.setState({
+                                             showDetail:false
+                                         })
+                                     }}
+                        />
+                }
             </div>
         )
     }

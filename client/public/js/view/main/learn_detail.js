@@ -72,22 +72,25 @@ export default class Learn extends React.Component{
         var self = this;
         return(
             <div style={{backgroundColor:'rgb(229,230,231)',
-             marginBottom:'90px',
+             paddingBottom:'150px',
              width:'100%'}} id="learn_detail">
                 {
                     section != null ?
                         <div style={{marginBottom:'120px'}}>
-                            <h1 style={{paddingTop:'30px', paddingLeft:'30px', fontSize:'40px'}}>{section.section_name}</h1>
+                            <h1 style={{paddingTop:'30px', paddingLeft:'30px', fontSize:'34px'}}>{section.section_name}</h1>
 
-                            <div style={{width: '100%', alignItems:'center', alignContent:'center', marginTop:'30px', marginBottom:'50px'}}>
+                            <div style={{width: '100%', alignItems:'center',
+                                alignContent:'center', marginTop:'30px', marginBottom:'50px'}}>
                                 <OneAudio audioUrl={section.section_voice}
                                           title={section.section_name}
                                           author={section.course_author}
                                 />
                             </div>
 
-                            <p style={{paddingLeft:'30px', paddingRight:'30px', backgroundColor:'white', fontSize:'35px'}}>{section.section_des}</p>
-                            <img style={{marginTop:'30px',marginLet:'80px', width:'200px', height:'auto'}} src="../../../img/weike/detail/comment.png"/>
+                            <p style={{paddingLeft:'30px', paddingRight:'30px',
+                                backgroundColor:'white', fontSize:'24px'}}>{section.section_des}</p>
+                            <img style={{marginTop:'30px',marginLet:'80px',
+                                width:'200px', height:'auto'}} src="../../../img/weike/detail/comment.png"/>
                             <Cells style={{marginTop:'0'}}>
                                 {
                                     this.state.comment.map(function (comment, index) {
@@ -95,7 +98,8 @@ export default class Learn extends React.Component{
                                             <Cell key={index} style={{marginTop:'10px', marginBottom:'10px'}}>
                                                 <CellBody>
                                                     <div>
-                                                        <img style={{width:'90px', height:'90px', borderRadius:'45px', float:'left', marginRight:'18px'}}
+                                                        <img style={{width:'90px', height:'90px', borderRadius:'45px',
+                                                            float:'left', marginRight:'18px'}}
                                                              src={comment.headimgurl}/>
                                                         <div style={{float:'right', fontSize:'24px'}}>{comment.datetime}</div>
                                                         <div>
@@ -114,10 +118,22 @@ export default class Learn extends React.Component{
                         :
                         null
                 }
-                <div style={{marginTop:'30px', height:'100px',width:'100%', position:'fixed', bottom:'0px', backgroundColor:'rgb(229,230,231)'}}>
-                    <input id="comment_input" style={{width: '76%', height: '80%',
+                <button style={{
+                    postion:'fixed',
+                    left:'0',
+                    bottom:'240px'
+                }} onClick={()=>{
+                    this.props.callback();
+                }}>
+                    <img style={{
+                        width:'60px'
+                    }} src="../../../img/weike/main/back.png"/>
+                </button>
+                <div style={{marginTop:'30px', height:'100px',width:'100%', position:'fixed',
+                    bottom:'130px', backgroundColor:'rgb(229,230,231)'}}>
+                    <input id="comment_input" placeholder="说点什么吧..." style={{width: '76%', height: '80%',
                         borderWidth:'2px', borderColor:'gray', borderRadius:'10px',marginTop:'10px',
-                        placeholder:'说点什么吧...', fontSize:'28px', marginLeft:'3%',marginBottom:'5px'
+                        fontSize:'28px', marginLeft:'3%',marginBottom:'5px',padding:'5px'
                     }}/>
                     <button onClick={()=>{
                         if(self.state.section == null){
@@ -161,7 +177,9 @@ export default class Learn extends React.Component{
                         }
                     }} style={{marginLeft:'2%', width: '15%', height:'80%',
                         fontSize:'35px', marginTop:'10px', borderWidth:'2px', borderColor:'gray'}}>留言</button>
+
                 </div>
+
             </div>
         )
     }

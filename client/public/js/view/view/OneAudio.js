@@ -23,11 +23,12 @@ export default class OneAudio extends React.Component{
                 duration:parseInt(duration),
                 curTime:parseInt(curTime)
             })
-        })
+        }, 1000)
     }
 
-    componentDidUnMount() {
-        this.audioTimer = null;
+    componentWillUnmount(){
+        console.log('计时器结束了！！！');
+        clearInterval(this.audioTimer);
     }
 
     render(){
@@ -37,8 +38,9 @@ export default class OneAudio extends React.Component{
         var wav_url = preUrl + '-wav.wav';
         
         return(
-            <div style={{width: '80%', height:'120px', backgroundColor:'white', borderWidth:'2px', borderRadius:'10px', marginLeft:'8.5%'}}>
-                <audio ref="section_audio" preload="auto" autoplay="true">
+            <div style={{width: '80%', height:'120px', backgroundColor:'white',
+                borderWidth:'2px', borderRadius:'10px', marginLeft:'8.5%'}}>
+                <audio ref="section_audio" preload="auto">
                     <source src={ogg_url} type="audio/ogg"/>
                     <source src={wav_url} type="audio/wav"/>
                     <source src={mp3_url} type="audio/mpeg"/>
@@ -60,12 +62,15 @@ export default class OneAudio extends React.Component{
                     }
                 }} style={{width:'90%', height:'100%', marginLeft:'30px'
                 }}>
-                    <img style={{float:'left', width:'80px', height:'80px', marginTop:'20px', marginLeft:'10px', marginRight:'30px'}}
+                    <img style={{float:'left', width:'80px', height:'80px', marginTop:'20px',
+                        marginLeft:'10px', marginRight:'30px'}}
                          src="../../../img/weike/detail/voice.png"/>
                     <div style={{marginLeft:'30px'}}>
-                        <p style={{fontSize:'35px', marginTop:'20px',height:'60px', overflow:'hidden'}}>{this.props.title}</p>
-                        <p style={{fontSize:'35px', marginTop:'10px', float:'left'}}>{this.props.author}</p>
-                        <p style={{fontSize:'25px', marginTop:'10px', float:'right'}}>{this.state.curTime+'s/'+this.state.duration+'s'}</p>
+                        <p style={{fontSize:'28px', marginTop:'20px',height:'60px',
+                            overflow:'hidden'}}>{this.props.title}</p>
+                        <p style={{fontSize:'28px', marginTop:'10px', float:'left'}}>{this.props.author}</p>
+                        <p style={{fontSize:'22px', marginTop:'10px',
+                            float:'right'}}>{this.state.curTime+'s/'+this.state.duration+'s'}</p>
                     </div>
                 </div>
             </div>

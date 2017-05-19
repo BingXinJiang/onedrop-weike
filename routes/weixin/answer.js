@@ -65,11 +65,11 @@ router.post('/questions', function (req, res, next) {
     var key_id = Number(req.body.key_id);
     var query_sql = "";
     if(page === 1){
-        query_sql = "select a.*,b.nickname,b.headimgurl from " +
+        query_sql = "select year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl from " +
             "(select * from question order by key_id desc limit 0,10)a left join " +
             "(select * from user)b on a.user_id=b.user_id";
     }else{
-        query_sql = "select a.*,b.nickname,b.headimgurl from " +
+        query_sql = "select year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl from " +
             "(select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc)a " +
             "left join (select * from user)b on a.user_id=b.user_id";
     }
@@ -134,7 +134,7 @@ router.post('/reply', function (req, res, next) {
 router.post('/question/detail', function (req, res, next) {
     var question_id = req.body.question_id;
 
-    var query_sql = "select a.question_id,a.question_desc,a.user_id,a.up_time,b.nickname,b.headimgurl from " +
+    var query_sql = "select year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.question_id,a.question_desc,a.user_id,a.up_time,b.nickname,b.headimgurl from " +
             "(select * from question where question_id='"+question_id+"')a left join " +
         "(select * from user)b on a.user_id=b.user_id";
 
@@ -156,12 +156,12 @@ router.post('/question/detail', function (req, res, next) {
 })
 /**
  * 查看某一问题对应的所有答案，按时间倒序排列
- * 参数：question_id  149500987801845931
+ * 参数：question_id  149500987801845931  149500987801845931
  * */
 router.post('/question/answers', function (req, res, next) {
     var question_id = req.body.question_id;
 
-    var query_sql = "select a.answer_id,a.answer_desc,a.user_id,a.answer_time,a.answer_voice,b.nickname,b.headimgurl "+
+    var query_sql = "select year(a.answer_time)year,month(a.answer_time)month,day(a.answer_time)day,a.answer_id,a.answer_desc,a.user_id,a.answer_time,a.answer_voice,b.nickname,b.headimgurl "+
     "from (select * from answer where question_id='"+question_id+"' order by answer_time desc)a left join (select * from user)b on a.user_id = b.user_id;"
     // console.log('query_sql:', query_sql);
     query(query_sql, function (qerr, valls, next) {

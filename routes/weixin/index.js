@@ -535,19 +535,36 @@ router.post('/main/getcoursedetail', function (req, res, next) {
  * 获取课程的每个章节,并能体现当前的学习进度
  * 接收字段:
  *        course_id
+ *        user_id
  * */
 router.post('/main/getsection', function(req, res, next){
     
     var course_id = req.body.course_id;
+    var user_id = req.body.user_id;
     
-    var section_sql = "select * from course_section where course_id = " + course_id +" order by chapter_num, section_num";
+    // var section_sql = "select * from course_section where course_id = " + course_id +" order by chapter_num, section_num";
     var course_sql = "select detail_bg_image from course where course_id = " + course_id;
+
+    // var section_sql = "select a.*,b.is_learn from (" +
+    //     "(select * from course_section)as a left join " +
+    //     "(select user_id,section_id,is_learn from schedule_learn)as b " +
+    //     "on a.section_id = b.section_id) " +
+    //     "where course_id="+course_id+" and user_id='"+user_id+"' order by chapter_num, section_num";
+
+    var section_sql = "select (Now()>a.open_date)is_open,a.*,b.is_learn from (" +
+        "(select * from course_section)as a left join " +
+        "(select user_id,section_id,is_learn from schedule_learn where user_id='"+user_id+"')as b " +
+        "on a.section_id = b.section_id) " +
+        "where a.course_id="+course_id+" order by a.chapter_num, a.section_num";
+
+    // console.log('section_sql:', section_sql);
+
     query(section_sql, function (qerr, valls, fields) {
         if(qerr){
             var response = {
                 status:0,
                 data:{
-                    msg:'数据库执行错误'
+                    msg:'数据库执行错误1'
                 }
             }
             res.json(response);
@@ -575,7 +592,7 @@ router.post('/main/getsection', function(req, res, next){
                     var response = {
                         status:0,
                         data:{
-                            msg:'数据库执行错误'
+                            msg:'数据库执行错误2'
                         }
                     }
                     res.json(response);
@@ -833,15 +850,15 @@ router.post('/main/section/comment', function (req, res, next) {
 
 /**
  * 获取小节的所有评论
- * 参数: section_id
+ * 参数: section_id  89
  * */
 router.post('/main/section/get_comment', function (req, res, next) {
     var section_id = req.body.section_id;
 
     // var search_sql = "select * from comment where section_id = " + section_id + " order by datetime desc";
     // var user_sql= "select nickname,headimgurl from user where user_id = (select user_id from comment where section_id = "+section_id+" order by datetime desc)";
-
-    var union_sql = "select comment.*, user.nickname, user.headimgurl from comment, user where comment.section_id = "+section_id+" and user.user_id = comment.user_id order by comment.datetime desc";
+    var union_sql = "select year(comment.datetime)year,month(comment.datetime)month,day(comment.datetime)day,comment.*, user.nickname, user.headimgurl from comment, user where comment.section_id = "+section_id+" and user.user_id = comment.user_id order by comment.datetime desc";
+    console.log('union_sql:', union_sql);
     function showErr() {
         var response = {
             status:0,
@@ -853,6 +870,7 @@ router.post('/main/section/get_comment', function (req, res, next) {
     }
     query(union_sql, function (qerr, valls, fields) {
         if(qerr){
+            console.log('qerr:', qerr);
             showErr();
         }else{
             var response = {

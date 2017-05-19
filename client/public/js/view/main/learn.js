@@ -25,8 +25,8 @@ export default class Learn extends React.Component{
             selectSection:0,
             course_image:''
         }
-        this.learned_chapter = 0;
-        this.learned_section = 0;
+        // this.learned_chapter = 0;
+        // this.learned_section = 0;
     }
 
     componentDidMount() {
@@ -38,37 +38,38 @@ export default class Learn extends React.Component{
             dataType:'json',
             method:'POST',
             data:{
-                course_id:self.props.courseId
+                course_id:self.props.courseId,
+                user_id:REMOTE_WEIXIN_USER_ID
             },
             success:function(data){
                 var chapters = data.data.chapters;
                 var course_image = data.data.course_image;
-                var learned_chapter = 0;
-                var learned_section = 0;
+                // var learned_chapter = 0;
+                // var learned_section = 0;
+                // chapters.map(function (chapter) {
+                //     chapter.map(function (section) {
+                //         if(section.section_id == self.props.progress){
+                //             learned_chapter = section.chapter_num;
+                //             learned_section = section.section_num;
+                //             self.learned_chapter = learned_chapter;
+                //             self.learned_section = learned_section;
+                //         }
+                //     })
+                // })
                 chapters.map(function (chapter) {
-                    chapter.map(function (section) {
-                        if(section.section_id == self.props.progress){
-                            learned_chapter = section.chapter_num;
-                            learned_section = section.section_num;
-                            self.learned_chapter = learned_chapter;
-                            self.learned_section = learned_section;
-                        }
-                    })
-                })
-                chapters.map(function (chapter) {
-                    chapter.map(function (section) {
-                        if(section.chapter_num > learned_chapter){
-                            section.isLearned = false;
-                        }else if(section.chapter_num < learned_chapter){
-                            section.isLearned = true;
-                        }else {
-                            if(section.section_num>learned_section){
-                                section.isLearned = false;
-                            }else{
-                                section.isLearned = true;
-                            }
-                        }
-                    })
+                    // chapter.map(function (section) {
+                    //     if(section.chapter_num > learned_chapter){
+                    //         section.isLearned = false;
+                    //     }else if(section.chapter_num < learned_chapter){
+                    //         section.isLearned = true;
+                    //     }else {
+                    //         if(section.section_num>learned_section){
+                    //             section.isLearned = false;
+                    //         }else{
+                    //             section.isLearned = true;
+                    //         }
+                    //     }
+                    // })
                     chapter.sort(function (section1, section2) {
                         return section1.section_num - section2.section_num;
                     });
@@ -97,7 +98,9 @@ export default class Learn extends React.Component{
                             courseId={this.props.courseId}
                             courseSectionId={this.state.selectSection}
                             callback={()=>{
-                                
+                                this.setState({
+                                    toLearnDetail:false
+                                })
                             }}
                         />
                         :
@@ -114,30 +117,34 @@ export default class Learn extends React.Component{
 
                                                         return (
                                                             <Cell style={{height:'100px'}} onClick={()=>{
-                                                                if(section.isLearned){
-                                                                    self.setState({
-                                                                             toLearnDetail:true,
-                                                                             selectSection:section.section_id
-                                                                        })   
+                                                                if(section.is_open == 0){
+                                                                    alert('课程制作中，请耐心等待...');
                                                                 }else{
-                                                                    $.ajax({
-                                                                        url:OneDrop.base_ip + '/main/section/learn',
-                                                                        dataType:'json',
-                                                                        method:'POST',
-                                                                        data:{
-                                                                            user_id:self.props.userId,
-                                                                            course_id:self.props.courseId,
-                                                                            course_section_id:section.section_id
-                                                                        },
-                                                                        success:function(data) {
-                                                                           if(data.status === 1){
-                                                                               self.setState({
-                                                                                    toLearnDetail:true,
-                                                                                    selectSection:section.section_id
-                                                                               })
-                                                                           }
-                                                                        }
-                                                                    })
+                                                                    if(section.is_learned == 1){
+                                                                        self.setState({
+                                                                            toLearnDetail:true,
+                                                                            selectSection:section.section_id
+                                                                        })
+                                                                    }else{
+                                                                        $.ajax({
+                                                                            url:OneDrop.base_ip + '/main/section/learn',
+                                                                            dataType:'json',
+                                                                            method:'POST',
+                                                                            data:{
+                                                                                user_id:self.props.userId,
+                                                                                course_id:self.props.courseId,
+                                                                                course_section_id:section.section_id
+                                                                            },
+                                                                            success:function(data) {
+                                                                                if(data.status === 1){
+                                                                                    self.setState({
+                                                                                        toLearnDetail:true,
+                                                                                        selectSection:section.section_id
+                                                                                    })
+                                                                                }
+                                                                            }
+                                                                        })
+                                                                    }
                                                                 }
                                                                 
                                                             }} key={index} href="javascript:;" access>
@@ -145,7 +152,7 @@ export default class Learn extends React.Component{
                                                                     {'第'+section.section_num+'节:  '+section.section_name}
                                                                 </CellBody>
                                                                 <CellFooter style={{fontSize:'32px'}}>
-                                                                    {section.isLearned ? '已学习' : '去学习'}
+                                                                    {section.is_learned==1 ? '已学习' : '去学习'}
                                                                 </CellFooter>
                                                             </Cell>
                                                         )
