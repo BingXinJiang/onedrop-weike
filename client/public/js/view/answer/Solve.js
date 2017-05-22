@@ -174,7 +174,7 @@ export default class Solve extends React.Component{
                     height:'70px',
                     backgroundColor:'white',
                     left:'0',
-                    top:(OneDrop.JS_ScreenH*2 - 240) + 'px'
+                    bottom:'140px'
                 }}>
                     <div style={{
                         display:'flex',

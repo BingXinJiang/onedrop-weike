@@ -71,24 +71,34 @@ export default class Learn extends React.Component{
         var section = this.state.section;
         var self = this;
         return(
-            <div style={{backgroundColor:'rgb(229,230,231)',
+            <div style={{backgroundColor:'rgb(235,235,235)',
              paddingBottom:'150px',
              width:'100%'}} id="learn_detail">
                 {
                     section != null ?
                         <div style={{marginBottom:'120px'}}>
-                            <h1 style={{paddingTop:'30px', paddingLeft:'30px', fontSize:'34px'}}>{section.section_name}</h1>
 
-                            <div style={{width: '100%', alignItems:'center',
+                            <div style={{
+                                backgroundColor:'white'
+                            }}>
+                                <h1 style={{paddingTop:'30px', paddingLeft:'30px', fontSize:'34px'}}>
+                                    {section.section_name}
+                                </h1>
+
+                                <div style={{width: '100%', alignItems:'center',
                                 alignContent:'center', marginTop:'30px', marginBottom:'50px'}}>
-                                <OneAudio audioUrl={section.section_voice}
-                                          title={section.section_name}
-                                          author={section.course_author}
-                                />
+                                    <OneAudio audioUrl={section.section_voice}
+                                              title={section.section_name}
+                                              author={section.course_author}
+                                    />
+                                </div>
+
+                                <p style={{paddingLeft:'30px', paddingRight:'30px',
+                                backgroundColor:'white', fontSize:'24px'}}>
+                                    {section.section_des}
+                                </p>
                             </div>
 
-                            <p style={{paddingLeft:'30px', paddingRight:'30px',
-                                backgroundColor:'white', fontSize:'24px'}}>{section.section_des}</p>
                             <img style={{marginTop:'30px',marginLet:'80px',
                                 width:'200px', height:'auto'}} src="../../../img/weike/detail/comment.png"/>
                             <Cells style={{marginTop:'0'}}>
@@ -101,7 +111,9 @@ export default class Learn extends React.Component{
                                                         <img style={{width:'90px', height:'90px', borderRadius:'45px',
                                                             float:'left', marginRight:'18px'}}
                                                              src={comment.headimgurl}/>
-                                                        <div style={{float:'right', fontSize:'24px'}}>{comment.datetime}</div>
+                                                        <div style={{float:'right', fontSize:'24px'}}>
+                                                            {comment.year+'-'+comment.month+'-'+comment.day}
+                                                        </div>
                                                         <div>
                                                             <p style={{fontSize:'24px'}}>{comment.nickname}</p>
                                                             <p style={{fontSize:'24px'}}>{comment.comment}</p>
@@ -118,20 +130,19 @@ export default class Learn extends React.Component{
                         :
                         null
                 }
-                <button style={{
-                    postion:'fixed',
-                    left:'0',
-                    bottom:'240px'
-                }} onClick={()=>{
-                    this.props.callback();
-                }}>
-                    <img style={{
-                        width:'60px'
-                    }} src="../../../img/weike/main/back.png"/>
-                </button>
+
                 <div style={{marginTop:'30px', height:'100px',width:'100%', position:'fixed',
                     bottom:'130px', backgroundColor:'rgb(229,230,231)'}}>
-                    <input id="comment_input" placeholder="说点什么吧..." style={{width: '76%', height: '80%',
+                    <button style={{
+
+                    }} onClick={()=>{
+                        this.props.callback();
+                    }}>
+                        <img style={{
+                            width:'60px'
+                        }} src="../../../img/weike/main/back.png"/>
+                    </button>
+                    <input id="comment_input" placeholder="说点什么吧..." style={{width: '66%', height: '80%',
                         borderWidth:'2px', borderColor:'gray', borderRadius:'10px',marginTop:'10px',
                         fontSize:'28px', marginLeft:'3%',marginBottom:'5px',padding:'5px'
                     }}/>

@@ -82,7 +82,7 @@ export default class Answer extends React.Component{
                                     <p style={{
                                                 color:'rgb(169,169,169)',
                                                 fontSize:'26px'
-                                            }}>{content.up_time}</p>
+                                            }}>{content.year+'-'+content.month+'-'+content.day}</p>
                                 </div>
                             </div>
                             <p style={{

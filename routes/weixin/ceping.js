@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 
 var query = require('../../db/DB');
 
@@ -54,7 +55,7 @@ function responseRequestErr(res) {
  *           mobile
  *           session_id
  * */
-router.post('/', function (req, res, next) {
+router.post('/evaluation', function (req, res, next) {
     var user_id = req.body.user_id;
     var name = req.body.name;
     var age = req.body.age;
@@ -69,7 +70,7 @@ router.post('/', function (req, res, next) {
             var query_sql = "select candidate_unique_id  from request where user_id = '"+user_id+"'";
             query(query_sql, function (qerr, valls, fields) {
                 if(qerr){
-                    responseDataErr(res)
+                    responseDataErr(res);
                 }else{
                     //该用户存在于善则系统中
                     if(valls && valls.length>0){
@@ -110,29 +111,65 @@ router.post('/', function (req, res, next) {
                 }
                 postData = data;
             }
+            // var options = {
+            //     hostname:HOST_NAME,
+            //     path:'/invitation',
+            //     method:'POST',
+            //     // auth:' cloud-wisdom-uat: FBC659BD-CC1F-424C-A389-4D512632EBCF'
+            //     headers:{
+            //         "Authentication":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
+            //     }
+            // }
             var options = {
-                hostname:HOST_NAME,
-                path:'/invitation',
+                // auth : {
+                //     'username':'cloud-wisdom-uat',
+                //     'password':'FBC659BD-CC1F-424C-A389-4D512632EBCF',
+                //     'sendImmediately': false
+                // },
+                url: 'http://uat.api.i-select.cn/invitation',
+                headers: {
+                    // "User-Agent":"user-agent",
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
+                },
                 method:'POST',
-                auth:'Authorization: Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y='
+                form:postData
             }
-            var request = http.request(options, function (response) {
-                response.setEncoding('utf8');
-                response.on('data', function (chunk) {
-                    parseString(chunk, function (err, result) {
-                        if(err || result==null || result.ErrorCode != -1){
-                            responseRequestErr(res);
-                        }else{
-                            callback(null,result.RequestUniqueId);
-                        }
-                    })
-                })
+            // console.log('options:', options);
+            request.post(options, function (err, response, body) {
+                console.log('申请测评链接err:', err);
+                console.log('申请测评链接body:', body);
+                if(err || body==null || body==undefined || body.ErrorCode != -1){
+                    responseDataErr(res);
+                }else{
+                    callback(null, body.RequestUniqueId);
+                }
             })
-            request.write(JSON.stringify(postData));
-            request.on('error', function(e){
-                console.log('错误：' + e.message);
-            });
-            request.end();
+            // var request = http.request(options, function (response) {
+            //     response.setEncoding('utf8');
+            //     response.on('data', function (chunk) {
+            //         // console.log('chunk:', chunk);
+            //         var string = chunk.toString();
+            //         var cleanedString = string.replace(/^\ufeff/i, "").replace(/^\ufffe/i, "");
+            //          cleanedString = cleanedString.replace('\ufeff','');
+            //
+            //         console.log('cleanedString:', cleanedString);
+            //         parseString(cleanedString, function (err, result) {
+            //             console.log('result:', result);
+            //             console.log('err:', err);
+            //             if(err || result==null || result.ErrorCode != -1 || result == undefined){
+            //                 responseRequestErr(res);
+            //             }else{
+            //                 callback(null,result.RequestUniqueId);
+            //             }
+            //         })
+            //     })
+            // })
+            // request.write(JSON.stringify(postData));
+            // request.on('error', function(e){
+            //     console.log('错误：' + e.message);
+            // });
+            // request.end();
         },
         //第三步：将获取到的数据存储到数据库，用于后续操作
         function (arg1, callback) {
@@ -168,6 +205,7 @@ router.post('/', function (req, res, next) {
  * */
 router.post('/get_link', function (req, res, next) {
     var linkBody = req.body;
+    console.log('返回测评链接信息,善则回调:', linkBody);
     if(linkBody){
         var request_unique_id = linkBody.RequestUniqueId;
         var errorCode_out = linkBody.ErrorCode;
@@ -262,7 +300,7 @@ router.post('/look_link', function (req, res, next) {
  * */
 router.post('/complete', function (req, res, next) {
     var complete = req.body;
-
+    console.log('用户完成测评时,善则回调:',complete);
     function returnShanZe(status) {
         var response = {
             status:status,
@@ -337,28 +375,23 @@ router.post('/report', function (req, res, next) {
                 ]
             }
             var options = {
-                hostname:HOST_NAME,
-                path:'/report',
+                url: 'http://uat.api.i-select.cn/report',
+                headers: {
+                    "Content-Type":"application/x-www-form-urlencoded",
+                    "Authorization":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
+                },
                 method:'POST',
-                auth:'Authorization: Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y='
+                form:postData
             }
-            var request = http.request(options, function (response) {
-                response.setEncoding('utf8');
-                response.on('data', function (chunk) {
-                    parseString(chunk, function (err, result) {
-                        if(err || result==null || result.ErrorCode != -1){
-                            responseRequestErr(res);
-                        }else{
-                            callback(null,result.RequestUniqueId, respondent_uid);
-                        }
-                    })
-                })
+            request.post(options, function (err, response, body) {
+                console.log('请求报告err:',err);
+                console.log('请求报告body:', body);
+                if(err || body==null || body.ErrorCode != -1){
+                    responseRequestErr(res);
+                }else{
+                    callback(null,result.RequestUniqueId, respondent_uid);
+                }
             })
-            request.write(JSON.stringify(postData));
-            request.on('error', function(e){
-                console.log('错误：' + e.message);
-            });
-            request.end();
         },
         //将相关数据存储到数据库
         function (request_unique_id,respondent_uid, callback) {
@@ -393,6 +426,7 @@ router.post('/report', function (req, res, next) {
  * */
 router.post('/get_report', function (req, res, next) {
     var report = req.body;
+    console.log('返回报告的链接信息,善则回调:',report);
     function returnMsg(status) {
         var response = {
             status:status,
@@ -461,14 +495,14 @@ router.post('look_report', function (req, res, next) {
                 res.json(response);
             }
             if(valls.length<=0){
-                returnReportMsg(0, '请先申请报告然后查看报告');
+                returnReportMsg(1, '请先申请报告然后查看报告');
             }else{
                 var report = valls[0];
                 var report_link = report.report_link;
                 if(report_link){
                     returnReportMsg(1, '请点击:'+report_link);
                 }else{
-                    returnReportMsg(0, '请稍后,报告正在赶来...');
+                    returnReportMsg(1, '请稍后,报告正在赶来...');
                 }
             }
         }

@@ -13,5 +13,13 @@ module.exports = {
     },
     getAudio:function (src) {
         return 0
+    },
+    isEmail:function (str) {
+        var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if(reg.test(str)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -38,7 +38,7 @@ export default class OneAudio extends React.Component{
         var wav_url = preUrl + '-wav.wav';
         
         return(
-            <div style={{width: '80%', height:'120px', backgroundColor:'white',
+            <div style={{width: '80%', height:'120px', backgroundColor:'rgb(235,235,235)',
                 borderWidth:'2px', borderRadius:'10px', marginLeft:'8.5%'}}>
                 <audio ref="section_audio" preload="auto">
                     <source src={ogg_url} type="audio/ogg"/>
