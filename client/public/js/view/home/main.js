@@ -34,7 +34,6 @@ class Main extends React.Component{
     componentDidMount(){
         //第一次进来的时候，询问是否是兴业银行员工，搜集电话号码
         var my_id = this.state.userId;
-        REMOTE_WEIXIN_USER_ID = my_id;
         if(my_id === undefined || my_id === null || my_id === '' || my_id === 'undefined'){
             my_id = localStorage.getItem('onedrop_user_id');
             this.setState({
