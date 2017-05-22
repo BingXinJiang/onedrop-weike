@@ -1265,7 +1265,7 @@ router.post('/onedrop/user_info', function (req, res, next) {
     }else{
         is_member = 0;
     }
-    var my_up_sql = "update user set is_xingye_member = "+is_xingye_member+", phone_num = '"+phone_num+"' is_member="+is_member+" where user_id = '" + user_id + "'";
+    var my_up_sql = "update user set is_xingye_member = "+is_xingye_member+", phone_num = '"+phone_num+"', is_member="+is_member+" where user_id = '" + user_id + "'";
     console.log('my_update_sql:', my_up_sql);
     query(my_up_sql, function (qerr, valls, fields) {
         if(qerr){
