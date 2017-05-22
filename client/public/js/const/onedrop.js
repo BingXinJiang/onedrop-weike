@@ -28,6 +28,10 @@ module.exports = {
     base_url:'http://drop.cvwisdom.com',
     res_ip:'http://drop.cvwisdom.com',
 
+    // base_ip:'http://119.23.24.122:3001/weixin',
+    // base_url:'http://119.23.24.122:3001',
+    // res_ip:'http://119.23.24.122:3001',
+
     appId:'wxcb05ae4237186327',
 
     JS_ScreenW:document.body.clientWidth,//屏幕宽度
