@@ -46,7 +46,7 @@ class Main extends React.Component{
         }
         var self = this;
         $.ajax({
-            url:OneDrop.base_url+'/onedrop/xingye',
+            url:OneDrop.base_ip+'/onedrop/xingye',
             dataType:'json',
             method:'POST',
             data:{

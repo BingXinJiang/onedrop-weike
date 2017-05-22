@@ -70,7 +70,7 @@ export default class Introduction extends React.Component{
                     if(isPhoneNum){
                         phone_num = phoneNum;
                         $.ajax({
-                            url:OneDrop.base_url+'/onedrop/user_info',
+                            url:OneDrop.base_ip+'/onedrop/user_info',
                             dataType:'json',
                             method:'POST',
                             data:{
