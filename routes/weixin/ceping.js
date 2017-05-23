@@ -236,7 +236,7 @@ router.post('/get_link', function (req, res, next) {
 
         var link = linkBody.InvitationLinks[0];
 
-        var externalId = link.xternalId;
+        var externalId = link.ExternalId;
         var candidate_unique_id = link.CandidateUniqueId;
         var respondent_uid = link.RespondentUid;
         var invitation_link = link.InvitationLink;
