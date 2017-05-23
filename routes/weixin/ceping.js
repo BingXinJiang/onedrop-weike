@@ -419,11 +419,13 @@ router.post('/report', function (req, res, next) {
                     callback(null,body.requestUniqueId, respondent_uid);
                 }
             })
+
         },
         //将相关数据存储到数据库
         function (request_unique_id,respondent_uid, callback) {
-            var insert_sql = "insert into report(respontent_uid,request_unique_id,date_time) values(" +
-                "'"+respondent_uid+"','"+request_unique_id+"',Now()";
+            var insert_sql = "insert into report(respondent_uid,request_unique_id,date_time) values(" +
+                "'"+respondent_uid+"','"+request_unique_id+"',Now())";
+            console.log('insert_sql:', insert_sql);
             query(insert_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);
@@ -454,6 +456,7 @@ router.post('/report', function (req, res, next) {
 router.post('/get_report', function (req, res, next) {
     var report = req.body;
     console.log('返回报告的链接信息,善则回调:',report);
+    console.log(JSON.stringify(report));
     function returnMsg(status) {
         var response = {
             status:status,
