@@ -212,17 +212,17 @@ router.post('/get_link', function (req, res, next) {
     var linkBody = req.body;
     console.log('返回测评链接信息,善则回调:', linkBody);
     if(linkBody){
-        var request_unique_id = linkBody.requestUniqueId;
-        var errorCode_out = linkBody.errorCode;
+        var request_unique_id = linkBody.RequestUniqueId;
+        var errorCode_out = linkBody.ErrorCode;
 
-        var link = linkBody.invitationLinks[0];
+        var link = linkBody.InvitationLinks[0];
 
-        var externalId = link.externalId;
-        var candidate_unique_id = link.candidateUniqueId;
-        var respondent_uid = link.respondentUid;
-        var invitation_link = link.invitationLink;
+        var externalId = link.xternalId;
+        var candidate_unique_id = link.CandidateUniqueId;
+        var respondent_uid = link.RespondentUid;
+        var invitation_link = link.InvitationLink;
 
-        var errorCode_in = link.errorCode;
+        var errorCode_in = link.ErrorCode;
 
         function returnShanZe(status) {
             var response = {
@@ -442,16 +442,16 @@ router.post('/get_report', function (req, res, next) {
         res.json(response);
     }
     if(report){
-        var request_unique_id = report.request_unique_id;
-        var individualReportLinks = report.individualReportLinks;
+        var request_unique_id = report.RequestUniqueId;
+        var individualReportLinks = report.IndividualReportLinks;
         if(individualReportLinks && individualReportLinks.length>0){
             var individualReportLink = individualReportLinks[0];
-            var report_uid = individualReportLink.reportUid;
-            var reportLinks = individualReportLink.reportLinks;
+            var report_uid = individualReportLink.ReportUid;
+            var reportLinks = individualReportLink.ReportLinks;
             if(reportLinks && reportLinks.length>0){
                 var reportLink = reportLinks[0];
-                var respondent_uid = reportLink.respondentUid;
-                var report_link = reportLink.reportLink;
+                var respondent_uid = reportLink.RespondentUid;
+                var report_link = reportLink.ReportLink;
                 //存入数据库
                 var update_sql = "update report set report_link=" +
                     "'"+report_link+"',report_uid=" +
