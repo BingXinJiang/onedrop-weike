@@ -16,6 +16,8 @@ var parseString = require('xml2js').parseString;
 
 var async = require('async');
 
+var Tool = require('../tool/Tool');
+
 var APPLY_EVALUATION_URL = 'http://uat.api.i-select.cn/invitation';
 var APPLY_REPORT_URL = 'http://uat.api.i-select.cn/report';
 var HOST_NAME = 'uat.api.i-select.cn';
@@ -68,6 +70,7 @@ router.post('/evaluation', function (req, res, next) {
         //第一步：查询数据库数据，判断是否已经存在于善则系统中
         function(callback){
             var query_sql = "select candidate_unique_id  from request where user_id = '"+user_id+"'";
+            // Tool.Log('query_sql:', query_sql);
             query(query_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);
@@ -137,12 +140,13 @@ router.post('/evaluation', function (req, res, next) {
             }
             // console.log('options:', options);
             request.post(options, function (err, response, body) {
+                body = JSON.parse(body);
                 console.log('申请测评链接err:', err);
                 console.log('申请测评链接body:', body);
-                if(err || body==null || body==undefined || body.ErrorCode != -1){
-                    responseDataErr(res);
+                if(body && body.errorCode == -1){
+                    callback(null, body.requestUniqueId);
                 }else{
-                    callback(null, body.RequestUniqueId);
+                    responseDataErr(res);
                 }
             })
             // var request = http.request(options, function (response) {
@@ -157,7 +161,7 @@ router.post('/evaluation', function (req, res, next) {
             //         parseString(cleanedString, function (err, result) {
             //             console.log('result:', result);
             //             console.log('err:', err);
-            //             if(err || result==null || result.ErrorCode != -1 || result == undefined){
+            //             if(err || result==null || result.errorCode != -1 || result == undefined){
             //                 responseRequestErr(res);
             //             }else{
             //                 callback(null,result.RequestUniqueId);
@@ -177,6 +181,7 @@ router.post('/evaluation', function (req, res, next) {
                 "values(" +
                     session_id+",'"+user_id+"','"+name+"',"+age+",'"+gender+"','"+email+"','"+mobile+"','"+arg1+"',Now()"+
                 ")";
+            console.log('insert_sql:', insert_sql);
             query(insert_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);
@@ -207,17 +212,17 @@ router.post('/get_link', function (req, res, next) {
     var linkBody = req.body;
     console.log('返回测评链接信息,善则回调:', linkBody);
     if(linkBody){
-        var request_unique_id = linkBody.RequestUniqueId;
-        var errorCode_out = linkBody.ErrorCode;
+        var request_unique_id = linkBody.requestUniqueId;
+        var errorCode_out = linkBody.errorCode;
 
-        var link = linkBody.InvitationLinks[0];
+        var link = linkBody.invitationLinks[0];
 
-        var externalId = link.ExternalId;
-        var candidate_unique_id = link.CandidateUniqueId;
-        var respondent_uid = link.RespondentUid;
-        var invitation_link = link.InvitationLink;
+        var externalId = link.externalId;
+        var candidate_unique_id = link.candidateUniqueId;
+        var respondent_uid = link.respondentUid;
+        var invitation_link = link.invitationLink;
 
-        var errorCode_in = link.ErrorCode;
+        var errorCode_in = link.errorCode;
 
         function returnShanZe(status) {
             var response = {
@@ -266,7 +271,7 @@ router.post('/look_link', function (req, res, next) {
     var check_sql = "select invitation_link from request where " +
         "user_id = '"+user_id+"' and " +
         "request_unique_id = '"+request_unique_id+"'";
-
+    // console.log('check_sql:', check_sql);
     function returnMsg(msg) {
         var response = {
             status:1,
@@ -310,10 +315,11 @@ router.post('/complete', function (req, res, next) {
     }
 
     if(complete){
-        var respondent_uid = complete.RespondentUid;
+        var respondent_uid = complete.respondentUid;
         //更新数据库
         var update_sql = "update request set is_complete_evaluation = 1 where " +
             "respondent_uid = '"+respondent_uid+"'";
+        // console.log('update_sql:', update_sql);
         query(update_sql, function (qerr, valls, fields) {
             if(qerr){
                 responseDataErr(res);
@@ -384,12 +390,13 @@ router.post('/report', function (req, res, next) {
                 form:postData
             }
             request.post(options, function (err, response, body) {
+                body = JSON.parse(body);
                 console.log('请求报告err:',err);
                 console.log('请求报告body:', body);
-                if(err || body==null || body.ErrorCode != -1){
+                if(err || body==null || body.errorCode != -1){
                     responseRequestErr(res);
                 }else{
-                    callback(null,result.RequestUniqueId, respondent_uid);
+                    callback(null,result.requestUniqueId, respondent_uid);
                 }
             })
         },
@@ -436,15 +443,15 @@ router.post('/get_report', function (req, res, next) {
     }
     if(report){
         var request_unique_id = report.request_unique_id;
-        var individualReportLinks = report.IndividualReportLinks;
+        var individualReportLinks = report.individualReportLinks;
         if(individualReportLinks && individualReportLinks.length>0){
             var individualReportLink = individualReportLinks[0];
-            var report_uid = individualReportLink.ReportUid;
-            var reportLinks = individualReportLink.ReportLinks;
+            var report_uid = individualReportLink.reportUid;
+            var reportLinks = individualReportLink.reportLinks;
             if(reportLinks && reportLinks.length>0){
                 var reportLink = reportLinks[0];
-                var respondent_uid = reportLink.RespondentUid;
-                var report_link = reportLink.ReportLink;
+                var respondent_uid = reportLink.respondentUid;
+                var report_link = reportLink.reportLink;
                 //存入数据库
                 var update_sql = "update report set report_link=" +
                     "'"+report_link+"',report_uid=" +
@@ -474,7 +481,7 @@ router.post('/get_report', function (req, res, next) {
  *      request_unique_id
  *      user_id
  * */
-router.post('look_report', function (req, res, next) {
+router.post('/look_report', function (req, res, next) {
     var respondent_uid = req.body.respondent_uid;
     var request_unique_id = req.body.request_unique_id;
     var user_id = req.body.user_id;
