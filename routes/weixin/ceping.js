@@ -260,7 +260,7 @@ router.post('/get_link', function (req, res, next) {
                     "candidate_unique_id='"+candidate_unique_id+"'," +
                     "respondent_uid='"+respondent_uid+"'," +
                     "invitation_link='"+invitation_link+"' " +
-                    "where user_id='"+externalId+"' and " +
+                    "where user_key_id='"+externalId+"' and " +
                     "request_unique_id='"+request_unique_id+"'" +
                     "";
                 query(update_sql, function (qerr, valls, fields) {
