@@ -26,9 +26,9 @@ export default class Evaluation extends React.Component{
             var name = $('#evaluation_name').val();
             var age = Number($('#evaluation_age').val());
             var gender = null;
-            if($('input:radio[name="evaluation_choose_type"]:checked').val()==1){
+            if($('input:radio[name="evaluation_choose_gender"]:checked').val()==='1'){
                 gender = '男';
-            }else if($('input:radio[name="evaluation_choose_type"]:checked').val()==2){
+            }else if($('input:radio[name="evaluation_choose_gender"]:checked').val()==='2'){
                 gender = '女';
             }
             var email = $('#evaluation_email').val();
@@ -46,7 +46,7 @@ export default class Evaluation extends React.Component{
             }
             if(user_id && name && age && gender && email && mobile){
                 $.ajax({
-                    url:OneDrop.base_url + '/evaluation',
+                    url:OneDrop.base_url + '/ceping/evaluation',
                     dataType:'json',
                     method:'POST',
                     data:{
@@ -62,8 +62,12 @@ export default class Evaluation extends React.Component{
                         if(data.status == 1){
                             var request_unique_id = data.data.request_unique_id;
                             //将该值存储到本地
-                            localstorage.setItem('request_unique_id_link', request_unique_id);
+                            localStorage.setItem('request_unique_id_link', request_unique_id);
                             alert('申请测评成功,稍后可通过点击查看测评链接按钮参加测评');
+                            $('#evaluation_name').val('');
+                            $('#evaluation_age').val('');
+                            $('#evaluation_email').val('');
+                            $('#evaluation_mobile').val('');
                         }else{
                             alert('数据错误!');
                         }
@@ -77,10 +81,10 @@ export default class Evaluation extends React.Component{
         //查看测评链接
         this.evaluationLink = ()=>{
             var user_id = REMOTE_WEIXIN_USER_ID;
-            var request_unique_id = localstorage.getItem('request_unique_id_link');
+            var request_unique_id = localStorage.getItem('request_unique_id_link');
             if(user_id && request_unique_id){
                 $.ajax({
-                    url:OneDrop.base_url + '/look_link',
+                    url:OneDrop.base_url + '/ceping/look_link',
                     dataType:'json',
                     method:'POST',
                     data:{
@@ -102,13 +106,13 @@ export default class Evaluation extends React.Component{
         //申请测评报告
         this.report = ()=>{
             var user_id = REMOTE_WEIXIN_USER_ID;
-            var request_unique_id = localstorage.getItem('request_unique_id_link');
+            var request_unique_id = localStorage.getItem('request_unique_id_link');
             var report_uid = 'E713AA2E-EA03-4F58-BE94-F234DD3DF91A';
             var norm_id = 372;
             var session_id = 5041;
             if(user_id && request_unique_id && report_uid && norm_id && session_id){
                 $.ajax({
-                    url:OneDrop.base_url + '/report',
+                    url:OneDrop.base_url + '/ceping/report',
                     dataType:'json',
                     method:'POST',
                     data:{
@@ -122,8 +126,8 @@ export default class Evaluation extends React.Component{
                         if(data.status == 1){
                             var respondent_uid = data.data.respondent_uid;
                             var request_unique_id = data.data.request_unique_id;
-                            localstorage.setItem('respondent_uid_report', respondent_uid);
-                            localstorage.setItem('request_unique_id_report', request_unique_id);
+                            localStorage.setItem('respondent_uid_report', respondent_uid);
+                            localStorage.setItem('request_unique_id_report', request_unique_id);
                             alert('申请报告成功,请耐心等待,烧糊可通过查看报告按钮查看!');
                         }else{
                             alert('数据错误!');
@@ -136,12 +140,12 @@ export default class Evaluation extends React.Component{
         }
         //查看测评报告
         this.reportLink = ()=>{
-            var respondent_uid = localstorage.getItem('respondent_uid_report');
-            var request_unique_id = localstorage.getItem('request_unique_id_report');
+            var respondent_uid = localStorage.getItem('respondent_uid_report');
+            var request_unique_id = localStorage.getItem('request_unique_id_report');
             var user_id = REMOTE_WEIXIN_USER_ID;
             if(respondent_uid && request_unique_id && user_id){
                 $.ajax({
-                    url:OneDrop.base_url + '/look_report',
+                    url:OneDrop.base_url + '/ceping/look_report',
                     dataType:'json',
                     method:'POST',
                     data:{
@@ -223,7 +227,7 @@ export default class Evaluation extends React.Component{
                     <span style={{
                         ...wordStyle
                     }}>性别：</span>
-                    <input name="choose_gender"
+                    <input name="evaluation_choose_gender"
                            type="radio"
                            value="1"
                            style={{
@@ -232,7 +236,7 @@ export default class Evaluation extends React.Component{
                                marginLeft:'50px'
                            }}
                     /><span style={{...wordStyle, marginLeft:'20px'}}>男</span>
-                    <input name="choose_gender"
+                    <input name="evaluation_choose_gender"
                            type="radio"
                            value="2"
                            style={{

@@ -67,6 +67,13 @@ router.post('/evaluation', function (req, res, next) {
     var session_id = req.body.session_id;
     var external_id = 0;
 
+    res.json({
+        status:1,
+        data:{
+            request_unique_id:'bb6cf94c-695f-4c3f-99cf-45d1d6d0ec4c'
+        }
+    })
+/*
     async.waterfall([
         //根据user_id查询
         function (callback) {
@@ -222,6 +229,7 @@ router.post('/evaluation', function (req, res, next) {
             res.json(response);
         }
     })
+    */
 })
 /**
  * 返回测评链接信息
@@ -230,6 +238,8 @@ router.post('/evaluation', function (req, res, next) {
 router.post('/get_link', function (req, res, next) {
     var linkBody = req.body;
     console.log('返回测评链接信息,善则回调:', linkBody);
+    linkBody = JSON.stringify(linkBody);
+    linkBody = JSON.parse(linkBody);
     if(linkBody){
         var request_unique_id = linkBody.RequestUniqueId;
         var errorCode_out = linkBody.ErrorCode;
@@ -457,6 +467,8 @@ router.post('/get_report', function (req, res, next) {
     var report = req.body;
     console.log('返回报告的链接信息,善则回调:',report);
     console.log(JSON.stringify(report));
+    report = JSON.stringify(report);
+    report = JSON.parse(report);
     function returnMsg(status) {
         var response = {
             status:status,
