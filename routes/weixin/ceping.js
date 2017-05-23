@@ -416,7 +416,7 @@ router.post('/report', function (req, res, next) {
                 if(err || body==null || body.errorCode != -1){
                     responseRequestErr(res);
                 }else{
-                    callback(null,result.requestUniqueId, respondent_uid);
+                    callback(null,body.requestUniqueId, respondent_uid);
                 }
             })
         },
