@@ -260,9 +260,10 @@ router.post('/get_link', function (req, res, next) {
                     "candidate_unique_id='"+candidate_unique_id+"'," +
                     "respondent_uid='"+respondent_uid+"'," +
                     "invitation_link='"+invitation_link+"' " +
-                    "where user_key_id='"+externalId+"' and " +
+                    "where user_id=(select user_id from user where user_key_id="+externalId+") and " +
                     "request_unique_id='"+request_unique_id+"'" +
                     "";
+                console.log('update_sql:', update_sql);
                 query(update_sql, function (qerr, valls, fields) {
                     if(qerr){
                         responseDataErr(res);
@@ -334,7 +335,7 @@ router.post('/complete', function (req, res, next) {
     }
 
     if(complete){
-        var respondent_uid = complete.respondentUid;
+        var respondent_uid = complete.RespondentUid;
         //更新数据库
         var update_sql = "update request set is_complete_evaluation = 1 where " +
             "respondent_uid = '"+respondent_uid+"'";
