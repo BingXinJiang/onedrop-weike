@@ -141,6 +141,7 @@ router.post('/evaluation', function (req, res, next) {
             //         "Authentication":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
             //     }
             // }
+            console.log('postData:', postData);
             var options = {
                 // auth : {
                 //     'username':'cloud-wisdom-uat',
