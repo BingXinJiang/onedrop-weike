@@ -90,8 +90,6 @@ router.get('/main', function(req, res, next) {
                     var insert_sql = "insert into user(user_id,is_member,member_datetime,nickname,sex,headimgurl) values('"+user_id+"',0,0,'"+nickname+"',"+sex+",'"+headimgurl+"')";
                     var update_sql = "update user set nickname='"+nickname+"',sex="+sex+",headimgurl='"+headimgurl+"' where user_id='"+user_id+"'";
 
-                    console.log('insert:', insert_sql);
-
                     query(query_sql, function (qerr, valls, fields) {
                         if(qerr){
                             console.log('查询失败userData:'+userData+'----time:'+new Date());

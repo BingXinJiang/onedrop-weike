@@ -65,8 +65,26 @@ router.post('/evaluation', function (req, res, next) {
     var email = req.body.email;
     var mobile = req.body.mobile;
     var session_id = req.body.session_id;
+    var external_id = 0;
 
     async.waterfall([
+        //根据user_id查询
+        function (callback) {
+            var query_sql = "select user_key_id from user where user_id = '" + user_id +"'";
+            query(query_sql, function (qerr, valls, fields) {
+                if(qerr){
+                    responseDataErr(res);
+                }else{
+                    if(valls<=0){
+                        responseDataErr(res);
+                    }else{
+                        var user = valls[0];
+                        external_id = Number(user.user_key_id);
+                        callback(null);
+                    }
+                }
+            })
+        },
         //第一步：查询数据库数据，判断是否已经存在于善则系统中
         function(callback){
             var query_sql = "select candidate_unique_id  from request where user_id = '"+user_id+"'";
@@ -93,7 +111,7 @@ router.post('/evaluation', function (req, res, next) {
                     "SessionId":session_id,
                     "Candidates":[
                         {
-                            "ExternalId":user_id,
+                            "ExternalId":external_id,
                             "Name":name,
                             "Age":age,
                             "Gender":gender,
