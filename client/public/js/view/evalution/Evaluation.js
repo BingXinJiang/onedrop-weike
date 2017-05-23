@@ -68,6 +68,8 @@ export default class Evaluation extends React.Component{
                             $('#evaluation_age').val('');
                             $('#evaluation_email').val('');
                             $('#evaluation_mobile').val('');
+                            $('input:radio[name="evaluation_choose_gender"]').attr('checked',false);
+                            $('#evaluation_choose_type').val('');
                         }else{
                             alert('数据错误!');
                         }

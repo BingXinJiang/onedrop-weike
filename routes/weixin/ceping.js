@@ -67,13 +67,6 @@ router.post('/evaluation', function (req, res, next) {
     var session_id = req.body.session_id;
     var external_id = 0;
 
-    res.json({
-        status:1,
-        data:{
-            request_unique_id:'bb6cf94c-695f-4c3f-99cf-45d1d6d0ec4c'
-        }
-    })
-/*
     async.waterfall([
         //根据user_id查询
         function (callback) {
@@ -229,7 +222,7 @@ router.post('/evaluation', function (req, res, next) {
             res.json(response);
         }
     })
-    */
+
 })
 /**
  * 返回测评链接信息
@@ -301,7 +294,6 @@ router.post('/look_link', function (req, res, next) {
     var check_sql = "select invitation_link from request where " +
         "user_id = '"+user_id+"' and " +
         "request_unique_id = '"+request_unique_id+"'";
-    // console.log('check_sql:', check_sql);
     function returnMsg(msg) {
         var response = {
             status:1,
@@ -328,6 +320,7 @@ router.post('/look_link', function (req, res, next) {
             }
         }
     })
+
 })
 /**
  * 在用户完成测评时返回，
