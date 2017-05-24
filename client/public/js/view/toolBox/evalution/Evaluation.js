@@ -10,8 +10,8 @@ import {
     CellFooter,
     Cells
 } from 'react-weui';
-import OneDrop from '../../const/onedrop';
-import Tool from '../../Tool/Tool';
+import OneDrop from '../../../const/onedrop';
+import Tool from '../../../Tool/Tool';
 
 export default class Evaluation extends React.Component{
     constructor(props){

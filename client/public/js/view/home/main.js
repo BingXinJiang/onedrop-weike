@@ -12,10 +12,10 @@ import {
 import OneDrop from '../../const/onedrop';
 
 import Onedrop from '../drop/Onedrop';
-import Evaluation from '../evalution/Evaluation';
 import Question from '../question/Question';
 import Course from '../main/index';
 import Answer from '../answer/Answer';
+import ToolBox from '../toolBox/tool';
 
 import Introduction from './Introduction';
 
@@ -26,8 +26,8 @@ class Main extends React.Component{
             isFirst:false,
             selectedTab:'onedrop',
             showQuestion:false,
-            userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ'
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
@@ -79,8 +79,8 @@ class Main extends React.Component{
         var course_selected_src = '../../../img/weike/main/course_selected.png';
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
-        var ceping_src = '../../../img/weike/main/ceping.png';
-        var ceping_selected_src = '../../../img/weike/main/ceping_selected.png';
+        var tool_src = '../../../img/weike/main/tool.png';
+        var tool_selected_src = '../../../img/weike/main/tool_selected.png';
         return (
             <div>
                 {
@@ -95,7 +95,7 @@ class Main extends React.Component{
                             <Route exact path='/weixin/main/' component={Onedrop}/>
                             <Route path='/weixin/main/courses' component={Course}/>
                             <Route path='/weixin/main/question' component={Answer}/>
-                            <Route path='/weixin/main/evaluation' component={Evaluation}/>
+                            <Route path='/weixin/main/tool' component={ToolBox}/>
 
                             <div style={{position:'fixed', bottom:'0px',backgroundColor:'white'}}>
                                 <div style={{width:OneDrop.JS_ScreenW, height:'2px',
@@ -146,13 +146,13 @@ class Main extends React.Component{
                                         textAlign:'center',listStyleType:'none'
                                     }} onClick={()=>{
                                         this.setState({
-                                            selectedTab:'ceping'
+                                            selectedTab:'tool'
                                         })
                                     }}>
                                         <Link style={{
 
-                                        }} to="/weixin/main/evaluation">
-                                            <img src={this.state.selectedTab === 'ceping' ? ceping_selected_src : ceping_src}/>
+                                        }} to="/weixin/main/tool">
+                                            <img src={this.state.selectedTab === 'tool' ? tool_selected_src : tool_src}/>
                                         </Link>
                                     </li>
                                     <li style={{float:'right',width:tabBtnW,
