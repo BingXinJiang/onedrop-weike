@@ -45,36 +45,39 @@ export default class Evaluation extends React.Component{
                 mobile = null;
             }
             if(user_id && name && age && gender && email && mobile){
-                $.ajax({
-                    url:OneDrop.base_url + '/ceping/evaluation',
-                    dataType:'json',
-                    method:'POST',
-                    data:{
-                        user_id:user_id,
-                        name:name,
-                        age:age,
-                        gender:gender,
-                        email:email,
-                        mobile:mobile,
-                        session_id:session_id
-                    },
-                    success:function (data) {
-                        if(data.status == 1){
-                            var request_unique_id = data.data.request_unique_id;
-                            //将该值存储到本地
-                            localStorage.setItem('request_unique_id_link', request_unique_id);
-                            alert('申请测评成功,稍后可通过点击查看测评链接按钮参加测评');
-                            $('#evaluation_name').val('');
-                            $('#evaluation_age').val('');
-                            $('#evaluation_email').val('');
-                            $('#evaluation_mobile').val('');
-                            $('input:radio[name="evaluation_choose_gender"]').attr('checked',false);
-                            $('#evaluation_choose_type').val('');
-                        }else{
-                            alert('数据错误!');
-                        }
-                    }
-                })
+
+                alert(user_id+'='+name+'='+age+'='+gender+'='+email+'='+mobile);
+
+                // $.ajax({
+                //     url:OneDrop.base_url + '/ceping/evaluation',
+                //     dataType:'json',
+                //     method:'POST',
+                //     data:{
+                //         user_id:user_id,
+                //         name:name,
+                //         age:age,
+                //         gender:gender,
+                //         email:email,
+                //         mobile:mobile,
+                //         session_id:session_id
+                //     },
+                //     success:function (data) {
+                //         if(data.status == 1){
+                //             var request_unique_id = data.data.request_unique_id;
+                //             //将该值存储到本地
+                //             localStorage.setItem('request_unique_id_link', request_unique_id);
+                //             alert('申请测评成功,稍后可通过点击查看测评链接按钮参加测评');
+                //             $('#evaluation_name').val('');
+                //             $('#evaluation_age').val('');
+                //             $('#evaluation_email').val('');
+                //             $('#evaluation_mobile').val('');
+                //             $('input:radio[name="evaluation_choose_gender"]').attr('checked',false);
+                //             $('#evaluation_choose_type').val('');
+                //         }else{
+                //             alert('数据错误!');
+                //         }
+                //     }
+                // })
             }else{
                 alert('请输入正确的个人信息!');
             }
