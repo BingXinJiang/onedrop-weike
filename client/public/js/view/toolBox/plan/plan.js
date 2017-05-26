@@ -29,6 +29,9 @@ export default class Plan extends React.Component{
                 backgroundColor:'rgb(235,235,235)'
             }}/>
         }
+        console.log("OneDrop.JS_ScreenW:",OneDrop.JS_ScreenW);
+        console.log("OneDrop.JS_ScreenH:", OneDrop.JS_ScreenH);
+        console.log("OneDrop.JS_WindowH:", OneDrop.JS_WindowH);
         return(
             <div>
 
@@ -68,7 +71,7 @@ export default class Plan extends React.Component{
                             display:'flex',
                             flexDirection:'row'
                         }}>
-                            <div style={{width:'10px',height:'28px', backgroundColor:'#17acfb'}}/>
+                            <div style={{width:'10px',height:'28px',marginTop:'3px', backgroundColor:'#17acfb'}}/>
                             <p style={{fontSize:'28px', marginLeft:'20px'}}>今日任务</p>
                         </div>
                     </div>
@@ -133,14 +136,31 @@ export default class Plan extends React.Component{
                             display:'flex',
                             flexDirection:'row'
                         }}>
-                            <div style={{width:'10px',height:'28px', backgroundColor:'#17acfb'}}/>
+                            <div style={{width:'10px',height:'28px',marginTop:'3px', backgroundColor:'#17acfb'}}/>
                             <p style={{fontSize:'28px', marginLeft:'20px'}}>今日小计划</p>
                         </div>
                     </div>
                     <div>
-                        <div>
-                            <div>
-                                <p>1、重要的事</p>
+                        <div style={{
+                            display:'flex',
+                            height:'90px',
+                            flexDirection:'column'
+                        }}>
+                            <div style={{
+                                display:'flex',
+                                height:'70px',
+                                marginLeft:'30px',
+                                marginRight:'30px',
+                                borderWidth:'2px',
+                                borderColor:'rgb(235,235,235)'
+                            }}>
+                                <p style={{fontSize:'28px',
+                                    width:'70px',
+                                    height:'70px'
+                                }}>1、重要的事</p>
+                                <input style={{
+                                    flex:1,
+                                }}/>
                             </div>
                         </div>
                         <div>
