@@ -205,4 +205,28 @@ router.post('/every_day', function (req, res, next) {
 
 })
 
+/**
+ * 往日一滴的内容
+ * 参数: user_id  page
+ * */
+router.post('/sections', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var page = req.body.page;
+    var query_sql = "select a.course_title,a.open_date,b.teacher_id,b.teacher_position,c.punch_id" +
+        " from (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
+        "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
+        "(select * from punch_card where user_id='"+user_id+"')as c on a.section_id=c.section_id";
+    query(query_sql, function (qerr, valls, fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:valls
+            }
+            res.json(response);
+        }
+    })
+})
+
 module.exports = router;
