@@ -11,9 +11,9 @@ import {
 
 import OneDrop from '../../const/onedrop';
 
-import Onedrop from '../drop/Onedrop';
+import Onedrop from '../drop/TodayDrop';
 import Question from '../question/Question';
-import Course from '../main/index';
+import Course from '../drop/LastDrop';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
 
@@ -26,8 +26,8 @@ class Main extends React.Component{
             isFirst:false,
             selectedTab:'onedrop',
             showQuestion:false,
-            userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ'
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
@@ -46,6 +46,9 @@ class Main extends React.Component{
             localStorage.setItem('onedrop_user_id', my_id);
         }
         var self = this;
+        /**
+         * 在这里进行员工身份的识别，包括给员工进行分组，等。。。
+         * */
         $.ajax({
             url:OneDrop.base_ip+'/onedrop/xingye',
             dataType:'json',
@@ -73,10 +76,10 @@ class Main extends React.Component{
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';
-        var oneDrop_src = '../../../img/weike/main/onedrop.png';
-        var oneDrop_selected_src = '../../../img/weike/main/onedrop_selected.png';
-        var course_src = '../../../img/weike/main/course.png';
-        var course_selected_src = '../../../img/weike/main/course_selected.png';
+        var oneDrop_src = '../../../img/weike/main/drop.png';
+        var oneDrop_selected_src = '../../../img/weike/main/drop_selected.png';
+        var course_src = '../../../img/weike/main/last_drop.png';
+        var course_selected_src = '../../../img/weike/main/last_drop_selected.png';
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var tool_src = '../../../img/weike/main/tool.png';

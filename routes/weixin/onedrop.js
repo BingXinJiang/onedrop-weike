@@ -130,9 +130,15 @@ router.post('/section/detail', function (req, res, next) {
 
 /**
  * 获取当天推送的某一小节的具体信息
+ * 参数 user_id
  * */
 router.post('/every_day', function (req, res, next) {
     var user_id = req.body.user_id;
+    var section_id = req.body.section_id;
+    var isPast = false;
+    if(section_id){
+        isPast = true;
+    }
 
     //判断该user_id是否是会员,是否可以免费听取课程
 
@@ -141,6 +147,10 @@ router.post('/every_day', function (req, res, next) {
         function (callback) {
             var judge_sql = "select punch_time from punch_card where user_id = " +
                 "'"+user_id+"' and punch_time>=curdate() and punch_time<date_sub(curdate(),interval -1 day)";
+            if(isPast){
+                judge_sql = "select punch_time from punch_card where user_id=" +
+                    "'"+user_id+"' and section_id="+section_id;
+            }
             query(judge_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);
@@ -161,10 +171,17 @@ router.post('/every_day', function (req, res, next) {
                 "(select * from course_section where Now()>=open_date and Now()<date_sub(open_date,interval -1 day))as a " +
                 "left join (select * from teacher)as b " +
                 "on a.author_id = b.teacher_id";
+            if(isPast){
+                query_sql = "select a.course_id,a.course_title,a.author_id,a.section_voice,a.section_des," +
+                    "b.teacher_position from " +
+                    "(select * from course_section where section_id="+section_id+")as a " +
+                    "left join (select * from teacher)as b " +
+                    "on a.author_id=b.teacher_id";
+            }
             query(query_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);
-                }else if(valls.length != 1){
+                }else if(valls.length !== 1){
                     responseDataErr(res);
                 }else{
                     callback(null, valls[0])
@@ -220,13 +237,30 @@ router.post('/sections', function (req, res, next) {
         if(qerr){
             responseDataErr(res);
         }else{
+            var data = [];
+            valls.map(function (content, index) {
+                if(content.punch_id){
+                    content.isPunchCard = true;
+                }else{
+                    content.isPunchCard = false;
+                }
+                if(index == 0){
+
+                }else{
+                    data.push(content);
+                }
+            })
             var response = {
                 status:1,
-                data:valls
+                data:data
             }
             res.json(response);
         }
     })
 })
+
+/**
+ * 获取往日一滴某一小节的详细页面
+ * */
 
 module.exports = router;
