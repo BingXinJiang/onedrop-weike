@@ -130,7 +130,7 @@ router.post('/section/detail', function (req, res, next) {
 
 /**
  * 获取当天推送的某一小节的具体信息
- * 参数 user_id
+ * 参数 user_id section_id(可选)
  * */
 router.post('/every_day', function (req, res, next) {
     var user_id = req.body.user_id;
@@ -151,8 +151,10 @@ router.post('/every_day', function (req, res, next) {
                 judge_sql = "select punch_time from punch_card where user_id=" +
                     "'"+user_id+"' and section_id="+section_id;
             }
+            console.log('judge_sql:',judge_sql);
             query(judge_sql, function (qerr, valls, fields) {
                 if(qerr){
+                    console.log('====judge====');
                     responseDataErr(res);
                 }else{
                     if(valls.length>0){
@@ -178,10 +180,13 @@ router.post('/every_day', function (req, res, next) {
                     "left join (select * from teacher)as b " +
                     "on a.author_id=b.teacher_id";
             }
+            console.log('query_sql:', query_sql);
             query(query_sql, function (qerr, valls, fields) {
                 if(qerr){
+                    console.log('====query1====');
                     responseDataErr(res);
                 }else if(valls.length !== 1){
+                    console.log('====query2====');
                     responseDataErr(res);
                 }else{
                     callback(null, valls[0])
@@ -191,13 +196,16 @@ router.post('/every_day', function (req, res, next) {
         function (callback) {
             var user_sql = "select user_id,nickname,headimgurl,fraction from user " +
                 "where user_id='"+user_id+"'";
+            console.log('user_sql:', user_sql);
             query(user_sql, function (qerr, valls, fields) {
                 if(qerr){
+                    console.log('====user1====');
                     responseDataErr(res);
                 }else{
                     if(valls.length>0){
                         callback(null, valls[0]);
                     }else{
+                        console.log('====user2====');
                         responseDataErr(res);
                     }
                 }
@@ -205,6 +213,7 @@ router.post('/every_day', function (req, res, next) {
         }
     ], function (err, results) {
         if(err){
+            console.log('====err====');
             responseDataErr(res);
         }else{
             var data = {

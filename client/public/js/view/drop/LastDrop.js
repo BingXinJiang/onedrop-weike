@@ -11,12 +11,35 @@ export default class LastDrop extends React.Component{
         this.state = {
             isPlaying:false,
             playUrl:'',
-            courses:[{isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
+            courses_test:[{isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
                 {isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
                 {isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
                 {isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'}
-            ]
+            ],
+            courses:[]
         }
+    }
+
+    componentDidMount() {
+        $.ajax({
+            url:OneDrop.base_url+'/onedrop/sections',
+            dataType:'json',
+            method:'POST',
+            data:{
+                user_id:REMOTE_WEIXIN_USER_ID,
+                page:1
+            },
+            success:(data)=>{
+                if(data.status === 1){
+                    var courses = data.data;
+                    this.setState({
+                        courses:courses
+                    })
+                }else{
+                    alert('数据执行错误!');
+                }
+            }
+        })
     }
     render(){
         var mp3_url = this.state.playUrl;
@@ -29,7 +52,7 @@ export default class LastDrop extends React.Component{
                 width:OneDrop.JS_ScreenW
             }}>
                 <div>
-                    <audio ref="last_drop_section_audio" preload="auto">
+                    <audio preload="auto">
                         <source src={ogg_url} type="audio/ogg"/>
                         <source src={wav_url} type="audio/wav"/>
                         <source src={mp3_url} type="audio/mpeg"/>
@@ -37,7 +60,7 @@ export default class LastDrop extends React.Component{
                     </audio>
                 </div>
                 {
-                    this.state.courses.map((content,index)=>{
+                    this.state.courses_test.map((content,index)=>{
                         return (
                             <div key={index} style={{
                                 display:'flex',

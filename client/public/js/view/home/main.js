@@ -32,8 +32,8 @@ class Main extends React.Component{
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
     }
-    componentDidMount(){
-        //第一次进来的时候，询问是否是兴业银行员工，搜集电话号码
+
+    componentWillMount() {
         var my_id = this.state.userId;
         REMOTE_WEIXIN_USER_ID = my_id;
         if(my_id === undefined || my_id === null || my_id === '' || my_id === 'undefined'){
@@ -45,6 +45,10 @@ class Main extends React.Component{
         }else{
             localStorage.setItem('onedrop_user_id', my_id);
         }
+    }
+    componentDidMount(){
+        //第一次进来的时候，询问是否是兴业银行员工，搜集电话号码
+
         var self = this;
         /**
          * 在这里进行员工身份的识别，包括给员工进行分组，等。。。
@@ -54,7 +58,7 @@ class Main extends React.Component{
             dataType:'json',
             method:'POST',
             data:{
-                user_id:my_id
+                user_id:this.state.userId
             },
             success:function(data) {
                 if(data.status === 1){

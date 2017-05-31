@@ -24,10 +24,24 @@ export default class TodayDrop extends React.Component{
             isShowPunchCard:false
         }
     }
+
+    componentDidMount() {
+        $.ajax({
+            url:OneDrop.base_url + '/onedrop/every_day',
+            dataType:'json',
+            method:'POST',
+            data:{
+                user_id:REMOTE_WEIXIN_USER_ID
+            },
+            success:(data)=>{
+                console.log(data);
+            }
+        })
+    }
     render(){
         const desStyle = !this.state.isShowAllContent ? {
             height:'160px',
-            overflow:'hidden',
+            overflow:'hidden'
         } : {};
         return (
             <div style={{
