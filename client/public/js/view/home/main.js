@@ -69,12 +69,12 @@ class Main extends React.Component{
 
                     }else if(data.data.member_status === 3){//第一次登陆
                         self.setState({
-                            isFirst:true
+                            isFirst:false
                         })
                     }
                 }else{
                     self.setState({
-                        isFirst:true
+                        isFirst:false
                     })
                 }
             }
