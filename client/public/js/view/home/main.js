@@ -26,8 +26,8 @@ class Main extends React.Component{
             isFirst:false,
             selectedTab:'onedrop',
             showQuestion:false,
-            // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
-            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
+            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ'
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
@@ -73,7 +73,9 @@ class Main extends React.Component{
                         })
                     }
                 }else{
-                    alert('数据错误');
+                    self.setState({
+                        isFirst:true
+                    })
                 }
             }
         })

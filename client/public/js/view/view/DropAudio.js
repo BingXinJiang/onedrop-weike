@@ -35,9 +35,9 @@ export default class DropAudio extends React.Component{
     render(){
         var mp3_url = this.props.audioUrl;
         var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
-        var ogg_url = preUrl + '-ogg.ogg';
-        var wav_url = preUrl + '-wav.wav';
-
+        mp3_url = preUrl + '.mp3';
+        var ogg_url = preUrl + '.ogg';
+        var wav_url = preUrl + '.wav';
         return(
 
                 <div style={{

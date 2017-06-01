@@ -34,8 +34,8 @@ export default class OneAudio extends React.Component{
     render(){
         var mp3_url = this.props.audioUrl;
         var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
-        var ogg_url = preUrl + '-ogg.ogg';
-        var wav_url = preUrl + '-wav.wav';
+        var ogg_url = preUrl + '.ogg';
+        var wav_url = preUrl + '.wav';
         
         return(
             <div style={{width: '80%', height:'120px', backgroundColor:'rgb(235,235,235)',

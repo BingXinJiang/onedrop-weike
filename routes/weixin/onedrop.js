@@ -154,7 +154,6 @@ router.post('/every_day', function (req, res, next) {
             console.log('judge_sql:',judge_sql);
             query(judge_sql, function (qerr, valls, fields) {
                 if(qerr){
-                    console.log('====judge====');
                     responseDataErr(res);
                 }else{
                     if(valls.length>0){
@@ -169,13 +168,13 @@ router.post('/every_day', function (req, res, next) {
         },
         function (callback) {
             var query_sql = "select a.course_id,a.course_title,a.author_id,a.section_voice,a.section_des," +
-                "b.teacher_position from " +
+                "b.teacher_name,b.teacher_position from " +
                 "(select * from course_section where Now()>=open_date and Now()<date_sub(open_date,interval -1 day))as a " +
                 "left join (select * from teacher)as b " +
                 "on a.author_id = b.teacher_id";
             if(isPast){
                 query_sql = "select a.course_id,a.course_title,a.author_id,a.section_voice,a.section_des," +
-                    "b.teacher_position from " +
+                    "b.teacher_name,b.teacher_position from " +
                     "(select * from course_section where section_id="+section_id+")as a " +
                     "left join (select * from teacher)as b " +
                     "on a.author_id=b.teacher_id";
@@ -183,10 +182,8 @@ router.post('/every_day', function (req, res, next) {
             console.log('query_sql:', query_sql);
             query(query_sql, function (qerr, valls, fields) {
                 if(qerr){
-                    console.log('====query1====');
                     responseDataErr(res);
                 }else if(valls.length !== 1){
-                    console.log('====query2====');
                     responseDataErr(res);
                 }else{
                     callback(null, valls[0])
@@ -194,18 +191,18 @@ router.post('/every_day', function (req, res, next) {
             })
         },
         function (callback) {
-            var user_sql = "select user_id,nickname,headimgurl,fraction from user " +
-                "where user_id='"+user_id+"'";
+            var user_sql = "select a.user_id,a.nickname,a.headimgurl,b.fraction from ( " +
+                "select * from user where user_id='"+user_id+"')as a left join " +
+                "(select sum(punch_fraction)fraction,user_id from punch_card where user_id='"+user_id+"')as b" +
+                " on a.user_id=b.user_id";
             console.log('user_sql:', user_sql);
             query(user_sql, function (qerr, valls, fields) {
                 if(qerr){
-                    console.log('====user1====');
                     responseDataErr(res);
                 }else{
                     if(valls.length>0){
                         callback(null, valls[0]);
                     }else{
-                        console.log('====user2====');
                         responseDataErr(res);
                     }
                 }
@@ -213,7 +210,6 @@ router.post('/every_day', function (req, res, next) {
         }
     ], function (err, results) {
         if(err){
-            console.log('====err====');
             responseDataErr(res);
         }else{
             var data = {
@@ -238,7 +234,7 @@ router.post('/every_day', function (req, res, next) {
 router.post('/sections', function (req, res, next) {
     var user_id = req.body.user_id;
     var page = req.body.page;
-    var query_sql = "select a.course_title,a.open_date,b.teacher_id,b.teacher_position,c.punch_id" +
+    var query_sql = "select a.course_title,a.section_voice,a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_id,b.teacher_name,b.teacher_position,c.punch_id" +
         " from (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
         "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
         "(select * from punch_card where user_id='"+user_id+"')as c on a.section_id=c.section_id";

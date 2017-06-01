@@ -18,7 +18,9 @@ export default class Evaluation extends React.Component{
         super(props);
         this.state = {
             showEvalutionType:false,
-            evaluationType:0 //1、自我管理测评  2、15FQ+
+            evaluationType:0, //1、自我管理测评  2、15FQ+
+            isShowLink:false,
+            link:''
         }
         //申请测评链接
         this.evaluation = ()=>{
@@ -98,7 +100,10 @@ export default class Evaluation extends React.Component{
                     },
                     success:function (data) {
                         if(data.status == 1){
-                            alert(data.data.msg);
+                            this.setState({
+                                isShowLink:true,
+                                link:data.data.msg
+                            })
                         }else {
                             alert('数据错误!');
                         }
@@ -133,7 +138,7 @@ export default class Evaluation extends React.Component{
                             var request_unique_id = data.data.request_unique_id;
                             localStorage.setItem('respondent_uid_report', respondent_uid);
                             localStorage.setItem('request_unique_id_report', request_unique_id);
-                            alert('申请报告成功,请耐心等待,烧糊可通过查看报告按钮查看!');
+                            alert('申请报告成功,请耐心等待,稍后可通过查看报告按钮查看!');
                         }else{
                             alert('数据错误!');
                         }
@@ -160,7 +165,10 @@ export default class Evaluation extends React.Component{
                     },
                     success:function (data) {
                         if(data.status == 1){
-                            alert(data.data.msg);
+                            this.setState({
+                                isShowLink:true,
+                                link:data.data.msg
+                            })
                         }else{
                             alert('数据错误!');
                         }
@@ -374,6 +382,20 @@ export default class Evaluation extends React.Component{
                         </div>
                         :
                         null
+                }
+                {
+                    this.state.isShowLink ?
+                        <div style={{
+                            position:'absolute',
+                            left:'30px',
+                            width:(OneDrop.JS_ScreenW - 60)+'px',
+                            top:OneDrop.JS_ScreenH+'px',
+                            backgroundColor:'white'
+                        }}>
+                            <a style={{
+                                fontSize:'28px'
+                            }} href={this.state.link}>{this.state.link}</a>
+                        </div> : null
                 }
             </div>
         )

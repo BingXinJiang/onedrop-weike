@@ -315,7 +315,7 @@ router.post('/look_link', function (req, res, next) {
                 if(link.invitation_link == null || link.invitation_link == 'undefined'){
                     returnMsg('测评链接还未生成，请耐心等待，稍后查看。。。');
                 }else{
-                    returnMsg('测评链接：'+link.invitation_link);
+                    returnMsg(link.invitation_link);
                 }
             }
         }
@@ -535,7 +535,7 @@ router.post('/look_report', function (req, res, next) {
                 var report = valls[0];
                 var report_link = report.report_link;
                 if(report_link){
-                    returnReportMsg(1, '请点击:'+report_link);
+                    returnReportMsg(1, report_link);
                 }else{
                     returnReportMsg(1, '请稍后,报告正在赶来...');
                 }

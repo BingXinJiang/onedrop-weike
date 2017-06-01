@@ -20,8 +20,12 @@ export default class TodayDrop extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isShowAllContent:false,
-            isShowPunchCard:false
+            isShowAllContent: false,
+            isShowPunchCard: false,
+            course: null,
+            isPanchCard: false,
+            user: null,
+            nowMotto:'每日一滴，滴水穿石'
         }
     }
 
@@ -34,7 +38,16 @@ export default class TodayDrop extends React.Component{
                 user_id:REMOTE_WEIXIN_USER_ID
             },
             success:(data)=>{
-                console.log(data);
+                console.log('today drop:', data);
+                if(data.status === 1){
+                    this.setState({
+                        course:data.data.course,
+                        isPanchCard:data.data.isPanchCard,
+                        user:data.data.user
+                    })
+                }else{
+                    alert('数据错误！');
+                }
             }
         })
     }
@@ -43,6 +56,13 @@ export default class TodayDrop extends React.Component{
             height:'160px',
             overflow:'hidden'
         } : {};
+        let audioUrl = '';
+        if(this.state.course){
+            audioUrl = this.state.course.section_voice;
+        }else{
+            audioUrl = '';
+        }
+        let headimgUrl = this.state.user ? this.state.user.headimgurl :'';
         return (
             <div style={{
                 paddingBottom:'100px'
@@ -62,9 +82,13 @@ export default class TodayDrop extends React.Component{
                         justifyContent:'flex-end'
                     }}>
                         <div onClick={()=>{
-                            this.setState({
-                                isShowPunchCard:true
-                            })
+                            if(this.state.isPanchCard){
+
+                            }else{
+                                this.setState({
+                                    isShowPunchCard:true
+                                })
+                            }
                         }} style={{
                             display:'flex',
                             width:'110px',
@@ -77,7 +101,7 @@ export default class TodayDrop extends React.Component{
                             alignItems:'center',
                             marginRight:'24px',
                         }}>
-                            打卡
+                            {this.state.isPanchCard ? '已打卡':'打卡'}
                         </div>
                     </div>
                     <div style={{
@@ -96,7 +120,7 @@ export default class TodayDrop extends React.Component{
                                     width:'140px',
                                     height:'140px',
                                     borderRadius:'70px'
-                                }} src="../../../img/weike/test/test_head.png"/>
+                                }} src={headimgUrl}/>
                             </div>
                             <p style={{
                                 marginTop:'16px',
@@ -104,21 +128,21 @@ export default class TodayDrop extends React.Component{
                                 fontSize:'26px',
                                 width:'100%',
                                 textAlign:'center'
-                            }}>昵称</p>
+                            }}>{this.state.user ? this.state.user.nickname : ''}</p>
                             <p style={{
                                 marginTop:'16px',
                                 color:'rgb(0,0,0)',
                                 fontSize:'26px',
                                 width:'100%',
                                 textAlign:'center'
-                            }}>600积分</p>
+                            }}>积分  {this.state.user ? this.state.user.fraction ? this.state.user.fraction : 0 : 0}</p>
                             <p style={{
                                 marginTop:'16px',
                                 color:'rgb(0,0,0)',
                                 fontSize:'26px',
                                 width:'100%',
                                 textAlign:'center'
-                            }}>每日一滴，滴水穿石</p>
+                            }}>{this.state.nowMotto}</p>
                         </div>
                     </div>
 
@@ -148,7 +172,7 @@ export default class TodayDrop extends React.Component{
                             <p style={{
                                 fontSize:'44px',
                                 color:'rgb(0,0,0)'
-                            }}>管理者用人的100个细节</p>
+                            }}>{this.state.course ? this.state.course.course_title : ''}</p>
                         </div>
                         <div style={{
                             display:'flex',
@@ -159,11 +183,11 @@ export default class TodayDrop extends React.Component{
                             <p style={{
                                 fontSize:'28px',
                                 color:'rgb(127,127,127)'
-                            }}>李伟：</p>
+                            }}>{this.state.course ? this.state.course.teacher_name : ''}: </p>
                             <p style={{
                                 fontSize:'28px',
                                 color:'rgb(127,127,127)'
-                            }}>知名学者、教授</p>
+                            }}>{this.state.course ? this.state.course.teacher_position : ''}</p>
                         </div>
                         <div style={{
                             display:'flex',
@@ -171,7 +195,9 @@ export default class TodayDrop extends React.Component{
                             justifyContent:'center',
                             marginTop:'54px'
                         }}>
-                            <DropAudio audioUrl='../../../img/weike/test/盖子法则2.mp3'/>
+                            {
+                                this.state.course ? <DropAudio audioUrl={audioUrl}/> : null
+                            }
                         </div>
                         <div style={{
                             display:'flex',
@@ -185,14 +211,8 @@ export default class TodayDrop extends React.Component{
                                 fontSize:'26px',
                                 lineHeight:'42px',
                                 color:'rgb(127,127,127)'
-                            }}>你是一位优秀的管理者吗？这是什么到累呢那咖啡咖啡案件发生健康合法的授课风格，
-                            案件分别是科技股份登记说课稿。安徽发布独守空房价格爱空间划分公司贷款
-                            按空格键不服输的进口国安科技股份的司空见惯开关机耐腐蚀的恐惧感结果你东方时空
-                            按揭购房送大家看过安科技股份的时刻安监部给对方安监部给对方就安监部给对方、
-                            案件被范德萨啊个百分点、
-                            阿波菲斯等级跟不上安静不规范肯定是安监部给对方是安静的奋不顾身的会计估计不到法国
-                            啊对价格表的说法科技馆快递费价格狂蜂浪蝶石膏板咖啡馆和人
-                            爱干净开发商的顾客还是按客户公司可认购和卡号刚开始
+                            }}>
+                                {this.state.course ? this.state.course.section_des : ''}
                             </p>
                             <div style={{
                                 display:'flex',
@@ -217,7 +237,7 @@ export default class TodayDrop extends React.Component{
                                     justifyContent:'center',
                                     alignItems:'center',
                                     fontSize:'26px'
-                                }}>{!this.state.isShowAllContent ? '收起更多' : '查看更多'}</p>
+                                }}>{this.state.isShowAllContent ? '收起更多' : '查看更多'}</p>
                             </div>
                         </div>
                     </div>
@@ -277,7 +297,32 @@ export default class TodayDrop extends React.Component{
                                                 '每日一滴，滴水穿石每日一滴，滴水穿石',
                                             ].map((content, index)=>{
                                                 return (
-                                                    <p style={{
+                                                    <p onClick={()=>{
+                                                        if(this.state.course){
+                                                            var section_id = this.state.course.course_id;
+                                                            $.ajax({
+                                                                url:OneDrop.base_url+'/card/punch_card',
+                                                                dataType:'json',
+                                                                method:'POST',
+                                                                data:{
+                                                                    user_id:REMOTE_WEIXIN_USER_ID,
+                                                                    motto:content,
+                                                                    section_id:section_id
+                                                                },
+                                                                success:(data)=>{
+                                                                    if(data.status === 1){
+                                                                        this.setState({
+                                                                            isShowPunchCard:false,
+                                                                            isPanchCard:true,
+                                                                            nowMotto:content
+                                                                        })
+                                                                    }else{
+                                                                        alert('打卡失败');
+                                                                    }
+                                                                }
+                                                            })
+                                                        }
+                                                    }} style={{
                                                         fontSize:'24px',
                                                         lineHeight:'80px',
                                                     }} key={index}>

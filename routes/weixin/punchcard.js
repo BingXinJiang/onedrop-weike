@@ -35,14 +35,16 @@ router.post('/punch_card', function (req, res, next) {
 
     async.waterfall([
         function (callback) {
-            var query_sql = "select datediff(Now(),select open_date from course_section" +
-                " where section_id="+section_id+")";
+            var query_sql = "select (datediff(Now(),a.open_date))datediff from (select open_date from course_section" +
+                " where section_id="+section_id+")as a";
+
             query(query_sql, function (qerr, valls, fields) {
                 if(qerr){
+
                     responseDataErr(res);
                 }else{
                     if(valls.length>0){
-                        var datediffNum = Number(valls[0]);
+                        var datediffNum = Number(valls[0].datediff);
                         if(datediffNum == 0){
                             callback(null, 2);
                         }else if(datediffNum == 1){
@@ -57,9 +59,12 @@ router.post('/punch_card', function (req, res, next) {
             })
         },
         function (fraction,callback) {
-            var punch_id = (new Date()).getTime()+ "" + Math.random()*100000;
+            console.log('-------------');
+            console.log(fraction);
+            var punch_id = (new Date()).getTime()+ "" + parseInt(Math.random()*100000);
             var insert_sql = "insert into punch_card(punch_id,user_id,punch_time,motto,punch_fraction,section_id) " +
                 "values('"+punch_id+"','"+user_id+"',Now(),'"+motto+"',"+fraction+","+section_id+")";
+
             query(insert_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);

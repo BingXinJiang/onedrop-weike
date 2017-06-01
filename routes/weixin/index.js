@@ -48,7 +48,7 @@ router.get('/main', function(req, res, next) {
         response.setEncoding('utf8');
         response.on('data',function(chunk){
             var returnData = JSON.parse(chunk);
-    
+
             /**
              * 获取用户信息
              * openid: 'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
@@ -63,7 +63,7 @@ router.get('/main', function(req, res, next) {
              * */
             var access_token = returnData.access_token;
             var openid = returnData.openid;
-    
+
             var user_data = querystring.stringify({
                 access_token:access_token,
                 openid:openid,
@@ -85,7 +85,7 @@ router.get('/main', function(req, res, next) {
                     var nickname = userData.nickname;
                     var sex = userData.sex;
                     var headimgurl = userData.headimgurl;
-    
+
                     var query_sql = "select * from user where user_id = '" + user_id + "'";
                     var insert_sql = "insert into user(user_id,is_member,member_datetime,nickname,sex,headimgurl) values('"+user_id+"',0,0,'"+nickname+"',"+sex+",'"+headimgurl+"')";
                     var update_sql = "update user set nickname='"+nickname+"',sex="+sex+",headimgurl='"+headimgurl+"' where user_id='"+user_id+"'";
@@ -99,7 +99,7 @@ router.get('/main', function(req, res, next) {
                                     if(qerr){
                                         console.log('查询到用户更新失败userData:'+userData+'----time:'+new Date());
                                     }else{
-    
+
                                     }
                                 })
                             }else{//不存在该用户的数据,插入
@@ -107,7 +107,7 @@ router.get('/main', function(req, res, next) {
                                     if(qerr){
                                         console.log('没有查询到用户插入失败userData:'+userData+'----time:'+new Date());
                                     }else{
-    
+
                                     }
                                 })
                             }

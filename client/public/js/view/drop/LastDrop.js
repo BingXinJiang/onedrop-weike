@@ -31,6 +31,7 @@ export default class LastDrop extends React.Component{
             },
             success:(data)=>{
                 if(data.status === 1){
+                    console.log('last drop:', data);
                     var courses = data.data;
                     this.setState({
                         courses:courses
@@ -42,25 +43,21 @@ export default class LastDrop extends React.Component{
         })
     }
     render(){
-        var mp3_url = this.state.playUrl;
-        var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
-        var ogg_url = preUrl + '-ogg.ogg';
-        var wav_url = preUrl + '-wav.wav';
         return (
             <div style={{
                 backgroundColor:'rgb(235,235,235)',
                 width:OneDrop.JS_ScreenW
             }}>
                 <div>
-                    <audio preload="auto">
-                        <source src={ogg_url} type="audio/ogg"/>
-                        <source src={wav_url} type="audio/wav"/>
-                        <source src={mp3_url} type="audio/mpeg"/>
-                        您的浏览器不支持audio
-                    </audio>
+
                 </div>
                 {
-                    this.state.courses_test.map((content,index)=>{
+                    this.state.courses.map((content,index)=>{
+                        var mp3_url = content.section_voice;
+                        var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
+                        mp3_url = preUrl + '.mp3';
+                        var ogg_url = preUrl + '.ogg';
+                        var wav_url = preUrl + '.wav';
                         return (
                             <div key={index} style={{
                                 display:'flex',
@@ -83,24 +80,37 @@ export default class LastDrop extends React.Component{
                                         <p style={{
                                             fontSize:'32px',
                                             color:'rgb(0,0,0)'
-                                        }}>管理者用人的100个细节</p>
+                                        }}>{content.course_title}</p>
                                         <p style={{
                                             fontSize:'24px',
                                             color:'rgb(0,0,0)',
-                                        }}>李伟：教授、学者</p>
+                                        }}>{content.teacher_name}：{content.teacher_position}</p>
                                         <p style={{
                                             fontSize:'20px',
                                             color:'rgb(88,88,88)',
                                             marginTop:'5px'
-                                        }}>2017年5月26日</p>
+                                        }}>{content.year+'年'+content.month+'月'+content.day+'日'}</p>
                                     </div>
+                                    <audio id={"onedrop_last_drop_audio_"+index} preload="auto">
+                                        <source src={ogg_url} type="audio/ogg"/>
+                                        <source src={wav_url} type="audio/wav"/>
+                                        <source src={mp3_url} type="audio/mpeg"/>
+                                        您的浏览器不支持audio
+                                    </audio>
                                     <div onClick={()=>{
-                                        // var audio = this.refs.last_drop_audio;
-                                        // console.log('audio:',audio);
                                         var newCourses = [];
                                         this.state.courses.map((con, idx)=>{
+                                            if(con.isPlaying === true && index !== idx){
+                                                $('#onedrop_last_drop_audio_'+idx)[0].load();
+                                            }
                                             if(index === idx){
-                                                con.isPlaying = !con.isPlaying;
+                                                if(con.isPlaying){
+                                                    $('#onedrop_last_drop_audio_'+idx)[0].pause();
+                                                    con.isPlaying = false;
+                                                }else{
+                                                    $('#onedrop_last_drop_audio_'+idx)[0].play();
+                                                    con.isPlaying = true;
+                                                }
                                             }else {
                                                 con.isPlaying = false;
                                             }

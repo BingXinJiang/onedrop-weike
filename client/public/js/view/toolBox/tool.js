@@ -34,13 +34,13 @@ export default class Tool extends React.Component{
                 }} style={{...spanStyle}}>
                     <img src="../../../img/weike/tool/evaluation.png"/>
                 </span>
-                <span onClick={()=>{
-                    this.setState({
-                        selected:'plan'
-                    })
-                }} style={{...spanStyle}}>
-                    <img src="../../../img/weike/tool/punch_card.png"/>
-                </span>
+                {/*<span onClick={()=>{*/}
+                    {/*this.setState({*/}
+                        {/*selected:'plan'*/}
+                    {/*})*/}
+                {/*}} style={{...spanStyle}}>*/}
+                    {/*<img src="../../../img/weike/tool/punch_card.png"/>*/}
+                {/*</span>*/}
             </div>
         return (
             <div>
@@ -53,11 +53,7 @@ export default class Tool extends React.Component{
                             case 'evaluation':
                                 return <Evaluation/>;
                             case 'plan':
-                                return <Plan callback={()=>{
-                                    this.setState({
-                                        selected:'tool'
-                                    })
-                                }}/>;
+                                return null;
                             default:
                                 return toolBox;
                         }
