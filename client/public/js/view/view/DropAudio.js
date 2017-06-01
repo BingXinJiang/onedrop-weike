@@ -79,7 +79,7 @@ export default class DropAudio extends React.Component{
                         <p style={{
                             fontSize:'24px',
                             color:'rgb(110,217,33)'
-                        }}>{Tool.convertSec(parseInt(Number(this.state.duration)))}</p>
+                        }}>{Tool.convertSec(parseInt(Number(this.state.duration ? this.state.duration : 0)))}</p>
                     </div>
                 </div>
 
