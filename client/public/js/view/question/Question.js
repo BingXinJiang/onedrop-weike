@@ -95,7 +95,6 @@ export default class Question extends React.Component{
                                         },
                                         success:function(data) {
                                             if(data.status === 1){
-                                                alert('您的问题提交成功,请耐心等待回答!');
                                                 self.props.callback();
                                             }else{
                                                 alert('网络错误,请重新提交!!!');

@@ -249,11 +249,7 @@ router.post('/sections', function (req, res, next) {
                 }else{
                     content.isPunchCard = false;
                 }
-                if(index == 0){
-
-                }else{
-                    data.push(content);
-                }
+                data.push(content);
             })
             var response = {
                 status:1,
@@ -265,7 +261,11 @@ router.post('/sections', function (req, res, next) {
 })
 
 /**
- * 获取往日一滴某一小节的详细页面
+ * 提交自赞的接口
+ * 参数： user_id  section_id  appreciate_value
  * */
+router.post('./appreciate/mine', function (req,res,next) {
+    
+})
 
 module.exports = router;

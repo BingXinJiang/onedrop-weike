@@ -182,21 +182,17 @@ export default class Solve extends React.Component{
                         paddingLeft:'30px',
                         paddingRight:'30px'
                     }}>
-                        <p onClick={()=>{
-                            this.props.callback();
-                        }} style={{
+                        <div style={{
                             display:'flex',
-                            justifyContent:'center',
+                            justifyContent:'flex-start',
                             alignItems:'center',
                             width:'80px',
-                            height:'60px',
-                            fontSize:'30px',
-                            borderColor:'rgb(235,235,235)',
-                            borderRadius:'5px',
-                            borderWidth:'2px'
+                            height:'80px'
                         }}>
-                            返回
-                        </p>
+                            <img onClick={()=>{
+                                this.props.callback();
+                            }} src="../../../img/weike/main/back.png"/>
+                        </div>
                         <input id="question_answer_solve_commit" style={{
                             display:'flex',
                             flex:'1',
@@ -257,11 +253,13 @@ export default class Solve extends React.Component{
                             justifyContent:'center',
                             alignItems:'center',
                             width:'80px',
-                            height:'60px',
+                            height:'75px',
                             fontSize:'30px',
                             borderColor:'rgb(235,235,235)',
                             borderRadius:'5px',
-                            borderWidth:'2px'
+                            borderWidth:'2px',
+                            backgroundColor:'rgb(235,235,235)',
+                            marginLeft:'5px'
                         }}>
                             提交
                         </p>

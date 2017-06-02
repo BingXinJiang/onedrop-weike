@@ -4,6 +4,7 @@
 import React from 'React';
 import OneDrop from '../../const/onedrop';
 import async from 'async';
+import Drop from './everyday/Drop';
 
 export default class LastDrop extends React.Component{
     constructor(props){
@@ -11,12 +12,8 @@ export default class LastDrop extends React.Component{
         this.state = {
             isPlaying:false,
             playUrl:'',
-            courses_test:[{isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
-                {isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
-                {isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'},
-                {isPlaying:false,section_voice:'../../../img/weike/test/盖子法则2.mp3'}
-            ],
-            courses:[]
+            courses:[],
+            isShowEverydayDrop:true
         }
     }
 
@@ -46,11 +43,57 @@ export default class LastDrop extends React.Component{
         return (
             <div style={{
                 backgroundColor:'rgb(235,235,235)',
-                width:OneDrop.JS_ScreenW
+                width:OneDrop.JS_ScreenW,
+                paddingBottom:'110px'
             }}>
                 <div>
-
+                    <img style={{
+                        width:OneDrop.JS_ScreenW,
+                        height:'360px'
+                    }} src="../../../img/weike/onedrop/banner.png"/>
                 </div>
+                {
+                    ['','',''].map((content,index)=>{
+                        return(
+                            <div onClick={()=>{
+                                this.setState({
+                                    isShowEverydayDrop:true
+                                })
+                            }} style={{
+                                marginTop:'20px',
+                                backgroundColor:'white',
+                                width:'100%'
+                            }}>
+                                <div style={{
+                                    paddingTop:'34px',
+                                    paddingBottom:'33px',
+                                    marginRight:'24px',
+                                    marginLeft:'24px'
+                                }}>
+                                    <p style={{
+                                        fontSize:'36px',
+                                        color:'rgb(0,0,0)'
+                                    }}>127 | 阿芙精油如何激活员工</p>
+                                    <img style={{height:'300px',width:'100%',
+                                        marginTop:'24px'
+                                    }} src="../../../img/weike/test/banner.jpg"/>
+                                    <p style={{
+                                        marginTop:'24px',
+                                        fontSize:'26px',
+                                        color:'rgb(102,102,102)'
+                                    }}>阿芙精油如何激活员工阿芙精油如何激活员工阿芙精油如何激活如何激活员工
+                                        阿芙精油如何激活员工阿芙精...</p>
+                                    <p style={{
+                                        marginTop:'24px',
+                                        fontSize:'20px',
+                                        color:'rgb(131,131,131)'
+                                    }}>2017年5月26日</p>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+
                 {
                     this.state.courses.map((content,index)=>{
                         var mp3_url = content.section_voice;
@@ -129,6 +172,15 @@ export default class LastDrop extends React.Component{
                             </div>
                         )
                     })
+                }
+                {
+                    this.state.isShowEverydayDrop ?
+                        <Drop callback={()=>{
+                            this.setState({
+                                isShowEverydayDrop:false
+                            })
+                        }}/>
+                        : null
                 }
             </div>
         )

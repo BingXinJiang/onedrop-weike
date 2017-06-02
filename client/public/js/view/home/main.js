@@ -11,11 +11,12 @@ import {
 
 import OneDrop from '../../const/onedrop';
 
-import Onedrop from '../drop/TodayDrop';
+import EveryDrop from '../drop/LastDrop';
 import Question from '../question/Question';
-import Course from '../drop/LastDrop';
+// import Course from '../drop/LastDrop';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
+import MyDrop from '../drop/mine/MyDrop';
 
 import Introduction from './Introduction';
 
@@ -24,7 +25,7 @@ class Main extends React.Component{
         super(props);
         this.state = {
             isFirst:false,
-            selectedTab:'onedrop',
+            selectedTab:'everydrop',
             showQuestion:false,
             // userId:REMOTE_WEIXIN_USER_ID, //以微信静默授权的方式拿到openid作为userid,
             userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
@@ -82,10 +83,10 @@ class Main extends React.Component{
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';
-        var oneDrop_src = '../../../img/weike/main/drop.png';
-        var oneDrop_selected_src = '../../../img/weike/main/drop_selected.png';
-        var course_src = '../../../img/weike/main/last_drop.png';
-        var course_selected_src = '../../../img/weike/main/last_drop_selected.png';
+        var oneDrop_src = '../../../img/weike/main/day_drop.png';
+        var oneDrop_selected_src = '../../../img/weike/main/day_drop_selected.png';
+        var course_src = '../../../img/weike/main/my_drop.png';
+        var course_selected_src = '../../../img/weike/main/my_drop_selected.png';
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var tool_src = '../../../img/weike/main/tool.png';
@@ -101,8 +102,8 @@ class Main extends React.Component{
                         }}/>
                         :
                         <div>
-                            <Route exact path='/weixin/main/' component={Onedrop}/>
-                            <Route path='/weixin/main/courses' component={Course}/>
+                            <Route exact path='/weixin/main/' component={EveryDrop}/>
+                            <Route path='/weixin/main/mydrop' component={MyDrop}/>
                             <Route path='/weixin/main/question' component={Answer}/>
                             <Route path='/weixin/main/tool' component={ToolBox}/>
 
@@ -115,26 +116,26 @@ class Main extends React.Component{
                                         textAlign:'center',listStyleType:'none'
                                     }} onClick={()=>{
                                         this.setState({
-                                            selectedTab:'onedrop'
+                                            selectedTab:'everydrop'
                                         })
                                     }}>
                                         <Link style={{
 
                                         }} to="/weixin/main/">
-                                            <img src={this.state.selectedTab === 'onedrop' ? oneDrop_selected_src : oneDrop_src}/>
+                                            <img src={this.state.selectedTab === 'everydrop' ? oneDrop_selected_src : oneDrop_src}/>
                                         </Link>
                                     </li>
                                     <li style={{float:'left',width:tabBtnW,
                                         textAlign:'center',listStyleType:'none'
                                     }} onClick={()=>{
                                         this.setState({
-                                            selectedTab:'course'
+                                            selectedTab:'mydrop'
                                         })
                                     }}>
                                         <Link style={{
 
-                                        }} to="/weixin/main/courses">
-                                            <img src={this.state.selectedTab === 'course' ? course_selected_src : course_src}/>
+                                        }} to="/weixin/main/mydrop">
+                                            <img src={this.state.selectedTab === 'mydrop' ? course_selected_src : course_src}/>
                                         </Link>
                                     </li>
 

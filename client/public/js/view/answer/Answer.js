@@ -55,7 +55,12 @@ export default class Answer extends React.Component{
             {
                 this.state.questions.map((content, index)=>{
                     return (
-                        <div key={index} style={{
+                        <div onClick={()=>{
+                            this.setState({
+                                question_id:content.question_id,
+                                showAnswer:true
+                            })
+                        }} key={index} style={{
                                     paddingLeft:'30px',
                                     paddingTop:'30px',
                                     paddingRight:'30px',
@@ -127,13 +132,18 @@ export default class Answer extends React.Component{
                 display:'flex',
                 justifyContent:'center',
                 alignItems:'center',
-                textAlign:'center',
-                fontSize:'32px',
                 width:'100%',
                 height:'80px',
-                backgroundColor:'rgb(235,235,235)',
-                marginBottom:'40px'
-            }}>下一页</div>
+                backgroundColor:'white',
+                marginBottom:'40px',
+                marginTop:'20px'
+            }}>
+                <p style={{
+                    fontSize:'32px'
+                }}>
+                    下一页
+                </p>
+            </div>
         </div>
         return (
             <div style={{
