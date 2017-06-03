@@ -130,96 +130,29 @@ router.post('/section/detail', function (req, res, next) {
 
 /**
  * 获取当天推送的某一小节的具体信息
- * 参数 user_id section_id(可选)
+ * 参数 user_id section_id
  * */
 router.post('/every_day', function (req, res, next) {
     var user_id = req.body.user_id;
     var section_id = req.body.section_id;
-    var isPast = false;
-    if(section_id){
-        isPast = true;
-    }
 
     //判断该user_id是否是会员,是否可以免费听取课程
 
-    //判断是否当天已经打卡
-    async.parallel([
-        function (callback) {
-            var judge_sql = "select punch_time from punch_card where user_id = " +
-                "'"+user_id+"' and punch_time>=curdate() and punch_time<date_sub(curdate(),interval -1 day)";
-            if(isPast){
-                judge_sql = "select punch_time from punch_card where user_id=" +
-                    "'"+user_id+"' and section_id="+section_id;
-            }
-            console.log('judge_sql:',judge_sql);
-            query(judge_sql, function (qerr, valls, fields) {
-                if(qerr){
-                    responseDataErr(res);
-                }else{
-                    if(valls.length>0){
-                        //已经打卡
-                        callback(null, true)
-                    }else{
-                        //还没有打卡
-                        callback(null, false)
-                    }
-                }
-            })
-        },
-        function (callback) {
-            var query_sql = "select a.course_id,a.course_title,a.author_id,a.section_voice,a.section_des," +
-                "b.teacher_name,b.teacher_position from " +
-                "(select * from course_section where Now()>=open_date and Now()<date_sub(open_date,interval -1 day))as a " +
-                "left join (select * from teacher)as b " +
-                "on a.author_id = b.teacher_id";
-            if(isPast){
-                query_sql = "select a.course_id,a.course_title,a.author_id,a.section_voice,a.section_des," +
-                    "b.teacher_name,b.teacher_position from " +
-                    "(select * from course_section where section_id="+section_id+")as a " +
-                    "left join (select * from teacher)as b " +
-                    "on a.author_id=b.teacher_id";
-            }
-            console.log('query_sql:', query_sql);
-            query(query_sql, function (qerr, valls, fields) {
-                if(qerr){
-                    responseDataErr(res);
-                }else if(valls.length !== 1){
-                    responseDataErr(res);
-                }else{
-                    callback(null, valls[0])
-                }
-            })
-        },
-        function (callback) {
-            var user_sql = "select a.user_id,a.nickname,a.headimgurl,b.fraction from ( " +
-                "select * from user where user_id='"+user_id+"')as a left join " +
-                "(select sum(punch_fraction)fraction,user_id from punch_card where user_id='"+user_id+"')as b" +
-                " on a.user_id=b.user_id";
-            console.log('user_sql:', user_sql);
-            query(user_sql, function (qerr, valls, fields) {
-                if(qerr){
-                    responseDataErr(res);
-                }else{
-                    if(valls.length>0){
-                        callback(null, valls[0]);
-                    }else{
-                        responseDataErr(res);
-                    }
-                }
-            })
-        }
-    ], function (err, results) {
-        if(err){
+    var  query_sql = "select a.section_id,a.section_name,a.author_id,a.section_voice,a.section_des," +
+        "year(a.open_date)year,month(a.open_date)month,day(a.open_date)day," +
+        "b.teacher_name,b.teacher_position,b.teacher_head from " +
+        "(select * from course_section where section_id="+section_id+")as a " +
+        "left join (select * from teacher)as b " +
+        "on a.author_id=b.teacher_id";
+    // console.log('请求课程内容=========================');
+    // console.log('query_sql:', query_sql);
+    query(query_sql, function (qerr, valls, fields) {
+        if(qerr){
             responseDataErr(res);
         }else{
-            var data = {
-                isPanchCard:results[0],
-                course:results[1],
-                user:results[2]
-            };
             var response = {
                 status:1,
-                data:data
+                data:valls[0]
             }
             res.json(response);
         }
@@ -234,26 +167,15 @@ router.post('/every_day', function (req, res, next) {
 router.post('/sections', function (req, res, next) {
     var user_id = req.body.user_id;
     var page = req.body.page;
-    var query_sql = "select a.course_title,a.section_voice,a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_id,b.teacher_name,b.teacher_position,c.punch_id" +
-        " from (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
-        "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
-        "(select * from punch_card where user_id='"+user_id+"')as c on a.section_id=c.section_id";
+    var query_sql = "select section_id,section_list_img,section_intro,section_name,open_date,year(open_date)year,month(open_date)month,day(open_date)day" +
+        " from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10";
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);
         }else{
-            var data = [];
-            valls.map(function (content, index) {
-                if(content.punch_id){
-                    content.isPunchCard = true;
-                }else{
-                    content.isPunchCard = false;
-                }
-                data.push(content);
-            })
             var response = {
                 status:1,
-                data:data
+                data:valls
             }
             res.json(response);
         }
@@ -264,8 +186,57 @@ router.post('/sections', function (req, res, next) {
  * 提交自赞的接口
  * 参数： user_id  section_id  appreciate_value
  * */
-router.post('./appreciate/mine', function (req,res,next) {
-    
+router.post('/appreciate/mine', function (req,res,next) {
+    var user_id = req.body.user_id;
+    var section_id = req.body.section_id;
+    var appreciate_value = req.body.appreciate_value;
+
+    //将自赞的数据插入数据库,每个课程,可以给自己多条自赞
+    var appreciate_id = (new Date()).getTime() + '' + parseInt(Math.random()*100000);
+    var insert_sql = "insert into appreciate_mine(" +
+        "appreciate_id,user_id,section_id,appreciate_time,appreciate_value) " +
+        "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now(),"+appreciate_value+")";
+    // console.log('提交自赞的接口执行sql:',insert_sql);
+    query(insert_sql, function (qerr, valls, fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:{
+                    msg:'success'
+                }
+            }
+            res.json(response);
+        }
+    })
+})
+/**
+ * 提交给课程点赞的接口
+ * 参数: user_id section_id
+ * */
+router.post('/appreciate/course', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var section_id = req.body.section_id;
+
+    //给课程点赞,同一个用户,重复进入该页面,可以重复点赞
+    var appreciate_id = (new Date()).getTime() + '' + parseInt(Math.random()*100000);
+    var insert_sql = "insert into appreciate_course(" +
+        "appreciate_id,user_id,section_id,appreciate_time) " +
+        "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now())";
+    query(insert_sql, function (qerr, valls, fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:{
+                    msg:'success'
+                }
+            }
+            res.json(response);
+        }
+    })
 })
 
 module.exports = router;

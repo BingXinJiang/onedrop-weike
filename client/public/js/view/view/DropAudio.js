@@ -28,7 +28,6 @@ export default class DropAudio extends React.Component{
     }
 
     componentWillUnmount(){
-        console.log('计时器结束了！！！');
         clearInterval(this.audioTimer);
     }
 

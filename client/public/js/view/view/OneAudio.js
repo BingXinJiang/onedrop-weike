@@ -27,7 +27,6 @@ export default class OneAudio extends React.Component{
     }
 
     componentWillUnmount(){
-        console.log('计时器结束了！！！');
         clearInterval(this.audioTimer);
     }
 

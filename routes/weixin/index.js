@@ -16,8 +16,11 @@ var parseString = require('xml2js').parseString;
 
 var async = require('async');
 
-var APPID = 'wxcb05ae4237186327';
-var APPSECRET = '059aead1e040418e4c9cbc1d71675390';
+// var APPID = 'wxcb05ae4237186327'; //旧
+// var APPSECRET = '059aead1e040418e4c9cbc1d71675390';
+
+var APPID = 'wxb2aff2a51a4bdb8e'; //新
+var APPSECRET = 'e691bcd73215de7bdc8dfecd150f9fe2';
 
 /* GET weixin page. */
 router.get('/main', function(req, res, next) {
@@ -824,7 +827,7 @@ router.post('/main/section/comment', function (req, res, next) {
             }else{
                 comment_id = 1;
             }
-            insert_sql = "insert into comment values("+comment_id+",'"+user_id+"',"+section_id+",'"+comment+"',now())";
+            insert_sql = "insert into comment(comment_id,user_id,section_id,comment,datetime) values("+comment_id+",'"+user_id+"',"+section_id+",'"+comment+"',now())";
             query(insert_sql, function (qerr, valls, fields) {
                 if(qerr){
                     var response = {
@@ -857,8 +860,10 @@ router.post('/main/section/get_comment', function (req, res, next) {
 
     // var search_sql = "select * from comment where section_id = " + section_id + " order by datetime desc";
     // var user_sql= "select nickname,headimgurl from user where user_id = (select user_id from comment where section_id = "+section_id+" order by datetime desc)";
-    var union_sql = "select year(comment.datetime)year,month(comment.datetime)month,day(comment.datetime)day,comment.*, user.nickname, user.headimgurl from comment, user where comment.section_id = "+section_id+" and user.user_id = comment.user_id order by comment.datetime desc";
-    console.log('union_sql:', union_sql);
+    var union_sql = "select year(comment.datetime)year,month(comment.datetime)month,day(comment.datetime)day,hour(comment.datetime)hour,minute(comment.datetime)minute,second(comment.datetime)second," +
+        "comment.comment_id,comment.comment,comment.is_checked, user.nickname, user.headimgurl from comment, user " +
+        "where comment.section_id = "+section_id+" and user.user_id = comment.user_id order by comment.datetime desc";
+    console.log('小节评论union_sql:', union_sql);
     function showErr() {
         var response = {
             status:0,
@@ -870,14 +875,11 @@ router.post('/main/section/get_comment', function (req, res, next) {
     }
     query(union_sql, function (qerr, valls, fields) {
         if(qerr){
-            console.log('qerr:', qerr);
             showErr();
         }else{
             var response = {
                 status:1,
-                data:{
-                    comments:valls
-                }
+                data:valls
             }
             res.json(response);
         }

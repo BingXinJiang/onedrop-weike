@@ -3,7 +3,6 @@
  */
 import React from 'React';
 import OneDrop from '../../const/onedrop';
-import async from 'async';
 import Drop from './everyday/Drop';
 
 export default class LastDrop extends React.Component{
@@ -13,7 +12,8 @@ export default class LastDrop extends React.Component{
             isPlaying:false,
             playUrl:'',
             courses:[],
-            isShowEverydayDrop:true
+            isShowEverydayDrop:false,
+            section_id:0
         }
     }
 
@@ -28,7 +28,6 @@ export default class LastDrop extends React.Component{
             },
             success:(data)=>{
                 if(data.status === 1){
-                    console.log('last drop:', data);
                     var courses = data.data;
                     this.setState({
                         courses:courses
@@ -50,14 +49,15 @@ export default class LastDrop extends React.Component{
                     <img style={{
                         width:OneDrop.JS_ScreenW,
                         height:'360px'
-                    }} src="../../../img/weike/onedrop/banner.png"/>
+                    }} src="../../../img/weike/onedrop/banner.jpg"/>
                 </div>
                 {
-                    ['','',''].map((content,index)=>{
+                    this.state.courses.map((content,index)=>{
                         return(
-                            <div onClick={()=>{
+                            <div key={index} onClick={()=>{
                                 this.setState({
-                                    isShowEverydayDrop:true
+                                    isShowEverydayDrop:true,
+                                    section_id:content.section_id
                                 })
                             }} style={{
                                 marginTop:'20px',
@@ -73,21 +73,20 @@ export default class LastDrop extends React.Component{
                                     <p style={{
                                         fontSize:'36px',
                                         color:'rgb(0,0,0)'
-                                    }}>127 | 阿芙精油如何激活员工</p>
+                                    }}>{content.section_id} | {content.section_name}</p>
                                     <img style={{height:'300px',width:'100%',
                                         marginTop:'24px'
-                                    }} src="../../../img/weike/test/banner.jpg"/>
+                                    }} src={OneDrop.res_ip+content.section_list_img}/>
                                     <p style={{
                                         marginTop:'24px',
                                         fontSize:'26px',
                                         color:'rgb(102,102,102)'
-                                    }}>阿芙精油如何激活员工阿芙精油如何激活员工阿芙精油如何激活如何激活员工
-                                        阿芙精油如何激活员工阿芙精...</p>
+                                    }}>{content.section_intro}</p>
                                     <p style={{
                                         marginTop:'24px',
                                         fontSize:'20px',
                                         color:'rgb(131,131,131)'
-                                    }}>2017年5月26日</p>
+                                    }}>{content.year}年{content.month}月{content.day}日</p>
                                 </div>
                             </div>
                         )
@@ -95,87 +94,8 @@ export default class LastDrop extends React.Component{
                 }
 
                 {
-                    this.state.courses.map((content,index)=>{
-                        var mp3_url = content.section_voice;
-                        var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
-                        mp3_url = preUrl + '.mp3';
-                        var ogg_url = preUrl + '.ogg';
-                        var wav_url = preUrl + '.wav';
-                        return (
-                            <div key={index} style={{
-                                display:'flex',
-                                width:'100%',
-                                height:'208px',
-                                backgroundColor:'white',
-                            }}>
-                                <div style={{
-                                    display:'flex',
-                                    width:'100%',
-                                    backgroundColor:'white',
-                                    justifyContent:'space-between',
-                                    marginLeft:'24px',
-                                    marginRight:'24px',
-                                    marginTop:'46px',
-                                    marginBottom:'44px',
-                                    alignItems:'center'
-                                }}>
-                                    <div>
-                                        <p style={{
-                                            fontSize:'32px',
-                                            color:'rgb(0,0,0)'
-                                        }}>{content.course_title}</p>
-                                        <p style={{
-                                            fontSize:'24px',
-                                            color:'rgb(0,0,0)',
-                                        }}>{content.teacher_name}：{content.teacher_position}</p>
-                                        <p style={{
-                                            fontSize:'20px',
-                                            color:'rgb(88,88,88)',
-                                            marginTop:'5px'
-                                        }}>{content.year+'年'+content.month+'月'+content.day+'日'}</p>
-                                    </div>
-                                    <audio id={"onedrop_last_drop_audio_"+index} preload="auto">
-                                        <source src={ogg_url} type="audio/ogg"/>
-                                        <source src={wav_url} type="audio/wav"/>
-                                        <source src={mp3_url} type="audio/mpeg"/>
-                                        您的浏览器不支持audio
-                                    </audio>
-                                    <div onClick={()=>{
-                                        var newCourses = [];
-                                        this.state.courses.map((con, idx)=>{
-                                            if(con.isPlaying === true && index !== idx){
-                                                $('#onedrop_last_drop_audio_'+idx)[0].load();
-                                            }
-                                            if(index === idx){
-                                                if(con.isPlaying){
-                                                    $('#onedrop_last_drop_audio_'+idx)[0].pause();
-                                                    con.isPlaying = false;
-                                                }else{
-                                                    $('#onedrop_last_drop_audio_'+idx)[0].play();
-                                                    con.isPlaying = true;
-                                                }
-                                            }else {
-                                                con.isPlaying = false;
-                                            }
-                                            newCourses.push(con);
-                                        });
-                                        this.setState({
-                                            courses:newCourses
-                                        })
-                                    }} style={{
-                                        marginRight:'44px'
-                                    }}>
-                                        <img src={content.isPlaying ? "../../../img/weike/onedrop/topause.png" :
-                                            "../../../img/weike/onedrop/toplay.png"}/>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-                {
                     this.state.isShowEverydayDrop ?
-                        <Drop callback={()=>{
+                        <Drop sectionId={this.state.section_id} callback={()=>{
                             this.setState({
                                 isShowEverydayDrop:false
                             })
