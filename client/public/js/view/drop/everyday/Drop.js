@@ -159,7 +159,7 @@ export default class Drop extends React.Component{
                                     <div style={{
                                 marginTop:'54px'
                             }}>
-                                        <DropAudio audioUrl={OneDrop.res_ip+this.state.course.section_voice}/>
+                                        <DropAudio audioUrl={this.state.course.section_voice}/>
                                     </div>
 
                                     <div style={{
