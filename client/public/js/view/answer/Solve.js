@@ -56,7 +56,7 @@ export default class Solve extends React.Component{
             if(err){
                 alert('数据错误3');
             }else{
-                console.log('results:', results);
+                // console.log('results:', results);
                 var question = results[0];
                 var answers = results[1];
                 self.setState({

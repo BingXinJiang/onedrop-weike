@@ -59,8 +59,8 @@ router.post('/punch_card', function (req, res, next) {
             })
         },
         function (fraction,callback) {
-            console.log('-------------');
-            console.log(fraction);
+            // console.log('-------------');
+            // console.log(fraction);
             var punch_id = (new Date()).getTime()+ "" + parseInt(Math.random()*100000);
             var insert_sql = "insert into punch_card(punch_id,user_id,punch_time,motto,punch_fraction,section_id) " +
                 "values('"+punch_id+"','"+user_id+"',Now(),'"+motto+"',"+fraction+","+section_id+")";

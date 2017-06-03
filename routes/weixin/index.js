@@ -95,12 +95,12 @@ router.get('/main', function(req, res, next) {
 
                     query(query_sql, function (qerr, valls, fields) {
                         if(qerr){
-                            console.log('查询失败userData:'+userData+'----time:'+new Date());
+                            // console.log('查询失败userData:'+userData+'----time:'+new Date());
                         }else{
                             if(valls.length>0){//存在该用户数据,更新
                                 query(update_sql, function (qerr, valls, fields) {
                                     if(qerr){
-                                        console.log('查询到用户更新失败userData:'+userData+'----time:'+new Date());
+                                        // console.log('查询到用户更新失败userData:'+userData+'----time:'+new Date());
                                     }else{
 
                                     }
@@ -108,7 +108,7 @@ router.get('/main', function(req, res, next) {
                             }else{//不存在该用户的数据,插入
                                 query(insert_sql, function (qerr, valls, fields) {
                                     if(qerr){
-                                        console.log('没有查询到用户插入失败userData:'+userData+'----time:'+new Date());
+                                        // console.log('没有查询到用户插入失败userData:'+userData+'----time:'+new Date());
                                     }else{
 
                                     }
@@ -120,13 +120,13 @@ router.get('/main', function(req, res, next) {
                 })
             })
             userRequest.on('error', function(e){
-                console.log('错误：' + e.message);
+                // console.log('错误：' + e.message);
             });
             userRequest.end();
         });
     })
     request.on('error', function(e){
-        console.log('错误：' + e.message);
+        // console.log('错误：' + e.message);
     });
     request.end();
 
@@ -173,7 +173,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
             token_response.setEncoding('utf8');
             token_response.on('data', function (token_res) {
                 var receive_token = JSON.parse(token_res);
-                console.log('receive_token', receive_token);
+                // console.log('receive_token', receive_token);
 
                 var access_token = receive_token.access_token;
 
@@ -186,7 +186,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
                     response.setEncoding('utf8');
                     response.on('data', function (response) {
                         var receiveData = JSON.parse(response);
-                        console.log('receiveData:', receiveData);
+                        // console.log('receiveData:', receiveData);
                         var jsapi_ticket = receiveData.ticket;
                         // var timestamp = parseInt(Date.parse(new Date())/1000).toString();
                         // var nonceStr = 'onedrop' + parseInt(Math.random()*1000000);
@@ -198,7 +198,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
 
                         query(update_sql, function (qerr, valls, fields) {
                             if(qerr){
-                                console.log('qerr:',qerr);
+                                // console.log('qerr:',qerr);
                             }else {
                                 paySign(jsapi_ticket);
                             }
@@ -207,13 +207,13 @@ router.post('/main/pay/getsign', function (req, res, next) {
                     })
                 })
                 request.on('error', function(e){
-                    console.log('错误：' + e.message);
+                    // console.log('错误：' + e.message);
                 });
                 request.end();
             })
         })
         token_request.on('error', function(e){
-            console.log('错误：' + e.message);
+            // console.log('错误：' + e.message);
         });
         token_request.end();
     }
@@ -275,7 +275,7 @@ router.get('/main/getcourse', function (req, res, next) {
  * */
 router.post('/main/user/is_member', function (req, res, next) {
     var user_id = req.body.user_id;
-    console.log('user_id:', user_id);
+    // console.log('user_id:', user_id);
     var ismember_sql = "select * from user where user_id = '" + user_id +"'";
     query(ismember_sql, function (qerr, valls, fields) {
         if(qerr){
@@ -323,7 +323,7 @@ router.post('/main/adduser', function (req, res, next) {
 
     query(search_sql, function (qeer, valls, fields) {
         if(qeer){
-            console.log(qeer);
+            // console.log(qeer);
         }else {
             if(valls.length>0){
                 //已经存在该user_id的用户
@@ -343,7 +343,7 @@ router.post('/main/adduser', function (req, res, next) {
                     if(qeer){
 
                     }else{
-                        console.log('新用户创建成功!'+user_id);
+                        // console.log('新用户创建成功!'+user_id);
                         var response = {
                             status:2,
                             data:{}
@@ -364,7 +364,7 @@ router.post('/main/adduser', function (req, res, next) {
 router.post('/main/buy_course', function (req, res, next) {
     var user_id = req.body.user_id;
     var course_id = req.body.course_id;
-    console.log('购买课程,支付成功记录-- user_id:'+user_id+'   course_id:'+course_id+'   time:'+ new Date());
+    // console.log('购买课程,支付成功记录-- user_id:'+user_id+'   course_id:'+course_id+'   time:'+ new Date());
     //获取表中order_id最大的字段
     var get_max_sql = "SELECT * FROM order_course ORDER BY order_id DESC LIMIT 1";
     query(get_max_sql, function (qerr, valls, fields) {
@@ -659,7 +659,7 @@ router.post('/main/bemember', function (req, res, next) {
     var user_id = req.body.user_id;
 
     var user_sql = "update user set is_member = 1, member_datetime = now() where user_id = '" + user_id+"'";
-    console.log('成为会员:'+user_id+'   '+ new Date());
+    // console.log('成为会员:'+user_id+'   '+ new Date());
     query(user_sql, function (qerr, valls, fields) {
         if(qerr){
             var response = {
@@ -863,7 +863,7 @@ router.post('/main/section/get_comment', function (req, res, next) {
     var union_sql = "select year(comment.datetime)year,month(comment.datetime)month,day(comment.datetime)day,hour(comment.datetime)hour,minute(comment.datetime)minute,second(comment.datetime)second," +
         "comment.comment_id,comment.comment,comment.is_checked, user.nickname, user.headimgurl from comment, user " +
         "where comment.section_id = "+section_id+" and user.user_id = comment.user_id order by comment.datetime desc";
-    console.log('小节评论union_sql:', union_sql);
+    // console.log('小节评论union_sql:', union_sql);
     function showErr() {
         var response = {
             status:0,
@@ -912,8 +912,8 @@ router.post('/main/real/pay/', function (req, res, next) {
 
         var allStr = "appid="+APPID+"&body=云谷慧-课程&device_info=WEB&mch_id=1316080301&nonce_str="+nonce_str+"&notify_url=www.cvwisdom.com/weixin/main/real/pay/back&openid="+user_id+"&out_trade_no="+order_id+"&spbill_create_ip=119.23.24.122&total_fee="+price+"&trade_type=JSAPI&key=YunGuHuiDavid778Tai18317018605Gu"
         var sign  = md5(allStr);
-        console.log('allStr:', allStr);
-        console.log('sign',sign);
+        // console.log('allStr:', allStr);
+        // console.log('sign',sign);
         var data = {
             appid:APPID,
             mch_id:'1316080301',
@@ -942,7 +942,7 @@ router.post('/main/real/pay/', function (req, res, next) {
             "<trade_type>JSAPI</trade_type>" +
             "<openid>"+user_id+"</openid></xml>"
 
-        console.log('xmlData:', xmlData);
+        // console.log('xmlData:', xmlData);
 
         var options = {
             hostname:'api.mch.weixin.qq.com',
@@ -952,10 +952,10 @@ router.post('/main/real/pay/', function (req, res, next) {
         var request = http.request(options,function (response) {
             response.setEncoding('utf8');
             response.on('data', function(chunk) {
-                console.log(chunk);
+                // console.log(chunk);
                 parseString(chunk, function (err, result) {
-                    console.log('-----------------------------------------');
-                    console.log('result:',result);
+                    // console.log('-----------------------------------------');
+                    // console.log('result:',result);
                     var receiveData = result.xml;
                     if(receiveData.result_code[0] == 'SUCCESS'){
                         var update_sql = "update order_course set buy_done = 1 where order_id = '" + order_id +"'";
@@ -987,15 +987,15 @@ router.post('/main/real/pay/', function (req, res, next) {
         });
         request.write(xmlData);
         request.on('error', function(e){
-            console.log('错误：' + e.message);
+            // console.log('错误：' + e.message);
         });
         request.end();
     }
 
     query(query_sql, function (qerr, valls, fields) {
-        console.log('query:',query_sql);
+        // console.log('query:',query_sql);
         if(qerr){
-            console.log('sql err');
+            // console.log('sql err');
             var response = {
                 status:0,
                 data:{
@@ -1012,7 +1012,7 @@ router.post('/main/real/pay/', function (req, res, next) {
                 order_id = order.order_id;
                 payFun(order_id);
             }else{
-                console.log('查询不到数据,插入数据');
+                // console.log('查询不到数据,插入数据');
                 var insert_sql = "insert into order_course values('"+order_id+"','"+user_id+"',"+course_id+",Now(),0)";
                 query(insert_sql, function (qerr, valls, fields) {
                     if(qerr){
@@ -1022,11 +1022,11 @@ router.post('/main/real/pay/', function (req, res, next) {
                                 msg:'数据库执行失败'
                             }
                         }
-                        console.log('数据库插入失败');
+                        // console.log('数据库插入失败');
                         res.json(response);
                     }else{
-                        console.log('数据库执行成功了,要去支付了。。。');
-                        console.log('orderId:',order_id);
+                        // console.log('数据库执行成功了,要去支付了。。。');
+                        // console.log('orderId:',order_id);
                         payFun(order_id);
                     }
                 })
@@ -1086,7 +1086,7 @@ router.post('/main/real/pay_member/', function (req, res, next) {
             "<trade_type>JSAPI</trade_type>" +
             "<openid>"+user_id+"</openid></xml>"
 
-        console.log('xmlData:', xmlData);
+        // console.log('xmlData:', xmlData);
 
         var options = {
             hostname:'api.mch.weixin.qq.com',
@@ -1098,8 +1098,8 @@ router.post('/main/real/pay_member/', function (req, res, next) {
             response.on('data', function(chunk) {
                 console.log(chunk);
                 parseString(chunk, function (err, result) {
-                    console.log('-----------------------------------------');
-                    console.log('result:',result);
+                    // console.log('-----------------------------------------');
+                    // console.log('result:',result);
                     var receiveData = result.xml;
                     if(receiveData.result_code[0] == 'SUCCESS'){
                         var update_sql = "update order_member O, user U set O.buy_done = 1, U.is_member = 1 where O.order_id = '" + order_id +"' and U.user_id = '"+user_id+"'";
@@ -1132,15 +1132,15 @@ router.post('/main/real/pay_member/', function (req, res, next) {
         });
         request.write(xmlData);
         request.on('error', function(e){
-            console.log('错误：' + e.message);
+            // console.log('错误：' + e.message);
         });
         request.end();
     }
 
     query(query_sql, function (qerr, valls, fields) {
-        console.log('query:',query_sql);
+        // console.log('query:',query_sql);
         if(qerr){
-            console.log('sql err');
+            // console.log('sql err');
             var response = {
                 status:0,
                 data:{
@@ -1157,7 +1157,7 @@ router.post('/main/real/pay_member/', function (req, res, next) {
                 order_id = order.order_id;
                 payFun(order_id);
             }else{
-                console.log('查询不到数据,插入数据');
+                // console.log('查询不到数据,插入数据');
                 var insert_sql = "insert into order_member values('"+order_id+"',Now(),'"+user_id+"',0)";
                 query(insert_sql, function (qerr, valls, fields) {
                     if(qerr){
@@ -1167,11 +1167,11 @@ router.post('/main/real/pay_member/', function (req, res, next) {
                                 msg:'数据库执行失败'
                             }
                         }
-                        console.log('数据库插入失败');
+                        // console.log('数据库插入失败');
                         res.json(response);
                     }else{
-                        console.log('数据库执行成功了,要去支付了。。。');
-                        console.log('orderId:',order_id);
+                        // console.log('数据库执行成功了,要去支付了。。。');
+                        // console.log('orderId:',order_id);
                         payFun(order_id);
                     }
                 })
@@ -1185,9 +1185,9 @@ router.post('/main/real/pay_member/', function (req, res, next) {
  * 场景: 非会员购买课程
  * */
 router.post('/main/real/pay/back', function (req, res, next) {
-    console.log('支付回调返回')
-    console.log('query:',req.query);
-    console.log('body:',req.body);
+    // console.log('支付回调返回')
+    // console.log('query:',req.query);
+    // console.log('body:',req.body);
     var order_id = req.query.order_id;
     var xmlData = '<xml>' +
         '<return_code>SUCCESS</return_code>' +
@@ -1200,9 +1200,9 @@ router.post('/main/real/pay/back', function (req, res, next) {
  * 场景: 非会员购买会员
  * */
 router.post('/main/real/pay/member_back', function (req, res, next) {
-    console.log('支付回调返回')
-    console.log('query:',req.query);
-    console.log('body:',req.body);
+    // console.log('支付回调返回')
+    // console.log('query:',req.query);
+    // console.log('body:',req.body);
     var order_id = req.query.order_id;
     var xmlData = '<xml>' +
         '<return_code>SUCCESS</return_code>' +
@@ -1268,10 +1268,10 @@ router.post('/onedrop/user_info', function (req, res, next) {
         is_member = 0;
     }
     var my_up_sql = "update user set is_xingye_member = "+is_xingye_member+", phone_num = '"+phone_num+"', is_member="+is_member+" where user_id = '" + user_id + "'";
-    console.log('my_update_sql:', my_up_sql);
+    // console.log('my_update_sql:', my_up_sql);
     query(my_up_sql, function (qerr, valls, fields) {
         if(qerr){
-            console.log('数据查询失败');
+            // console.log('数据查询失败');
             responseDataErr(res);
         }else{
             var response = {

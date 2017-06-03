@@ -141,7 +141,7 @@ router.post('/evaluation', function (req, res, next) {
             //         "Authentication":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
             //     }
             // }
-            console.log('postData:', postData);
+            // console.log('postData:', postData);
             var options = {
                 // auth : {
                 //     'username':'cloud-wisdom-uat',
@@ -160,8 +160,8 @@ router.post('/evaluation', function (req, res, next) {
             // console.log('options:', options);
             request.post(options, function (err, response, body) {
                 body = JSON.parse(body);
-                console.log('申请测评链接err:', err);
-                console.log('申请测评链接body:', body);
+                // console.log('申请测评链接err:', err);
+                // console.log('申请测评链接body:', body);
                 if(body && body.errorCode == -1){
                     callback(null, body.requestUniqueId);
                 }else{
@@ -414,8 +414,8 @@ router.post('/report', function (req, res, next) {
             }
             request.post(options, function (err, response, body) {
                 body = JSON.parse(body);
-                console.log('请求报告err:',err);
-                console.log('请求报告body:', body);
+                // console.log('请求报告err:',err);
+                // console.log('请求报告body:', body);
                 if(err || body==null || body.errorCode != -1){
                     responseRequestErr(res);
                 }else{
@@ -428,7 +428,7 @@ router.post('/report', function (req, res, next) {
         function (request_unique_id,respondent_uid, callback) {
             var insert_sql = "insert into report(respondent_uid,request_unique_id,date_time) values(" +
                 "'"+respondent_uid+"','"+request_unique_id+"',Now())";
-            console.log('insert_sql:', insert_sql);
+            // console.log('insert_sql:', insert_sql);
             query(insert_sql, function (qerr, valls, fields) {
                 if(qerr){
                     responseDataErr(res);

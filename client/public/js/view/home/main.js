@@ -63,7 +63,7 @@ class Main extends React.Component{
             },
             success:function(data) {
                 if(data.status === 1){
-                    console.log('data:', data);
+                    // console.log('data:', data);
                     if(data.data.member_status === 1){//兴业员工
 
                     }else if(data.data.member_status === 2){//非兴业员工

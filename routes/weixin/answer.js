@@ -39,7 +39,7 @@ router.post('/ask', function (req, res, next) {
         "'"+question_id+"'," +
         "'"+question_des+"'," +
         "'"+user_id+"',Now())";
-    console.log('insert_sql:', insert_sql);
+    // console.log('insert_sql:', insert_sql);
     query(insert_sql, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);
@@ -112,7 +112,7 @@ router.post('/reply', function (req, res, next) {
         "'"+user_id+"',Now()," +
         "'"+question_id+"'," +
         "'"+answer_voice+"')";
-    console.log('insert_sql:',insert_sql);
+    // console.log('insert_sql:',insert_sql);
     query(insert_sql, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);

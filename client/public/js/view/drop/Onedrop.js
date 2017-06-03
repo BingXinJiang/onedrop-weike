@@ -70,7 +70,7 @@ export default class Onedrop extends React.Component{
             if(err){
                 alert('网络错误');
             }else{
-                console.log('results:', results);
+                // console.log('results:', results);
                 var active = results[0];
                 var courses = results[1];
                 self.setState({
@@ -86,7 +86,7 @@ export default class Onedrop extends React.Component{
         if(this.state.active){
             bannerSrc = OneDrop.res_ip + this.state.active.bg_img;
         }
-        console.log(this.state.courses);
+        // console.log(this.state.courses);
         return (
             <div>
                 {
