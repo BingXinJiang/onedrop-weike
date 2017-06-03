@@ -85,14 +85,13 @@ export default class Drop extends React.Component{
         }
         return(
             <div style={{
-                position:'fixed',
+                position:'absolute',
                 width:OneDrop.JS_ScreenW,
                 height:OneDrop.JS_ScreenH*2,
                 left:'0px',
                 top:'0px',
                 backgroundColor:'white',
-                zIndex:'9999',
-                overflowX:'scroll'
+                zIndex:'9999'
             }}>
                 <div style={{
                 }}>
@@ -216,7 +215,7 @@ export default class Drop extends React.Component{
                             <p style={{
                                 fontSize:'28px',
                                 color:'rgb(102,102,102)'
-                            }}>-----------------------精选交手录-----------------------</p>
+                            }}>---------------------精选交手录---------------------</p>
                         </div>
 
                         <div style={{

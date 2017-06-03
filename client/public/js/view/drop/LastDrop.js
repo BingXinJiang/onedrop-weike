@@ -40,21 +40,24 @@ export default class LastDrop extends React.Component{
     }
     render(){
         return (
-            <div style={{
-                backgroundColor:'rgb(235,235,235)',
-                width:OneDrop.JS_ScreenW,
-                paddingBottom:'110px'
-            }}>
-                <div>
-                    <img style={{
+            <div>
+                {
+                    !this.state.isShowEverydayDrop ?
+                        <div style={{
+                    backgroundColor:'rgb(235,235,235)',
+                    width:OneDrop.JS_ScreenW,
+                    paddingBottom:'110px'
+                }}>
+                            <div>
+                                <img style={{
                         width:OneDrop.JS_ScreenW,
                         height:'360px'
                     }} src="../../../img/weike/onedrop/banner.jpg"/>
-                </div>
-                {
-                    this.state.courses.map((content,index)=>{
-                        return(
-                            <div key={index} onClick={()=>{
+                            </div>
+                            {
+                                this.state.courses.map((content,index)=>{
+                                    return(
+                                        <div key={index} onClick={()=>{
                                 this.setState({
                                     isShowEverydayDrop:true,
                                     section_id:content.section_id
@@ -64,35 +67,36 @@ export default class LastDrop extends React.Component{
                                 backgroundColor:'white',
                                 width:'100%'
                             }}>
-                                <div style={{
+                                            <div style={{
                                     paddingTop:'34px',
                                     paddingBottom:'33px',
                                     marginRight:'24px',
                                     marginLeft:'24px'
                                 }}>
-                                    <p style={{
+                                                <p style={{
                                         fontSize:'36px',
                                         color:'rgb(0,0,0)'
                                     }}>{content.section_id} | {content.section_name}</p>
-                                    <img style={{height:'300px',width:'100%',
+                                                <img style={{height:'300px',width:'100%',
                                         marginTop:'24px'
                                     }} src={OneDrop.res_ip+content.section_list_img}/>
-                                    <p style={{
+                                                <p style={{
                                         marginTop:'24px',
                                         fontSize:'26px',
                                         color:'rgb(102,102,102)'
                                     }}>{content.section_intro}</p>
-                                    <p style={{
+                                                <p style={{
                                         marginTop:'24px',
                                         fontSize:'20px',
                                         color:'rgb(131,131,131)'
                                     }}>{content.year}年{content.month}月{content.day}日</p>
-                                </div>
-                            </div>
-                        )
-                    })
+                                            </div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div> : null
                 }
-
                 {
                     this.state.isShowEverydayDrop ?
                         <Drop sectionId={this.state.section_id} callback={()=>{

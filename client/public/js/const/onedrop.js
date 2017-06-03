@@ -11,9 +11,9 @@ module.exports = {
     // base_url:'http://192.168.1.181:3000',
     // res_ip:'http://192.168.1.181:3000',
 
-    // base_ip:'http://192.168.2.104:3000/weixin',
-    // base_url:'http://192.168.2.104:3000',
-    // res_ip:'http://192.168.2.104:3000',
+    // base_ip:'http://192.168.2.104:3001/weixin',
+    // base_url:'http://192.168.2.104:3001',
+    // res_ip:'http://192.168.2.104:3001',
 
     // base_ip:'http://192.168.1.193:3000/weixin',
     // base_url:'http://192.168.1.193:3000',
