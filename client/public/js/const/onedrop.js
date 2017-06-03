@@ -32,9 +32,9 @@ module.exports = {
     // base_url:'http://119.23.24.122:3001',
     // res_ip:'http://119.23.24.122:3001',
 
-    // appId:'wxcb05ae4237186327',//旧
+    appId:'wxcb05ae4237186327',//旧
 
-    appId:'wxb2aff2a51a4bdb8e',//旧
+    // appId:'wxb2aff2a51a4bdb8e',//新
 
     JS_ScreenW:document.body.clientWidth,//屏幕宽度
     JS_ScreenH:screen.height,

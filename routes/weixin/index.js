@@ -16,11 +16,11 @@ var parseString = require('xml2js').parseString;
 
 var async = require('async');
 
-// var APPID = 'wxcb05ae4237186327'; //旧
-// var APPSECRET = '059aead1e040418e4c9cbc1d71675390';
+var APPID = 'wxcb05ae4237186327'; //旧
+var APPSECRET = '059aead1e040418e4c9cbc1d71675390';
 
-var APPID = 'wxb2aff2a51a4bdb8e'; //新
-var APPSECRET = 'e691bcd73215de7bdc8dfecd150f9fe2';
+// var APPID = 'wxb2aff2a51a4bdb8e'; //新
+// var APPSECRET = 'e691bcd73215de7bdc8dfecd150f9fe2';
 
 /* GET weixin page. */
 router.get('/main', function(req, res, next) {
