@@ -47,8 +47,8 @@ export default class DropAudio extends React.Component{
                 }}>
                     <audio ref="section_audio" preload="auto">
                         <source src={ogg_url} type="audio/ogg"/>
-                        <source src={wav_url} type="audio/wav"/>
                         <source src={mp3_url} type="audio/mpeg"/>
+                        <source src={wav_url} type="audio/wav"/>
                         您的浏览器不支持audio
                     </audio>
                     <div style={{
