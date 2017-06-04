@@ -27,8 +27,8 @@ class Main extends React.Component{
             isFirst:false,
             selectedTab:'everydrop',
             showQuestion:false,
-            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ'
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
@@ -107,7 +107,7 @@ class Main extends React.Component{
                             <Route path='/weixin/main/question' component={Answer}/>
                             <Route path='/weixin/main/tool' component={ToolBox}/>
 
-                            <div style={{position:'fixed', bottom:'0px',backgroundColor:'white'}}>
+                            <div style={{position:'fixed', bottom:'-500px',backgroundColor:'white'}}>
                                 <div style={{width:OneDrop.JS_ScreenW, height:'2px',
                                     backgroundColor:'rgb(235,235,235)'
                                 }}/>
