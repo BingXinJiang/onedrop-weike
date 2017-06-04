@@ -138,7 +138,7 @@ router.post('/every_day', function (req, res, next) {
 
     //判断该user_id是否是会员,是否可以免费听取课程
 
-    var  query_sql = "select a.section_id,a.section_name,a.author_id,a.section_voice,a.section_des," +
+    var  query_sql = "select a.section_id,a.section_name,a.author_id,a.section_voice,a.section_des,a.section_detail_img," +
         "year(a.open_date)year,month(a.open_date)month,day(a.open_date)day," +
         "b.teacher_name,b.teacher_position,b.teacher_head from " +
         "(select * from course_section where section_id="+section_id+")as a " +

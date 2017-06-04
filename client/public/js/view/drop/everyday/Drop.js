@@ -98,7 +98,7 @@ export default class Drop extends React.Component{
                     <img style={{
                         width:OneDrop.JS_ScreenW,
                         height:'320px'
-                    }} src="../../../../img/weike/test/banner.jpg"/>
+                    }} src={this.state.course ? OneDrop.res_ip+this.state.course.section_detail_img : '../../../../img/weike/zhanwei.jpg'}/>
                     {
                         this.state.course ?
                             <div style={{
@@ -171,7 +171,7 @@ export default class Drop extends React.Component{
                                                 return (
                                                     <div key={index}>
                                                         <p style={{
-                                                    fontSize:'28px',
+                                                    fontSize:'35px',
                                                     marginTop:'30px',
                                                     marginBottom:'15px',
                                                     fontWeight:'bold'
@@ -180,8 +180,9 @@ export default class Drop extends React.Component{
                                                             chapter.text.map((section,idx)=>{
                                                                 return (
                                                                     <p style={{
-                                                                fontSize:'26px',
-                                                                textIndent:'48px'
+                                                                fontSize:'32px',
+                                                                textIndent:'48px',
+                                                                lineHeight:'70px'
                                                             }} key={idx}>{section}</p>
                                                                 )
                                                             })
@@ -219,7 +220,8 @@ export default class Drop extends React.Component{
                         </div>
 
                         <div style={{
-                            marginTop:'35px'
+                            marginTop:'35px',
+                            marginBottom:'110px'
                         }}>
                             {
                                 this.state.comments.map((content,index)=>{
@@ -264,6 +266,9 @@ export default class Drop extends React.Component{
                     </div>
 
                     <div style={{
+                        position:'fixed',
+                        left:'0',
+                        bottom:'0',
                         backgroundColor:'white',
                         height:'110px',
                         display:'flex',
@@ -429,7 +434,7 @@ export default class Drop extends React.Component{
                             left:'15%',
                             bottom:'300px',
                             width:'70%',
-                            height:'400px',
+                            height:'450px',
                             backgroundColor:'rgb(235,235,235)',
                             display:'flex',
                             flexDirection:'column'
@@ -467,9 +472,8 @@ export default class Drop extends React.Component{
                                             }
                                         })
                                     }} style={{
-                                        marginLeft:'40px',
-                                        fontSize:'28px',
-                                        lineHeight:'50px'
+                                        fontSize:'30px',
+                                        lineHeight:'60px'
                                     }} key={index}>{content}</p>
                                     })
                                 }
