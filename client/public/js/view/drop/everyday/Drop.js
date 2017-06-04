@@ -337,6 +337,7 @@ export default class Drop extends React.Component{
                         </div>
                     </div>
                 </div>
+
                 {
                     this.state.isShowConnectEach ?
                         <div style={{
@@ -345,37 +346,36 @@ export default class Drop extends React.Component{
                             top:'0',
                             width:OneDrop.JS_ScreenW,
                             height:OneDrop.JS_ScreenH*2,
-                            backgroundColor:'white'
+                            backgroundColor:'rgb(235,235,235)'
                         }}>
+                            <div style={{paddingLeft:'24px',paddingRight:'24px',marginTop:'56px'}}>
+                                <p style={{fontSize:'44px'}}>{this.state.course ? this.state.course.section_name : ''}</p>
+                            </div>
+                            <textarea id="every_day_drop_comment" style={{
+                                width:(OneDrop.JS_ScreenW-100) +'px',
+                                fontSize:'24px',
+                                color:'rgb(153,153,153)',
+                                padding:'15px',
+                                height:'500px',
+                                marginLeft:'25px',
+                                marginRight:'25px',
+                                borderWidth:'2px',
+                                borderColor:'white',
+                                marginTop:'56px'
+                            }} placeholder="留言将经过筛选后显示，对所有用户可见"/>
                             <div style={{
                                 display:'flex',
-                                flexDirection:'row',
-                                justifyContent:'space-between',
-                                paddingTop:'20px',
+                                flexDirection:'column',
+                                marginTop:'38px',
                                 paddingLeft:'24px',
                                 paddingRight:'24px'
                             }}>
-                                <div onClick={()=>{
-                                    this.setState({
-                                        isShowConnectEach:false
-                                    })
-                                }} style={{
-                                    width:'120px',
-                                    height:'70px',
-                                    backgroundColor:'rgb(153,153,153)',
-                                    display:'flex',
-                                    justifyContent:'center',
-                                    alignItems:'center',
-                                    borderRadius:'10px'
-                                }}>
-                                    <p style={{fontSize:'26px',color:'white'}}>取消</p>
-                                </div>
                                 <div onClick={()=>{
                                     //提交评论
                                     var comment = $('#every_day_drop_comment').val().trim();
                                     if(comment){
                                         if(this.state.course){
-                                            var section_id = self.props.sectionId;
+                                            var section_id = self.state.nowSectionId;
                                             $.ajax({
                                                 url:OneDrop.base_ip+'/main/section/comment',
                                                 dataType:'json',
@@ -401,29 +401,35 @@ export default class Drop extends React.Component{
                                         alert('请先输入评论,再提交您的评论!');
                                     }
                                 }} style={{
-                                    width:'120px',
+                                    width:'100%',
                                     height:'70px',
                                     backgroundColor:'rgb(28,166,148)',
                                     display:'flex',
                                     justifyContent:'center',
                                     alignItems:'center',
-                                    borderRadius:'10px'
+                                    borderRadius:'10px',
+                                    marginTop:'38px'
                                 }}>
                                     <p style={{fontSize:'26px',color:'white'}}>提交</p>
                                 </div>
+                                <div onClick={()=>{
+                                    this.setState({
+                                        isShowConnectEach:false
+                                    })
+                                }} style={{
+                                    width:'100%',
+                                    height:'70px',
+                                    backgroundColor:'rgb(208,207,207)',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                    alignItems:'center',
+                                    borderRadius:'10px',
+                                    marginTop: '38px'
+                                }}>
+                                    <p style={{fontSize:'26px',color:'white'}}>取消</p>
+                                </div>
                             </div>
-                            <textarea id="every_day_drop_comment" style={{
-                                width:(OneDrop.JS_ScreenW-100) +'px',
-                                fontSize:'24px',
-                                color:'rgb(153,153,153)',
-                                padding:'15px',
-                                height:'500px',
-                                marginLeft:'25px',
-                                marginRight:'25px',
-                                marginTop:'50px',
-                                borderWidth:'2px',
-                                borderColor:'rgb(235,235,235)'
-                            }} placeholder="留言将经过筛选后显示，对所有用户可见"/>
+
                         </div>
                         : null
                 }
