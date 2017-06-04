@@ -17,6 +17,7 @@ import Question from '../question/Question';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
 import MyDrop from '../drop/mine/MyDrop';
+import Drop from '../drop/everyday/Drop';
 
 import Introduction from './Introduction';
 
@@ -102,12 +103,12 @@ class Main extends React.Component{
                         }}/>
                         :
                         <div>
-                            <Route exact path='/weixin/main/' component={EveryDrop}/>
+                            <Route exact path='/weixin/main/' component={Drop}/>
                             <Route path='/weixin/main/mydrop' component={MyDrop}/>
                             <Route path='/weixin/main/question' component={Answer}/>
                             <Route path='/weixin/main/tool' component={ToolBox}/>
 
-                            <div style={{position:'fixed', bottom:'0px',backgroundColor:'white'}}>
+                            <div style={{position:'fixed', bottom:'-500px',backgroundColor:'white'}}>
                                 <div style={{width:OneDrop.JS_ScreenW, height:'2px',
                                     backgroundColor:'rgb(235,235,235)'
                                 }}/>
