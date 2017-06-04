@@ -375,14 +375,14 @@ export default class Drop extends React.Component{
                                     var comment = $('#every_day_drop_comment').val().trim();
                                     if(comment){
                                         if(this.state.course){
-                                            var section_id = self.state.nowSectionId;
+                                            // var section_id = self.state.nowSectionId;
                                             $.ajax({
                                                 url:OneDrop.base_ip+'/main/section/comment',
                                                 dataType:'json',
                                                 method:'POST',
                                                 data:{
                                                     user_id:REMOTE_WEIXIN_USER_ID,
-                                                    section_id:section_id,
+                                                    section_id:self.props.sectionId,
                                                     comment:comment
                                                 },
                                                 success:(data)=>{
