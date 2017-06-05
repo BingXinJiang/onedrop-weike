@@ -59,7 +59,7 @@ export default class LastDrop extends React.Component{
                 {
                     !this.state.isShowEverydayDrop&&!this.state.isShowLeadPage ?
                         <div style={{
-                            backgroundColor:'rgb(235,235,235)',
+                            backgroundColor:'rgb(229,236,242)',
                             width:OneDrop.JS_ScreenW,
                             paddingBottom:'110px'
                         }}>
@@ -90,33 +90,34 @@ export default class LastDrop extends React.Component{
                                                 wav_url:wav_url
                                             })
                                         }} style={{
-                                            marginTop:'20px',
+                                            marginTop:'30px',
                                             backgroundColor:'white',
                                             width:'100%'
                                         }}>
                                             <div style={{
-                                                paddingTop:'34px',
-                                                paddingBottom:'33px',
+                                                paddingTop:'48px',
+                                                paddingBottom:'28px',
                                                 marginRight:'24px',
                                                 marginLeft:'24px'
                                             }}>
                                                 <p style={{
-                                                    fontSize:'36px',
-                                                    color:'rgb(0,0,0)'
-                                                }}>{content.section_id} | {content.section_name}</p>
-                                                <img style={{height:'300px',width:'100%',
-                                                    marginTop:'24px'
-                                                }} src={OneDrop.res_ip+content.section_list_img}/>
+                                                    fontSize:'48px',
+                                                    color:'rgb(0,0,0)',
+                                                    fontFamily:'DropText'
+                                                }}>{content.section_name}</p>
                                                 <p style={{
-                                                    marginTop:'24px',
-                                                    fontSize:'26px',
+                                                    marginTop:'48px',
+                                                    fontSize:'30px',
                                                     color:'rgb(102,102,102)'
                                                 }}>{content.section_intro}</p>
                                                 <p style={{
-                                                    marginTop:'24px',
+                                                    marginTop:'28px',
                                                     fontSize:'20px',
                                                     color:'rgb(131,131,131)'
                                                 }}>{content.year}年{content.month}月{content.day}日</p>
+                                                <img style={{height:'300px',width:'100%',
+                                                    marginTop:'28px'
+                                                }} src={OneDrop.res_ip+content.section_list_img}/>
                                             </div>
                                         </div>
                                     )

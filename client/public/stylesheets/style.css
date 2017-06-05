@@ -3,6 +3,11 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+@font-face {
+  font-family: DropText; /*这里是说明调用来的字体名字*/
+  src: url('../img/weike/drop.TTF'); /*这里是字体文件路径*/
+}
+
 #container{
   width:100%;
 }
