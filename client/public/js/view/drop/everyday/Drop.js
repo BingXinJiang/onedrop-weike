@@ -102,88 +102,102 @@ export default class Drop extends React.Component{
                     {
                         this.state.course ?
                             <div style={{
-                        display:'flex',
-                        flexDirection:'column',
-                        width:'100%',
-                        backgroundColor:'white'
-                    }}>
+                                display:'flex',
+                                flexDirection:'column',
+                                width:'100%',
+                                backgroundColor:'white'
+                            }}>
                                 <div style={{
-                            paddingTop:'56px',
-                            marginLeft:'24px',
-                            marginRight:'24px'
-                        }}>
+                                    paddingTop:'89px',
+                                    marginLeft:'24px',
+                                    marginRight:'24px'
+                                }}>
                                     <p style={{
-                                fontSize:'44px',
-                                color:'rgb(0,0,0)'
-                            }}>{this.state.course ? this.state.course.section_name : ''}</p>
+                                        fontFamily:'DropText',
+                                        fontSize:'44px',
+                                        color:'rgb(0,0,0)'
+                                    }}>{this.state.course ? this.state.course.section_name : ''}</p>
 
                                     <div style={{
-                                display:'flex',
-                                flexDirection:'row',
-                                marginTop:'34px',
-                                justifyContent:'space-between'
-                            }}>
-                                        <div style={{
-                                    display:'flex',
-                                    flexDirection:'row'
-                                }}>
-                                            <div style={{
-                                        width:'80px',
-                                        height:'80px',
-                                        borderRadius:'40px'
+                                        display:'flex',
+                                        flexDirection:'row',
+                                        marginTop:'34px',
+                                        justifyContent:'space-between'
                                     }}>
+                                        <div style={{
+                                            display:'flex',
+                                            flexDirection:'row'
+                                        }}>
+                                            <div style={{
+                                                width:'80px',
+                                                height:'80px',
+                                                borderRadius:'40px'
+                                            }}>
                                                 <img style={{
-                                            width:'80px'
-                                        }} src={OneDrop.res_ip+this.state.course.teacher_head}/>
+                                                    width:'80px'
+                                                }} src={OneDrop.res_ip+this.state.course.teacher_head}/>
                                             </div>
                                             <div style={{
-                                        display:'flex',
-                                        flexDirection:'column',
-                                        marginLeft:'16px'
-                                    }}>
+                                                display:'flex',
+                                                flexDirection:'column',
+                                                marginLeft:'16px'
+                                            }}>
                                                 <p style={{
-                                            fontSize:'28px'
-                                        }}>{this.state.course.teacher_name}</p>
+                                                    fontSize:'28px'
+                                                }}>{this.state.course.teacher_name}</p>
                                                 <p style={{
-                                            fontSize:'28px'
-                                        }}>{this.state.course.teacher_position}</p>
+                                                    fontSize:'28px'
+                                                }}>{this.state.course.teacher_position}</p>
                                             </div>
                                         </div>
                                         <p style={{
-                                    fontSize:'24px',
-                                    color:'rgb(153,153,153)',
-                                    marginTop:'40px'
-                                }}>{this.state.course.year}年{this.state.course.month}月{this.state.course.day}日</p>
+                                            fontSize:'24px',
+                                            color:'rgb(153,153,153)',
+                                            marginTop:'40px'
+                                        }}>{this.state.course.year}年{this.state.course.month}月{this.state.course.day}日</p>
+                                    </div>
+
+                                    <div style={{width:(OneDrop.JS_ScreenW-48)+'px',height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'41px'}}/>
+
+                                    <div style={{
+                                        marginTop:'95px'
+                                    }}>
+                                        <DropAudio sectionName={this.state.course.section_name}/>
                                     </div>
 
                                     <div style={{
-                                marginTop:'54px'
-                            }}>
-                                        <DropAudio audioUrl={this.state.course.section_voice}/>
-                                    </div>
-
-                                    <div style={{
-                                marginTop:'72px',
-                                marginBottom:'30px'
-                            }}>
+                                        marginTop:'92px',
+                                        marginBottom:'30px'
+                                    }}>
                                         {
                                             myArticle ? myArticle.text.map((chapter, index)=>{
                                                 return (
                                                     <div key={index}>
                                                         <p style={{
-                                                    fontSize:'35px',
-                                                    marginTop:'30px',
-                                                    marginBottom:'15px',
-                                                    fontWeight:'bold'
-                                                }}>{chapter.title}</p>
+                                                            fontSize:'36px',
+                                                            marginTop:'70px',
+                                                            marginBottom:'15px',
+                                                            fontWeight:'bold'
+                                                        }}>{chapter.title}</p>
                                                         {
                                                             chapter.text.map((section,idx)=>{
+                                                                if(index === 0 && idx === 0){
+                                                                    return(
+                                                                        <p style={{
+                                                                            fontSize:'32px',
+                                                                            textIndent:'48px',
+                                                                            lineHeight:'70px',
+                                                                            color:'rgb(23,172,251)'
+                                                                        }} key={idx}>{section}</p>
+                                                                    )
+                                                                }
                                                                 return (
                                                                     <p style={{
-                                                                fontSize:'32px',
-                                                                textIndent:'48px',
-                                                                lineHeight:'70px'
-                                                            }} key={idx}>{section}</p>
+                                                                        fontSize:'32px',
+                                                                        textIndent:'48px',
+                                                                        lineHeight:'70px',
+                                                                        color:'rgb(51,51,51)'
+                                                                    }} key={idx}>{section}</p>
                                                                 )
                                                             })
                                                         }

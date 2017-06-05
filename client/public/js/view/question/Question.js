@@ -11,7 +11,7 @@ export default class Question extends React.Component{
     render(){
         var self = this;
         return (
-            <div style={{width:'100%', height:'100%',
+            <div style={{width:'100%',
                 backgroundColor:'rgb(235,235,235)'
             }}>
                 <div style={{marginTop:'20px',
@@ -20,7 +20,7 @@ export default class Question extends React.Component{
                     flexDirection:'column',
                     alignItems:'center',
                     width:'100%',
-                    height:'330px',
+                    height:'330px'
 
                 }}>
                    <span style={{height:'60px',

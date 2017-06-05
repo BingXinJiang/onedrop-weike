@@ -48,7 +48,7 @@ export default class LastDrop extends React.Component{
             <div>
                 {
                     this.state.isShowEverydayDrop ?
-                        <audio preload="auto">
+                        <audio id="che_dan_de_yin_pin" preload="auto">
                             <source src={this.state.ogg_url} type="audio/ogg"/>
                             <source src={this.state.mp3_url} type="audio/mpeg"/>
                             <source src={this.state.wav_url} type="audio/wav"/>

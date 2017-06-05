@@ -17,7 +17,6 @@ import Question from '../question/Question';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
 import MyDrop from '../drop/mine/MyDrop';
-
 import Introduction from './Introduction';
 
 class Main extends React.Component{
@@ -87,6 +86,8 @@ class Main extends React.Component{
         var oneDrop_selected_src = '../../../img/weike/main/day_drop_selected.png';
         var course_src = '../../../img/weike/main/my_drop.png';
         var course_selected_src = '../../../img/weike/main/my_drop_selected.png';
+        var question_src = '../../../img/weike/main/question.png';
+        var question_selected_src = '../../../img/weike/main/question_selected.png';
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var tool_src = '../../../img/weike/main/tool.png';
@@ -102,12 +103,13 @@ class Main extends React.Component{
                         }}/>
                         :
                         <div>
-                            <Route exact path='/weixin/main/' component={EveryDrop}/>
+                            <Route exact path='/weixin/main' component={EveryDrop}/>
                             <Route path='/weixin/main/mydrop' component={MyDrop}/>
-                            <Route path='/weixin/main/question' component={Answer}/>
+                            <Route path='/weixin/main/question' component={Question}/>
+                            <Route path='/weixin/main/answer' component={Answer}/>
                             <Route path='/weixin/main/tool' component={ToolBox}/>
 
-                            <div style={{position:'fixed', bottom:'-500px',backgroundColor:'white'}}>
+                            <div style={{position:'fixed', bottom:'0px',backgroundColor:'white'}}>
                                 <div style={{width:OneDrop.JS_ScreenW, height:'2px',
                                     backgroundColor:'rgb(235,235,235)'
                                 }}/>
@@ -121,7 +123,7 @@ class Main extends React.Component{
                                     }}>
                                         <Link style={{
 
-                                        }} to="/weixin/main/">
+                                        }} to="/weixin/main">
                                             <img src={this.state.selectedTab === 'everydrop' ? oneDrop_selected_src : oneDrop_src}/>
                                         </Link>
                                     </li>
@@ -139,17 +141,34 @@ class Main extends React.Component{
                                         </Link>
                                     </li>
 
+                                    {
+                                        /*
+                                         <li style={{float:'left',width:tabBtnW,
+                                         textAlign:'center',listStyleType:'none',
+                                         marginTop:'-65px'
+                                         }} onClick={()=>{
+                                         this.setState({
+                                         showQuestion:true
+                                         })
+                                         }}>
+                                         <img style={{
+                                         width:tabBtnW
+                                         }} src="../../../img/weike/main/question.png"/>
+                                         </li>
+                                        */
+                                    }
                                     <li style={{float:'left',width:tabBtnW,
-                                        textAlign:'center',listStyleType:'none',
-                                        marginTop:'-65px'
+                                        textAlign:'center',listStyleType:'none'
                                     }} onClick={()=>{
                                         this.setState({
-                                            showQuestion:true
+                                            selectedTab:'question'
                                         })
                                     }}>
-                                        <img style={{
-                                            width:tabBtnW
-                                        }} src="../../../img/weike/main/question.png"/>
+                                        <Link style={{
+
+                                        }} to="/weixin/main/question">
+                                            <img src={this.state.selectedTab === 'question' ? question_selected_src : question_src}/>
+                                        </Link>
                                     </li>
 
                                     <li style={{float:'right',width:tabBtnW,
@@ -174,13 +193,14 @@ class Main extends React.Component{
                                     }}>
                                         <Link style={{
 
-                                        }} to="/weixin/main/question">
+                                        }} to="/weixin/main/answer">
                                             <img src={this.state.selectedTab === 'answer' ? answer_selected_src : answer_src}/>
                                         </Link>
                                     </li>
                                 </ul>
                             </div>
                             {
+                                /*
                                 this.state.showQuestion ?
                                     <div style={{position:'fixed', top:'0', left:'0',
                                         width:OneDrop.JS_ScreenW,
@@ -195,6 +215,7 @@ class Main extends React.Component{
                                     </div>
                                     :
                                     null
+                                    */
                             }
                         </div>
                 }
