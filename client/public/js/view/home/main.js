@@ -54,32 +54,32 @@ class Main extends React.Component{
         /**
          * 在这里进行员工身份的识别，包括给员工进行分组，等。。。
          * */
-        $.ajax({
-            url:OneDrop.base_ip+'/onedrop/xingye',
-            dataType:'json',
-            method:'POST',
-            data:{
-                user_id:this.state.userId
-            },
-            success:function(data) {
-                if(data.status === 1){
-                    // console.log('data:', data);
-                    if(data.data.member_status === 1){//兴业员工
-
-                    }else if(data.data.member_status === 2){//非兴业员工
-
-                    }else if(data.data.member_status === 3){//第一次登陆
-                        self.setState({
-                            isFirst:false
-                        })
-                    }
-                }else{
-                    self.setState({
-                        isFirst:false
-                    })
-                }
-            }
-        })
+        // $.ajax({
+        //     url:OneDrop.base_ip+'/onedrop/xingye',
+        //     dataType:'json',
+        //     method:'POST',
+        //     data:{
+        //         user_id:this.state.userId
+        //     },
+        //     success:function(data) {
+        //         if(data.status === 1){
+        //             // console.log('data:', data);
+        //             if(data.data.member_status === 1){//兴业员工
+        //
+        //             }else if(data.data.member_status === 2){//非兴业员工
+        //
+        //             }else if(data.data.member_status === 3){//第一次登陆
+        //                 self.setState({
+        //                     isFirst:false
+        //                 })
+        //             }
+        //         }else{
+        //             self.setState({
+        //                 isFirst:false
+        //             })
+        //         }
+        //     }
+        // })
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';
