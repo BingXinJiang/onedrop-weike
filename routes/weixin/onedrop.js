@@ -167,7 +167,7 @@ router.post('/every_day', function (req, res, next) {
 router.post('/sections', function (req, res, next) {
     var user_id = req.body.user_id;
     var page = req.body.page;
-    var query_sql = "select section_id,section_list_img,section_intro,section_name,open_date,year(open_date)year,month(open_date)month,day(open_date)day" +
+    var query_sql = "select section_id,section_list_img,section_intro,section_voice,section_name,open_date,year(open_date)year,month(open_date)month,day(open_date)day" +
         " from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10";
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){

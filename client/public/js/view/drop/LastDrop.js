@@ -62,17 +62,28 @@ export default class LastDrop extends React.Component{
                             </div>
                             {
                                 this.state.courses.map((content,index)=>{
+                                    var mp3_url = content.section_voice;
+                                    var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
+                                    mp3_url = preUrl + '.mp3';
+                                    var ogg_url = preUrl + '.ogg';
+                                    var wav_url = preUrl + '.wav';
                                     return(
                                         <div key={index} onClick={()=>{
-                                this.setState({
-                                    isShowEverydayDrop:true,
-                                    section_id:content.section_id
-                                })
-                            }} style={{
-                                marginTop:'20px',
-                                backgroundColor:'white',
-                                width:'100%'
-                            }}>
+                                            this.setState({
+                                                isShowEverydayDrop:true,
+                                                section_id:content.section_id
+                                            })
+                                        }} style={{
+                                            marginTop:'20px',
+                                            backgroundColor:'white',
+                                            width:'100%'
+                                        }}>
+                                            <audio preload="auto">
+                                                <source src={ogg_url} type="audio/ogg"/>
+                                                <source src={mp3_url} type="audio/mpeg"/>
+                                                <source src={wav_url} type="audio/wav"/>
+                                                您的浏览器不支持audio
+                                            </audio>
                                             <div style={{
                                                 paddingTop:'34px',
                                                 paddingBottom:'33px',
