@@ -62,7 +62,9 @@ export default class DropAudio extends React.Component{
                         }}>{Tool.convertSec(parseInt(Number(this.state.curTime)))}</p>
                         <img onClick={()=>{
                             var audio = this.refs.section_audio;
-
+                            audio.addEventListener("playing", function(){
+                                console.log('现在开始播放了呢。。。。。。');
+                            });
                             if(audio.paused || audio.ended || !this.state.playing){
                                 audio.play();
                                 this.setState({
