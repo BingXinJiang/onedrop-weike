@@ -20,6 +20,7 @@ export default class DropAudio extends React.Component{
         this.audioTimer = setInterval(()=>{
             var duration = this.refs.section_audio.duration;
             var curTime = this.refs.section_audio.currentTime;
+            console.log('---------');
             this.setState({
                 duration:parseInt(duration),
                 curTime:parseInt(curTime)
@@ -61,6 +62,7 @@ export default class DropAudio extends React.Component{
                             color:'rgb(110,217,33)'
                         }}>{Tool.convertSec(parseInt(Number(this.state.curTime)))}</p>
                         <img onClick={()=>{
+                            console.log('点击开始播放。。。');
                             var audio = this.refs.section_audio;
                             audio.addEventListener("playing", function(){
                                 console.log('现在开始播放了呢。。。。。。');
