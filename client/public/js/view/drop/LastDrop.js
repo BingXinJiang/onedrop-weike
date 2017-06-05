@@ -78,6 +78,7 @@ export default class LastDrop extends React.Component{
                                     var mp3_url = content.section_voice;
                                     var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
                                     mp3_url = preUrl + '.mp3';
+                                    mp3_url = 'http://dev.mymax.cn/affix/temp/music/section_1_1_1.mp3';
                                     var ogg_url = preUrl + '.ogg';
                                     var wav_url = preUrl + '.wav';
                                     return(
