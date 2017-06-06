@@ -13,7 +13,7 @@ export default class MyDrop extends React.Component{
             <div>
                 <img style={{
                     width:OneDrop.JS_ScreenW,
-                    height:OneDrop.JS_ScreenH*2
+                    height:(OneDrop.JS_ScreenH*2-90)+'px'
                 }} src="../../../../img/weike/home/mydrop.jpg"/>
             </div>
         )
