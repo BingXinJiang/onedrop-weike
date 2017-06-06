@@ -101,17 +101,19 @@ export default class DropAudio extends React.Component{
                         <div style={{
                             display:'flex',
                             flexDirection:'column',
-                            justifyContent:'center',
+                            // justifyContent:'center',
                             marginLeft:'28px'
+
                         }}>
                             <p style={{
-                                fontSize:'30px',
-                                color:'rgb(0,0,0)'
+                                fontSize:'33px',
+                                color:'rgb(0,0,0)',
+                                // marginTop:'25px'
                             }}>{this.props.sectionName}</p>
                             <p style={{
-                                fontSize:'24px',
+                                fontSize:'28px',
                                 color:'rgb(134,135,136)',
-                                marginTop:'25px'
+                                // marginTop:'15px'
                             }}>{Tool.convertSec(parseInt(Number(this.state.duration ? this.state.duration : 0)))}</p>
                         </div>
                     </div>
