@@ -34,9 +34,10 @@ export default class DropAudio extends React.Component{
 
     componentWillUnmount(){
         clearInterval(this.audioTimer);
-        var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+        var section = '#che_dan_de_yin_pin'+this.props.sectionId;
         var audio = $(section)[0];
-        audio.stop();
+        audio.pause();
+        audio.currentTime = 0;
     }
 
     render(){
@@ -82,9 +83,9 @@ export default class DropAudio extends React.Component{
                             // var audio = this.refs.section_audio;
                             var section = '#che_dan_de_yin_pin'+self.props.sectionId;
                             var audio = $(section)[0];
-                            audio.addEventListener("playing", function(){
-                                console.log('现在开始播放了呢。。。。。。');
-                            });
+                            // audio.addEventListener("playing", function(){
+                            //     console.log('现在开始播放了呢。。。。。。');
+                            // });
                             if(audio.paused || audio.ended || !this.state.playing){
                                 audio.play();
                                 this.setState({
