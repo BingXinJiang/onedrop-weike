@@ -7,6 +7,9 @@ import OneDrop from '../../const/onedrop';
 export default class Question extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            isShowAlert:false
+        }
     }
     render(){
         var self = this;
@@ -23,17 +26,22 @@ export default class Question extends React.Component{
                     height:'330px'
 
                 }}>
-                   <span style={{height:'60px',
-                            width:'85%',
-                            marginTop:'10px',
-                            textAlign:'right'
-                   }} onClick={()=>{
-                        this.props.callback();
-                   }}>
-                       <img style={{
-                            width:'60px'
-                       }} src="../../../img/weike/question/close.png"/>
-                   </span>
+                    {
+                        /*
+                         <span style={{height:'60px',
+                         width:'85%',
+                         marginTop:'10px',
+                         textAlign:'right'
+                         }} onClick={()=>{
+                         this.props.callback();
+                         }}>
+                         <img style={{
+                         width:'60px'
+                         }} src="../../../img/weike/question/close.png"/>
+                         </span>
+                        **/
+                    }
+
                     <img style={{
                         width:'90px',
                         marginTop:'30px'
@@ -95,7 +103,12 @@ export default class Question extends React.Component{
                                         },
                                         success:function(data) {
                                             if(data.status === 1){
-                                                self.props.callback();
+                                                // self.props.callback();
+                                                $('#question_ask_commit').val('');
+                                                // alert('问题提交成功,请到解答页面查看您提交的问题!')
+                                                self.setState({
+                                                    isShowAlert:true
+                                                })
                                             }else{
                                                 alert('网络错误,请重新提交!!!');
                                             }
@@ -120,6 +133,35 @@ export default class Question extends React.Component{
                         }}>提交问题</p>
                     </div>
                 </div>
+                {
+                    this.state.isShowAlert ?
+                        <div style={{
+                            position:'absolute',
+                            left:'15%',
+                            top:'40%',
+                            width:'70%',
+                            height:'200px',
+                            display:'flex',
+                            flexDirection:'column',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            backgroundColor:'rgb(235,235,235)',
+                            borderRadius:'10px'
+                        }}>
+                            <p style={{fontSize:'30px',marginLeft:'20px',marginRight:'20px'}}>问题提交成功,请到解答页面查看您提交的问题!</p>
+                            <div onClick={()=>{
+                                this.setState({
+                                    isShowAlert:false
+                                })
+                            }} style={{width:'80px',height:'60px',display:'flex',justifyContent:'center',
+                            alignItems:'center',borderWidth:'2px',borderRadius:'5px',borderStyle:'solid',
+                            borderColor:'rgb(149,149,149)',marginTop:'20px'
+                            }}>
+                                <p style={{fontSize:'28px'}}>确定</p>
+                            </div>
+                        </div>
+                        : null
+                }
             </div>
         )
     }

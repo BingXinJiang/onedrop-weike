@@ -17,6 +17,30 @@ export default class Drop extends React.Component{
             isAppreciateMine:false,
             isShowAppreciateMine:false,
             appreciate_course_num:0
+        };
+        this.chooseHight = (section)=>{
+            var htext = section.htext[0];
+            var texts = section.text.split(htext);
+            return <p style={{
+                fontSize:'32px',
+                lineHeight:'70px',
+                color:'rgb(51,51,51)'
+            }}>
+                {
+                    texts.map((txt,idx)=>{
+
+                        return  <span key={idx}>
+                            <span>{txt}</span>
+                            {
+                                idx === 0 ? <span key={idx} style={{color:'rgb(117,193,241)'}}>{htext}</span>
+                                    : null
+                            }
+                        </span>
+
+                    })
+                }
+            </p>
+
         }
     }
 
@@ -198,7 +222,7 @@ export default class Drop extends React.Component{
                                                                             fontSize:'32px',
                                                                             lineHeight:'70px',
                                                                             color:'rgb(23,172,251)'
-                                                                        }} key={idx}>{section}</p>
+                                                                        }} key={idx}>{section.text}</p>
                                                                     )
                                                                 }
                                                                 return (
@@ -225,11 +249,14 @@ export default class Drop extends React.Component{
                                                                                 }
                                                                             })
                                                                         }
-                                                                        <p style={{
-                                                                            fontSize:'32px',
-                                                                            lineHeight:'70px',
-                                                                            color:'rgb(51,51,51)'
-                                                                        }} key={idx}>{section}</p>
+                                                                        {
+                                                                            section.htext.length>0 ? this.chooseHight(section) :
+                                                                                <p style={{
+                                                                                    fontSize:'32px',
+                                                                                    lineHeight:'70px',
+                                                                                    color:'rgb(51,51,51)'
+                                                                                }} key={idx}>{section.text}</p>
+                                                                        }
                                                                     </div>
                                                                 )
                                                             })
