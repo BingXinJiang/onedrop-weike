@@ -102,7 +102,7 @@ export default class LastDrop extends React.Component{
                                                 marginLeft:'24px'
                                             }}>
                                                 <p style={{
-                                                    fontSize:'48px',
+                                                    fontSize:'40px',
                                                     color:'rgb(0,0,0)'
                                                 }}>{content.section_name}</p>
                                                 <p style={{
@@ -111,7 +111,7 @@ export default class LastDrop extends React.Component{
                                                     color:'rgb(102,102,102)'
                                                 }}>{content.section_intro}</p>
                                                 <p style={{
-                                                    marginTop:'28px',
+                                                    marginTop:'23px',
                                                     fontSize:'20px',
                                                     color:'rgb(131,131,131)'
                                                 }}>{content.year}年{content.month}月{content.day}日</p>

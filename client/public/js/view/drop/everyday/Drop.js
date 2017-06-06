@@ -484,11 +484,12 @@ export default class Drop extends React.Component{
                             bottom:'300px',
                             width:'70%',
                             height:'450px',
-                            backgroundColor:'rgb(235,235,235)',
                             display:'flex',
-                            flexDirection:'column'
+                            flexDirection:'column',
+                            backgroundImage:'url(../../../../img/weike/onedrop/appreciate_me_bg.png)',
+                            backgroundSize:'100% 100%'
                         }}>
-                            <p style={{fontSize:'28px',paddingTop:'15px',paddingLeft:'15px',paddingRight:'15px'}}>学了这个课程,你觉得自己的领导力长高了几米呢?</p>
+                            <p style={{fontSize:'28px',color:'white',paddingTop:'15px',paddingLeft:'15px',paddingRight:'15px'}}>学了这个课程,你觉得自己的领导力长高了几米呢?</p>
                             <div style={{
                                 display:'flex',
                                 flexDirection:'column',
@@ -522,7 +523,8 @@ export default class Drop extends React.Component{
                                         })
                                     }} style={{
                                         fontSize:'30px',
-                                        lineHeight:'60px'
+                                        lineHeight:'63px',
+                                        color:'white'
                                     }} key={index}>{content}</p>
                                     })
                                 }
