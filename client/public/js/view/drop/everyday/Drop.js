@@ -15,7 +15,8 @@ export default class Drop extends React.Component{
             comments:[],
             isAppreciateCourse:false,
             isAppreciateMine:false,
-            isShowAppreciateMine:false
+            isShowAppreciateMine:false,
+            appreciate_course_num:0
         }
     }
 
@@ -65,7 +66,8 @@ export default class Drop extends React.Component{
                 var comments = results[1];
                 self.setState({
                     course:course,
-                    comments:comments
+                    comments:comments,
+                    appreciate_course_num:course.appreciate_course_num
                 })
             }
         })
@@ -76,7 +78,7 @@ export default class Drop extends React.Component{
         if(this.state.course){
             myArticle = JSON.parse(this.state.course.section_des);
         }
-
+        const appreciate_num_color = this.state.isAppreciateCourse ? 'rgb(220,92,34)' : 'rgb(121,122,123)';
         const tabStyle = {
             width:OneDrop.JS_ScreenW/4,
             display:'flex',
@@ -98,7 +100,7 @@ export default class Drop extends React.Component{
                     <img style={{
                         width:OneDrop.JS_ScreenW,
                         height:'320px'
-                    }} src={this.state.course ? OneDrop.res_ip+this.state.course.section_detail_img : '../../../../img/weike/zhanwei.jpg'}/>
+                    }} src={this.state.course ? OneDrop.res_ip+this.state.course.section_detail_img : '../../../../img/weike/onedrop/zhanwei.jpg'}/>
                     {
                         this.state.course ?
                             <div style={{
@@ -113,7 +115,6 @@ export default class Drop extends React.Component{
                                     marginRight:'24px'
                                 }}>
                                     <p style={{
-                                        fontFamily:'DropText',
                                         fontSize:'44px',
                                         color:'rgb(0,0,0)'
                                     }}>{this.state.course ? this.state.course.section_name : ''}</p>
@@ -162,7 +163,7 @@ export default class Drop extends React.Component{
                                     <div style={{
                                         marginTop:'95px'
                                     }}>
-                                        <DropAudio sectionName={this.state.course.section_name}/>
+                                        <DropAudio sectionName={this.state.course.section_name} sectionId={this.props.sectionId}/>
                                     </div>
 
                                     <div style={{
@@ -185,19 +186,40 @@ export default class Drop extends React.Component{
                                                                     return(
                                                                         <p style={{
                                                                             fontSize:'32px',
-                                                                            textIndent:'48px',
                                                                             lineHeight:'70px',
                                                                             color:'rgb(23,172,251)'
                                                                         }} key={idx}>{section}</p>
                                                                     )
                                                                 }
                                                                 return (
-                                                                    <p style={{
+                                                                    <div>
+                                                                        {
+                                                                            myArticle.image.map((img,indx)=>{
+                                                                                if(index==img.part && idx==img.section){
+                                                                                    return (
+                                                                                        <div key={indx} style={{
+                                                                                            display:'flex',
+                                                                                            width:'100%',
+                                                                                            justifyContent:'center',
+                                                                                            alignItems:'center',
+                                                                                            marginTop:'30px',
+                                                                                            marginBottom:'40px'
+                                                                                        }}>
+                                                                                            <img style={{
+                                                                                                width:'100%',
+                                                                                                height:'360px'
+                                                                                            }} src={OneDrop.res_ip+img.url}/>
+                                                                                        </div>
+                                                                                    )
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                        <p style={{
                                                                         fontSize:'32px',
-                                                                        textIndent:'48px',
                                                                         lineHeight:'70px',
                                                                         color:'rgb(51,51,51)'
                                                                     }} key={idx}>{section}</p>
+                                                                    </div>
                                                                 )
                                                             })
                                                         }
@@ -323,7 +345,8 @@ export default class Drop extends React.Component{
                                 success:(data)=>{
                                     if(data.status === 1){
                                         self.setState({
-                                            isAppreciateCourse:true
+                                            isAppreciateCourse:true,
+                                            appreciate_course_num:this.state.appreciate_course_num+1
                                         })
                                     }else{
                                         alert('点赞失败!');
@@ -334,15 +357,21 @@ export default class Drop extends React.Component{
                         }} style={{
                             ...tabStyle
                         }}>
-                            <div>
+                            <div style={{position:'relative'}}>
                                 <img src={this.state.isAppreciateCourse ? "../../../../img/weike/onedrop/appreciate_course_selected.png":"../../../../img/weike/onedrop/appreciate_course.png"}/>
+
+                                    <p style={{position:'absolute',left:'38px',top:'0',
+                                    fontSize:'28px',color:appreciate_num_color
+                                    }}>{this.state.appreciate_course_num}</p>
+
                             </div>
                         </div>
                         <div onClick={()=>{
                             if(this.state.isAppreciateMine){return;}
                             if(this.state.isShowConnectEach){return;}
                             this.setState({
-                                isShowAppreciateMine:true
+                                isShowAppreciateMine:true,
+
                             })
                         }} style={{
                             ...tabStyle

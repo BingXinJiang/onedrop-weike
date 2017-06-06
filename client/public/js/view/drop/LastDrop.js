@@ -47,10 +47,10 @@ export default class LastDrop extends React.Component{
         return (
             <div>
                 {
-                    this.state.isShowEverydayDrop ?
+                    this.state.isShowEverydayDrop && false ?
                         <audio id="che_dan_de_yin_pin" preload="auto">
-                            <source src={this.state.ogg_url} type="audio/ogg"/>
                             <source src={this.state.mp3_url} type="audio/mpeg"/>
+                            <source src={this.state.ogg_url} type="audio/ogg"/>
                             <source src={this.state.wav_url} type="audio/wav"/>
                             您的浏览器不支持audio
                         </audio>
@@ -78,7 +78,7 @@ export default class LastDrop extends React.Component{
                                     var mp3_url = content.section_voice;
                                     var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
                                     mp3_url = preUrl + '.mp3';
-                                    mp3_url = 'http://dev.mymax.cn/affix/temp/music/section_1_1_1.mp3';
+                                    // mp3_url = 'http://dev.mymax.cn/affix/temp/music/section_1_1_1.mp3';
                                     var ogg_url = preUrl + '.ogg';
                                     var wav_url = preUrl + '.wav';
                                     return(
@@ -103,8 +103,7 @@ export default class LastDrop extends React.Component{
                                             }}>
                                                 <p style={{
                                                     fontSize:'48px',
-                                                    color:'rgb(0,0,0)',
-                                                    fontFamily:'DropText'
+                                                    color:'rgb(0,0,0)'
                                                 }}>{content.section_name}</p>
                                                 <p style={{
                                                     marginTop:'48px',

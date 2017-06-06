@@ -17,22 +17,23 @@ export default class DropAudio extends React.Component{
     }
 
     componentDidMount() {
-        // this.audioTimer = setInterval(()=>{
+        var self = this;
+        this.audioTimer = setInterval(()=>{
             // var duration = this.refs.section_audio.duration;
             // var curTime = this.refs.section_audio.currentTime;
-            var audio = $('#che_dan_de_yin_pin')[0];
+            var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+            var audio = $(section)[0];
             var duration = audio.duration;
             var curTime = audio.currentTime;
-            console.log('---------');
             this.setState({
                 duration:parseInt(duration),
                 curTime:parseInt(curTime)
             })
-        // }, 1000)
+        }, 1000)
     }
 
     componentWillUnmount(){
-        // clearInterval(this.audioTimer);
+        clearInterval(this.audioTimer);
     }
 
     render(){
@@ -41,6 +42,7 @@ export default class DropAudio extends React.Component{
         // mp3_url = preUrl + '.mp3';
         // var ogg_url = preUrl + '.ogg';
         // var wav_url = preUrl + '.wav';
+        var self = this;
         return(
 
                 <div style={{
@@ -62,13 +64,12 @@ export default class DropAudio extends React.Component{
                         display:'flex',
                         flexDirection:'row',
                         height:'144px',
-                        width:(OneDrop.JS_ScreenW-50) + 'px',
-                        marginRight:'24px',
-                        marginLeft:'24px',
-                        borderColor:'rgb(153,153,153)',
-                        borderWidth:'1px',
+                        width:(OneDrop.JS_ScreenW-50)+'px',
+                        borderColor:'rgb(135,135,135)',
+                        borderWidth:'2px',
                         backgroundColor:'rgb(222,232,240)',
-                        alignItems:'center'
+                        alignItems:'center',
+                        borderStyle:'solid'
                     }}>
 
                         <img style={{
@@ -76,7 +77,8 @@ export default class DropAudio extends React.Component{
                         }} onClick={()=>{
                             console.log('点击开始播放。。。');
                             // var audio = this.refs.section_audio;
-                            var audio = $('#che_dan_de_yin_pin')[0];
+                            var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+                            var audio = $(section)[0];
                             audio.addEventListener("playing", function(){
                                 console.log('现在开始播放了呢。。。。。。');
                             });
@@ -99,12 +101,12 @@ export default class DropAudio extends React.Component{
                             marginLeft:'28px'
                         }}>
                             <p style={{
-                                fontSize:'24px',
-                                color:'rgb(110,217,33)'
+                                fontSize:'30px',
+                                color:'rgb(0,0,0)'
                             }}>{this.props.sectionName}</p>
                             <p style={{
                                 fontSize:'24px',
-                                color:'rgb(110,217,33)',
+                                color:'rgb(134,135,136)',
                                 marginTop:'25px'
                             }}>{Tool.convertSec(parseInt(Number(this.state.duration ? this.state.duration : 0)))}</p>
                         </div>

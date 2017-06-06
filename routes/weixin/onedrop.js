@@ -140,10 +140,12 @@ router.post('/every_day', function (req, res, next) {
 
     var  query_sql = "select a.section_id,a.section_name,a.author_id,a.section_voice,a.section_des,a.section_detail_img," +
         "year(a.open_date)year,month(a.open_date)month,day(a.open_date)day," +
-        "b.teacher_name,b.teacher_position,b.teacher_head from " +
+        "b.teacher_name,b.teacher_position,b.teacher_head,c.appreciate_course_num from " +
         "(select * from course_section where section_id="+section_id+")as a " +
         "left join (select * from teacher)as b " +
-        "on a.author_id=b.teacher_id";
+        "on a.author_id=b.teacher_id left join " +
+        "(select section_id,count(*)appreciate_course_num from appreciate_course where section_id="+section_id+")as c" +
+        " on a.section_id=c.section_id";
     // console.log('请求课程内容=========================');
     // console.log('query_sql:', query_sql);
     query(query_sql, function (qerr, valls, fields) {
