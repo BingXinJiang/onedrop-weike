@@ -34,6 +34,9 @@ export default class DropAudio extends React.Component{
 
     componentWillUnmount(){
         clearInterval(this.audioTimer);
+        var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+        var audio = $(section)[0];
+        audio.stop();
     }
 
     render(){
