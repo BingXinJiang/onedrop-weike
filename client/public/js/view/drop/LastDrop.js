@@ -106,7 +106,7 @@ export default class LastDrop extends React.Component{
                                                     color:'rgb(0,0,0)'
                                                 }}>{content.section_name}</p>
                                                 <p style={{
-                                                    marginTop:'38px',
+                                                    marginTop:'28px',
                                                     fontSize:'30px',
                                                     color:'rgb(102,102,102)'
                                                 }}>{content.section_intro}</p>

@@ -174,12 +174,22 @@ export default class Drop extends React.Component{
                                             myArticle ? myArticle.text.map((chapter, index)=>{
                                                 return (
                                                     <div key={index}>
-                                                        <p style={{
-                                                            fontSize:'36px',
-                                                            marginTop:'70px',
-                                                            marginBottom:'15px',
-                                                            fontWeight:'bold'
-                                                        }}>{chapter.title}</p>
+                                                        {
+                                                            chapter.title ?
+                                                                <p style={{
+                                                                    fontSize:'36px',
+                                                                    marginTop:'70px',
+                                                                    marginBottom:'15px',
+                                                                    fontWeight:'bold'
+                                                                }}>{chapter.title}</p>
+                                                                :
+                                                                <p style={{
+                                                                    fontSize:'36px',
+                                                                    marginTop:'50px',
+                                                                    marginBottom:'15px',
+                                                                    fontWeight:'bold'
+                                                                }}>{chapter.title}</p>
+                                                        }
                                                         {
                                                             chapter.text.map((section,idx)=>{
                                                                 if(index === 0 && idx === 0){
@@ -202,8 +212,9 @@ export default class Drop extends React.Component{
                                                                                             width:'100%',
                                                                                             justifyContent:'center',
                                                                                             alignItems:'center',
-                                                                                            marginTop:'30px',
-                                                                                            marginBottom:'40px'
+                                                                                            marginTop:'28px',
+                                                                                            marginBottom:'40px',
+                                                                                            backgroundColor:'orange'
                                                                                         }}>
                                                                                             <img style={{
                                                                                                 width:'100%',
@@ -215,10 +226,10 @@ export default class Drop extends React.Component{
                                                                             })
                                                                         }
                                                                         <p style={{
-                                                                        fontSize:'32px',
-                                                                        lineHeight:'70px',
-                                                                        color:'rgb(51,51,51)'
-                                                                    }} key={idx}>{section}</p>
+                                                                            fontSize:'32px',
+                                                                            lineHeight:'70px',
+                                                                            color:'rgb(51,51,51)'
+                                                                        }} key={idx}>{section}</p>
                                                                     </div>
                                                                 )
                                                             })
@@ -360,8 +371,8 @@ export default class Drop extends React.Component{
                             <div style={{position:'relative'}}>
                                 <img src={this.state.isAppreciateCourse ? "../../../../img/weike/onedrop/appreciate_course_selected.png":"../../../../img/weike/onedrop/appreciate_course.png"}/>
 
-                                    <p style={{position:'absolute',left:'38px',top:'0',
-                                    fontSize:'28px',color:appreciate_num_color
+                                    <p style={{position:'absolute',left:'38px',top:'0px',
+                                    fontSize:'28px',color:appreciate_num_color,lineHeight:'30px'
                                     }}>{this.state.appreciate_course_num}</p>
 
                             </div>
