@@ -5,13 +5,122 @@ import React from 'react';
 
 import OneDrop from '../../../const/onedrop';
 
-let content = '["典故一：","父子两人，攀登高山，黄昏时刻，到了山顶。","这时，父亲问儿子，”向前看，你能看多远？“ ","“太阳已经下山，我大概能看到百米左右；但天亮时，我应该可以看到数里之外！我年轻，眼力好，比你看的远吧？” 儿子骄傲的说。","“儿子，我能看到数亿里之外！” 父亲冷静的说。","“什么？不可能！”儿子愣住了。","image-image-image","”抬头，向上看，你能否看到繁星满天？知道吗？离我们最近的星星也在数亿里之外！“ 父亲语重心长地说，”视角变了，看到的距离也就变了！“ ","改变视角，不同的角度看问题，解决问题，而且还不用吹灰之力！这...... 就是领导力！你每天都需要的领导力！","要具备这样的领导力，一定很难吧？是的，很难，需要长年累月的磨炼，历尽千难万险；不过也很容易，只需 “每日一滴”，功到自然成。","典故二：","屋檐下，巨大的麻石安详地躺着。雨点一滴一滴落下来，麻石丝毫没有感觉。","一天，两天；一周，两周；一月，两月，不管是屋子的主人，还是过路的行人，都没有发现麻石有任何变化。","时间就这么不知不觉地流逝。不知过了多久，人们发现，原来平平整整的麻石，居然有了斑斑点点，显得有些凹凸不平了。","谁凿出了这些斑斑点点？是顽皮的小孩，是倾盆大雨，还是另有神奇的力量？谁也琢磨不透。直到一天下雨，主人坐在屋里，透过窗户，望着屋顶的雨点，滴滴答答地掉下来，刚好落到麻石的小孔上，一丝不差。","原来是雨滴有规律地凿出了麻石身上的斑斑点点。倾盆大雨看起来吓人，但是其力量没有雨滴强大，更没有雨滴恒久。从数量来看，长时间的雨滴和一场倾盆大雨相当，但其力量却不可同日而语。滴水穿石；雨打风吹过。。","我们发现，领导力发展和滴水穿石异曲同工。","连续一周乃至一月的领导力课程，其实难以真正提升管理者的领导力；暴风骤雨式的领导力提升方法，其实只在当下的场域里对学员有些许作用，而学员一旦离开特定的环境，立刻复原甚至反弹，领导力发展无从谈起。","如果化整为零，每天只关注一点，只改变一个动作，哪怕再微不足道，只要天天坚持，领导力行为浑然天成，而你的领导力水平也就迥然不同了。如同雨水一样，看似一滴，其力无穷。行动改变行为，行为养成习惯，习惯造就全新领导力！","image-image-image","因此，我们创造了“一滴领导力”的概念，借助认知科学、脑神经学、教育技术学、行为大数据、云计算等前沿科学研究与互联网技术手段，打造“一滴领导力”平台。我们相信，每日一滴，水滴石穿；提升领导力，快快来一滴！","“一滴”汇聚了各路专家，他们潜心研究和实践领导力数十年，在各自的领域辛勤耕耘，且述且作，颇有心得，而今联手，志在用“一滴”改变管理者行为，借平台提升国人领导力。","这期的一滴领导力由一下专家精心打造：","【陈德智先生】，DDI认证讲师，PDI360反馈顾问，Hudson大五人格测评解读师，深谙行为模式发展法，并潜心研究德鲁克、麦克斯韦尔、尤里奇等领导力大师的经典，融会贯通。领导力实践方面，他29岁即担任云南少数民族自治县政府副县长，被当地称颂为“清正廉洁，一切从人民的利益出发，是一位人民的父母官”；“领导有方、力戒空谈、是一位好领导”。2005年起返回上海，历任阿尔卡特朗讯、贝卡尔特、辉门中国和阿里巴巴组织与人才发展负责人，负责领导力和人才发展等工作，他还曾任IBM人力资本管理高级咨询顾问，为客户提供领导力发展、人才与能力发展等方面的咨询与服务。","【马成功先生】，乐视培训发展总经理、原京东大学校长、原万达学院教学部总经理。中国微课联盟专家， ZITPA协会（北京中关村IT专业人士协会）培训委员会成员；担任过中国人力资源开发网专家团成员；《重新定义组织》、《构建学习生态》一书作者。","中国（北京）电商人才促进中心发起人之一；中国企业大学联席会委员；获得《培训》杂志2014年度颁发的“十年贡献奖——最受欢迎演讲嘉宾”荣誉；“颠覆培训”一文刊登在《商业评论》2014年8月封面文章，并获得年度“最佳管理行动奖”；获得CSTD-中国企业大学联盟2014年度“十佳企业大学校长”荣誉；2016年《人力资源》封面人物。","课程框架","一滴领导力，首先介绍互联网及智能化时代管理界的真实案例和新鲜招数，然后抽丝剥茧、举一反三，提炼领导力新知，最后形成核心细则和行动指南，真正帮助你:","30天升级领导力思维","60天刷新领导力行为","90天重启领导力心智","I. 时代变了，你的领导力技能变了吗？","互联网时代的管理新招：","第一周主题：如何激发员工的智慧与激情？","周一：罗辑思维用“节操币”做管理","周二：阿芙精油如何激活员工","周三：罗辑思维的小组制管理","周四：JD talk激发业务专家的分享欲","周五：没有茶歇就不叫培训","周六：海底捞员工每年6000个创意是如何做到的","周日：企业家点评综述","第二周主题：如何吸引用户的参与贡献？","周一：小米为何这么重视用户","周二：乐视如何做到消费者倒逼管理层","周三：什么是二次元五大审美原则：呆萌蠢贱基","周四：特斯拉为什么要开放电池技术","周五：滴滴用了我们什么时间","周六：e袋洗为什么喜欢广场舞大妈","周日：企业家点评综述","第三周主题：如何构建员工与用户共创的环境与生态？","周一：美图秀秀如何与用户聊天","周二：京东如何推动微创新","周三：微信红包逆袭支付宝的管理启示","周四：乐视90后员工给高管讲什么课","周五：淘宝的海量创新是如何做到的","周六：“远离领导”为何越来越重要","周日：企业家点评综述","II. 时代变了，你的领导力知识变了吗？新时代的领导力新知：【马老师的新大纲会改变这些内容吗？】","1、3C，领导力的根基","2、成功的领导力修炼靠什么？","3、成功的领袖有哪些共同点？","4、如何衡量领导力？","5、领导力为什么会阻碍你实现更大成就？","6、领导者的心脑体是什么？","7、领导力发展的四个层次","8、职位会不会带来领导力？","9、没有职权，怎样发挥领导力？","10、怎样形成自己的领导力风格？","11、领导者如何提升自知？","12、领导人如何找到内心的恐惧？","13、领导人如何克服弱点？","14、领导者该吸引怎样的人？","15、找不到优秀人才，领导者该怎么办","16、如何吸引追随者","17、威严，还是亲和力？","18、领导者该不该有核心圈？","19、领导者该如何培养领导者？","20、领导者该把精力放在高潜力人上，还是低绩效人身上","21、你在激励方面还差多远？","22、领导者如何赢得人心？","23、领导人致胜的三要素","24、领导人时间分配的3R模型","25、领导人致命的错误有哪些？","26、领导人如何避免致命的错误？","27、领导人如何选拔接班人","III. 时代变了，你的领导力方法变了吗？新时代的领导力法则","1.做中层领导者犹如恋情，有7个阶段，你在哪个阶段？","2.中层领导中有7个误区，你跳进过那个坑？","3.中层领导有7个挑战，你都克服了哪些？","4.中层领导向上管理有7个面，你是否面面俱到？","5.中层领导横向管理有7个度，你是否把握有度？","6.中层领导向下管理有7个点，你是否点点有数？","7.上司平庸，我怎么办？","8.领导更喜欢前线，而不是中层，怎么办？","9.盖子法则：领导力犹如盖帽，你的盖儿有多大？","10.过程法则：知道与不知道，你在哪里？","11.导航法则：你是掌舵者还是导航者？","12.根基法则：你的根在哪里？","13.直觉法则：跟着感觉走，你就会卓越？","14.吸引力法则：你都在吸引着什么？","15.核心圈法则：你的未来不是靠你决定，而是你的圈？","16.镜像法则：你是别人的镜子还是别人是你的镜子？","17.接纳法则：人们先接纳你，然后才是你的愿景","18.动势法则：你是制造风还是雨？","19.时机法则：决策与时间点，你是把握时间点还是决策？","20.权利法则：42中权利，你如何使自己卓越？","以上主题，我们会不倦的通过每日一滴的形式，给你带来水和氧，使你每日一滴，滴水穿石，实现领导力的升级和跨越。希望你每日一滴，滴滴成长！我们期待把我们数十年的研究，结合现在最新的案例，把一滴滴的营养无私的奉献给你和你领导的团队！","每日一滴，快来一滴！","期待你的换代升级！"]';
+
+let story1 = [
+    '父子两人，攀登高山，黄昏时刻，到了山顶。',
+    '父亲问儿子，“向前看，你能看多远？”',
+    '“现在我能看到百米远；但天亮时，我应该可以看到数里之外！我眼力好，比你看的远吧？” 儿子骄傲的说。',
+    '“儿子，我能看到数亿里之外！” 父亲冷静的说。',
+    '“什么？不可能！”儿子愣住了。',
+    '“抬头，向上看，你能否看到繁星满天？知道吗？离我们最近的星星也在数亿里之外！”父亲语重心长地说，“视角变了，看到的距离也就变了！”'
+]
+
+let story2 = [
+    '屋檐下，巨大的麻石安详地躺着。雨点一滴一滴落下来，麻石丝毫没有感觉。',
+    '一天，两天；一周，两周；一月，两月，不管是屋子的主人，还是过路的行人，都没有发现麻石有任何变化。',
+    '时间就这么不知不觉地流逝。不知过了多久，人们发现，原来平平整整的麻石，居然有了斑斑点点，显得有些凹凸不平了。',
+    '谁凿出了这些斑斑点点？是顽皮的小孩，是倾盆大雨，还是另有神奇的力量？谁也琢磨不透。直到一天下雨，主人坐在屋里，透过窗户，望着屋顶的雨点，滴滴答答地掉下来，刚好落到麻石的小孔上，一丝不差。',
+    '原来是雨滴有规律地凿出了麻石身上的斑斑点点。倾盆大雨看起来吓人，但是其力量没有雨滴强大，更没有雨滴恒久。从数量来看，长时间的雨滴和一场倾盆大雨相当，但其力量却不可同日而语。滴水穿石；雨打风吹过。'
+]
+
+let content1 = [
+    '改变视角，用不同的角度看问题，而且得来全不费工夫。这就是领导力！你每天都需要的领导力！',
+    '要具备这样的领导力，一定很难吧？是的，很难，需要长年累月的磨炼，历尽千难万险；不过也很容易，只需“每日一滴”，功到自然成。'
+]
+
+let content2 = [
+    '我们长期研究发现，领导力发展和滴水穿石异曲同工。',
+    '连续一周甚至更长的领导力课程，其实难以真正提升领导力；暴风骤雨式的领导力提升方法，其实只在当下的场域里对学员有些许作用，而学员一旦离开特定的环境，立刻复原甚至反弹，领导力发展无从谈起。',
+    '如果化整为零，每天只关注一点，只改变一个动作，哪怕再微不足道，只要天天坚持，领导力行为浑然天成，而你的领导力水平也就迥然不同了。如同雨水一样，看似一滴，其力无穷。行动改变行为，行为养成习惯，习惯造就全新领导力！',
+    '因此，我们创造了“一滴领导力”的概念，借助认知科学、脑神经学、教育技术学、行为大数据、云计算等前沿科学研究与互联网技术手段，打造“一滴领导力”平台。我们相信，每日一滴，水滴石穿；提升领导力，快快来一滴！',
+    '“一滴”汇聚了各路专家，他们潜心研究和实践领导力数十年，在各自的领域辛勤耕耘，且述且作，颇有心得，而今联手，志在用“一滴”改变管理者行为，借平台提升国人领导力。'
+]
+let content3 = [
+    '一滴领导力，首先介绍互联网及智能化时代管理界的真实案例和新鲜招数，然后抽丝剥茧、举一反三，提炼领导力新知，最后形成核心细则和行动指南，真正帮助你:'
+]
+let content4 = [
+    '以上主题，每日一滴，如同水和氧，帮助您成长。祝愿您通过“一滴领导力”，滴水穿石，成功完成领导力转型，实现团队与绩效升级！',
+    '提升领导力，快快来一滴！'
+]
+
+let teacher = [
+    {
+        name:'陈德智先生',
+        des:[
+            'DDI认证讲师，PDI360反馈顾问，Hudson大五人格测评解读师，深谙行为模式发展法，并潜心研究德鲁克、麦克斯韦尔、尤里奇等领导力大师的经典，融会贯通。领导力实践方面，他29岁即担任云南少数民族自治县政府副县长，被当地称颂为“清正廉洁，一切从人民的利益出发，是一位人民的父母官”；“领导有方、力戒空谈、是一位好领导”。2005年起返回上海，历任阿尔卡特朗讯、贝卡尔特、辉门中国和阿里巴巴旗下事业部组织与人才发展负责人，负责领导力和人才发展等工作，他还曾任IBM人力资本管理高级咨询顾问，为客户提供领导力发展、人才与能力发展等方面的咨询与服务。'
+        ]
+    }
+    ,
+    {
+        name:'马成功先生',
+        des:[
+            '乐视培训发展总经理、原京东大学校长、原万达学院教学部总经理。中国微课联盟专家， ZITPA协会（北京中关村IT专业人士协会）培训委员会成员；担任过中国人力资源开发网专家团成员；《重新定义组织》、《构建学习生态》一书作者。',
+            '中国（北京）电商人才促进中心发起人之一；中国企业大学联席会委员；获得《培训》杂志2014年度颁发的“十年贡献奖——最受欢迎演讲嘉宾”荣誉；“颠覆培训”一文刊登在《商业评论》2014年8月封面文章，并获得年度“最佳管理行动奖”；获得CSTD-中国企业大学联盟2014年度“十佳企业大学校长”荣誉；2016年《人力资源》封面人物。'
+        ]
+    }
+]
+
+const wordStyle = {
+    fontSize:'32px',
+    lineHeight:'70px',
+    color:'rgb(51,51,51)'
+}
+
+const storyWordStyle = {
+    ...wordStyle,
+    fontStyle:'italic',
+    fontSize:'30px'
+}
+
+const sceneStyle = {
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    width:'134px',
+    height:'43px',
+    backgroundColor:'rgb(23,172,251)'
+}
+const sceneWorldStyle = {
+    fontSize:'32px',
+    color:'white'
+}
+const storyContainerStyle = {
+    display:'flex',
+    flexDirection:'row'
+}
+const storyLineStyle = {
+    width:'15px',
+    backgroundColor:'rgb(229,236,242)'
+}
+const storyContentStyle = {
+    marginLeft:'35px'
+}
+
+const teacherContainerStyle = {
+    marginTop:'34px',
+    backgroundColor:'rgb(229,236,242)'
+}
+const teacherStyle = {
+    width:'230px',
+    height:'50px',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundImage:'url(../../../../img/weike/detail/techer_bg.png)',
+    backgroundSize:'100% 100%'
+}
+const teacherWordStyle = {
+    fontSize:'32px',
+    color:'white'
+}
+
+
 export default class LeadPage extends React.Component{
     constructor(props){
         super(props);
     }
     render(){
-        var article = JSON.parse(content);
+        // var article = JSON.parse(content);
         return(
             <div style={{
                 display:'flex',
@@ -19,63 +128,287 @@ export default class LeadPage extends React.Component{
                 width: OneDrop.JS_ScreenW,
                 height:OneDrop.JS_ScreenH*2,
                 zIndex:'99',
-                backgroundColor:'white'
+                backgroundColor:'white',paddingBottom:'130px'
             }}>
-                <img style={{width:'100%',height:'320px'}} src='../../../../img/weike/onedrop/banner.jpg'/>
+                <img style={{width:'100%',height:'360px'}} src='../../../../img/weike/onedrop/banner.jpg'/>
 
                 <div style={{
-                    paddingLeft:'24px',
-                    paddingRight:'24px',
-                    paddingTop:'56px',
-                    paddingBottom:'80px'
+                    display:'flex',
+                    backgroundColor:'white',
+                    flexDirection:'column',
+                    marginLeft:'24px',
+                    marginRight:'24px'
                 }}>
-                    <p style={{
-                        fontSize:'45px',
-                        color:'rgb(51,51,51)'
-                    }}>领导力:人人都得一滴</p>
-                    <div style={{marginTop:'56px'}}>
+                    <h3 style={{
+                        fontSize:'44px',
+                        marginTop:'30px'
+                    }}>一滴领导力</h3>
+                    <h2 style={{
+                        fontSize:'32px',
+                        marginTop:'30px'
+                    }}>开篇寄语</h2>
+
+
+
+                    <div>
+                        <div style={{
+                            display:'flex',
+                            flexDirection:'column',
+                            marginTop:'30px'
+                        }}>
+                            <div style={{...sceneStyle}}>
+                                <p style={{...sceneWorldStyle}}>场景一</p>
+                            </div>
+                            <div style={{
+                                ...storyContainerStyle,
+                                marginTop:'35px'
+                            }}>
+                                <div style={{
+                                    ...storyLineStyle
+                                }}/>
+                                <div style={{
+                                    ...storyContentStyle
+                                }}>
+                                    {
+                                        story1.map((content,index)=>{
+                                            return (
+                                                <p key={index} style={{...storyWordStyle}}>{content}</p>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div>
+                        <img style={{width:'100%',height:'380px',marginTop:'28px'}} src='../../../../img/weike/detail/open1.jpg'/>
+                    </div>
+
+
+
+
+                    <div style={{
+                    }}>
                         {
-                            article.map((content,index)=>{
-                                console.log(content);
-                                if(index === 6){
-                                    return(
-                                        <img key={index} style={{
-                                            width:'70%',
-                                            height:'300px',
-                                            marginTop:'30px',
-                                            marginLeft:'15%'
-                                        }} src="../../../../img/weike/main/pageone1.jpeg"/>
+                            content1.map((content,index)=>{
+                                if(index === 0){
+                                    return (
+                                        <p key={index} style={{...wordStyle,marginTop:'30px',color:'rgb(23,172,251)'}}>{content}</p>
                                     )
                                 }
-                                if(index === 22){
-                                    return(
-                                        <img key={index} style={{
-                                            width:'70%',
-                                            height:'300px',
-                                            marginTop:'30px',
-                                            marginLeft:'15%'
-                                         }} src="../../../../img/weike/main/pageone2.jpeg"/>
-                                    )
-                                }
-                                return (
-                                    <p key={index} style={{
-                                        fontSize:'30px',
-                                        lineHeight:'40px',
-                                        color:'rgb(51,51,51)',
-                                        marginTop:'30px'
-                                    }}>{content}</p>
+                                return(
+                                    <p key={index} style={{...wordStyle,marginTop:'30px'}}>{content}</p>
                                 )
                             })
                         }
                     </div>
+
+
+
+
+                    <div>
+                        <div style={{
+                            marginTop:'30px'
+                        }}>
+                            <div style={{...sceneStyle}}>
+                                <p style={{...sceneWorldStyle}}>场景二</p>
+                            </div>
+                            <div style={{
+                                ...storyContainerStyle,
+                                marginTop:'35px'
+                            }}>
+                                <div style={{
+                                    ...storyLineStyle
+                                }}/>
+                                <div style={{
+                                    ...storyContentStyle
+                                }}>
+                                    {
+                                        story2.map((content,index)=>{
+                                            return (
+                                                <p key={index} style={{...storyWordStyle}}>{content}</p>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <img style={{width:'100%',height:'380px',marginTop:'28px'}} src='../../../../img/weike/detail/open2.jpg'/>
+                    </div>
+
+
+
+
+                    <div style={{
+                    }}>
+                        {
+                            content2.map((content,index)=>{
+                                if(index === 0){
+                                    return (
+                                        <p key={index} style={{...wordStyle,marginTop:'30px',color:'rgb(23,172,251)'}}>{content}</p>
+                                    )
+                                }
+                                return(
+                                    <p key={index} style={{...wordStyle,marginTop:'30px'}}>{content}</p>
+                                )
+                            })
+                        }
+                    </div>
+
+
+
+                    <div style={{
+                        marginTop:'30px'
+                    }}>
+                        <div style={{
+                            display:'flex',width:'100%',height:'68px',backgroundColor:'rgb(7,115,172)',
+                            justifyContent:'center',alignItems:'center'
+                        }}>
+                            <p style={{fontSize:'32px',color:'white'}}>这期的一滴领导力由以下专家精心打造。</p>
+                        </div>
+                    </div>
+
+
+                    {
+                        teacher.map((teacher,index)=>{
+                            return(
+                                <div key={index} style={{...teacherContainerStyle}}>
+                                    <div style={{...teacherStyle,marginTop:'30px'}}>
+                                        <p style={{...teacherWordStyle}}>{teacher.name}</p>
+                                    </div>
+                                    <div style={{
+                                        marginTop:'30px'
+                                    }}>
+                                        {
+                                            teacher.des.map((des,idx)=>{
+                                                return(
+                                                    <p key={idx} style={{
+                                                        fontSize:'30px',
+                                                        color:'rgb(102,102,102)',
+                                                        lineHeight:'70px',
+                                                        marginTop:'30px',
+                                                        marginBottom:'30px',
+                                                        marginLeft:'24px',
+                                                        marginRight:'24px'
+                                                    }}>{des}</p>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+
+
+                    <h2 style={{fontSize:'34px',fontWeight:'bold',marginTop:'34px'}}>课程框架</h2>
+
+
+
+                    <div>
+                        {
+                            content3.map((content,index)=>{
+                                return (
+                                    <p key={index} style={{...wordStyle,marginTop:'30px'}}>{content}</p>
+                                )
+                            })
+                        }
+                    </div>
+
+
+                    <div style={{
+                    }}>
+                        {
+                            ['30天升级领导力思维','60天刷新领导力行为','90天重启领导力心智'].map((content,index)=>{
+                                return(
+                                    <div key={index} style={{display:'flex',width:'300px',
+                                        height:'50px',justifyContent:'center',
+                                        alignItems:'center',backgroundColor:'rgb(23,172,251)',marginTop:'23px'}}>
+                                        <p style={{...wordStyle,color:'white'}}>{content}</p>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+
+                    <img style={{width:'100%',marginTop:'50px'}} src='../../../../img/weike/detail/table.jpg'/>
+
+
+                    <div>
+                        {
+                            content4.map((content,index)=>{
+                                return (
+                                    <p key={index} style={{...wordStyle,marginTop:'30px'}}>{content}</p>
+                                )
+                            })
+                        }
+                    </div>
+
+                    <p style={{marginTop:'30px',marginBottom:'120px'}}>--------------------------------------</p>
+
                 </div>
+
+                {/*<div style={{
+                 paddingLeft:'24px',
+                 paddingRight:'24px',
+                 paddingTop:'56px',
+                 paddingBottom:'80px'
+                 }}>
+                 <p style={{
+                 fontSize:'45px',
+                 color:'rgb(51,51,51)'
+                 }}>领导力:人人都得一滴</p>
+                 <div style={{marginTop:'56px'}}>
+                 {
+                 article.map((content,index)=>{
+                 if(index === 6){
+                 return(
+                 <img key={index} style={{
+                 width:'70%',
+                 height:'300px',
+                 marginTop:'30px',
+                 marginLeft:'15%'
+                 }} src="../../../../img/weike/main/pageone1.jpeg"/>
+                 )
+                 }
+                 if(index === 22){
+                 return(
+                 <img key={index} style={{
+                 width:'70%',
+                 height:'300px',
+                 marginTop:'30px',
+                 marginLeft:'15%'
+                 }} src="../../../../img/weike/main/pageone2.jpeg"/>
+                 )
+                 }
+                 return (
+                 <p key={index} style={{
+                 fontSize:'30px',
+                 lineHeight:'40px',
+                 color:'rgb(51,51,51)',
+                 marginTop:'30px'
+                 }}>{content}</p>
+                 )
+                 })
+                 }
+                 </div>
+                 </div>*/}
 
                 <img onClick={()=>{
                     this.props.callback();
                 }} style={{
                     position:'fixed',
-                    top:'500px',
-                    right:'0'
+                    top:'800px',
+                    right:'24px'
                 }} src="../../../../img/weike/home/back_home.png"/>
             </div>
         )

@@ -123,7 +123,7 @@ export default class Drop extends React.Component{
                 }}>
                     <img style={{
                         width:OneDrop.JS_ScreenW,
-                        height:'320px'
+                        height:'360px'
                     }} src={this.state.course ? OneDrop.res_ip+this.state.course.section_detail_img : '../../../../img/weike/onedrop/zhanwei.jpg'}/>
                     {
                         this.state.course ?
@@ -290,7 +290,7 @@ export default class Drop extends React.Component{
                             <p style={{
                                 fontSize:'28px',
                                 color:'rgb(102,102,102)'
-                            }}>---------------------精选交手录---------------------</p>
+                            }}>----------------精选交手录----------------</p>
                         </div>
 
                         <div style={{
@@ -537,33 +537,33 @@ export default class Drop extends React.Component{
                                 {
                                     ['1米','2米','3米','4米','5米'].map((content,index)=>{
                                         return <p key={index} onClick={()=>{
-                                        var appreciate_value = index+1;
-                                        if(this.state.course){
+                                            var appreciate_value = index+1;
+                                            if(this.state.course){
 
-                                        }else{return;}
-                                        $.ajax({
-                                            url:OneDrop.base_url+'/onedrop/appreciate/mine',
-                                            dataType:'json',
-                                            method:'POST',
-                                            data:{
-                                                user_id:REMOTE_WEIXIN_USER_ID,
-                                                section_id:self.props.sectionId,
-                                                appreciate_value:appreciate_value
-                                            },
-                                            success:(data)=>{
-                                                if(data.status===1){
-                                                    self.setState({
-                                                        isShowAppreciateMine:false,
-                                                        isAppreciateMine:true
-                                                    })
+                                            }else{return;}
+                                            $.ajax({
+                                                url:OneDrop.base_url+'/onedrop/appreciate/mine',
+                                                dataType:'json',
+                                                method:'POST',
+                                                data:{
+                                                    user_id:REMOTE_WEIXIN_USER_ID,
+                                                    section_id:self.props.sectionId,
+                                                    appreciate_value:appreciate_value
+                                                },
+                                                success:(data)=>{
+                                                    if(data.status===1){
+                                                        self.setState({
+                                                            isShowAppreciateMine:false,
+                                                            isAppreciateMine:true
+                                                        })
+                                                    }
                                                 }
-                                            }
-                                        })
-                                    }} style={{
-                                        fontSize:'30px',
-                                        lineHeight:'63px',
-                                        color:'white'
-                                    }} key={index}>{content}</p>
+                                            })
+                                        }} style={{
+                                            fontSize:'30px',
+                                            lineHeight:'63px',
+                                            color:'white'
+                                        }} >{content}</p>
                                     })
                                 }
                             </div>
