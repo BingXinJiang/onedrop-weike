@@ -19,10 +19,7 @@ export default class DropAudio extends React.Component{
     componentDidMount() {
         var self = this;
         this.audioTimer = setInterval(()=>{
-            var section = '#che_dan_de_yin_pin'+self.props.sectionId;
-            // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
-            var audio = $(section)[0];
-            // var audio = OneDrop.AUDIO;
+            var audio = OneDrop.AUDIO;
             var duration = audio.duration;
             var curTime = audio.currentTime;
             console.log('-------');
@@ -38,11 +35,7 @@ export default class DropAudio extends React.Component{
 
     componentWillUnmount(){
         clearInterval(this.audioTimer);
-        var section = '#che_dan_de_yin_pin'+this.props.sectionId;
-        // var audio = document.getElementById(section);
-        // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
-        var audio = $(section)[0];
-        // var audio = OneDrop.AUDIO;
+        var audio = OneDrop.AUDIO;
         audio.pause();
         audio.currentTime = 0;
     }
@@ -73,10 +66,7 @@ export default class DropAudio extends React.Component{
                                marginLeft:'24px'
                         }} onClick={()=>{
                             console.log('点击开始播放。。。');
-                            var section = '#che_dan_de_yin_pin'+self.props.sectionId;
-                            // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
-                            var audio = $(section)[0];
-                            // var audio = OneDrop.AUDIO;
+                            var audio = OneDrop.AUDIO;
                             if(audio.paused || audio.ended || !this.state.playing){
                                 audio.play();
                                 this.setState({

@@ -78,11 +78,11 @@ export default class LastDrop extends React.Component{
                                     var mp3_url = 'https://www.mymax.cn/videos/voices/section_1_1_'+content.section_id+'.mp3';
                                     return(
                                         <div key={index} onClick={()=>{
-                                            // var audio = document.createElement('audio');
-                                            // audio.preload = 'auto';
-                                            // audio.src = mp3_url;
-                                            // audio.id = 'che_dan_de_yin_pin'+content.section_id;
-                                            // OneDrop.AUDIO = audio;
+                                            var audio = document.createElement('audio');
+                                            audio.preload = 'auto';
+                                            audio.src = mp3_url;
+                                            audio.id = 'che_dan_de_yin_pin'+content.section_id;
+                                            OneDrop.AUDIO = audio;
                                             this.setState({
                                                 isShowEverydayDrop:true,
                                                 section_id:content.section_id,
