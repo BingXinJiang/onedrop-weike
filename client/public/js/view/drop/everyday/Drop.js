@@ -437,7 +437,7 @@ export default class Drop extends React.Component{
                                 fontSize:'24px',
                                 color:'rgb(153,153,153)',
                                 padding:'15px',
-                                height:'500px',
+                                height:'400px',
                                 marginLeft:'25px',
                                 marginRight:'25px',
                                 borderWidth:'2px',
@@ -484,14 +484,14 @@ export default class Drop extends React.Component{
                                 }} style={{
                                     width:'100%',
                                     height:'70px',
-                                    backgroundColor:'rgb(28,166,148)',
+                                    backgroundColor:'rgb(23,172,251)',
                                     display:'flex',
                                     justifyContent:'center',
                                     alignItems:'center',
                                     borderRadius:'10px',
                                     marginTop:'38px'
                                 }}>
-                                    <p style={{fontSize:'26px',color:'white'}}>提交</p>
+                                    <p style={{fontSize:'30px',color:'white'}}>提交</p>
                                 </div>
                                 <div onClick={()=>{
                                     this.setState({
@@ -507,7 +507,7 @@ export default class Drop extends React.Component{
                                     borderRadius:'10px',
                                     marginTop: '38px'
                                 }}>
-                                    <p style={{fontSize:'26px',color:'white'}}>取消</p>
+                                    <p style={{fontSize:'30px',color:'white'}}>取消</p>
                                 </div>
                             </div>
 

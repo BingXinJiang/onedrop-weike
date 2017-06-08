@@ -7,6 +7,7 @@
     <title>一滴领导力
 
     </title>
+
     <link rel="stylesheet" href="../stylesheets/style.css" type="text/css">
     <!--<link rel="stylesheet" href="../stylesheets/weui.min.css" type="text/css">-->
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
@@ -14,47 +15,27 @@
 </head>
 <body style="margin: 0; padding: 0;">
 <div id="container"></div>
-
+<script>
+//    ONEDROP_AUDIO = [];
+//    [1,2,3,4].map(function (con,idx) {
+//        var audio = document.createElement('audio');
+//        audio.preload = 'auto';
+//        audio.src = 'https://www.mymax.cn/videos/voices/section_1_1_'+con+'.mp3';
+//        audio.id = 'che_dan_de_yin_pin'+con;
+//        ONEDROP_AUDIO.push(audio);
+//    })
+</script>
 <script>
     REMOTE_WEIXIN_USER_ID = "<%= user_id %>";
     REMOTE_WEIXIN_ACCESS_TOKEN = "<%= access_token %>";
-//    window.onload = function () {
-
-//    }
-    /*
-    function setCookie(c_name,value,expiredays)
-    {
-        var exdate=new Date()
-        exdate.setDate(exdate.getDate()+expiredays)
-        document.cookie=c_name+ "=" +escape(value)+ ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
-    }
-    function getCookie(c_name)
-    {
-        if (document.cookie.length>0)
-        {
-            c_start=document.cookie.indexOf(c_name + "=")
-            if (c_start!=-1)
-            {
-                c_start=c_start + c_name.length+1
-                c_end=document.cookie.indexOf(";",c_start)
-                if (c_end==-1) c_end=document.cookie.length
-                return unescape(document.cookie.substring(c_start,c_end))
-            }
-        }
-        return ""
-    }
-    if(REMOTE_WEIXIN_USER_ID != null && REMOTE_WEIXIN_USER_ID != undefined){
-        setCookie('user_id', REMOTE_WEIXIN_USER_ID, 24);
-    }else{
-        REMOTE_WEIXIN_USER_ID = getCookie('user_id');
-    }
-    */
 </script>
 <div id="main-container"></div>
+
 <audio id="che_dan_de_yin_pin1" preload="auto" src="https://www.mymax.cn/videos/voices/section_1_1_1.mp3"/>
 <audio id="che_dan_de_yin_pin2" preload="auto" src="https://www.mymax.cn/videos/voices/section_1_1_2.mp3"/>
 <audio id="che_dan_de_yin_pin3" preload="auto" src="https://www.mymax.cn/videos/voices/section_1_1_3.mp3"/>
 <audio id="che_dan_de_yin_pin4" preload="auto" src="https://www.mymax.cn/videos/voices/section_1_1_4.mp3"/>
+
 <script src="../output/js/view/main/index.bundle.js"></script>
 </body>
 </html>

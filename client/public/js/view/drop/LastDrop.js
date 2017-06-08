@@ -71,24 +71,22 @@ export default class LastDrop extends React.Component{
                                 <img style={{
                                     width:OneDrop.JS_ScreenW,
                                     height:'360px'
-                                }} src="../../../img/weike/onedrop/banner.jpg"/>
+                                }} src="../../../img/weike/home/home_banner.jpg"/>
                             </div>
                             {
                                 this.state.courses.map((content,index)=>{
-                                    var mp3_url = content.section_voice;
-                                    var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
-                                    mp3_url = preUrl + '.mp3';
-                                    // mp3_url = 'http://dev.mymax.cn/affix/temp/music/section_1_1_1.mp3';
-                                    var ogg_url = preUrl + '.ogg';
-                                    var wav_url = preUrl + '.wav';
+                                    var mp3_url = 'https://www.mymax.cn/videos/voices/section_1_1_'+content.section_id+'.mp3';
                                     return(
                                         <div key={index} onClick={()=>{
+                                            // var audio = document.createElement('audio');
+                                            // audio.preload = 'auto';
+                                            // audio.src = mp3_url;
+                                            // audio.id = 'che_dan_de_yin_pin'+content.section_id;
+                                            // OneDrop.AUDIO = audio;
                                             this.setState({
                                                 isShowEverydayDrop:true,
                                                 section_id:content.section_id,
                                                 mp3_url:mp3_url,
-                                                ogg_url:ogg_url,
-                                                wav_url:wav_url
                                             })
                                         }} style={{
                                             marginTop:'30px',

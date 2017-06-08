@@ -19,12 +19,16 @@ export default class DropAudio extends React.Component{
     componentDidMount() {
         var self = this;
         this.audioTimer = setInterval(()=>{
-            // var duration = this.refs.section_audio.duration;
-            // var curTime = this.refs.section_audio.currentTime;
             var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+            // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
             var audio = $(section)[0];
+            // var audio = OneDrop.AUDIO;
             var duration = audio.duration;
             var curTime = audio.currentTime;
+            console.log('-------');
+            if(curTime){
+                console.log('可以播放了，哈哈哈哈');
+            }
             this.setState({
                 duration:parseInt(duration),
                 curTime:parseInt(curTime)
@@ -35,17 +39,15 @@ export default class DropAudio extends React.Component{
     componentWillUnmount(){
         clearInterval(this.audioTimer);
         var section = '#che_dan_de_yin_pin'+this.props.sectionId;
+        // var audio = document.getElementById(section);
+        // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
         var audio = $(section)[0];
+        // var audio = OneDrop.AUDIO;
         audio.pause();
         audio.currentTime = 0;
     }
 
     render(){
-        // var mp3_url = this.props.audioUrl;
-        // var preUrl = OneDrop.res_ip + mp3_url.split('.mp3')[0];
-        // mp3_url = preUrl + '.mp3';
-        // var ogg_url = preUrl + '.ogg';
-        // var wav_url = preUrl + '.wav';
         var self = this;
         return(
 
@@ -55,15 +57,6 @@ export default class DropAudio extends React.Component{
                     justifyContent:'center',
                     marginTop:'95px'
                 }}>
-                    {/*
-                        <audio ref="section_audio" preload="auto">
-                            <source src={ogg_url} type="audio/ogg"/>
-                            <source src={mp3_url} type="audio/mpeg"/>
-                            <source src={wav_url} type="audio/wav"/>
-                            您的浏览器不支持audio
-                        </audio>
-                        */
-                    }
                     <div style={{
                         display:'flex',
                         flexDirection:'row',
@@ -80,12 +73,10 @@ export default class DropAudio extends React.Component{
                                marginLeft:'24px'
                         }} onClick={()=>{
                             console.log('点击开始播放。。。');
-                            // var audio = this.refs.section_audio;
                             var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+                            // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
                             var audio = $(section)[0];
-                            // audio.addEventListener("playing", function(){
-                            //     console.log('现在开始播放了呢。。。。。。');
-                            // });
+                            // var audio = OneDrop.AUDIO;
                             if(audio.paused || audio.ended || !this.state.playing){
                                 audio.play();
                                 this.setState({
