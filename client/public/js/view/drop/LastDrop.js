@@ -53,7 +53,7 @@ export default class LastDrop extends React.Component{
             success:function (data) {
                 var payData = data.data;
                 wx.config({
-                    debug:true,
+                    debug:false,
                     appId:OneDrop.appId,
                     timestamp:payData.timestamp,
                     nonceStr:payData.nonceStr,
