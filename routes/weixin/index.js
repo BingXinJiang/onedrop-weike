@@ -163,7 +163,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
     }
 
     //从网络获取jsapi_ticket
-    function getTicket() {
+    function getTicket(isExist) {
         var token_options = {
             hostname:'api.weixin.qq.com',
             path:'/cgi-bin/token?grant_type=client_credential&appid='+APPID+'&secret='+APPSECRET,
@@ -194,9 +194,13 @@ router.post('/main/pay/getsign', function (req, res, next) {
                         // var signature = sha1(beforeSignStr);
 
                         //对获取到的access_token 和  jsapi_ticket  进行存储
-                        var update_sql = "update info_const set datetime=Now(), access_token='"+access_token+"',jsapi_ticket='"+jsapi_ticket+"'";
+                        var querry_sql = "update info_const set datetime=Now(), access_token='"+access_token+"',jsapi_ticket='"+jsapi_ticket+"'";
+                        if(!isExist){
+                            querry_sql = "insert into info_const(date_time,access_token,jsapi_ticket) values(" +
+                                "Now(),'"+access_token+"','"+jsapi_ticket+"')";
+                        }
 
-                        query(update_sql, function (qerr, valls, fields) {
+                        query(querry_sql, function (qerr, valls, fields) {
                             if(qerr){
                                 // console.log('qerr:',qerr);
                             }else {
@@ -221,19 +225,20 @@ router.post('/main/pay/getsign', function (req, res, next) {
     var query_sql = "select * from info_const";
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){
-            getTicket();
+            // getTicket();
+            responseDataErr(res);
         }else{
             if(valls.length>0){
                 var info = valls[0];
                 var left_second = (new Date()).getTime() - (new Date(info.datetime)).getTime();
 
                 if(left_second >= 7000*1000){
-                    getTicket();
+                    getTicket(true);
                 }else{
                     paySign(info.jsapi_ticket);
                 }
             }else{
-                getTicket();
+                getTicket(false);
             }
         }
     })
