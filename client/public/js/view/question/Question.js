@@ -23,7 +23,7 @@ export default class Question extends React.Component{
                     flexDirection:'column',
                     alignItems:'center',
                     width:'100%',
-                    height:'330px'
+                    height:'250px'
 
                 }}>
                     {
@@ -62,7 +62,7 @@ export default class Question extends React.Component{
                     backgroundColor:'white',
                     marginTop:'0',
                     alignItems:'center',
-                    height:'900px'
+                    height:'700px'
                 }}>
                     <p style={{
                         fontSize:'44px',

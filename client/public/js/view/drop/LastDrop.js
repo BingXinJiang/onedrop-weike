@@ -32,6 +32,7 @@ export default class LastDrop extends React.Component{
                 page:1
             },
             success:(data)=>{
+                console.log('data:',data);
                 if(data.status === 1){
                     var courses = data.data;
                     this.setState({
@@ -99,10 +100,22 @@ export default class LastDrop extends React.Component{
                                                 marginRight:'24px',
                                                 marginLeft:'24px'
                                             }}>
-                                                <p style={{
-                                                    fontSize:'40px',
-                                                    color:'rgb(0,0,0)'
-                                                }}>{content.section_name}</p>
+                                                <div style={{
+                                                    display:'flex',
+                                                    flexDirection:'row'
+                                                }}>
+                                                    <img style={{
+                                                        width:'48px',
+                                                        height:'48px',
+                                                        borderRadius:'24px',
+                                                        marginTop:'8px'
+                                                    }} src={OneDrop.res_ip+content.teacher_head}/>
+                                                    <p style={{
+                                                        fontSize:'40px',
+                                                        color:'rgb(0,0,0)',
+                                                        marginLeft:'20px'
+                                                    }}>{content.section_name}</p>
+                                                </div>
                                                 <p style={{
                                                     marginTop:'28px',
                                                     fontSize:'30px',

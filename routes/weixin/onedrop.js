@@ -171,7 +171,11 @@ router.post('/sections', function (req, res, next) {
     var page = req.body.page;
     var query_sql = "select section_id,section_list_img,section_intro,section_voice,section_name,open_date,year(open_date)year,month(open_date)month,day(open_date)day" +
         " from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10";
-    query(query_sql, function (qerr, valls, fields) {
+    var query_sql2 = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
+        "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head from" +
+        " (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
+        "(select * from teacher)as b on a.author_id=b.teacher_id";
+    query(query_sql2, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);
         }else{
