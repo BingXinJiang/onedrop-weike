@@ -196,10 +196,10 @@ router.post('/main/pay/getsign', function (req, res, next) {
                         //对获取到的access_token 和  jsapi_ticket  进行存储
                         var querry_sql = "update info_const set datetime=Now(), access_token='"+access_token+"',jsapi_ticket='"+jsapi_ticket+"'";
                         if(!isExist){
-                            querry_sql = "insert into info_const(date_time,access_token,jsapi_ticket) values(" +
+                            querry_sql = "insert into info_const(datetime,access_token,jsapi_ticket) values(" +
                                 "Now(),'"+access_token+"','"+jsapi_ticket+"')";
                         }
-                        console.log('querry_sql:缓存微信数据',querry_sql);
+                        // console.log('querry_sql:缓存微信数据',querry_sql);
                         query(querry_sql, function (qerr, valls, fields) {
                             if(qerr){
                                 // console.log('qerr:',qerr);
