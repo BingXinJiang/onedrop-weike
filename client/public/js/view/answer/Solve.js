@@ -100,7 +100,7 @@ export default class Solve extends React.Component{
                                     <p style={{
                                           color:'rgb(169,169,169)',
                                           fontSize:'26px'
-                                    }}>{this.state.question.up_time}</p>
+                                    }}>{this.state.question.year}-{this.state.question.month}-{this.state.question.day}</p>
                                 </div>
                             </div>
                             <p style={{
@@ -151,7 +151,7 @@ export default class Solve extends React.Component{
                                                 color:'rgb(169,169,169)',
                                                 fontSize:'26px',
                                                 float:'right'
-                                            }}>{content.answer_time}</p>
+                                            }}>{content.year}-{content.month}-{content.day}</p>
                                         </div>
 
                                         <p style={{
