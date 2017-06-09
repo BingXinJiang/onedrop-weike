@@ -199,7 +199,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
                             querry_sql = "insert into info_const(date_time,access_token,jsapi_ticket) values(" +
                                 "Now(),'"+access_token+"','"+jsapi_ticket+"')";
                         }
-
+                        console.log('querry_sql:缓存微信数据',querry_sql);
                         query(querry_sql, function (qerr, valls, fields) {
                             if(qerr){
                                 // console.log('qerr:',qerr);
