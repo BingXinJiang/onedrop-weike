@@ -18,6 +18,27 @@ export default class DropAudio extends React.Component{
 
     componentDidMount() {
         var self = this;
+        // $.ajax({
+        //     url:OneDrop.base_ip + '/main/pay/getsign',
+        //     dataType:'json',
+        //     method:'POST',
+        //     data:{
+        //         location_url:encodeURIComponent(location.href.split('#')[0])
+        //     },
+        //     success:function (data) {
+        //         var payData = data.data;
+        //         wx.config({
+        //             debug:false,
+        //             appId:OneDrop.appId,
+        //             timestamp:payData.timestamp,
+        //             nonceStr:payData.nonceStr,
+        //             signature:payData.signature,
+        //             jsApiList:[
+        //                 'chooseWXPay'
+        //             ]
+        //         })
+        //     }
+        // })
         this.audioTimer = setInterval(()=>{
             var section = '#che_dan_de_yin_pin'+self.props.sectionId;
             // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
@@ -25,7 +46,6 @@ export default class DropAudio extends React.Component{
             // var audio = OneDrop.AUDIO;
             var duration = audio.duration;
             var curTime = audio.currentTime;
-            console.log('-------');
             if(curTime){
                 console.log('可以播放了，哈哈哈哈');
             }
@@ -73,15 +93,23 @@ export default class DropAudio extends React.Component{
                                marginLeft:'24px'
                         }} onClick={()=>{
                             console.log('点击开始播放。。。');
+
                             var section = '#che_dan_de_yin_pin'+self.props.sectionId;
                             // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
                             var audio = $(section)[0];
                             // var audio = OneDrop.AUDIO;
+
                             if(audio.paused || audio.ended || !this.state.playing){
-                                audio.play();
-                                this.setState({
-                                    playing:true
+
+
+                                wx.ready(function() {
+                                  audio.play();
+                                  self.setState({
+                                        playing:true
+                                    })
                                 })
+
+
                             }else{
                                 audio.pause();
                                 this.setState({
