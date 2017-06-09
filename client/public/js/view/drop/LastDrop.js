@@ -43,6 +43,27 @@ export default class LastDrop extends React.Component{
                 }
             }
         })
+        $.ajax({
+            url:OneDrop.base_ip + '/main/pay/getsign',
+            dataType:'json',
+            method:'POST',
+            data:{
+                location_url:encodeURIComponent(location.href.split('#')[0])
+            },
+            success:function (data) {
+                var payData = data.data;
+                wx.config({
+                    debug:true,
+                    appId:OneDrop.appId,
+                    timestamp:payData.timestamp,
+                    nonceStr:payData.nonceStr,
+                    signature:payData.signature,
+                    jsApiList:[
+                        'chooseWXPay'
+                    ]
+                })
+            }
+        })
     }
     render(){
         return (

@@ -223,13 +223,17 @@ router.post('/main/pay/getsign', function (req, res, next) {
         if(qerr){
             getTicket();
         }else{
-            var info = valls[0];
-            var left_second = (new Date()).getTime() - (new Date(info.datetime)).getTime();
+            if(valls.length>0){
+                var info = valls[0];
+                var left_second = (new Date()).getTime() - (new Date(info.datetime)).getTime();
 
-            if(left_second >= 7000*1000){
-                getTicket();
+                if(left_second >= 7000*1000){
+                    getTicket();
+                }else{
+                    paySign(info.jsapi_ticket);
+                }
             }else{
-                paySign(info.jsapi_ticket);
+                getTicket();
             }
         }
     })
