@@ -69,16 +69,6 @@ export default class LastDrop extends React.Component{
         return (
             <div>
                 {
-                    this.state.isShowEverydayDrop && false ?
-                        <audio id="che_dan_de_yin_pin" preload="auto">
-                            <source src={this.state.mp3_url} type="audio/mpeg"/>
-                            <source src={this.state.ogg_url} type="audio/ogg"/>
-                            <source src={this.state.wav_url} type="audio/wav"/>
-                            您的浏览器不支持audio
-                        </audio>
-                        : null
-                }
-                {
                     !this.state.isShowLeadPage&&!this.state.isShowEverydayDrop&&!this.state.isShowLeadPage ?
                         <div style={{
                             backgroundColor:'rgb(229,236,242)',
@@ -160,6 +150,7 @@ export default class LastDrop extends React.Component{
                 {
                     this.state.isShowEverydayDrop ?
                         <Drop sectionId={this.state.section_id} callback={()=>{
+                            document.body.scrollTop=0;
                             this.setState({
                                 isShowEverydayDrop:false
                             })
@@ -169,6 +160,7 @@ export default class LastDrop extends React.Component{
                 {
                     this.state.isShowLeadPage ?
                         <LeadPage callback={()=>{
+                            document.body.scrollTop=0;
                             this.setState({
                                 isShowLeadPage:false
                             })
