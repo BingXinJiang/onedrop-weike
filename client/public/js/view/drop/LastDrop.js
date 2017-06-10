@@ -79,7 +79,7 @@ export default class LastDrop extends React.Component{
                         : null
                 }
                 {
-                    !this.state.isShowEverydayDrop&&!this.state.isShowLeadPage ?
+                    !this.state.isShowLeadPage&&!this.state.isShowEverydayDrop&&!this.state.isShowLeadPage ?
                         <div style={{
                             backgroundColor:'rgb(229,236,242)',
                             width:OneDrop.JS_ScreenW,
