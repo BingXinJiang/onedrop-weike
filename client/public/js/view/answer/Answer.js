@@ -14,7 +14,8 @@ export default class Answer extends React.Component{
             questions:[],
             page:1,
             key_id:0,
-            question_id:0
+            question_id:0,
+            isNoMoreQuestion:false
         }
         this.getQuestions = (self, page, key_id)=>{
             $.ajax({
@@ -28,7 +29,9 @@ export default class Answer extends React.Component{
                 success:function (data) {
                     if(data.status === 1){
                         if(data.data.length<=0){
-                            alert('没有更多问题了...');
+                            self.setState({
+                                isNoMoreQuestion:true
+                            })
                         }else{
                             var lastOne = data.data[data.data.length-1];
                             var lastKeyId = lastOne.key_id;
@@ -44,10 +47,25 @@ export default class Answer extends React.Component{
                 }
             })
         }
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    handleScroll(event){
+        if(Number(document.body.clientHeight-document.body.scrollTop)<1250){
+            if(this.state.isNoMoreQuestion){
+                return;
+            }
+            this.getQuestions(this, this.state.page, this.state.key_id);
+        }
     }
 
     componentDidMount() {
         this.getQuestions(this, 1, 0);
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentDidUnMount() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
     render(){
         const Question =
@@ -126,24 +144,6 @@ export default class Answer extends React.Component{
                     )
                 })
             }
-            <div onClick={()=>{
-                this.getQuestions(this, this.state.page, this.state.key_id);
-            }} style={{
-                display:'flex',
-                justifyContent:'center',
-                alignItems:'center',
-                width:'100%',
-                height:'80px',
-                backgroundColor:'white',
-                marginBottom:'40px',
-                marginTop:'20px'
-            }}>
-                <p style={{
-                    fontSize:'32px'
-                }}>
-                    下一页
-                </p>
-            </div>
         </div>
         return (
             <div style={{

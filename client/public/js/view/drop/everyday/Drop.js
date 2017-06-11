@@ -45,6 +45,7 @@ export default class Drop extends React.Component{
     }
 
     componentDidMount() {
+        document.body.scrollTop=0;
         var self = this;
         async.parallel([
             function (callback) {

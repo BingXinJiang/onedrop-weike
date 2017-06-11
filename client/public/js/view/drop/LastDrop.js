@@ -17,8 +17,7 @@ export default class LastDrop extends React.Component{
             section_id:0,
             isShowLeadPage:false,
             mp3_url:'',
-            ogg_url:'',
-            wav_url:''
+            scrollTopNum:0
         }
     }
 
@@ -32,7 +31,6 @@ export default class LastDrop extends React.Component{
                 page:1
             },
             success:(data)=>{
-                console.log('data:',data);
                 if(data.status === 1){
                     var courses = data.data;
                     this.setState({
@@ -99,6 +97,7 @@ export default class LastDrop extends React.Component{
                                                 isShowEverydayDrop:true,
                                                 section_id:content.section_id,
                                                 mp3_url:mp3_url,
+                                                scrollTopNum:document.body.scrollTop
                                             })
                                         }} style={{
                                             marginTop:'30px',
@@ -150,7 +149,7 @@ export default class LastDrop extends React.Component{
                 {
                     this.state.isShowEverydayDrop ?
                         <Drop sectionId={this.state.section_id} callback={()=>{
-                            document.body.scrollTop=0;
+                            document.body.scrollTop=this.state.scrollTopNum;
                             this.setState({
                                 isShowEverydayDrop:false
                             })
