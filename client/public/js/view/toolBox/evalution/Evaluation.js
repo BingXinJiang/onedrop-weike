@@ -46,6 +46,36 @@ export default class Evaluation extends React.Component{
             }else{
                 mobile = null;
             }
+            if(name){
+
+            }else{
+                alert('请输入您的姓名!');
+                return;
+            }
+            if(age){
+
+            }else{
+                alert('请输入您的年龄!');
+                return;
+            }
+            if(gender){
+
+            }else{
+                alert('请选择您的性别!');
+                return;
+            }
+            if(email){
+
+            }else{
+                alert('请输入正确的电子邮件!');
+                return;
+            }
+            if(mobile){
+
+            }else{
+                alert('请输入正确的手机号!');
+                return;
+            }
             if(user_id && name && age && gender && email && mobile){
 
                 // alert(user_id+'='+name+'='+age+'='+gender+'='+email+'='+mobile);
@@ -81,12 +111,13 @@ export default class Evaluation extends React.Component{
                     }
                 })
             }else{
+                alter(user_id);
                 alert('请输入正确的个人信息!');
             }
 
         }
         //查看测评链接
-        this.evaluationLink = ()=>{
+        this.evaluationLink = (self)=>{
             var user_id = REMOTE_WEIXIN_USER_ID;
             var request_unique_id = localStorage.getItem('request_unique_id_link');
             if(user_id && request_unique_id){
@@ -100,7 +131,7 @@ export default class Evaluation extends React.Component{
                     },
                     success:function (data) {
                         if(data.status == 1){
-                            this.setState({
+                            self.setState({
                                 isShowLink:true,
                                 link:data.data.msg
                             })
@@ -110,6 +141,7 @@ export default class Evaluation extends React.Component{
                     }
                 })
             }else{
+                alert(user_id);
                 alert('数据错误,请重新申请测评!');
             }
         }
@@ -149,7 +181,7 @@ export default class Evaluation extends React.Component{
             }
         }
         //查看测评报告
-        this.reportLink = ()=>{
+        this.reportLink = (self)=>{
             var respondent_uid = localStorage.getItem('respondent_uid_report');
             var request_unique_id = localStorage.getItem('request_unique_id_report');
             var user_id = REMOTE_WEIXIN_USER_ID;
@@ -165,7 +197,7 @@ export default class Evaluation extends React.Component{
                     },
                     success:function (data) {
                         if(data.status == 1){
-                            this.setState({
+                            self.setState({
                                 isShowLink:true,
                                 link:data.data.msg
                             })
@@ -315,7 +347,9 @@ export default class Evaluation extends React.Component{
                         <button onClick={this.evaluation.bind(this)} style={{
                             ...btnWordStyle
                         }}>申请测评</button>
-                        <button onClick={this.evaluationLink.bind(this)} style={{
+                        <button onClick={()=>{
+                            this.evaluationLink(this);
+                        }} style={{
                             ...btnWordStyle,
                             marginLeft:'70px'
                         }}>查看测评链接</button>
@@ -327,7 +361,9 @@ export default class Evaluation extends React.Component{
                         <button onClick={this.report.bind(this)} style={{
                             ...btnWordStyle
                         }}>申请报告</button>
-                        <button onClick={this.reportLink.bind(this)} style={{
+                        <button onClick={()=>{
+                            this.reportLink(this);
+                        }} style={{
                             ...btnWordStyle,
                             marginLeft:'70px'
                         }}>查看报告链接</button>
@@ -388,13 +424,34 @@ export default class Evaluation extends React.Component{
                         <div style={{
                             position:'absolute',
                             left:'30px',
-                            width:(OneDrop.JS_ScreenW - 60)+'px',
-                            top:OneDrop.JS_ScreenH+'px',
-                            backgroundColor:'white'
+                            width:(OneDrop.JS_ScreenW - 120)+'px',
+                            top:'500px',
+                            height:'300px',
+                            display:'flex',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRadius:'10px',
+                            backgroundColor:'rgb(235,235,235)',
+                            borderWidth:'2px',
+                            borderColor:'gray',
+                            borderStyle:'solid'
                         }}>
+                            <p style={{
+                                fontSize:'32px',
+                                marginTop:'10px'
+                            }}>点击一下链接查看测评链接/报告:</p>
                             <a style={{
-                                fontSize:'28px'
+                                fontSize:'32px',
+                                marginTop:'20px',
+                                marginLeft:'20px',
+                                marginRight:'20px'
                             }} href={this.state.link}>{this.state.link}</a>
+                            <p style={{fontSize:'34px',marginTop:'20px'}} onClick={()=>{
+                                this.setState({
+                                    isShowLink:false,
+                                    link:''
+                                })
+                            }}>确定</p>
                         </div> : null
                 }
             </div>
