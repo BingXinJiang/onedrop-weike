@@ -157,7 +157,8 @@ export default class Drop extends React.Component{
                                             <div style={{
                                                 width:'80px',
                                                 height:'80px',
-                                                borderRadius:'40px'
+                                                borderRadius:'40px',
+                                                overflow:'hidden'
                                             }}>
                                                 <img style={{
                                                     width:'80px'
