@@ -180,6 +180,7 @@ export default class Evaluation extends React.Component{
         }
         //申请测评报告
         this.report = ()=>{
+            var self = this;
             if(this.state.isLoading){
                 return;
             }
@@ -266,7 +267,7 @@ export default class Evaluation extends React.Component{
 
     componentDidMount() {
         var evaluationStatus = localStorage.getItem('evaluation_status');
-        console.log('evalutionStatus:',evaluationStatus);
+        // console.log('evalutionStatus:',evaluationStatus);
         if(evaluationStatus){
             var num = Number(evaluationStatus);
             var msg = '';
@@ -526,25 +527,27 @@ export default class Evaluation extends React.Component{
                                 marginTop:'10px'
                             }}>点击链接,{!this.state.whatLink ? '参与测评':'查看报告'}:</p>
                             <a onClick={()=>{
-                                if(this.state.whatLink){
-                                    localStorage.setItem('evaluation_status', 4);
-                                    self.setState({
-                                        guideMsg:'',
-                                        evaluationStatus:4
-                                    });
-                                    return;
+                                // console.log('点击了a标签,-------------');
+
+                                var num = 4;
+                                var msg = '';
+
+                                if(!this.state.whatLink){
+                                    num = 2;
+                                    msg = '如果您已完成测评,可以点击申请报告按钮申请报告!';
                                 }
                                 localStorage.setItem('evaluation_status', 2);
-                                self.setState({
-                                    guideMsg:'如果您已完成测评,可以点击申请报告按钮申请报告!',
-                                    evaluationStatus:2
-                                })
+                                this.setState({
+                                    guideMsg:msg,
+                                    evaluationStatus:num
+                                });
+                                window.open(this.state.link);
                             }} style={{
                                 fontSize:'32px',
                                 marginTop:'20px',
                                 marginLeft:'20px',
                                 marginRight:'20px'
-                            }} href={this.state.link}>{this.state.link}</a>
+                            }} href='javascript:void(0);'>{this.state.link}</a>
                             <p style={{fontSize:'34px',marginTop:'20px'}} onClick={()=>{
                                 this.setState({
                                     isShowLink:false,
