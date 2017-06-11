@@ -266,6 +266,7 @@ export default class Evaluation extends React.Component{
 
     componentDidMount() {
         var evaluationStatus = localStorage.getItem('evaluation_status');
+        console.log('evalutionStatus:',evaluationStatus);
         if(evaluationStatus){
             var num = Number(evaluationStatus);
             var msg = '';
@@ -416,7 +417,7 @@ export default class Evaluation extends React.Component{
                 <div style={{
                     display:'flex',justifyContent:'center',width:'100%',marginTop:'40px'
                 }}>
-                    <p style={{fontSize:'28px',marginLeft:'30px',marginRight:'30px'}}>如果您已完成测评,可通过点击申请申请报告按钮来申请您的测评报告</p>
+                    <p style={{fontSize:'28px',marginLeft:'30px',marginRight:'30px'}}>{this.state.guideMsg}</p>
                 </div>
 
                 <div style={{
