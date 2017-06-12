@@ -5,6 +5,7 @@ import React from 'React';
 import OneDrop from '../../const/onedrop';
 import Drop from './everyday/Drop';
 import LeadPage from './everyday/LeadPage';
+import async from 'async';
 
 export default class LastDrop extends React.Component{
     constructor(props){
@@ -22,46 +23,63 @@ export default class LastDrop extends React.Component{
     }
 
     componentDidMount() {
-        $.ajax({
-            url:OneDrop.base_url+'/onedrop/sections',
-            dataType:'json',
-            method:'POST',
-            data:{
-                user_id:REMOTE_WEIXIN_USER_ID,
-                page:1
+        var self =  this;
+        async.parallel([
+            function (callback) {
+                $.ajax({
+                    url:OneDrop.base_url+'/onedrop/sections',
+                    dataType:'json',
+                    method:'POST',
+                    data:{
+                        user_id:REMOTE_WEIXIN_USER_ID,
+                        page:1
+                    },
+                    success:(data)=>{
+                        if(data.status === 1){
+                            var courses = data.data;
+                            console.log('courses:',courses);
+                            self.setState({
+                                courses:courses
+                            })
+                        }else{
+                            callback('数据库执行错误');
+                        }
+                    }
+                })
             },
-            success:(data)=>{
-                if(data.status === 1){
-                    var courses = data.data;
-                    this.setState({
-                        courses:courses
-                    })
-                }else{
-                    alert('数据执行错误!');
-                }
-            }
-        })
-        $.ajax({
-            url:OneDrop.base_ip + '/main/pay/getsign',
-            dataType:'json',
-            method:'POST',
-            data:{
-                location_url:encodeURIComponent(location.href.split('#')[0])
-            },
-            success:function (data) {
-                var payData = data.data;
-                wx.config({
-                    debug:false,
-                    appId:OneDrop.appId,
-                    timestamp:payData.timestamp,
-                    nonceStr:payData.nonceStr,
-                    signature:payData.signature,
-                    jsApiList:[
-                        'chooseWXPay'
-                    ]
+            function (callback) {
+                $.ajax({
+                    url:OneDrop.base_ip + '/main/pay/getsign',
+                    dataType:'json',
+                    method:'POST',
+                    data:{
+                        location_url:encodeURIComponent(location.href.split('#')[0])
+                    },
+                    success:function (data) {
+                        if(data.status === 0){
+                            callback('执行错误');
+                        }
+                        var payData = data.data;
+                        wx.config({
+                            debug:false,
+                            appId:OneDrop.appId,
+                            timestamp:payData.timestamp,
+                            nonceStr:payData.nonceStr,
+                            signature:payData.signature,
+                            jsApiList:[
+                                'chooseWXPay'
+                            ]
+                        })
+                    }
                 })
             }
+        ], function (err,results) {
+            if(err){
+                alert(err);
+            }
         })
+
+
     }
     render(){
         return (

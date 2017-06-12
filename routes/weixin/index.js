@@ -203,6 +203,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
                         query(querry_sql, function (qerr, valls, fields) {
                             if(qerr){
                                 // console.log('qerr:',qerr);
+                                responseDataErr(res);
                             }else {
                                 paySign(jsapi_ticket);
                             }
@@ -212,12 +213,18 @@ router.post('/main/pay/getsign', function (req, res, next) {
                 })
                 request.on('error', function(e){
                     // console.log('错误：' + e.message);
+                    if(e){
+                        responseDataErr(res);
+                    }
                 });
                 request.end();
             })
         })
         token_request.on('error', function(e){
             // console.log('错误：' + e.message);
+            if(e){
+                responseDataErr(res);
+            }
         });
         token_request.end();
     }

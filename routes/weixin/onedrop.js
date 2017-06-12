@@ -169,12 +169,18 @@ router.post('/every_day', function (req, res, next) {
 router.post('/sections', function (req, res, next) {
     var user_id = req.body.user_id;
     var page = req.body.page;
-    var query_sql = "select section_id,section_list_img,section_intro,section_voice,section_name,open_date,year(open_date)year,month(open_date)month,day(open_date)day" +
-        " from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10";
+    // var query_sql = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
+    //     "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head from" +
+    //     " (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
+    //     "(select * from teacher)as b on a.author_id=b.teacher_id";
     var query_sql2 = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
-        "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head from" +
+        "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
+        "d.comment_count from" +
         " (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
-        "(select * from teacher)as b on a.author_id=b.teacher_id";
+        "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
+        "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
+        "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
+        "on a.section_id=d.section_id";
     query(query_sql2, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);

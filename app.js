@@ -15,6 +15,8 @@ var ceping = require('./routes/weixin/ceping');
 var onedrop = require('./routes/weixin/onedrop');
 var answer = require('./routes/weixin/answer');
 var punchcard = require('./routes/weixin/punchcard');
+var mydrop = require('./routes/weixin/mydrop');
+var learn = require('./routes/weixin/learn');
 
 var app = express();
 
@@ -40,6 +42,8 @@ app.use('/ceping', ceping);
 app.use('/onedrop', onedrop);
 app.use('/answer', answer);
 app.use('/card',punchcard);
+app.use('/mydrop',mydrop);
+app.use('/learn',learn);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

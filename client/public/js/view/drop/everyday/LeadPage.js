@@ -130,7 +130,7 @@ export default class LeadPage extends React.Component{
                 zIndex:'99',
                 backgroundColor:'white',paddingBottom:'130px'
             }}>
-                <img style={{width:'100%',height:'360px'}} src='../../../../img/weike/onedrop/banner.jpg'/>
+                <img style={{width:'100%',height:'360px'}} src='../../../../img/weike/home/lead_banner.jpg'/>
 
                 <div style={{
                     display:'flex',
@@ -328,7 +328,7 @@ export default class LeadPage extends React.Component{
                     <div style={{
                     }}>
                         {
-                            ['30天升级领导力思维','60天刷新领导力行为','90天重启领导力心智'].map((content,index)=>{
+                            ['21天升级领导力思维','49天刷新领导力行为','70天重启领导力心智'].map((content,index)=>{
                                 return(
                                     <div key={index} style={{display:'flex',width:'300px',
                                         height:'50px',justifyContent:'center',

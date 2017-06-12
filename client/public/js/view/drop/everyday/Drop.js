@@ -32,7 +32,7 @@ export default class Drop extends React.Component{
                         return  <span key={idx}>
                             <span>{txt}</span>
                             {
-                                idx === 0 ? <span key={idx} style={{color:'rgb(117,193,241)'}}>{htext}</span>
+                                idx === 0 ? <span key={idx} style={{color:'rgb(117,193,241)',fontWeight:'bold'}}>{htext}</span>
                                     : null
                             }
                         </span>
@@ -223,7 +223,8 @@ export default class Drop extends React.Component{
                                                                         <p style={{
                                                                             fontSize:'32px',
                                                                             lineHeight:'70px',
-                                                                            color:'rgb(23,172,251)'
+                                                                            color:'rgb(23,172,251)',
+                                                                            fontWeight:'bold'
                                                                         }} key={idx}>{section.text}</p>
                                                                     )
                                                                 }

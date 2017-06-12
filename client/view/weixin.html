@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
-    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5">
+    <meta name="viewport" id="viewport" content="width=device-width,user-scalable= 'no', initial-scale=0.5, maximum-scale=0.5">
     <title>一滴领导力
 
     </title>
 
     <link rel="stylesheet" href="../stylesheets/style.css" type="text/css">
     <!--<link rel="stylesheet" href="../stylesheets/weui.min.css" type="text/css">-->
+    <script src="../js/thirdlib/fastclick.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 </head>
@@ -26,16 +27,21 @@
         ONEDROP_AUDIO.push(audio);
     })
     */
-(function(){
-    window.alert = function(name){
-        var iframe = document.createElement("IFRAME");
-        iframe.style.display="none";
-        iframe.setAttribute("src", 'data:text/plain');
-        document.documentElement.appendChild(iframe);
-        window.frames[0].window.alert(name);
-        iframe.parentNode.removeChild(iframe);
-    }
-})();
+    window.onload = function () {
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    };
+    (function(){
+        window.alert = function(name){
+            var iframe = document.createElement("IFRAME");
+            iframe.style.display="none";
+            iframe.setAttribute("src", 'data:text/plain');
+            document.documentElement.appendChild(iframe);
+            window.frames[0].window.alert(name);
+            iframe.parentNode.removeChild(iframe);
+        }
+    })();
 </script>
 <script>
     REMOTE_WEIXIN_USER_ID = "<%= user_id %>";
