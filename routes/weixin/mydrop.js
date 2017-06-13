@@ -34,12 +34,13 @@ function responseDataErr(res) {
 router.post('/',function (req,res,next) {
     var user_id= req.body.user_id;
 
-     var query_sql = "select a.headimgur,b.question_count,c.answer_count,d.comment_count,e.learn_count from " +
+     var query_sql = "select a.headimgurl,b.question_count,c.answer_count,d.comment_count,e.learn_count,f.appreciate_count from " +
          "(select user_id,headimgurl from user where user_id='"+user_id+"')as a left join " +
-         "(select count(*)question_count from question group by user_id)as b on a.user_id=b.user_id left join " +
-         "(select count(*)answer_count from answer group by user_id)as c on c.user_id=a.user_id left join " +
-         "(select count(*)comment_count from comment group by user_id)as d on d.user_id=a.user_id left join " +
-         "(select count(*)learn_count from schedule_learn where is_learn=1 group by user_id)as e on e.user_id=a.user_id";
+         "(select user_id,count(*)question_count from question group by user_id)as b on a.user_id=b.user_id left join " +
+         "(select user_id,count(*)answer_count from answer group by user_id)as c on c.user_id=a.user_id left join " +
+         "(select user_id,count(*)comment_count from comment group by user_id)as d on d.user_id=a.user_id left join " +
+         "(select user_id,count(*)learn_count from schedule_learn where is_learn=1 group by user_id)as e on e.user_id=a.user_id left join " +
+         "(select user_id,sum(appreciate_value)appreciate_count from appreciate_mine group by user_id)as f on f.user_id=a.user_id";
 
      query(query_sql, function (qerr, valls, fields) {
          if(qerr){

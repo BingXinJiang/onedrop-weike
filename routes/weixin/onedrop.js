@@ -138,7 +138,7 @@ router.post('/every_day', function (req, res, next) {
 
     //判断该user_id是否是会员,是否可以免费听取课程
 
-    var  query_sql = "select a.section_id,a.section_name,a.author_id,a.section_voice,a.section_des,a.section_detail_img," +
+    var  query_sql = "select a.section_id,a.section_name,a.author_id,a.section_voice,a.section_des,a.section_detail_img,a.label_des," +
         "year(a.open_date)year,month(a.open_date)month,day(a.open_date)day," +
         "b.teacher_name,b.teacher_position,b.teacher_head,c.appreciate_course_num from " +
         "(select * from course_section where section_id="+section_id+")as a " +
@@ -169,19 +169,25 @@ router.post('/every_day', function (req, res, next) {
 router.post('/sections', function (req, res, next) {
     var user_id = req.body.user_id;
     var page = req.body.page;
-    // var query_sql = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
-    //     "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head from" +
+
+    // var query_sql2 = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
+    //     "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
+    //     "d.comment_count from" +
     //     " (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
-    //     "(select * from teacher)as b on a.author_id=b.teacher_id";
-    var query_sql2 = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
+    //     "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
+    //     "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
+    //     "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
+    //     "on a.section_id=d.section_id";
+    var query_sql = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name,a.label_des," +
         "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
         "d.comment_count from" +
-        " (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
+        " (select * from course_section where open_date between date_sub((select be_date from user where user_id='"+user_id+"'),interval 1 day) and Now() " +
+        "order by open_date desc limit "+(page-1)*7+",7)as a left join " +
         "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
         "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
         "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
         "on a.section_id=d.section_id";
-    query(query_sql2, function (qerr, valls, fields) {
+    query(query_sql, function (qerr, valls, fields) {
         if(qerr){
             responseDataErr(res);
         }else{

@@ -17,35 +17,46 @@ export default class LastDrop extends React.Component{
             isShowEverydayDrop:false,
             section_id:0,
             isShowLeadPage:false,
-            mp3_url:'',
-            scrollTopNum:0
-        }
+            scrollTopNum:0,
+            page:1,
+            isNoMoreCourse:false
+        };
+        this.getCourses = (self,page)=>{
+            $.ajax({
+                url:OneDrop.base_url+'/onedrop/sections',
+                dataType:'json',
+                method:'POST',
+                data:{
+                    user_id:REMOTE_WEIXIN_USER_ID,
+                    page:page
+                },
+                success:(data)=>{
+                    if(data.status === 1){
+                        var courses = data.data;
+                        if(courses.length>0){
+                            self.setState({
+                                courses:self.state.courses.concat(courses),
+                                page:self.state.page+1
+                            })
+                        }else{
+                            self.setState({
+                                isNoMoreCourse:true
+                            })
+                        }
+                    }else{
+                        alert('数据库执行错误');
+                    }
+                }
+            })
+        };
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount() {
         var self =  this;
         async.parallel([
             function (callback) {
-                $.ajax({
-                    url:OneDrop.base_url+'/onedrop/sections',
-                    dataType:'json',
-                    method:'POST',
-                    data:{
-                        user_id:REMOTE_WEIXIN_USER_ID,
-                        page:1
-                    },
-                    success:(data)=>{
-                        if(data.status === 1){
-                            var courses = data.data;
-                            console.log('courses:',courses);
-                            self.setState({
-                                courses:courses
-                            })
-                        }else{
-                            callback('数据库执行错误');
-                        }
-                    }
-                })
+                self.getCourses(self,1);
             },
             function (callback) {
                 $.ajax({
@@ -78,8 +89,18 @@ export default class LastDrop extends React.Component{
                 alert(err);
             }
         })
-
-
+        window.addEventListener('scroll', this.handleScroll);
+    }
+    handleScroll(event){
+        if(Number(document.body.clientHeight-document.body.scrollTop)<1350){
+            if(this.state.isNoMoreCourse){
+                return;
+            }
+            this.getCourses(this, this.state.page);
+        }
+    }
+    componentDidUnMount() {
+        window.removeEventListener('scroll', this.handleScroll);
     }
     render(){
         return (
@@ -103,18 +124,19 @@ export default class LastDrop extends React.Component{
                             </div>
                             {
                                 this.state.courses.map((content,index)=>{
-                                    var mp3_url = 'https://www.mymax.cn/videos/voices/section_1_1_'+content.section_id+'.mp3';
+                                    // var audio = document.createElement('audio');
+                                    // audio.preload = 'auto';
+                                    // audio.src = content.section_voice;
+                                    // audio.id = 'che_dan_de_yin_pin'+content.section_id;
                                     return(
                                         <div key={index} onClick={()=>{
-                                            // var audio = document.createElement('audio');
-                                            // audio.preload = 'auto';
-                                            // audio.src = mp3_url;
-                                            // audio.id = 'che_dan_de_yin_pin'+content.section_id;
-                                            // OneDrop.AUDIO = audio;
+                                            var audio = document.createElement('audio');
+                                            audio.preload = 'auto';
+                                            audio.src = content.section_voice;
+                                            audio.id = 'che_dan_de_yin_pin'+content.section_id;
                                             this.setState({
                                                 isShowEverydayDrop:true,
                                                 section_id:content.section_id,
-                                                mp3_url:mp3_url,
                                                 scrollTopNum:document.body.scrollTop
                                             })
                                         }} style={{
@@ -154,9 +176,23 @@ export default class LastDrop extends React.Component{
                                                     fontSize:'20px',
                                                     color:'rgb(131,131,131)'
                                                 }}>{content.year}年{content.month}月{content.day}日</p>
-                                                <img style={{height:'300px',width:'100%',
-                                                    marginTop:'28px'
-                                                }} src={OneDrop.res_ip+content.section_list_img}/>
+                                                <div style={{position:'relative'}}>
+                                                    <img style={{height:'300px',width:'100%',
+                                                        marginTop:'28px'
+                                                    }} src={OneDrop.res_ip+content.section_list_img}/>
+                                                    <div style={{position:'absolute',
+                                                        display:'flex',flexDirection:'row',bottom:'25px',right:'40px'
+                                                    }}>
+                                                        <div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
+                                                            <img src="../../../img/weike/onedrop/appreciate_num.png"/>
+                                                            <p style={{color:'white',fontSize:'26px',marginLeft:'10px'}}>{content.appreciate_count ? content.appreciate_count : 0}</p>
+                                                        </div>
+                                                        <div style={{display:'flex',flexDirection:'row',alignItems:'center',marginLeft:'20px'}}>
+                                                            <img src="../../../img/weike/onedrop/comment_num.png"/>
+                                                            <p style={{color:'white',fontSize:'26px',marginLeft:'10px'}}>{content.comment_count ? content.comment_count : 0}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     )
