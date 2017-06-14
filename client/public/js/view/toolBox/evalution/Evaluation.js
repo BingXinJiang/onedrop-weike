@@ -42,10 +42,11 @@ export default class Evaluation extends React.Component{
             if(this.state.isLoading){
                 return;
             }
-            this.setState({
-                isLoading:true,
-                loadingMsg:'正在申请测评测评链接,请耐心等待...'
-            })
+            var status = localStorage.getItem('evaluation_status');
+            if(status == 1 || status == 2 || status == 3){
+                alert('您已申请过测评，不需要重新申请...');
+                return;
+            }
             var user_id = REMOTE_WEIXIN_USER_ID;
             var name = $('#evaluation_name').val();
             var age = Number($('#evaluation_age').val());
@@ -77,7 +78,7 @@ export default class Evaluation extends React.Component{
             if(age){
 
             }else{
-                alert('请输入您的年龄!');
+                alert('请正确输入您的年龄!');
                 return;
             }
             if(gender){
@@ -100,7 +101,10 @@ export default class Evaluation extends React.Component{
             }
             if(user_id && name && age && gender && email && mobile){
 
-                // alert(user_id+'='+name+'='+age+'='+gender+'='+email+'='+mobile);
+                this.setState({
+                    isLoading:true,
+                    loadingMsg:'正在申请测评测评链接,请耐心等待...'
+                })
 
                 $.ajax({
                     url:OneDrop.base_url + '/ceping/evaluation',
@@ -141,6 +145,9 @@ export default class Evaluation extends React.Component{
                     }
                 })
             }else{
+                self.setState({
+                    isLoading:false
+                })
                 alert('请输入正确的个人信息!');
             }
 
@@ -150,6 +157,19 @@ export default class Evaluation extends React.Component{
             if(this.state.isLoading){
                 return;
             }
+            var status = localStorage.getItem('evaluation_status');
+            if(!status || status == 0){
+                alert('请先申请测评链接...');
+                return;
+            }
+            if(!status || status == 4){
+                alert('请重新申请测评或查看报告链接...');
+                return;
+            }
+            this.setState({
+                isLoading:true,
+                loadingMsg:'正在获取测评链接，请耐心等待...'
+            })
             var user_id = REMOTE_WEIXIN_USER_ID;
             var request_unique_id = localStorage.getItem('request_unique_id_link');
             if(user_id && request_unique_id){
@@ -166,22 +186,41 @@ export default class Evaluation extends React.Component{
                             self.setState({
                                 isShowLink:true,
                                 link:data.data.msg,
-                                whatLink:false
+                                whatLink:false,
+                                isLoading:false
                             })
                         }else {
                             alert('数据错误!');
+                            self.setState({
+                                isLoading:false
+                            })
                         }
                     }
                 })
             }else{
-                alert(user_id);
                 alert('数据错误,请重新申请测评!');
+                self.setState({
+                    isLoading:false
+                })
             }
         }
         //申请测评报告
         this.report = ()=>{
             var self = this;
             if(this.state.isLoading){
+                return;
+            }
+            var status = localStorage.getItem('evaluation_status');
+            if(!status || status == 0){
+                alert('请先申请测评链接...');
+                return;
+            }
+            if(!status || status == 1){
+                alert('请先通过查看测评链接，参加测评...');
+                return;
+            }
+            if(!status || status == 4){
+                alert('请重新申请测评或查看报告链接...');
                 return;
             }
             this.setState({
@@ -227,6 +266,9 @@ export default class Evaluation extends React.Component{
                 })
             }else{
                 alert('数据错误!');
+                self.setState({
+                    isLoading:false
+                })
             }
         }
         //查看测评报告
@@ -234,6 +276,23 @@ export default class Evaluation extends React.Component{
             if(this.state.isLoading){
                 return;
             }
+            var status = localStorage.getItem('evaluation_status');
+            if(!status || status == 0){
+                alert('请先申请测评链接...');
+                return;
+            }
+            if(!status || status == 1){
+                alert('请先通过查看测评链接，参加测评...');
+                return;
+            }
+            if(!status || status == 2){
+                alert('请先申请报告...');
+                return;
+            }
+            this.setState({
+                isLoading:true,
+                loadingMsg:'正在获取报告，请耐心等待...'
+            })
             var respondent_uid = localStorage.getItem('respondent_uid_report');
             var request_unique_id = localStorage.getItem('request_unique_id_report');
             var user_id = REMOTE_WEIXIN_USER_ID;
@@ -252,15 +311,22 @@ export default class Evaluation extends React.Component{
                             self.setState({
                                 isShowLink:true,
                                 link:data.data.msg,
-                                whatLink:true
+                                whatLink:true,
+                                isLoading:false
                             })
                         }else{
                             alert('数据错误!');
+                            self.setState({
+                                isLoading:false
+                            })
                         }
                     }
                 })
             }else{
                 alert('数据错误!');
+                self.setState({
+                    isLoading:false
+                })
             }
         }
     }
@@ -272,7 +338,7 @@ export default class Evaluation extends React.Component{
             var num = Number(evaluationStatus);
             var msg = '';
             if(num === 0){
-                msg = '';
+                msg = '请正确填写信息申请测评，如果您已经有测评报告，可直接点击查看报告链接，查看报告！';
             }else if(num === 1){
                 msg = '您已成功申请测评链接,可通过查看测评链接,参与测评!';
             }else if(num === 2){
@@ -280,7 +346,7 @@ export default class Evaluation extends React.Component{
             }else if(num === 3){
                 msg = '您已成功申请报告,可通过点击查看报告链接查看测评报告!';
             }else {
-                msg = '';
+                msg = '请正确填写信息申请测评，如果您已经有测评报告，可直接点击查看报告链接，查看报告！';
             }
             this.setState({
                 guideMsg:msg,
@@ -306,12 +372,18 @@ export default class Evaluation extends React.Component{
             fontSize:'30px',
             borderColor:'rgb(235,235,235)',
             borderWidth:'2px',
-            width:'75%',
-            padding:'5px'
+            width:'79%',
+            padding:'5px',
+            marginLeft:'20px'
         };
         const btnWordStyle = {
             fontSize:'32px',
-            color:'rgb(0,164,251)'
+            color:'rgb(0,164,251)',
+            borderStyle:'solid',
+            padding:'10px',
+            borderWidth:'2px',
+            borderColor:'rgb(235,235,235)',
+            borderRadius:'20px'
         };
         const btnConyainerStyle = {
             display:'flex',
@@ -430,29 +502,29 @@ export default class Evaluation extends React.Component{
                     <div style={{
                         ...btnConyainerStyle
                     }}>
-                        <button onClick={this.evaluation.bind(this)} style={{
+                        <div onClick={this.evaluation.bind(this)} style={{
                             ...btnWordStyle
-                        }}>申请测评</button>
-                        <button onClick={()=>{
+                        }}>申请测评</div>
+                        <div onClick={()=>{
                             this.evaluationLink(this);
                         }} style={{
                             ...btnWordStyle,
                             marginLeft:'70px'
-                        }}>查看测评链接</button>
+                        }}>查看测评链接</div>
                     </div>
                     <div style={{
                         ...btnConyainerStyle,
                         marginTop:'30px'
                     }}>
-                        <button onClick={this.report.bind(this)} style={{
+                        <div onClick={this.report.bind(this)} style={{
                             ...btnWordStyle
-                        }}>申请报告</button>
-                        <button onClick={()=>{
+                        }}>申请报告</div>
+                        <div onClick={()=>{
                             this.reportLink(this);
                         }} style={{
                             ...btnWordStyle,
                             marginLeft:'70px'
-                        }}>查看报告链接</button>
+                        }}>查看报告链接</div>
                     </div>
                 </div>
 
@@ -475,16 +547,22 @@ export default class Evaluation extends React.Component{
                                 display:'block',
                                 float:'right',
                                 marginRight:'20px',
-                                marginTop:'5px'
+                                marginTop:'15px'
                             }}>
                                 <img style={{width:'40px'}}
                                      src="../../../img/weike/question/close.png"/>
                             </div>
-                            <Cells style={{marginTop:'50px'}}>
+                            <Cells style={{marginTop:'80px',display:'flex',flexDirection:'column',alignItems:'center',
+                                backgroundColor:'rgb(235,235,235)',width:'100%'
+                            }}>
                                 {
-                                    ['自我管理测评','15FQ+'].map((content, index)=>{
+                                    ['15FQ+'].map((content, index)=>{
                                         return (
-                                            <Cell key={index} style={{backgroundColor:'rgb(235,235,235)'}}>
+                                            <Cell key={index} style={{backgroundColor:'rgb(235,235,235)',width:'100%',
+                                                borderStyle:'solid',borderTopWidth:'2px',borderBottomWidth:'2px',
+                                                borderTopColor:'rgb(220,220,220)',borderBottomColor:'rgb(220,220,220)',
+                                                display:'flex',flexDirection:'column',alignItems:'center',
+                                            }}>
                                                 <CellBody onClick={()=>{
                                                     $('#evaluation_choose_type').val(content)
                                                     this.setState({
@@ -530,13 +608,13 @@ export default class Evaluation extends React.Component{
                                 // console.log('点击了a标签,-------------');
 
                                 var num = 4;
-                                var msg = '';
+                                var msg = '请正确填写信息申请测评，如果您已经有测评报告，可直接点击查看报告链接，查看报告！';
 
                                 if(!this.state.whatLink){
                                     num = 2;
                                     msg = '如果您已完成测评,可以点击申请报告按钮申请报告!';
                                 }
-                                localStorage.setItem('evaluation_status', 2);
+                                localStorage.setItem('evaluation_status', num);
                                 this.setState({
                                     guideMsg:msg,
                                     evaluationStatus:num
@@ -547,12 +625,24 @@ export default class Evaluation extends React.Component{
                                 marginTop:'20px',
                                 marginLeft:'20px',
                                 marginRight:'20px'
-                            }} href='javascript:void(0);'>{this.state.link}</a>
+                            }} target="_blank" href='javascript:void(0);'>{this.state.link}</a>
                             <p style={{fontSize:'34px',marginTop:'20px'}} onClick={()=>{
-                                this.setState({
-                                    isShowLink:false,
-                                    link:''
-                                })
+                                if(this.state.whatLink){
+                                    var num = 4;
+                                    var msg = '请正确填写信息申请测评，如果您已经有测评报告，可直接点击查看报告链接，查看报告！';
+                                    localStorage.setItem('evaluation_status', num);
+                                    this.setState({
+                                        isShowLink:false,
+                                        link:'',
+                                        guideMsg:msg,
+                                        evaluationStatus:num
+                                    })
+                                }else{
+                                    this.setState({
+                                        isShowLink:false,
+                                        link:''
+                                    })
+                                }
                             }}>确定</p>
                         </div> : null
                 }
@@ -561,7 +651,7 @@ export default class Evaluation extends React.Component{
                         <div style={{
                             position:'absolute',
                             width:'400px',
-                            height:'300px',
+                            height:'350px',
                             top:'50%',
                             left:(OneDrop.JS_ScreenW-400)/2 + 'px',
                             display:'flex',

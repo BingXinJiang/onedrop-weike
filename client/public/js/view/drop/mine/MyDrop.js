@@ -21,7 +21,6 @@ export default class MyDrop extends React.Component{
                 user_id:REMOTE_WEIXIN_USER_ID
             },
             success:(data)=>{
-                console.log('data:',data.data);
                 if(data.status === 1){
                     this.setState({
                         user:data.data
@@ -66,7 +65,7 @@ export default class MyDrop extends React.Component{
             <div>
                 <div style={{
                     width:OneDrop.JS_ScreenW,
-                    height:(OneDrop.JS_ScreenH*2-108)+'px',
+                    height:(OneDrop.JS_ScreenH*2-114)+'px',
                     backgroundImage:'url(../../../../img/weike/home/mydrop.jpg)',
                     backgroundSize:'100% 100%'
                 }}>

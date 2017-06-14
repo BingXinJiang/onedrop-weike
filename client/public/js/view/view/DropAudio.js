@@ -37,10 +37,10 @@ export default class DropAudio extends React.Component{
 
     componentDidMount() {
         var self = this;
-        var section = '#che_dan_de_yin_pin'+self.props.sectionId;
-        var audio = $(section)[0];
+        // var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+        // var audio = $(section)[0];
+        var audio = OneDrop.AUDIO;
         this.audioTimer = setInterval(()=>{
-            // var audio = OneDrop.AUDIO;
             var duration = audio.duration;
             var curTime = audio.currentTime;
             this.setState({
@@ -48,7 +48,7 @@ export default class DropAudio extends React.Component{
                 curTime:parseInt(curTime)
             })
         }, 1000)
-        $(section).bind('ended',()=>{
+        audio.addEventListener('ended',()=>{
            self.commitLearnStatus(100);
            self.setState({
                playing:false
@@ -58,9 +58,9 @@ export default class DropAudio extends React.Component{
 
     componentWillUnmount(){
         clearInterval(this.audioTimer);
-        var section = '#che_dan_de_yin_pin'+this.props.sectionId;
-        var audio = $(section)[0];
-        // var audio = OneDrop.AUDIO;
+        // var section = '#che_dan_de_yin_pin'+this.props.sectionId;
+        // var audio = $(section)[0];
+        var audio = OneDrop.AUDIO;
         var duration = audio.duration;
         var curTime = audio.currentTime;
         if(curTime && curTime>0){
@@ -97,12 +97,11 @@ export default class DropAudio extends React.Component{
                                marginLeft:'24px'
                         }} onClick={()=>{
 
-                            var section = '#che_dan_de_yin_pin'+self.props.sectionId;
-                            // var audio = ONEDROP_AUDIO[self.props.sectionId-1];
-                            var audio = $(section)[0];
-                            // var audio = OneDrop.AUDIO;
+                            // var section = '#che_dan_de_yin_pin'+self.props.sectionId;
+                            // var audio = $(section)[0];
+                            var audio = OneDrop.AUDIO;
 
-                            if(audio.paused || audio.ended || !this.state.playing){
+                            if(audio.paused || !this.state.playing){
 
                                 wx.ready(function() {
                                   audio.play();

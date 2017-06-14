@@ -15,9 +15,16 @@ export default class Answer extends React.Component{
             page:1,
             key_id:0,
             question_id:0,
-            isNoMoreQuestion:false
+            isNoMoreQuestion:false,
+            isLoading:false
         }
         this.getQuestions = (self, page, key_id)=>{
+            if(this.state.isLoading){
+                return;
+            }
+            self.setState({
+                isLoading:true
+            })
             $.ajax({
                 url:OneDrop.base_url+'/answer/questions',
                 dataType:'json',
@@ -38,7 +45,8 @@ export default class Answer extends React.Component{
                             self.setState({
                                 questions:self.state.questions.concat(data.data),
                                 key_id:lastKeyId,
-                                page:self.state.page+1
+                                page:self.state.page+1,
+                                isLoading:false
                             })
                         }
                     }else{

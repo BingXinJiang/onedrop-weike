@@ -144,6 +144,10 @@ export default class Drop extends React.Component{
                                         color:'rgb(0,0,0)'
                                     }}>{this.state.course ? this.state.course.section_name : ''}</p>
 
+                                    <p style={{
+                                        fontSize:'26px',color:'rgb(51,51,51)'
+                                    }}>#标签：  {this.state.course ? this.state.course.label_des : ''}</p>
+
                                     <div style={{
                                         display:'flex',
                                         flexDirection:'row',

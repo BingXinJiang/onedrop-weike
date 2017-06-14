@@ -26,9 +26,9 @@ class Main extends React.Component{
             isFirst:false,
             selectedTab:'everydrop',
             showQuestion:false,
-            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
-            // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ'
+            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ' //仕龙
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
     }
@@ -92,6 +92,9 @@ class Main extends React.Component{
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var tool_src = '../../../img/weike/main/tool.png';
         var tool_selected_src = '../../../img/weike/main/tool_selected.png';
+        const linkStyle = {
+            width:'100%',height:'100%',display:'flex',justifyContent:'center',marginBottom:'8px'
+        }
         return (
             <div>
                 {
@@ -122,7 +125,7 @@ class Main extends React.Component{
                                         })
                                     }}>
                                         <Link style={{
-
+                                            ...linkStyle
                                         }} to="/weixin/main">
                                             <img src={this.state.selectedTab === 'everydrop' ? oneDrop_selected_src : oneDrop_src}/>
                                         </Link>
@@ -135,7 +138,7 @@ class Main extends React.Component{
                                         })
                                     }}>
                                         <Link style={{
-
+                                            ...linkStyle
                                         }} to="/weixin/main/mydrop">
                                             <img src={this.state.selectedTab === 'mydrop' ? course_selected_src : course_src}/>
                                         </Link>
@@ -165,7 +168,7 @@ class Main extends React.Component{
                                         })
                                     }}>
                                         <Link style={{
-
+                                            ...linkStyle
                                         }} to="/weixin/main/question">
                                             <img src={this.state.selectedTab === 'question' ? question_selected_src : question_src}/>
                                         </Link>
@@ -179,7 +182,7 @@ class Main extends React.Component{
                                         })
                                     }}>
                                         <Link style={{
-
+                                            ...linkStyle
                                         }} to="/weixin/main/tool">
                                             <img src={this.state.selectedTab === 'tool' ? tool_selected_src : tool_src}/>
                                         </Link>
@@ -192,7 +195,7 @@ class Main extends React.Component{
                                         })
                                     }}>
                                         <Link style={{
-
+                                            ...linkStyle
                                         }} to="/weixin/main/answer">
                                             <img src={this.state.selectedTab === 'answer' ? answer_selected_src : answer_src}/>
                                         </Link>

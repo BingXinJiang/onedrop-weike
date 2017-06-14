@@ -19,9 +19,16 @@ export default class LastDrop extends React.Component{
             isShowLeadPage:false,
             scrollTopNum:0,
             page:1,
-            isNoMoreCourse:false
+            isNoMoreCourse:false,
+            isLoading:false
         };
         this.getCourses = (self,page)=>{
+            if(self.state.isLoading){
+                return;
+            }
+            self.setState({
+                isLoading:true
+            })
             $.ajax({
                 url:OneDrop.base_url+'/onedrop/sections',
                 dataType:'json',
@@ -36,11 +43,13 @@ export default class LastDrop extends React.Component{
                         if(courses.length>0){
                             self.setState({
                                 courses:self.state.courses.concat(courses),
-                                page:self.state.page+1
+                                page:self.state.page+1,
+                                isLoading:false
                             })
                         }else{
                             self.setState({
-                                isNoMoreCourse:true
+                                isNoMoreCourse:true,
+                                isLoading:false
                             })
                         }
                     }else{
@@ -134,6 +143,7 @@ export default class LastDrop extends React.Component{
                                             audio.preload = 'auto';
                                             audio.src = content.section_voice;
                                             audio.id = 'che_dan_de_yin_pin'+content.section_id;
+                                            OneDrop.AUDIO = audio;
                                             this.setState({
                                                 isShowEverydayDrop:true,
                                                 section_id:content.section_id,
@@ -172,10 +182,14 @@ export default class LastDrop extends React.Component{
                                                     color:'rgb(102,102,102)'
                                                 }}>{content.section_intro}</p>
                                                 <p style={{
+                                                    fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
+                                                }}>#标签：  {content.label_des}</p>
+                                                <p style={{
                                                     marginTop:'18px',
                                                     fontSize:'20px',
                                                     color:'rgb(131,131,131)'
                                                 }}>{content.year}年{content.month}月{content.day}日</p>
+
                                                 <div style={{position:'relative'}}>
                                                     <img style={{height:'300px',width:'100%',
                                                         marginTop:'28px'
