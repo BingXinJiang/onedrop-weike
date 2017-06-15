@@ -11,8 +11,6 @@ export default class LastDrop extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isPlaying:false,
-            playUrl:'',
             courses:[],
             isShowEverydayDrop:false,
             section_id:0,
@@ -22,43 +20,45 @@ export default class LastDrop extends React.Component{
             isNoMoreCourse:false,
             isLoading:false
         };
-        this.getCourses = (self,page)=>{
-            if(self.state.isLoading){
-                return;
-            }
-            self.setState({
-                isLoading:true
-            })
-            $.ajax({
-                url:OneDrop.base_url+'/onedrop/sections',
-                dataType:'json',
-                method:'POST',
-                data:{
-                    user_id:REMOTE_WEIXIN_USER_ID,
-                    page:page
-                },
-                success:(data)=>{
-                    if(data.status === 1){
-                        var courses = data.data;
-                        if(courses.length>0){
-                            self.setState({
-                                courses:self.state.courses.concat(courses),
-                                page:self.state.page+1,
-                                isLoading:false
-                            })
-                        }else{
-                            self.setState({
-                                isNoMoreCourse:true,
-                                isLoading:false
-                            })
-                        }
-                    }else{
-                        alert('数据库执行错误');
-                    }
-                }
-            })
-        };
+        this.getCourses = this.getCourses.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    getCourses(self,page){
+        if(self.state.isLoading){
+            return;
+        }
+        self.setState({
+            isLoading:true
+        })
+        $.ajax({
+            url:OneDrop.base_url+'/onedrop/sections',
+            dataType:'json',
+            method:'POST',
+            data:{
+                user_id:REMOTE_WEIXIN_USER_ID,
+                page:page
+            },
+            success:(data)=>{
+                if(data.status === 1){
+                    var courses = data.data;
+                    if(courses.length>0){
+                        self.setState({
+                            courses:self.state.courses.concat(courses),
+                            page:self.state.page+1,
+                            isLoading:false
+                        })
+                    }else{
+                        self.setState({
+                            isNoMoreCourse:true,
+                            isLoading:false
+                        })
+                    }
+                }else{
+                    alert('数据库执行错误');
+                }
+            }
+        })
     }
 
     componentDidMount() {
@@ -122,6 +122,10 @@ export default class LastDrop extends React.Component{
                             paddingBottom:'110px'
                         }}>
                             <div onClick={()=>{
+                                if(this.state.isLoading){
+                                    return;
+                                }
+                                window.removeEventListener('scroll', this.handleScroll);
                                 this.setState({
                                     isShowLeadPage:true
                                 })
@@ -139,6 +143,10 @@ export default class LastDrop extends React.Component{
                                     // audio.id = 'che_dan_de_yin_pin'+content.section_id;
                                     return(
                                         <div key={index} onClick={()=>{
+                                            if(this.state.isLoading){
+                                                return;
+                                            }
+                                            window.removeEventListener('scroll', this.handleScroll);
                                             var audio = document.createElement('audio');
                                             audio.preload = 'auto';
                                             audio.src = content.section_voice;
@@ -182,13 +190,17 @@ export default class LastDrop extends React.Component{
                                                     color:'rgb(102,102,102)'
                                                 }}>{content.section_intro}</p>
                                                 <p style={{
-                                                    fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
-                                                }}>#标签：  {content.label_des}</p>
-                                                <p style={{
-                                                    marginTop:'18px',
-                                                    fontSize:'20px',
-                                                    color:'rgb(131,131,131)'
-                                                }}>{content.year}年{content.month}月{content.day}日</p>
+                                                    fontSize:'22px',color:'rgb(131,131,131)',marginTop:'10px'
+                                                }}>{content.label_des}</p>
+                                                {
+                                                    /*
+                                                     <p style={{
+                                                     marginTop:'18px',
+                                                     fontSize:'20px',
+                                                     color:'rgb(131,131,131)'
+                                                     }}>{content.year}年{content.month}月{content.day}日</p>
+                                                    * */
+                                                }
 
                                                 <div style={{position:'relative'}}>
                                                     <img style={{height:'300px',width:'100%',
@@ -219,8 +231,13 @@ export default class LastDrop extends React.Component{
                         <Drop sectionId={this.state.section_id} callback={()=>{
                             document.body.scrollTop=this.state.scrollTopNum;
                             this.setState({
-                                isShowEverydayDrop:false
+                                isShowEverydayDrop:false,
+                                page:1,
+                                courses:[],
+                                isNoMoreCourse:false
                             })
+                            this.getCourses(this,1);
+                            window.addEventListener('scroll', this.handleScroll);
                         }}/>
                         : null
                 }
@@ -229,11 +246,27 @@ export default class LastDrop extends React.Component{
                         <LeadPage callback={()=>{
                             document.body.scrollTop=0;
                             this.setState({
-                                isShowLeadPage:false
-                            })
+                                isShowLeadPage:false,
+                                page:1,
+                                courses:[],
+                                isNoMoreCourse:false
+                            });
+                            this.getCourses(this,1);
+                            window.addEventListener('scroll', this.handleScroll);
                         }}/>
                         :
                         null
+                }
+                {
+                    this.state.isLoading ?
+                        <div style={{
+                            position:'fixed',top:'0',left:'0',
+                            width:OneDrop.JS_ScreenW,
+                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../img/weike/home/loading.gif"/>
+                        </div>
+                        : null
                 }
             </div>
         )

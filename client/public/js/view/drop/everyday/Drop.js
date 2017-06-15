@@ -16,7 +16,8 @@ export default class Drop extends React.Component{
             isAppreciateCourse:false,
             isAppreciateMine:false,
             isShowAppreciateMine:false,
-            appreciate_course_num:0
+            appreciate_course_num:0,
+            isLoading:false
         };
         this.chooseHight = (section)=>{
             var htext = section.htext[0];
@@ -49,6 +50,9 @@ export default class Drop extends React.Component{
         var self = this;
         async.parallel([
             function (callback) {
+                self.setState({
+                    isLoading:true
+                })
                 $.ajax({
                     url:OneDrop.base_url+'/onedrop/every_day',
                     dataType:'json',
@@ -67,6 +71,9 @@ export default class Drop extends React.Component{
                 })
             },
             function (callback) {
+                self.setState({
+                    isLoading:true
+                })
                 $.ajax({
                     url:OneDrop.base_ip+'/main/section/get_comment',
                     dataType:'json',
@@ -92,7 +99,8 @@ export default class Drop extends React.Component{
                 self.setState({
                     course:course,
                     comments:comments,
-                    appreciate_course_num:course.appreciate_course_num
+                    appreciate_course_num:course.appreciate_course_num,
+                    isLoading:false
                 })
             }
         })
@@ -289,15 +297,15 @@ export default class Drop extends React.Component{
                         paddingRight:'24px'
                     }}>
                         <div style={{
-                            display:'flex',
-                            flexDirection:'row',
-                            justifyContent:'center',
+                            display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',
                             width:'100%'
                         }}>
+                            <img style={{width:(OneDrop.JS_ScreenW-200)/2}} src="../../../../img/weike/onedrop/fengexian1.png"/>
                             <p style={{
-                                fontSize:'28px',
-                                color:'rgb(102,102,102)'
-                            }}>----------------精选交手录----------------</p>
+                                fontSize:'28px',color:'rgb(102,102,102)',marginLeft:'10px',marginRight:'10px',
+                                width:'200px',textAlign:'center'
+                            }}>精选交手录</p>
+                            <img style={{width:(OneDrop.JS_ScreenW-250)/2}} src="../../../../img/weike/onedrop/fengexian2.png"/>
                         </div>
 
                         <div style={{
@@ -358,6 +366,9 @@ export default class Drop extends React.Component{
                         justifyContent:'space-between'
                     }}>
                         <div onClick={()=>{
+                            if(this.state.isLoading){
+                                return;
+                            }
                             self.props.callback();
                         }} style={{
                             ...tabStyle
@@ -365,6 +376,9 @@ export default class Drop extends React.Component{
                             <img src="../../../../img/weike/onedrop/back.png"/>
                         </div>
                         <div onClick={()=>{
+                            if(this.state.isLoading){
+                                return;
+                            }
                             if(this.state.isShowAppreciateMine){
                                 return;
                             }
@@ -377,8 +391,14 @@ export default class Drop extends React.Component{
                             <img src="../../../../img/weike/onedrop/connect.png"/>
                         </div>
                         <div onClick={()=>{
+                            if(this.state.isLoading){
+                                return;
+                            }
                             if(this.state.isAppreciateCourse){return;}
                             if(this.state.course){
+                                this.setState({
+                                    isLoading:true
+                                })
                                 $.ajax({
                                 url:OneDrop.base_url+'/onedrop/appreciate/course',
                                 dataType:'json',
@@ -391,7 +411,8 @@ export default class Drop extends React.Component{
                                     if(data.status === 1){
                                         self.setState({
                                             isAppreciateCourse:true,
-                                            appreciate_course_num:this.state.appreciate_course_num+1
+                                            appreciate_course_num:this.state.appreciate_course_num+1,
+                                            isLoading:false
                                         })
                                     }else{
                                         alert('点赞失败!');
@@ -412,6 +433,9 @@ export default class Drop extends React.Component{
                             </div>
                         </div>
                         <div onClick={()=>{
+                            if(this.state.isLoading){
+                                return;
+                            }
                             if(this.state.isAppreciateMine){return;}
                             if(this.state.isShowConnectEach){return;}
                             this.setState({
@@ -459,11 +483,17 @@ export default class Drop extends React.Component{
                                 paddingRight:'24px'
                             }}>
                                 <div onClick={()=>{
+                                    if(this.state.isLoading){
+                                        return;
+                                    }
                                     //提交评论
                                     var comment = $('#every_day_drop_comment').val().trim();
                                     if(comment){
                                         if(this.state.course){
                                             // var section_id = self.state.nowSectionId;
+                                            this.setState({
+                                                isLoading:true
+                                            })
                                             $.ajax({
                                                 url:OneDrop.base_ip+'/main/section/comment',
                                                 dataType:'json',
@@ -477,7 +507,8 @@ export default class Drop extends React.Component{
                                                     if(data.status===1){
                                                         $('#every_day_drop_comment').val('');
                                                         self.setState({
-                                                            isShowConnectEach:false
+                                                            isShowConnectEach:false,
+                                                            isLoading:false
                                                         })
                                                     }else{
                                                         alert('评论失败!');
@@ -501,6 +532,9 @@ export default class Drop extends React.Component{
                                     <p style={{fontSize:'30px',color:'white'}}>提交</p>
                                 </div>
                                 <div onClick={()=>{
+                                    if(this.state.isLoading){
+                                        return;
+                                    }
                                     this.setState({
                                         isShowConnectEach:false
                                     })
@@ -544,10 +578,16 @@ export default class Drop extends React.Component{
                                 {
                                     ['1米','2米','3米','4米','5米'].map((content,index)=>{
                                         return <p key={index} onClick={()=>{
+                                            if(this.state.isLoading){
+                                                return;
+                                            }
                                             var appreciate_value = index+1;
                                             if(this.state.course){
 
                                             }else{return;}
+                                            this.setState({
+                                                isLoading:true
+                                            })
                                             $.ajax({
                                                 url:OneDrop.base_url+'/onedrop/appreciate/mine',
                                                 dataType:'json',
@@ -561,7 +601,8 @@ export default class Drop extends React.Component{
                                                     if(data.status===1){
                                                         self.setState({
                                                             isShowAppreciateMine:false,
-                                                            isAppreciateMine:true
+                                                            isAppreciateMine:true,
+                                                            isLoading:false
                                                         })
                                                     }
                                                 }
@@ -577,6 +618,17 @@ export default class Drop extends React.Component{
                         </div>
                         :
                         null
+                }
+                {
+                    this.state.isLoading ?
+                        <div style={{
+                            position:'fixed',top:'0',left:'0',
+                            width:OneDrop.JS_ScreenW,
+                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../../img/weike/home/loading.gif"/>
+                        </div>
+                        : null
                 }
             </div>
         )

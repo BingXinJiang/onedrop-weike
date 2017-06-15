@@ -193,15 +193,10 @@ export default class Solve extends React.Component{
                                 this.props.callback();
                             }} src="../../../img/weike/main/back.png"/>
                         </div>
-                        <input id="question_answer_solve_commit" style={{
-                            display:'flex',
-                            flex:'1',
-                            height:'60px',
-                            fontSize:'28px',
-                            borderRadius:'5px',
-                            borderWidth:'2px',
-                            borderColor:'rgb(235,235,235)',
-                            padding:'5px'
+                        <textarea id="question_answer_solve_commit" contentEditable={true} style={{
+                            display:'flex',flex:'1',height:'40px',fontSize:'28px',borderRadius:'5px',
+                            borderWidth:'2px',borderColor:'rgb(235,235,235)',padding:'10px',
+                            borderStyle:'solid',marginTop:'7px'
                         }}/>
                         <p onClick={()=>{
                             var answer = $('#question_answer_solve_commit').val();

@@ -182,7 +182,7 @@ router.post('/sections', function (req, res, next) {
         "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
         "d.comment_count from" +
         " (select * from course_section where open_date between date_sub((select be_date from user where user_id='"+user_id+"'),interval 1 day) and Now() " +
-        "order by open_date desc limit "+(page-1)*7+",7)as a left join " +
+        "order by open_date desc limit "+(page-1)*2+",2)as a left join " +
         "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
         "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
         "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
