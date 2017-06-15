@@ -55,10 +55,10 @@ export default class Answer extends React.Component{
                 }
             })
         }
-        this.handleScroll = this.handleScroll.bind(this);
+        this.handleScroll2 = this.handleScroll2.bind(this);
     }
 
-    handleScroll(event){
+    handleScroll2(event){
         if(Number(document.body.clientHeight-document.body.scrollTop)<1250){
             if(this.state.isNoMoreQuestion){
                 return;
@@ -69,11 +69,11 @@ export default class Answer extends React.Component{
 
     componentDidMount() {
         this.getQuestions(this, 1, 0);
-        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll2);
     }
 
-    componentDidUnMount() {
-        window.removeEventListener('scroll', this.handleScroll);
+    componentWillUnMount() {
+        window.removeEventListener('scroll', this.handleScroll2);
     }
     render(){
         const Question =

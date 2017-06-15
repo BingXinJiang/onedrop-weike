@@ -21,7 +21,7 @@ export default class LastDrop extends React.Component{
             isLoading:false
         };
         this.getCourses = this.getCourses.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
+        this.handleScroll1 = this.handleScroll1.bind(this);
     }
 
     getCourses(self,page){
@@ -98,9 +98,9 @@ export default class LastDrop extends React.Component{
                 alert(err);
             }
         })
-        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('scroll', this.handleScroll1);
     }
-    handleScroll(event){
+    handleScroll1(event){
         if(Number(document.body.clientHeight-document.body.scrollTop)<1350){
             if(this.state.isNoMoreCourse){
                 return;
@@ -108,8 +108,9 @@ export default class LastDrop extends React.Component{
             this.getCourses(this, this.state.page);
         }
     }
-    componentDidUnMount() {
-        window.removeEventListener('scroll', this.handleScroll);
+
+    componentWillUnMount() {
+        window.removeEventListener('scroll', this.handleScroll1);
     }
     render(){
         return (
@@ -125,7 +126,7 @@ export default class LastDrop extends React.Component{
                                 if(this.state.isLoading){
                                     return;
                                 }
-                                window.removeEventListener('scroll', this.handleScroll);
+                                window.removeEventListener('scroll', this.handleScroll1);
                                 this.setState({
                                     isShowLeadPage:true
                                 })
@@ -146,7 +147,7 @@ export default class LastDrop extends React.Component{
                                             if(this.state.isLoading){
                                                 return;
                                             }
-                                            window.removeEventListener('scroll', this.handleScroll);
+                                            window.removeEventListener('scroll', this.handleScroll1);
                                             var audio = document.createElement('audio');
                                             audio.preload = 'auto';
                                             audio.src = content.section_voice;
@@ -237,7 +238,7 @@ export default class LastDrop extends React.Component{
                                 isNoMoreCourse:false
                             })
                             this.getCourses(this,1);
-                            window.addEventListener('scroll', this.handleScroll);
+                            window.addEventListener('scroll', this.handleScroll1);
                         }}/>
                         : null
                 }
@@ -252,7 +253,7 @@ export default class LastDrop extends React.Component{
                                 isNoMoreCourse:false
                             });
                             this.getCourses(this,1);
-                            window.addEventListener('scroll', this.handleScroll);
+                            window.addEventListener('scroll', this.handleScroll1);
                         }}/>
                         :
                         null
