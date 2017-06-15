@@ -101,7 +101,7 @@ export default class LastDrop extends React.Component{
         window.addEventListener('scroll', this.handleScroll1);
     }
     handleScroll1(event){
-        if(Number(document.body.clientHeight-document.body.scrollTop)<1350){
+        if(Number(document.body.clientHeight-document.body.scrollTop)<=1335){
             if(this.state.isNoMoreCourse){
                 return;
             }
@@ -109,7 +109,7 @@ export default class LastDrop extends React.Component{
         }
     }
 
-    componentWillUnMount() {
+    componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll1);
     }
     render(){
@@ -232,12 +232,8 @@ export default class LastDrop extends React.Component{
                         <Drop sectionId={this.state.section_id} callback={()=>{
                             document.body.scrollTop=this.state.scrollTopNum;
                             this.setState({
-                                isShowEverydayDrop:false,
-                                page:1,
-                                courses:[],
-                                isNoMoreCourse:false
+                                isShowEverydayDrop:false
                             })
-                            this.getCourses(this,1);
                             window.addEventListener('scroll', this.handleScroll1);
                         }}/>
                         : null
@@ -248,11 +244,7 @@ export default class LastDrop extends React.Component{
                             document.body.scrollTop=0;
                             this.setState({
                                 isShowLeadPage:false,
-                                page:1,
-                                courses:[],
-                                isNoMoreCourse:false
                             });
-                            this.getCourses(this,1);
                             window.addEventListener('scroll', this.handleScroll1);
                         }}/>
                         :

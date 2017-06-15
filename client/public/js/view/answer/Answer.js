@@ -59,7 +59,7 @@ export default class Answer extends React.Component{
     }
 
     handleScroll2(event){
-        if(Number(document.body.clientHeight-document.body.scrollTop)<1250){
+        if(Number(document.body.clientHeight-document.body.scrollTop)<=1215){
             if(this.state.isNoMoreQuestion){
                 return;
             }
@@ -72,7 +72,7 @@ export default class Answer extends React.Component{
         window.addEventListener('scroll', this.handleScroll2);
     }
 
-    componentWillUnMount() {
+    componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll2);
     }
     render(){
