@@ -3,29 +3,82 @@
  */
 import React from 'react';
 import OneDrop from '../../../const/onedrop';
-import async from 'async';
 
 export default class ListDrop extends React.Component{
 
     constructor(props){
         super(props);
+        this.state = {
+            courses:[],
+            page:1,
+            isNoMoreCourse:false,
+            isLoading:false,
+            scrollTopNum:0
+        };
+        this.getCourses = this.getCourses.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount(){
+        this.getCourses(this.state.page);
         window.addEventListener('scroll', this.handleScroll);
+        document.body.scrollTop = this.state.scrollTopNum;
     }
 
-    componentDidUnMount() {
+    componentWillUnMount() {
+        console.log('sections监听事件被移除了.....');
         window.removeEventListener('scroll', this.handleScroll);
     }
 
     handleScroll(event){
+        // console.log('------');
+        // console.log(document.body.clientHeight-document.body.scrollTop);
         if(Number(document.body.clientHeight-document.body.scrollTop)<1350){
             if(this.state.isNoMoreCourse){
                 return;
             }
-            this.getCourses(this, this.state.page);
+            this.getCourses(this.state.page);
         }
+    }
+
+    getCourses(page){
+        if(this.state.isLoading){
+            return;
+        }
+        this.setState({
+            isLoading:true
+        })
+        $.ajax({
+            url:OneDrop.base_url+'/onedrop/sections',
+            dataType:'json',
+            method:'POST',
+            data:{
+                user_id:REMOTE_WEIXIN_USER_ID,
+                page:page
+            },
+            success:(data)=>{
+                if(data.status === 1){
+                    var courses = data.data;
+                    if(courses.length>0){
+                        this.setState({
+                            courses:this.state.courses.concat(courses),
+                            page:this.state.page+1,
+                            isLoading:false
+                        })
+                    }else{
+                        this.setState({
+                            isNoMoreCourse:true,
+                            isLoading:false
+                        })
+                    }
+                }else{
+                    alert('数据库执行错误');
+                    this.setState({
+                        isLoading:false
+                    })
+                }
+            }
+        })
     }
 
     render(){
@@ -39,10 +92,7 @@ export default class ListDrop extends React.Component{
                     if(this.state.isLoading){
                         return;
                     }
-                    window.removeEventListener('scroll', this.handleScroll);
-                    this.setState({
-                        isShowLeadPage:true
-                    })
+                    this.props.callback2();
                 }}>
                     <img style={{
                         width:OneDrop.JS_ScreenW,
@@ -60,15 +110,13 @@ export default class ListDrop extends React.Component{
                                 if(this.state.isLoading){
                                     return;
                                 }
-                                window.removeEventListener('scroll', this.handleScroll);
                                 var audio = document.createElement('audio');
                                 audio.preload = 'auto';
                                 audio.src = content.section_voice;
                                 audio.id = 'che_dan_de_yin_pin'+content.section_id;
                                 OneDrop.AUDIO = audio;
+                                this.props.callback1(content.section_id);
                                 this.setState({
-                                    isShowEverydayDrop:true,
-                                    section_id:content.section_id,
                                     scrollTopNum:document.body.scrollTop
                                 })
                             }} style={{
@@ -137,6 +185,17 @@ export default class ListDrop extends React.Component{
                             </div>
                         )
                     })
+                }
+                {
+                    this.state.isLoading ?
+                        <div style={{
+                            position:'fixed',top:'0',left:'0',
+                            width:OneDrop.JS_ScreenW,
+                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../../img/weike/home/loading.gif"/>
+                        </div>
+                        : null
                 }
             </div>
         )

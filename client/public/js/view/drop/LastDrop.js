@@ -12,55 +12,15 @@ export default class LastDrop extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            courses:[],
             isShowEverydayDrop:false,
             section_id:0,
             isShowLeadPage:false,
             scrollTopNum:0,
-            page:1,
-            isNoMoreCourse:false,
-            isLoading:false
         };
-        this.getCourses = this.getCourses.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
+
     }
 
-    getCourses(self,page){
-        if(self.state.isLoading){
-            return;
-        }
-        self.setState({
-            isLoading:true
-        })
-        $.ajax({
-            url:OneDrop.base_url+'/onedrop/sections',
-            dataType:'json',
-            method:'POST',
-            data:{
-                user_id:REMOTE_WEIXIN_USER_ID,
-                page:page
-            },
-            success:(data)=>{
-                if(data.status === 1){
-                    var courses = data.data;
-                    if(courses.length>0){
-                        self.setState({
-                            courses:self.state.courses.concat(courses),
-                            page:self.state.page+1,
-                            isLoading:false
-                        })
-                    }else{
-                        self.setState({
-                            isNoMoreCourse:true,
-                            isLoading:false
-                        })
-                    }
-                }else{
-                    alert('数据库执行错误');
-                }
-            }
-        })
-    }
+
 
     componentDidMount() {
         $.ajax({
@@ -87,7 +47,6 @@ export default class LastDrop extends React.Component{
                 })
             }
         })
-
     }
 
 
@@ -95,14 +54,22 @@ export default class LastDrop extends React.Component{
         return (
             <div>
                 {
-                    !this.state.isShowLeadPage&&!this.state.isShowEverydayDrop&&!this.state.isShowLeadPage ?
-                         <ListDrop/>
+                    !this.state.isShowLeadPage&&!this.state.isShowEverydayDrop ?
+                         <ListDrop callback1={(sectionId)=>{
+                             this.setState({
+                                 section_id:sectionId,
+                                 isShowEverydayDrop:true
+                             })
+                         }} callback2={()=>{
+                             this.setState({
+                                 isShowLeadPage:true
+                             })
+                         }}/>
                         : null
                 }
                 {
                     this.state.isShowEverydayDrop ?
                         <Drop sectionId={this.state.section_id} callback={()=>{
-                            document.body.scrollTop=this.state.scrollTopNum;
                             this.setState({
                                 isShowEverydayDrop:false
                             })
@@ -119,17 +86,6 @@ export default class LastDrop extends React.Component{
                         }}/>
                         :
                         null
-                }
-                {
-                    this.state.isLoading ?
-                        <div style={{
-                            position:'fixed',top:'0',left:'0',
-                            width:OneDrop.JS_ScreenW,
-                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
-                        }}>
-                            <img src="../../../img/weike/home/loading.gif"/>
-                        </div>
-                        : null
                 }
             </div>
         )

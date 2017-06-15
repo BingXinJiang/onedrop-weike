@@ -72,7 +72,8 @@ export default class Answer extends React.Component{
         window.addEventListener('scroll', this.handleScroll);
     }
 
-    componentDidUnMount() {
+    componentWillUnMount() {
+        console.log('answers监听事件被移除了.....');
         window.removeEventListener('scroll', this.handleScroll);
     }
     render(){
