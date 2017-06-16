@@ -23,11 +23,11 @@ class Main extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isFirst:false,
+            isFirst:true,
             selectedTab:'everydrop',
             showQuestion:false,
-            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ' //仕龙
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I',//彩红
         }
@@ -53,32 +53,29 @@ class Main extends React.Component{
         /**
          * 在这里进行员工身份的识别，包括给员工进行分组，等。。。
          * */
-        // $.ajax({
-        //     url:OneDrop.base_ip+'/onedrop/xingye',
-        //     dataType:'json',
-        //     method:'POST',
-        //     data:{
-        //         user_id:this.state.userId
-        //     },
-        //     success:function(data) {
-        //         if(data.status === 1){
-        //             // console.log('data:', data);
-        //             if(data.data.member_status === 1){//兴业员工
-        //
-        //             }else if(data.data.member_status === 2){//非兴业员工
-        //
-        //             }else if(data.data.member_status === 3){//第一次登陆
-        //                 self.setState({
-        //                     isFirst:false
-        //                 })
-        //             }
-        //         }else{
-        //             self.setState({
-        //                 isFirst:false
-        //             })
-        //         }
-        //     }
-        // })
+        $.ajax({
+            url:OneDrop.base_url+'/auth/check',
+            dataType:'json',
+            method:'POST',
+            data:{
+                user_id:this.state.userId
+            },
+            success:(data)=>{
+                if(data.status === 0){
+                    alert('用户验证错误！');
+                }else{
+                    if(data.data === 0){
+                        this.setState({
+                            isFirst:true
+                        })
+                    }else{
+                        this.setState({
+                            isFirst:false
+                        })
+                    }
+                }
+            }
+        })
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';

@@ -9,14 +9,13 @@ var ejs = require('ejs');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var courses = require('./routes/courses');
-var adddb = require('./routes/db/db_add');
 var weixin = require('./routes/weixin/index');
 var ceping = require('./routes/weixin/ceping');
 var onedrop = require('./routes/weixin/onedrop');
 var answer = require('./routes/weixin/answer');
-var punchcard = require('./routes/weixin/punchcard');
 var mydrop = require('./routes/weixin/mydrop');
 var learn = require('./routes/weixin/learn');
+var auth = require('./routes/weixin/auth');
 
 var app = express();
 
@@ -36,14 +35,13 @@ app.use(express.static(path.join(__dirname, 'client/public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/courses', courses);
-app.use('/adddb', adddb);
 app.use('/weixin', weixin);
 app.use('/ceping', ceping);
 app.use('/onedrop', onedrop);
 app.use('/answer', answer);
-app.use('/card',punchcard);
 app.use('/mydrop',mydrop);
 app.use('/learn',learn);
+app.use('/auth',auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
