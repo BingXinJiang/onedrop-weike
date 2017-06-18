@@ -7,13 +7,12 @@ import {
     BrowserRouter as Router,
     Route,
     Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import OneDrop from '../../const/onedrop';
 
 import EveryDrop from '../drop/LastDrop';
 import Question from '../question/Question';
-// import Course from '../drop/LastDrop';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
 import MyDrop from '../drop/mine/MyDrop';
@@ -75,7 +74,16 @@ class Main extends React.Component{
                     }
                 }
             }
-        })
+        });
+
+        //监听浏览器的返回
+        window.addEventListener('popstate',(e)=>{
+            console.log('------------------------');
+
+            this.setState({
+                selectedTab:'everydrop'
+            })
+        },false);
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';
