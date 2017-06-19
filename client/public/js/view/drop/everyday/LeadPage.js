@@ -139,10 +139,6 @@ export default class LeadPage extends React.Component{
                     marginLeft:'24px',
                     marginRight:'24px'
                 }}>
-                    <h3 style={{
-                        fontSize:'44px',
-                        marginTop:'30px'
-                    }}>一滴领导力</h3>
                     <h2 style={{
                         fontSize:'32px',
                         marginTop:'30px'

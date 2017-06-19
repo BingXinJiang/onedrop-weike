@@ -78,8 +78,7 @@ class Main extends React.Component{
 
         //监听浏览器的返回
         window.addEventListener('popstate',(e)=>{
-            console.log('------------------------');
-
+            this.context.router.history.push('/weixin/main');
             this.setState({
                 selectedTab:'everydrop'
             })
@@ -230,6 +229,10 @@ class Main extends React.Component{
             </div>
         )
     }
+}
+
+Main.contextTypes = {
+    router:React.PropTypes.object
 }
 
 ReactDOM.render(

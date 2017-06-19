@@ -11,7 +11,8 @@ export default class DropAudio extends React.Component{
         this.state = {
             playing:false,
             duration:0,
-            curTime:0
+            curTime:0,
+            leftTime:0
         };
         this.audioTimer = null;
         this.commitLearnStatus = (percent)=>{
@@ -33,6 +34,10 @@ export default class DropAudio extends React.Component{
                 }
             })
         }
+
+        // this.mypositionX = 0;
+        // this.mytransformX = 0;
+        // this.mythisWidth = 0;
     }
 
     componentDidMount() {
@@ -45,7 +50,8 @@ export default class DropAudio extends React.Component{
             var curTime = audio.currentTime;
             this.setState({
                 duration:parseInt(duration),
-                curTime:parseInt(curTime)
+                curTime:parseInt(curTime),
+                leftTime:parseInt(duration-curTime)
             })
         }, 1000)
         audio.addEventListener('ended',()=>{
@@ -73,6 +79,10 @@ export default class DropAudio extends React.Component{
 
     render(){
         var self = this;
+        // var videoShow = document.getElementById("audioPlayControll");
+        // var videoShowPositionX1 = $(videoShow).offset().left;
+        // var videoShowFa = document.getElementById("audioPlayContainer");
+        // var videoShowPositionX1Fa = $(videoShow).offset().left;
         return(
 
                 <div style={{
@@ -103,11 +113,16 @@ export default class DropAudio extends React.Component{
 
                             if(audio.paused || !this.state.playing){
 
-                                wx.ready(function() {
-                                  audio.play();
-                                  self.setState({
-                                        playing:true
-                                    })
+                                // wx.ready(function() {
+                                //   audio.play();
+                                //   self.setState({
+                                //         playing:true
+                                //     })
+                                // })
+
+                                audio.play();
+                                self.setState({
+                                    playing:true
                                 })
 
 
@@ -130,11 +145,75 @@ export default class DropAudio extends React.Component{
                                 color:'rgb(0,0,0)',
                                 // marginTop:'25px'
                             }}>{this.props.sectionName}</p>
+                            {/*
+                            <div style={{
+                                display:'flex',flexDirection:'row',alignItems:'center'
+                            }}>
+                                <p style={{
+                                    fontSize:'28px',
+                                    color:'rgb(134,135,136)',
+                                }}>{Tool.convertSec(parseInt(Number(this.state.duration)))}</p>
+                                <div id="audioPlayContainer" style={{
+                                    width:'300px',height:'30px',marginLeft:'25px',marginRight:'25px',
+                                    display:'flex',flexDirection:'row',alignItems:'center'
+                                }}>
+                                    <div style={{
+                                        width:'200px',height:'5px',backgroundColor:'green'
+                                    }}/>
+                                    <div id="audioPlayControll" onTouchStart={(e)=>{
+                                        e.preventDefault();
+                                        if(e.targetTouches.length == 1){
+                                            var touch = e.targetTouches[0];
+                                            this.mypositionX = touch.pageX;
+                                            //确定本次拖动transform的初始值
+                                            var transformStr = videoShow.style.transform;
+                                            transformStr = transformStr.substring(11);
+                                            var index = transformStr.lastIndexOf("p");
+                                            transformStr = transformStr.substring(0, index);
+                                            this.mytransformX = parseInt(transformStr);
+                                            //确定本次拖动的div宽度值
+                                            var widthStr = videoShow.style.width;
+                                            this.mythisWidth = parseInt(widthStr.substring(0,widthStr.lastIndexOf("p")));
+                                        }
+                                    }} onTouchMove={(e)=>{
+                                        e.preventDefault();
+                                        if(e.targetTouches.length == 1){
+                                            var touch = e.targetTouches[0];
+                                            videoShow.style.transform = 'translateX('+(this.transformX+touch.pageX-this.positionX)+'px)';
+                                            $(videoShow).css("width",this.mythisWidth+this.mypositionX-touch.pageX);
+                                        }
+                                    }} onTouchEnd={(e)=>{
+                                        e.preventDefault();
+                                        if($(videoShowFa).offset().left>videoShowPositionX1){
+                                            videoShow.style.transform = 'translateX('+(videoShowPositionX1)+'px)';
+                                            //此时恢复初始状态
+                                            $(videoShow).css("width",videoShowWidth);
+                                        }
+                                        // 最后一个标签的位置,父元素右上角坐标值
+                                        var videoItem2 = videoItems[videoItems.length-1];
+                                        var videoItemPositionX = $(videoItem2).offset().left+$(videoItem2).width();
+                                        if(videoItemPositionX<videoShowPositionX2){
+                                            //此时展示最后三个元素,宽度为最大宽度
+                                            videoShow.style.transform = 'translateX('+(0-(videoShowWidth/3)*(videoItems.length-3))+'px)';
+                                            $(videoShow).css("width",videoShowWidth/3*videoItems.length);
+                                        }
+                                    }} style={{
+                                        width:'30px',height:'30px',borderRadius:'15px',backgroundColor:'orange'
+                                    }}/>
+                                    <div style={{
+                                        width:'70px',height:'5px',backgroundColor:'blue'
+                                    }}/>
+                                </div>
+                                <p style={{
+                                    fontSize:'28px',
+                                    color:'rgb(134,135,136)',
+                                }}>{Tool.convertSec(parseInt(Number(this.state.leftTime)))}</p>
+                            </div>
+                            */}
                             <p style={{
                                 fontSize:'28px',
                                 color:'rgb(134,135,136)',
-                                // marginTop:'15px'
-                            }}>{Tool.convertSec(parseInt(Number(this.state.duration ? this.state.duration : 0)))}</p>
+                            }}>{Tool.convertSec(parseInt(Number(this.state.leftTime)))}</p>
                         </div>
                     </div>
                 </div>
