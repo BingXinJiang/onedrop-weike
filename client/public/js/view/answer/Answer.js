@@ -4,6 +4,7 @@
 import React from 'React';
 
 import Solve from './Solve';
+import Ques from '../question/Question';
 import OneDrop from '../../const/onedrop';
 
 export default class Answer extends React.Component{
@@ -11,6 +12,7 @@ export default class Answer extends React.Component{
         super(props);
         this.state = {
             showAnswer:false,
+            showQuestion:false,
             questions:[],
             page:1,
             key_id:0,
@@ -78,6 +80,24 @@ export default class Answer extends React.Component{
     render(){
         const Question =
         <div>
+            <div style={{
+                width:'100%',height:'100px',backgroundColor:'white',paddingTop:'20px'
+            }}>
+                <div onClick={()=>{
+                    this.setState({
+                        showQuestion:true
+                    })
+                }} style={{
+                    marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'60px',
+                    borderRadius:'10px',borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'2px',
+                    width:(OneDrop.JS_ScreenW-48)+'px',fontSize:'28px',
+                    display:'flex',justifyContent:'space-between',alignItems:'center'
+                }}>
+                    <p style={{fontSize:'28px',color:'rgb(167,167,167)',marginLeft:'15px'}}>提出你的问题！！！</p>
+                    <img style={{marginRight:'15px'}} src="../../../../img/weike/question/commit.png"/>
+                </div>
+
+            </div>
             {
                 this.state.questions.map((content, index)=>{
                     return (
@@ -152,6 +172,13 @@ export default class Answer extends React.Component{
                     )
                 })
             }
+            {
+                this.state.showQuestion ? <Ques callback={()=>{
+                    this.setstate({
+                        showQuestion:false
+                    })
+                }}/> : null
+            }
         </div>
         return (
             <div style={{
@@ -169,7 +196,6 @@ export default class Answer extends React.Component{
                         })
                     }} question_id={this.state.question_id}/> : Question
                 }
-
             </div>
         )
     }

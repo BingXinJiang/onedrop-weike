@@ -13,6 +13,7 @@ import OneDrop from '../../const/onedrop';
 
 import EveryDrop from '../drop/LastDrop';
 import Question from '../question/Question';
+import Rank from '../rank/rank';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
 import MyDrop from '../drop/mine/MyDrop';
@@ -90,8 +91,8 @@ class Main extends React.Component{
         var oneDrop_selected_src = '../../../img/weike/main/day_drop_selected.png';
         var course_src = '../../../img/weike/main/my_drop.png';
         var course_selected_src = '../../../img/weike/main/my_drop_selected.png';
-        var question_src = '../../../img/weike/main/question.png';
-        var question_selected_src = '../../../img/weike/main/question_selected.png';
+        var question_src = '../../../img/weike/main/rank.png';
+        var question_selected_src = '../../../img/weike/main/rank_selected.png';
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var tool_src = '../../../img/weike/main/tool.png';
@@ -112,7 +113,7 @@ class Main extends React.Component{
                         <div>
                             <Route exact path='/weixin/main' component={EveryDrop}/>
                             <Route path='/weixin/main/mydrop' component={MyDrop}/>
-                            <Route path='/weixin/main/question' component={Question}/>
+                            <Route path='/weixin/main/question' component={Rank}/>
                             <Route path='/weixin/main/answer' component={Answer}/>
                             <Route path='/weixin/main/tool' component={ToolBox}/>
 

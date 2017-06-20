@@ -16,6 +16,8 @@ var answer = require('./routes/weixin/answer');
 var mydrop = require('./routes/weixin/mydrop');
 var learn = require('./routes/weixin/learn');
 var auth = require('./routes/weixin/auth');
+var rank = require('./routes/weixin/rank');
+var appreciate = require('./routes/weixin/appreciate');
 
 var app = express();
 
@@ -42,6 +44,8 @@ app.use('/answer', answer);
 app.use('/mydrop',mydrop);
 app.use('/learn',learn);
 app.use('/auth',auth);
+app.use('/rank',rank);
+app.use('/appreciate',appreciate);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
