@@ -107,21 +107,13 @@ export default class Answer extends React.Component{
                                 showAnswer:true
                             })
                         }} key={index} style={{
-                                    paddingLeft:'30px',
-                                    paddingTop:'30px',
-                                    paddingRight:'30px',
-                                    backgroundColor:'white',
-                                    marginTop:'20px'
+                                    paddingTop:'30px',backgroundColor:'white',marginTop:'20px'
                                 }}>
                             <div style={{
-                                        display:'block'
+                                        display:'block',marginLeft:'24px',marginRight:'24px'
                                     }}>
                                 <img style={{
-                                            width:'90px',
-                                            height:'90px',
-                                            borderRadius:'45px',
-                                            float:'left',
-                                            marginRight:'16px'
+                                            width:'90px',height:'90px',borderRadius:'45px',float:'left',marginRight:'16px'
                                         }} src={content.headimgurl}/>
                                 <div style={{
                                             display:'block'
@@ -137,37 +129,62 @@ export default class Answer extends React.Component{
                                 </div>
                             </div>
                             <p style={{
-                                       fontSize:'28px',
-                                       marginTop:'24px'
+                                       fontSize:'28px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
                                    }}>
                                 {content.question_desc}
                             </p>
+                            <div style={{width:OneDrop.JS_ScreenW,height:'2px',backgroundColor:'rgb(153,153,153)'}}></div>
+
+
                             <div style={{
-                                       width:'100%',
-                                       height:'90px',
-                                       marginTop:'36px'
+                                display:'flex',flexDirection:'row'
+                            }}>
+                                <div></div>
+                                <div>
+                                    <div></div>
+                                    <div>
+                                        <p><span>大樟树:</span>管理者的能力这节课,让我认识到了
+                                        节课,让我认识节课,让我认识节课,让我认识节课,让我认识
+                                        节课,让我认识节课,让我认识节课,让我认识节课,让我认识
+                                        节课,让我认识节课,让我认识</p>
+                                        <p><span>大樟树:</span>管理者的能力这节课,让我认识到了
+                                            节课,让我认识节课,让我认识节课,让我认识节课,让我认识
+                                            节课,让我认识节课,让我认识节课,让我认识节课,让我认识
+                                            节课,让我认识节课,让我认识</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div style={{width:OneDrop.JS_ScreenW,height:'2px',backgroundColor:'rgb(153,153,153)'}}></div>
+                            <div style={{
+                                       width:'100%',height:'90px',display:'flex',
+                                       flexDirection:'row',justifyContent:'center',alignItems:'center'
                                    }}>
-                                <p onClick={()=>{
+                                <div style={{
+                                    display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
+                                    width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
+                                }} onClick={()=>{
                                     this.setState({
                                         question_id:content.question_id,
                                         showAnswer:true
                                     })
-                                }} style={{
-                                           width:'260px',
-                                           height:'60px',
-                                           fontSize:'36px',
-                                           border:'2px',
-                                           borderStyle:'solid',
-                                           borderColor:'rgb(0,164,251)',
-                                           borderRadius:'40px',
-                                           color:'rgb(0,164,251)',
-                                           textAlign:'center',
-                                           paddingTop:'6px',
-                                           marginLeft:'60%'
-                                       }}>
-                                    我要解答
-                                </p>
+                                }}>
+                                    <img src="../../../../img/weike/question/answer.png"/>
+                                    <p style={{fontSize:'24px',color:'rgb(51,51,51)'}}>234</p>
+                                </div>
+                                <div style={{
+                                    width:'2px',height:'46px',backgroundColor:'rgb(153,153,153)'
+                                }}></div>
+                                <div style={{
+                                    display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
+                                    width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
+                                }}>
+                                    <img src="../../../../img/weike/question/appreciate.png"/>
+                                    <p style={{fontSize:'24px',color:'rgb(51,51,51)'}}>234</p>
+                                </div>
                             </div>
+                            <div style={{width:OneDrop.JS_ScreenW,height:'2px',backgroundColor:'rgb(153,153,153)'}}></div>
                         </div>
                     )
                 })

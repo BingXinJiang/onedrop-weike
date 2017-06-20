@@ -22,15 +22,16 @@ export default class Question extends React.Component{
                     alignItems:'center',
                     height:'700px'
                 }}>
-                    <textarea id="question_ask_commit" placeholder="请输入您要问的内容..."
+                    <textarea id="question_ask_commit" placeholder="请输入您要问的内容..." autofocus='autofocus'
                        style={{
-                            width:OneDrop.JS_ScreenW - 60 + 'px',height:'300px',fontSize:'28px',marginTop:'20px',
-                            borderWidth:'1px',borderColor:'rgb(235,235,235)',padding:'12px'
+                            width:OneDrop.JS_ScreenW - 60 + 'px',height:'300px',fontSize:'28px',marginTop:'40px',
+                            borderWidth:'2px',borderColor:'rgb(235,235,235)',padding:'12px',borderStyle:'solid'
                        }}
                     >
                     </textarea>
                     <div style={{
-                        display:'flex',width:'100%',height:'80px',justifyContent:'center',marginTop:'62px'
+                        display:'flex',width:'100%',height:'80px',justifyContent:'center',marginTop:'62px',
+                        flexDirection:'column'
                     }}>
                         <p onClick={()=>{
                             var question_des = $('#question_ask_commit').val();
@@ -63,8 +64,15 @@ export default class Question extends React.Component{
                             }
                         }} style={{
                             backgroundColor:'rgb(18,144,249)',fontSize:'34px',color:'white',textAlign:'center',
-                            paddingLeft:'60px',paddingRight:'60px',borderRadius:'40px',paddingTop:'15px'
-                        }}>提交问题</p>
+                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'98px',marginLeft:'24px'
+                        }}>提交</p>
+                        <p onClick={()=>{
+                            self.props.callback();
+                        }} style={{
+                            backgroundColor:'rgb(200,200,200)',fontSize:'34px',color:'white',textAlign:'center',
+                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'98px',marginLeft:'24px',
+                            marginTop:'30px'
+                        }}>取消</p>
                     </div>
                 </div>
             </div>
