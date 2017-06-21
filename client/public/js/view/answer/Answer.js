@@ -20,7 +20,10 @@ export default class Answer extends React.Component{
             isNoMoreQuestion:false,
             isLoading:false,
             scrollTopNum:0
-        }
+        };
+        this.ISBACK = false;
+        this.ISTIMER = true;
+        this.SCROLLS = [];
         this.getQuestions = (self, page, key_id)=>{
             if(this.state.isLoading){
                 return;
@@ -69,6 +72,37 @@ export default class Answer extends React.Component{
             }
             this.getQuestions(this, this.state.page, this.state.key_id);
         }
+        // console.log('document.body.scrollTop:',document.body.scrollTop);
+        this.SCROLLS.push(document.body.scrollTop);
+        if(this.ISTIMER){
+            this.ISTIMER = false;
+            setTimeout(()=>{
+                if(this.SCROLLS.length>5  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>180){
+                    let singal = true;
+                    for(let i=1;i<this.SCROLLS.length;i++){
+                        if(this.SCROLLS[i]<this.SCROLLS[i-1]){
+                            singal = false;
+                        }
+                    }
+                    if(singal){
+                        $('#drop_push_question').css('top','-120px');
+                    }
+                }
+                if(this.SCROLLS.length>5  && this.SCROLLS[0]-this.SCROLLS[this.SCROLLS.length-1]>180){
+                    let singal = true;
+                    for(let i=1;i<this.SCROLLS.length;i++){
+                        if(this.SCROLLS[i]>this.SCROLLS[i-1]){
+                            singal = false;
+                        }
+                    }
+                    if(singal){
+                        $('#drop_push_question').css('top','0px');
+                    }
+                }
+                this.ISTIMER = true;
+                this.SCROLLS = [];
+            },800)
+        }
     }
 
     componentDidMount() {
@@ -79,10 +113,18 @@ export default class Answer extends React.Component{
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll2);
     }
+
+    componentDidUpdate() {
+        if(this.ISBACK){
+            document.body.scrollTop = this.state.scrollTopNum;
+        }
+        this.ISBACK = false;
+    }
     render(){
         const Question =
         <div>
-            <div style={{
+            <div id="drop_push_question" style={{
+                position:'fixed',left:'0',top:'0',
                 width:'100%',height:'100px',backgroundColor:'white',paddingTop:'20px'
             }}>
                 <div onClick={()=>{
@@ -101,7 +143,7 @@ export default class Answer extends React.Component{
                 </div>
 
             </div>
-            <div style={{marginTop:'10px'}}>
+            <div style={{marginTop:'110px'}}>
                 {
                     this.state.questions.map((content, index)=>{
                         return (
@@ -143,12 +185,14 @@ export default class Answer extends React.Component{
 
 
                                 <div style={{
-                                    display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px'
+                                    display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px',
+                                    justifyContent:'space-between'
                                 }}>
                                     <div style={{width:'3px',backgroundColor:'rgb(153,153,153)'}}/>
-                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'20px'}}>
+                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'20px',width:'98%'}}>
                                         <div style={{
-                                            display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between'
+                                            display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between',
+                                            width:'100%'
                                         }}>
                                             <p style={{fontSize:'24px',color:'rgb(0,0,0)'}}>最赞解答</p>
                                             <p onClick={()=>{
@@ -265,6 +309,7 @@ export default class Answer extends React.Component{
                         page:1,
                         key_id:0,
                         isNoMoreQuestion:false,
+                        scrollTopNum:0
                     })
                     this.getQuestions(this, 1, 0);
                 }}/> : null
@@ -281,10 +326,11 @@ export default class Answer extends React.Component{
             }}>
                 {
                     this.state.showAnswer ? <Solve callback={()=>{
+                        this.ISBACK = true;
                         this.setState({
                             showAnswer:false
                         })
-                        document.body.scrollTop = this.state.scrollTopNum;
+                        // document.body.scrollTop = this.state.scrollTopNum;
                         window.addEventListener('scroll', this.handleScroll2);
                     }} question_id={this.state.question_id}/> : Question
                 }

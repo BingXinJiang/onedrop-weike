@@ -11,7 +11,7 @@ export default class Question extends React.Component{
     render(){
         var self = this;
         return (
-            <div style={{width:'100%',position:'absolute',top:'0',left:'0',height:OneDrop.JS_ScreenH*2,
+            <div style={{width:'100%',position:'fixed',top:'0',left:'0',height:OneDrop.JS_ScreenH*2,
                 backgroundColor:'rgb(235,235,235)'
             }}>
                 <div style={{
