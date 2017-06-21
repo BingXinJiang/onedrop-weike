@@ -13,6 +13,7 @@ var querystring = require('querystring');
 
 var crypto = require('crypto');
 var parseString = require('xml2js').parseString;
+var Tool = require('../tool/Tool');
 
 var async = require('async');
 

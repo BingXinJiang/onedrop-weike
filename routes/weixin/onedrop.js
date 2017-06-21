@@ -12,6 +12,7 @@ var querystring = require('querystring');
 
 var crypto = require('crypto');
 var parseString = require('xml2js').parseString;
+var Tool = require('../tool/Tool');
 
 var async = require('async');
 
@@ -225,7 +226,11 @@ router.post('/appreciate/mine', function (req,res,next) {
                     msg:'success'
                 }
             }
-            res.json(response);
+            Tool.addRank(user_id,1,0,function () {
+                res.json(response);
+            },function () {
+                responseDataErr(res);
+            })
         }
     })
 })
@@ -252,7 +257,11 @@ router.post('/appreciate/course', function (req, res, next) {
                     msg:'success'
                 }
             }
-            res.json(response);
+            Tool.addRank(user_id,1,0,function () {
+                res.json(response);
+            },function () {
+                responseDataErr(res);
+            })
         }
     })
 })

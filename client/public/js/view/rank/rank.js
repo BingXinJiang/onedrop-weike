@@ -7,7 +7,28 @@ import OneDrop from '../../const/onedrop';
 export default class Rank extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            isLoading:true
+        }
     }
+
+    componentDidMount(){
+        $.ajax({
+            url:OneDrop.base_url+'/rank',
+            dataType:'json',
+            method:'POST',
+            data:{
+                user_id:REMOTE_WEIXIN_USER_ID
+            },
+            success:(data)=>{
+                console.log('data:',data);
+                this.setState({
+                    isLoading:false
+                })
+            }
+        })
+    }
+
     render(){
         return(
             <div style={{
@@ -116,7 +137,17 @@ export default class Rank extends React.Component{
                         })
                     }
                 </div>
-
+                {
+                    this.state.isLoading ?
+                        <div style={{
+                            position:'fixed',top:'0',left:'0',
+                            width:OneDrop.JS_ScreenW,
+                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../img/weike/home/loading.gif"/>
+                        </div>
+                        : null
+                }
             </div>
         )
     }

@@ -12,6 +12,7 @@ var querystring = require('querystring');
 
 var crypto = require('crypto');
 var parseString = require('xml2js').parseString;
+var Tool = require('../tool/Tool');
 
 var async = require('async');
 
@@ -54,7 +55,15 @@ router.post('/',function (req,res,next) {
                     msg:'插入数据成功'
                 }
             }
-            res.json(response);
+            if(is_learn === 1){
+                Tool.addRank(user_id,10,5,function () {
+                    res.json(response);
+                },function () {
+                    responseDataErr(res);
+                })
+            }else{
+                res.json(response);
+            }
         }
     })
 

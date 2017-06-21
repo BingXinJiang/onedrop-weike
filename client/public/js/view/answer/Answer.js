@@ -18,7 +18,8 @@ export default class Answer extends React.Component{
             key_id:0,
             question_id:0,
             isNoMoreQuestion:false,
-            isLoading:false
+            isLoading:false,
+            scrollTopNum:0
         }
         this.getQuestions = (self, page, key_id)=>{
             if(this.state.isLoading){
@@ -33,7 +34,8 @@ export default class Answer extends React.Component{
                 method:'POST',
                 data:{
                     page:page,
-                    key_id:key_id
+                    key_id:key_id,
+                    user_id:REMOTE_WEIXIN_USER_ID
                 },
                 success:function (data) {
                     if(data.status === 1){
@@ -84,6 +86,7 @@ export default class Answer extends React.Component{
                 width:'100%',height:'100px',backgroundColor:'white',paddingTop:'20px'
             }}>
                 <div onClick={()=>{
+                    window.removeEventListener('scroll', this.handleScroll2);
                     this.setState({
                         showQuestion:true
                     })
@@ -98,102 +101,172 @@ export default class Answer extends React.Component{
                 </div>
 
             </div>
-            {
-                this.state.questions.map((content, index)=>{
-                    return (
-                        <div onClick={()=>{
-                            this.setState({
-                                question_id:content.question_id,
-                                showAnswer:true
-                            })
-                        }} key={index} style={{
-                                    paddingTop:'30px',backgroundColor:'white',marginTop:'20px'
-                                }}>
-                            <div style={{
-                                        display:'block',marginLeft:'24px',marginRight:'24px'
-                                    }}>
-                                <img style={{
-                                            width:'90px',height:'90px',borderRadius:'45px',float:'left',marginRight:'16px'
-                                        }} src={content.headimgurl}/>
-                                <div style={{
-                                            display:'block'
-                                        }}>
-                                    <p style={{
-                                                color:'rgb(127,127,127)',
-                                                fontSize:'28px'
-                                            }}>{content.nickname}</p>
-                                    <p style={{
-                                                color:'rgb(169,169,169)',
-                                                fontSize:'26px'
-                                            }}>{content.year+'-'+content.month+'-'+content.day}</p>
-                                </div>
-                            </div>
-                            <p style={{
-                                       fontSize:'28px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
-                                   }}>
-                                {content.question_desc}
-                            </p>
-                            <div style={{width:OneDrop.JS_ScreenW,height:'2px',backgroundColor:'rgb(153,153,153)'}}></div>
-
-
-                            <div style={{
-                                display:'flex',flexDirection:'row'
+            <div style={{marginTop:'10px'}}>
+                {
+                    this.state.questions.map((content, index)=>{
+                        return (
+                            <div  key={index} style={{
+                                paddingTop:'30px',backgroundColor:'white',marginTop:'20px'
                             }}>
-                                <div></div>
-                                <div>
-                                    <div></div>
-                                    <div>
-                                        <p><span>大樟树:</span>管理者的能力这节课,让我认识到了
-                                        节课,让我认识节课,让我认识节课,让我认识节课,让我认识
-                                        节课,让我认识节课,让我认识节课,让我认识节课,让我认识
-                                        节课,让我认识节课,让我认识</p>
-                                        <p><span>大樟树:</span>管理者的能力这节课,让我认识到了
-                                            节课,让我认识节课,让我认识节课,让我认识节课,让我认识
-                                            节课,让我认识节课,让我认识节课,让我认识节课,让我认识
-                                            节课,让我认识节课,让我认识</p>
+                                <div style={{
+                                    display:'block',marginLeft:'24px',marginRight:'24px'
+                                }}>
+                                    <img style={{
+                                        width:'90px',height:'90px',borderRadius:'45px',float:'left',marginRight:'16px'
+                                    }} src={content.headimgurl}/>
+                                    <div style={{
+                                        display:'block'
+                                    }}>
+                                        <p style={{
+                                            color:'rgb(127,127,127)',
+                                            fontSize:'28px'
+                                        }}>{content.nickname}</p>
+                                        <p style={{
+                                            color:'rgb(169,169,169)',
+                                            fontSize:'26px'
+                                        }}>{content.year+'-'+content.month+'-'+content.day}</p>
                                     </div>
                                 </div>
-                            </div>
-
-
-                            <div style={{width:OneDrop.JS_ScreenW,height:'2px',backgroundColor:'rgb(153,153,153)'}}></div>
-                            <div style={{
-                                       width:'100%',height:'90px',display:'flex',
-                                       flexDirection:'row',justifyContent:'center',alignItems:'center'
-                                   }}>
-                                <div style={{
-                                    display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
-                                    width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
-                                }} onClick={()=>{
+                                <p onClick={()=>{
+                                    window.removeEventListener('scroll', this.handleScroll2);
                                     this.setState({
                                         question_id:content.question_id,
-                                        showAnswer:true
+                                        showAnswer:true,
+                                        scrollTopNum:document.body.scrollTop
                                     })
+                                }} style={{
+                                    fontSize:'28px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
                                 }}>
-                                    <img src="../../../../img/weike/question/answer.png"/>
-                                    <p style={{fontSize:'24px',color:'rgb(51,51,51)'}}>234</p>
-                                </div>
+                                    {content.question_desc}
+                                </p>
+                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
+
+
                                 <div style={{
-                                    width:'2px',height:'46px',backgroundColor:'rgb(153,153,153)'
-                                }}></div>
-                                <div style={{
-                                    display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
-                                    width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
+                                    display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px'
                                 }}>
-                                    <img src="../../../../img/weike/question/appreciate.png"/>
-                                    <p style={{fontSize:'24px',color:'rgb(51,51,51)'}}>234</p>
+                                    <div style={{width:'3px',backgroundColor:'rgb(153,153,153)'}}/>
+                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'20px'}}>
+                                        <div style={{
+                                            display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between'
+                                        }}>
+                                            <p style={{fontSize:'24px',color:'rgb(0,0,0)'}}>最赞解答</p>
+                                            <p onClick={()=>{
+                                                window.removeEventListener('scroll', this.handleScroll2);
+                                                this.setState({
+                                                    question_id:content.question_id,
+                                                    showAnswer:true,
+                                                    scrollTopNum:document.body.scrollTop
+                                                })
+                                            }} style={{fontSize:'24px',color:'rgb(0,0,0)'}}>全部解答</p>
+                                        </div>
+                                        <div style={{marginTop:'5px'}}>
+                                            {
+                                                content.answers.map((cont,idx)=>{
+                                                    return (
+                                                        <p key={index} style={{
+                                                            fontSize:'22px',color:'rgb(102,102,102)',marginTop:'10px'
+                                                        }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
+                                                    )
+                                                })
+                                            }
+                                            {
+                                                content.answers.length === 0 ?
+                                                    <img src="../../../../img/weike/question/noanswer.jpg"/> : null
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
+
+
+                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
+                                <div style={{
+                                    width:'100%',height:'90px',display:'flex',
+                                    flexDirection:'row',justifyContent:'center',alignItems:'center'
+                                }}>
+                                    <div style={{
+                                        display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
+                                        width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
+                                    }} onClick={()=>{
+                                        window.removeEventListener('scroll', this.handleScroll2);
+                                        this.setState({
+                                            question_id:content.question_id,
+                                            showAnswer:true,
+                                            scrollTopNum:document.body.scrollTop
+                                        })
+                                    }}>
+                                        <img src="../../../../img/weike/question/answer.png"/>
+                                        <p style={{fontSize:'24px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.answer_count}</p>
+                                    </div>
+                                    <div style={{
+                                        width:'2px',height:'46px',backgroundColor:'rgb(153,153,153)'
+                                    }}/>
+                                    <div onClick={()=>{
+                                        //对问题点赞
+                                        if(this.state.isLoading){
+                                            return;
+                                        }
+                                        this.setState({
+                                            isLoading:true
+                                        })
+                                        $.ajax({
+                                            url:OneDrop.base_url+'/appreciate/question',
+                                            dataType:'json',
+                                            method:'POST',
+                                            data:{
+                                                user_id:REMOTE_WEIXIN_USER_ID,
+                                                question_id:content.question_id
+                                            },
+                                            success:(data)=>{
+                                                if(data.status === 1){
+                                                    var newQuestions = this.state.questions;
+                                                    if(data.data === 'done'){
+                                                        //点赞成功
+                                                        newQuestions[index].appreciate_status = 1;
+                                                        newQuestions[index].appreciate_count = newQuestions[index].appreciate_count+1;
+                                                    }
+                                                    if(data.data === 'cancel'){
+                                                        //取消点赞
+                                                        newQuestions[index].appreciate_status = 0;
+                                                        newQuestions[index].appreciate_count = newQuestions[index].appreciate_count-1;
+                                                    }
+                                                    this.setState({
+                                                        questions:newQuestions,
+                                                        isLoading:false
+                                                    })
+                                                }else{
+                                                    this.setState({
+                                                        isLoading:false
+                                                    })
+                                                    alert('点赞失败！');
+                                                }
+                                            }
+                                        })
+                                    }} style={{
+                                        display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
+                                        width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
+                                    }}>
+                                        <img src={content.appreciate_status===0 ? '../../../../img/weike/question/appreciate.png':'../../../../img/weike/question/appreciated.png'}/>
+                                        <p style={{fontSize:'24px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.appreciate_count}</p>
+                                    </div>
+                                </div>
+                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)'}}/>
                             </div>
-                            <div style={{width:OneDrop.JS_ScreenW,height:'2px',backgroundColor:'rgb(153,153,153)'}}></div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
             {
                 this.state.showQuestion ? <Ques callback={()=>{
-                    this.setstate({
-                        showQuestion:false
+                    window.addEventListener('scroll', this.handleScroll2);
+                    this.setState({
+                        showQuestion:false,
+                        questions:[],
+                        page:1,
+                        key_id:0,
+                        isNoMoreQuestion:false,
                     })
+                    this.getQuestions(this, 1, 0);
                 }}/> : null
             }
         </div>
@@ -211,7 +284,20 @@ export default class Answer extends React.Component{
                         this.setState({
                             showAnswer:false
                         })
+                        document.body.scrollTop = this.state.scrollTopNum;
+                        window.addEventListener('scroll', this.handleScroll2);
                     }} question_id={this.state.question_id}/> : Question
+                }
+                {
+                    this.state.isLoading ?
+                        <div style={{
+                            position:'fixed',top:'0',left:'0',
+                            width:OneDrop.JS_ScreenW,
+                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../img/weike/home/loading.gif"/>
+                        </div>
+                        : null
                 }
             </div>
         )

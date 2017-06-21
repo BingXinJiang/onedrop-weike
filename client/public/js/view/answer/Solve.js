@@ -11,7 +11,8 @@ export default class Solve extends React.Component{
         super(props);
         this.state = {
             question:null,
-            answers:[]
+            answers:[],
+            isLoading:true
         }
     }
 
@@ -30,7 +31,7 @@ export default class Solve extends React.Component{
                         if(data.status === 1){
                             callback(null, data.data);
                         }else{
-                            alert('数据错误1');
+                            callback('数据错误1');
                         }
                     }
                 })
@@ -41,19 +42,23 @@ export default class Solve extends React.Component{
                     dataType:'json',
                     method:'POST',
                     data:{
-                        question_id:self.props.question_id
+                        question_id:self.props.question_id,
+                        user_id:REMOTE_WEIXIN_USER_ID
                     },
                     success:function (data) {
                         if(data.status === 1){
                             callback(null, data.data);
                         }else{
-                            alert('数据错误2');
+                            callback('数据错误2');
                         }
                     }
                 })
             }
         ], function (err, results) {
             if(err){
+                self.setState({
+                    isLoading:false
+                })
                 alert('数据错误3');
             }else{
                 // console.log('results:', results);
@@ -61,7 +66,8 @@ export default class Solve extends React.Component{
                 var answers = results[1];
                 self.setState({
                     question:question,
-                    answers:answers
+                    answers:answers,
+                    isLoading:false
                 })
             }
         })
@@ -74,9 +80,9 @@ export default class Solve extends React.Component{
                 {
                     this.state.question ?
                         <div style={{
-                              paddingLeft:'30px',
+                              paddingLeft:'24px',
                               paddingTop:'30px',
-                              paddingRight:'30px',
+                              paddingRight:'24px',
                               backgroundColor:'white',
                               marginTop:'20px'
                          }}>
@@ -114,54 +120,100 @@ export default class Solve extends React.Component{
                         :null
                 }
 
-                <div style={{marginTop:'20px'}}>
+                <div style={{marginTop:'20px',width:OneDrop.JS_ScreenW,backgroundColor:'white'}}>
                     {
                         this.state.answers.map((content, index)=>{
                             return (
-                                <div key={index} style={{
-                                    display:'flex',
-                                    paddingLeft:'30px',
-                                    paddingTop:'30px',
-                                    paddingRight:'30px',
-                                    backgroundColor:'white',
-                                    marginTop:'5px'
-                                }}>
-                                    <div style={{
-                                        display:'block',
-                                        width:'90px',
-                                        marginRight:'16px'
+                                <div style={{width:'100%',marginLeft:'24px',marginRight:'24px'}}>
+                                    <div style={{width:'100%',height:'3px',backgroundColor:'rgb(235,235,235)'}}/>
+                                    <div key={index} style={{
+                                        display:'flex',paddingTop:'30px',width:'100%'
                                     }}>
-                                        <img style={{
-                                            display:'block',
-                                            width:'90px',
-                                            height:'90px',
-                                            borderRadius:'45px'
-                                        }} src={content.headimgurl}/>
-                                    </div>
-                                    <div>
                                         <div style={{
-                                            display:'block'
+                                            display:'flex',width:'90px',marginRight:'16px'
                                         }}>
-                                            <p style={{
-                                                color:'rgb(127,127,127)',
-                                                fontSize:'28px',
-                                                float:'left'
-                                            }}>{content.nickname}</p>
-                                            <p style={{
-                                                color:'rgb(169,169,169)',
-                                                fontSize:'26px',
-                                                float:'right'
-                                            }}>{content.year}-{content.month}-{content.day}</p>
+                                            <img style={{
+                                                display:'block',width:'90px',height:'90px',borderRadius:'45px'
+                                            }} src={content.headimgurl}/>
                                         </div>
-
-                                        <p style={{
-                                            fontSize:'28px',
-                                            marginTop:'24px',
-                                            clear:'both',
-                                            paddingBottom:'12px'
+                                        <div style={{
+                                            display:'flex',flexDirection:'column',width:OneDrop.JS_ScreenW-154+'px'
                                         }}>
-                                            {content.answer_desc}
-                                        </p>
+                                            <div style={{
+                                                display:'flex',justifyContent:'space-between',width:'100%'
+                                            }}>
+                                                <div style={{
+                                                    display:'flex',flexDirection:'column'
+                                                }}>
+                                                    <p style={{
+                                                        color:'rgb(127,127,127)',
+                                                        fontSize:'28px',
+                                                        float:'left'
+                                                    }}>{content.nickname}</p>
+                                                    <p style={{
+                                                        color:'rgb(169,169,169)',
+                                                        fontSize:'26px',
+                                                        float:'right'
+                                                    }}>{content.year}-{content.month}-{content.day}</p>
+                                                </div>
+                                                <div onClick={()=>{
+                                                    if(this.state.isLoading){
+                                                        return;
+                                                    }
+                                                    this.setState({
+                                                        isLoading:true
+                                                    })
+                                                    //给答案点赞
+                                                    $.ajax({
+                                                        url:OneDrop.base_url+'/appreciate/answer',
+                                                        dataType:'json',
+                                                        method:'POST',
+                                                        data:{
+                                                            user_id:REMOTE_WEIXIN_USER_ID,
+                                                            answer_id:content.answer_id
+                                                        },
+                                                        success:(data)=>{
+                                                            if(data.status === 1){
+                                                                var newAnswers = this.state.answers;
+                                                                if(data.data === 'done'){
+                                                                    //点赞成功
+                                                                    newAnswers[index].appreciate_status = 1;
+                                                                    newAnswers[index].appreciate_count = newAnswers[index].appreciate_count+1;
+                                                                }
+                                                                if(data.data === 'cancel'){
+                                                                    //取消点赞
+                                                                    newAnswers[index].appreciate_status = 0;
+                                                                    newAnswers[index].appreciate_count = newAnswers[index].appreciate_count-1;
+                                                                }
+                                                                this.setState({
+                                                                    isLoading:false,
+                                                                    answers:newAnswers
+                                                                })
+                                                            }else{
+                                                                this.setState({
+                                                                    isLoading:false
+                                                                });
+                                                                alert('点赞失败！');
+                                                            }
+                                                        }
+                                                    })
+                                                }} style={{
+                                                    display:'flex',alignItems:'flex-start'
+                                                }}>
+                                                    <img src={content.appreciate_status===0 ? '../../../../img/weike/question/appreciate.png':'../../../../img/weike/question/appreciated.png'}/>
+                                                    <p style={{fontSize:'24px',marginLeft:'5px'}}>{content.appreciate_count}</p>
+                                                </div>
+                                            </div>
+
+                                            <p style={{
+                                                fontSize:'28px',
+                                                marginTop:'24px',
+                                                clear:'both',
+                                                paddingBottom:'12px'
+                                            }}>
+                                                {content.answer_desc}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             )
@@ -199,11 +251,17 @@ export default class Solve extends React.Component{
                             borderStyle:'solid',marginTop:'7px'
                         }}/>
                         <p onClick={()=>{
+                            if(this.state.isLoading){
+                                return;
+                            }
                             var answer = $('#question_answer_solve_commit').val();
                             if(answer){
                                 if(answer===''){
                                     alert('请输入您的答案...');
                                 }else{
+                                    this.setState({
+                                        isLoading:true
+                                    })
                                     //提交答案
                                     $.ajax({
                                         url:OneDrop.base_url+'/answer/reply',
@@ -227,14 +285,21 @@ export default class Solve extends React.Component{
                                                     success:function (data) {
                                                         if(data.status === 1){
                                                             self.setState({
-                                                                answers:data.data
+                                                                answers:data.data,
+                                                                isLoading:false
                                                             })
                                                         }else{
+                                                            self.setState({
+                                                                isLoading:false
+                                                            })
                                                             alert('数据错误2');
                                                         }
                                                     }
                                                 })
                                             }else{
+                                                self.setState({
+                                                    isLoading:false
+                                                })
                                                 alert('数据错误!');
                                             }
                                         }
@@ -260,6 +325,17 @@ export default class Solve extends React.Component{
                         </p>
                     </div>
                 </div>
+                {
+                    this.state.isLoading ?
+                        <div style={{
+                            position:'fixed',top:'0',left:'0',
+                            width:OneDrop.JS_ScreenW,
+                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../img/weike/home/loading.gif"/>
+                        </div>
+                        : null
+                }
             </div>
         )
     }

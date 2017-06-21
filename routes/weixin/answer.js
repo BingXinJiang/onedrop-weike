@@ -12,6 +12,7 @@ var querystring = require('querystring');
 
 var crypto = require('crypto');
 var parseString = require('xml2js').parseString;
+var Tool = require('../tool/Tool');
 
 var async = require('async');
 
@@ -50,7 +51,11 @@ router.post('/ask', function (req, res, next) {
                     msg:'问题提交成功，请耐心等待解答...'
                 }
             }
-            res.json(response);
+            Tool.addRank(user_id,1,0,function () {
+                res.json(response);
+            },function () {
+                responseDataErr(res);
+            })
         }
     })
 })
@@ -59,19 +64,31 @@ router.post('/ask', function (req, res, next) {
  * 按时间排序，分页获取问题，每页10条
  * 参数： page 当前获取问题的分页页码数
  *       key_id 记录主键，第一页传0， 当第二页时传第一页获取到的最小主键
+ *       user_id
  * */
 router.post('/questions', function (req, res, next) {
     var page = Number(req.body.page);
     var key_id = Number(req.body.key_id);
+    var user_id = req.body.user_id;
     var query_sql = "";
     if(page === 1){
-        query_sql = "select year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl from " +
+        query_sql = "select a.question_id,year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl," +
+            "c.answer_count,d.appreciate_count,e.appreciate_status from " +
             "(select * from question order by key_id desc limit 0,10)a left join " +
-            "(select * from user)b on a.user_id=b.user_id";
+            "(select * from user)b on a.user_id=b.user_id left join " +
+            "(select count(*)answer_count,question_id from answer group by question_id)as c on a.question_id=c.question_id left join " +
+            "(select count(*)appreciate_count,question_id from appreciate_question group by question_id)as d on a.question_id=d.question_id " +
+            "left join " +
+            "(select count(*)appreciate_status,question_id from appreciate_question where user_id='"+user_id+"' group by question_id)as e on a.question_id=e.question_id";
     }else{
-        query_sql = "select year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl from " +
+        query_sql = "select a.question_id,year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl," +
+            "c.answer_count,d.appreciate_count,e.appreciate_status from " +
             "(select * from question where key_id between "+(key_id-10)+" and " +(key_id-1) +" order by key_id desc)a " +
-            "left join (select * from user)b on a.user_id=b.user_id";
+            "left join (select * from user)b on a.user_id=b.user_id left join " +
+            "(select count(*)answer_count,question_id from answer group by question_id)as c on a.question_id=c.question_id left join " +
+            "(select count(*)appreciate_count,question_id from appreciate_question group by question_id)as d on a.question_id=d.question_id " +
+            "left join " +
+            "(select count(*)appreciate_status,question_id from appreciate_question where user_id='"+user_id+"' group by question_id)as e on a.question_id=e.question_id";
     }
     // console.log(query_sql);
     query(query_sql, function (qerr, valls, fields) {
@@ -84,11 +101,45 @@ router.post('/questions', function (req, res, next) {
             }else{
                 data = valls;
             }
-            var response = {
-                status:1,
-                data:data
-            }
-            res.json(response);
+            var questions = [];
+            var funArr = valls.map(function (content) {
+                content.answer_count = content.answer_count ? content.answer_count : 0;
+                content.appreciate_count = content.appreciate_count ? content.appreciate_count : 0;
+                content.appreciate_status = content.appreciate_status ? content.appreciate_status : 0;
+                questions.push(content);
+                return function (callback) {
+                    var question_id = content.question_id;
+                    var query_question_sql = "select a.answer_id,a.answer_desc,b.nickname,c.appreciate_count from " +
+                        "((select answer_id,answer_desc,user_id,question_id from answer where question_id='"+question_id+"')as a " +
+                        "left join " +
+                        "(select user_id,nickname from user)as b on a.user_id=b.user_id " +
+                        "left join " +
+                        "(select answer_id,count(*)appreciate_count from appreciate_answer group by answer_id)as c on a.answer_id=c.answer_id) " +
+                        "order by c.appreciate_count desc limit 2";
+                    // console.log('query_question_sql:',query_question_sql);
+                    query(query_question_sql,function (qerr,valls,fields) {
+                        if(qerr){
+                            callback(qerr);
+                        }else{
+                            callback(null,valls);
+                        }
+                    })
+                }
+            })
+            async.parallel(funArr,function (err,results) {
+                if(err){
+                    responseDataErr(res);
+                }else{
+                    results.map(function (answers,idx) {
+                        questions[idx].answers = answers;
+                    })
+                    var response = {
+                        status:1,
+                        data:questions
+                    }
+                    res.json(response);
+                }
+            })
         }
     })
 })
@@ -123,7 +174,11 @@ router.post('/reply', function (req, res, next) {
                     msg:'您的答案提交成功！'
                 }
             }
-            res.json(response);
+            Tool.addRank(user_id,1,0,function () {
+                res.json(response);
+            },function () {
+                responseDataErr(res);
+            })
         }
     })
 })
@@ -157,20 +212,37 @@ router.post('/question/detail', function (req, res, next) {
 /**
  * 查看某一问题对应的所有答案，按时间倒序排列
  * 参数：question_id  149500987801845931  149500987801845931
+ *      user_id
  * */
+
 router.post('/question/answers', function (req, res, next) {
     var question_id = req.body.question_id;
+    var user_id = req.body.user_id;
 
-    var query_sql = "select year(a.answer_time)year,month(a.answer_time)month,day(a.answer_time)day,a.answer_id,a.answer_desc,a.user_id,a.answer_time,a.answer_voice,b.nickname,b.headimgurl "+
-    "from (select * from answer where question_id='"+question_id+"' order by answer_time desc)a left join (select * from user)b on a.user_id = b.user_id;"
+    var query_sql = "select year(a.answer_time)year,month(a.answer_time)month,day(a.answer_time)day,a.answer_id," +
+        "a.answer_desc,b.nickname,b.headimgurl,c.appreciate_status,d.appreciate_count from " +
+        "((select * from answer where question_id='"+question_id+"')as a " +
+        "left join " +
+        "(select user_id,headimgurl,nickname from user)as b on a.user_id=b.user_id " +
+        "left join " +
+        "(select count(*)appreciate_status,answer_id,user_id from appreciate_answer where user_id='"+user_id+"')as c on a.answer_id=c.answer_id " +
+        "left join " +
+        "(select count(*)appreciate_count,answer_id from appreciate_answer)as d on a.answer_id=d.answer_id) " +
+        "order by d.appreciate_count desc";
     // console.log('query_sql:', query_sql);
     query(query_sql, function (qerr, valls, next) {
         if(qerr){
             responseDataErr(res);
         }else{
+            var answers = [];
+            valls.map(function (content) {
+                content.appreciate_status = content.appreciate_status ? content.appreciate_status : 0;
+                content.appreciate_count = content.appreciate_count ? content.appreciate_count : 0;
+                answers.push(content);
+            })
             var response = {
                 status:1,
-                data:valls
+                data:answers
             }
             res.json(response);
         }

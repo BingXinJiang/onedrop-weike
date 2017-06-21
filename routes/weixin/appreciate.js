@@ -12,6 +12,7 @@ var querystring = require('querystring');
 
 var crypto = require('crypto');
 var parseString = require('xml2js').parseString;
+var Tool = require('../tool/Tool');
 
 var async = require('async');
 
@@ -25,7 +26,7 @@ function responseDataErr(res) {
     res.json(response);
 }
 
-function appreciate(query_sql,insert_sql,del_sql,res) {
+function appreciate(user_id,query_sql,insert_sql,del_sql,res) {
     query(query_sql,function (qerr,valls,fields) {
         if(qerr){
             responseDataErr(res);
@@ -53,7 +54,11 @@ function appreciate(query_sql,insert_sql,del_sql,res) {
                             status:1,
                             data:'done' //返回值 done 代表点赞成功
                         }
-                        res.json(response);
+                        Tool.addRank(user_id,0,1,function () {
+                            res.json(response);
+                        },function () {
+                            responseDataErr(res);
+                        })
                     }
                 })
             }
@@ -76,7 +81,7 @@ router.post('/rank',function (req,res,next) {
     var del_sql = "delete from appreciate_rank where user_id='"+user_id+"' and " +
         "appreciate_user_id='"+appreciate_user_id+"'";
 
-    appreciate(query_sql,insert_sql,del_sql,res);
+    appreciate(user_id,query_sql,insert_sql,del_sql,res);
 
 })
 /**
@@ -93,7 +98,7 @@ router.post('/question',function (req,res,next) {
         "values('"+user_id+"','"+question_id+"',Now())";
     var del_sql = "delete from appreciate_question where user_id='"+user_id+"' and question_id='"+question_id+"'";
 
-    appreciate(query_sql,insert_sql,del_sql,res);
+    appreciate(user_id,query_sql,insert_sql,del_sql,res);
 })
 /**
  * 给答案点赞
@@ -109,7 +114,7 @@ router.post('/answer',function (req,res,next) {
         "values('"+user_id+"','"+answer_id+"',Now())";
     var del_sql = "delete from appreciate_answer where user_id='"+user_id+"' and answer_id='"+answer_id+"'";
 
-    appreciate(query_sql,insert_sql,del_sql,res);
+    appreciate(user_id,query_sql,insert_sql,del_sql,res);
 })
 
 module.exports = router;
