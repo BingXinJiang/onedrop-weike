@@ -15,11 +15,7 @@ module.exports = {
     addRank:function (user_id,fraction,leader_value,success,failure) {
         var query_sql = "select * from user_value where user_id='"+user_id+"'";
         var insert_sql = "insert into user_value(user_id) values('"+user_id+"')";
-        var update_sql = "update user_value set fraction=fraction+"+fraction+",leader_value=leader_value+"+leader_value+"update_time=Now()";
-
-        console.log('query_sql:',query_sql);
-        console.log('insert_sql:',insert_sql);
-        console.log('update_sql:',update_sql);
+        var update_sql = "update user_value set fraction=fraction+"+fraction+",leader_value=leader_value+"+leader_value+",update_time=Now() where user_id='"+user_id+"'";
 
         query(query_sql,function (qerr,valls,fields) {
             if(qerr){

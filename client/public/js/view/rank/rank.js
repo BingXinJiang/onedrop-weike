@@ -8,7 +8,9 @@ export default class Rank extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isLoading:true
+            isLoading:true,
+            rank:[],
+            user:null
         }
     }
 
@@ -22,9 +24,20 @@ export default class Rank extends React.Component{
             },
             success:(data)=>{
                 console.log('data:',data);
-                this.setState({
-                    isLoading:false
-                })
+                if(data.status === 1){
+                    var rank = data.data.rank;
+                    var user = data.data.user;
+                    this.setState({
+                        rank:rank,
+                        user:user,
+                        isLoading:false
+                    })
+                }else{
+                    this.setState({
+                        isLoading:false
+                    })
+                    alert('数据错误!');
+                }
             }
         })
     }
@@ -38,49 +51,53 @@ export default class Rank extends React.Component{
                     width:OneDrop.JS_ScreenW,height:'300px'
                 }} src="../../../../img/weike/rank/banner.jpg"/>
 
-                <div style={{
-                    height:'140px',paddingLeft:'24px',paddingRight:'24px',backgroundColor:'rgb(241,241,241)',
-                    paddingTop:'30px',paddingBottom:'30px',display:'flex',flexDirection:'row',
-                    justifyContent:'space-between',alignItems:'center'
-                }}>
-                    <div style={{
-                        display:'flex',flexDirection:'row',alignItems:'center'
-                    }}>
+                {
+                    this.state.user ?
                         <div style={{
-                            marginLeft:'42px'
+                            height:'140px',paddingLeft:'24px',paddingRight:'24px',backgroundColor:'rgb(241,241,241)',
+                            paddingTop:'30px',paddingBottom:'30px',display:'flex',flexDirection:'row',
+                            justifyContent:'space-between',alignItems:'center'
                         }}>
-                            <img style={{
-                                width:'76px',height:'76px'
-                            }} src="../../../../img/weike/test/test_head.png"/>
-                        </div>
-                        <div style={{
-                            marginLeft:'22px'
-                        }}>
-                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>昵称</p>
-                            <p style={{fontSize:'26px',color:'rgb(153,153,153)'}}>第12名</p>
-                            <p style={{fontSize:'20px',color:'rgb(153,153,153)'}}>领导力能量 200</p>
-                        </div>
-                    </div>
-                    <div style={{
-                        display:'flex',flexDirection:'row',alignItems:'center'
-                    }}>
-                        <div style={{
-                            display:'flex',flexDirection:'row',alignItems:'flex-end',
-                            marginRight:'40px'
-                        }}>
-                            <p style={{fontSize:'46px',color:'rgb(23,172,251)',lineHeight:'46px'}}>200</p>
-                            <p style={{fontSize:'26px',color:'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
-                        </div>
-                        <div style={{
-                            display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'
-                        }}>
-                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>3</p>
-                            <div>
-                                <img src="../../../../img/weike/rank/love.png"/>
+                            <div style={{
+                                display:'flex',flexDirection:'row',alignItems:'center'
+                            }}>
+                                <div style={{
+                                    marginLeft:'42px'
+                                }}>
+                                    <img style={{
+                                        width:'76px',height:'76px',borderRadius:'38px'
+                                    }} src={this.state.user.headimgurl}/>
+                                </div>
+                                <div style={{
+                                    marginLeft:'22px'
+                                }}>
+                                    <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{this.state.user.nickname}</p>
+                                    <p style={{fontSize:'26px',color:'rgb(153,153,153)'}}>第{this.state.user.number ? this.state.user.number+1 : 1}名</p>
+                                    <p style={{fontSize:'20px',color:'rgb(153,153,153)'}}>领导力能量 {this.state.user.leader_value}</p>
+                                </div>
+                            </div>
+                            <div style={{
+                                display:'flex',flexDirection:'row',alignItems:'center'
+                            }}>
+                                <div style={{
+                                    display:'flex',flexDirection:'row',alignItems:'flex-end',
+                                    marginRight:'40px'
+                                }}>
+                                    <p style={{fontSize:'46px',color:'rgb(23,172,251)',lineHeight:'46px'}}>{this.state.user.fraction}</p>
+                                    <p style={{fontSize:'26px',color:'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
+                                </div>
+                                <div style={{
+                                    display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'
+                                }}>
+                                    <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{this.state.user.appreciate_count ? this.state.user.appreciate_count : 0}</p>
+                                    <div>
+                                        <img src="../../../../img/weike/rank/loved.png"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        : null
+                }
 
                 <div style={{
                     width:'100%',height:'30px',backgroundColor:'rgb(209,209,209)'
@@ -88,7 +105,7 @@ export default class Rank extends React.Component{
 
                 <div>
                     {
-                        ['','','','','',''].map((content,index)=>{
+                        this.state.rank.map((content,index)=>{
                             return(
                                 <div key={index} style={{
                                     height:'110px',paddingLeft:'24px',paddingRight:'24px',backgroundColor:index%2===0 ? 'white':'rgb(241,241,241)',
@@ -103,14 +120,14 @@ export default class Rank extends React.Component{
                                             marginLeft:'29px'
                                         }}>
                                             <img style={{
-                                                width:'76px',height:'76px'
-                                            }} src="../../../../img/weike/test/test_head.png"/>
+                                                width:'76px',height:'76px',borderRadius:'38px'
+                                            }} src={content.headimgurl}/>
                                         </div>
                                         <div style={{
                                             marginLeft:'22px'
                                         }}>
-                                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>昵称</p>
-                                            <p style={{fontSize:'20px',color:'rgb(153,153,153)'}}>领导力能量 200</p>
+                                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{content.nickname}</p>
+                                            <p style={{fontSize:'20px',color:'rgb(153,153,153)'}}>领导力能量 {content.leader_value}</p>
                                         </div>
                                     </div>
                                     <div style={{
@@ -120,15 +137,55 @@ export default class Rank extends React.Component{
                                             display:'flex',flexDirection:'row',alignItems:'flex-end',
                                             marginRight:'40px'
                                         }}>
-                                            <p style={{fontSize:'46px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'46px'}}>200</p>
+                                            <p style={{fontSize:'46px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'46px'}}>{content.fraction}</p>
                                             <p style={{fontSize:'26px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
                                         </div>
-                                        <div style={{
+                                        <div onClick={()=>{
+                                            if(this.state.isLoading){
+                                                return;
+                                            }
+                                            this.setState({
+                                                isLoading:true
+                                            })
+                                            $.ajax({
+                                                url:OneDrop.base_url+'/appreciate/rank',
+                                                dataType:'json',
+                                                method:'POST',
+                                                data:{
+                                                    user_id:REMOTE_WEIXIN_USER_ID,
+                                                    appreciate_user_id:content.user_id
+                                                },
+                                                success:(data)=>{
+                                                    if(data.status === 1){
+                                                        var newRank = this.state.rank;
+                                                        newRank[index].appreciate_count = newRank[index].appreciate_count ? newRank[index].appreciate_count : 0;
+                                                        newRank[index].appreciate_status = newRank[index].appreciate_status ? newRank[index].appreciate_status : 0;
+                                                        if(data.data === 'done'){
+                                                            newRank[index].appreciate_count = newRank[index].appreciate_count + 1;
+                                                            newRank[index].appreciate_status = 1;
+                                                        }
+                                                        if(data.data === 'cancel'){
+                                                            newRank[index].appreciate_count = newRank[index].appreciate_count - 1;
+                                                            newRank[index].appreciate_status = 0;
+                                                        }
+                                                        this.setState({
+                                                            rank:newRank,
+                                                            isLoading:false
+                                                        })
+                                                    }else{
+                                                        this.setState({
+                                                            isLoading:false
+                                                        })
+                                                        alert('点赞失败!')
+                                                    }
+                                                }
+                                            })
+                                        }} style={{
                                             display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'
                                         }}>
-                                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>3</p>
+                                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{content.appreciate_count ? content.appreciate_count : 0}</p>
                                             <div>
-                                                <img src="../../../../img/weike/rank/love.png"/>
+                                                <img src={content.appreciate_status ? '../../../../img/weike/rank/loved.png':'../../../../img/weike/rank/love.png'}/>
                                             </div>
                                         </div>
                                     </div>
