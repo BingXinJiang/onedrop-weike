@@ -115,7 +115,7 @@ router.post('/questions', function (req, res, next) {
                         "(select user_id,nickname from user)as b on a.user_id=b.user_id " +
                         "left join " +
                         "(select answer_id,count(*)appreciate_count from appreciate_answer group by answer_id)as c on a.answer_id=c.answer_id) " +
-                        "order by c.appreciate_count desc limit 2";
+                        "order by c.appreciate_count desc limit 0,2";
                     // console.log('query_question_sql:',query_question_sql);
                     query(query_question_sql,function (qerr,valls,fields) {
                         if(qerr){
@@ -225,9 +225,9 @@ router.post('/question/answers', function (req, res, next) {
         "left join " +
         "(select user_id,headimgurl,nickname from user)as b on a.user_id=b.user_id " +
         "left join " +
-        "(select count(*)appreciate_status,answer_id,user_id from appreciate_answer where user_id='"+user_id+"')as c on a.answer_id=c.answer_id " +
+        "(select count(*)appreciate_status,answer_id from appreciate_answer where user_id='"+user_id+"' group by answer_id)as c on a.answer_id=c.answer_id " +
         "left join " +
-        "(select count(*)appreciate_count,answer_id from appreciate_answer)as d on a.answer_id=d.answer_id) " +
+        "(select count(*)appreciate_count,answer_id from appreciate_answer group by answer_id)as d on a.answer_id=d.answer_id) " +
         "order by d.appreciate_count desc";
     // console.log('query_sql:', query_sql);
     query(query_sql, function (qerr, valls, next) {

@@ -61,7 +61,6 @@ export default class Solve extends React.Component{
                 })
                 alert('数据错误3');
             }else{
-                // console.log('results:', results);
                 var question = results[0];
                 var answers = results[1];
                 self.setState({
@@ -76,43 +75,31 @@ export default class Solve extends React.Component{
     render(){
         var self = this;
         return (
-            <div>
+            <div style={{zIndex:'999'}}>
                 {
                     this.state.question ?
                         <div style={{
-                              paddingLeft:'24px',
-                              paddingTop:'30px',
-                              paddingRight:'24px',
-                              backgroundColor:'white',
-                              marginTop:'20px'
+                              paddingLeft:'24px',paddingTop:'30px',paddingRight:'24px',backgroundColor:'white',marginTop:'20px'
                          }}>
                             <div style={{
                              display:'block'
                             }}>
                                 <img style={{
-                                     width:'90px',
-                                     height:'90px',
-                                     borderRadius:'45px',
-                                     float:'left',
-                                     marginRight:'16px'
+                                     width:'90px',height:'90px',borderRadius:'45px',float:'left',marginRight:'16px'
                                 }} src={this.state.question.headimgurl}/>
                                 <div style={{
                                     display:'block'
                                 }}>
                                     <p style={{
-                                          color:'rgb(127,127,127)',
-                                          fontSize:'28px'
+                                          color:'rgb(127,127,127)',fontSize:'28px'
                                     }}>{this.state.question.nickname}</p>
                                     <p style={{
-                                          color:'rgb(169,169,169)',
-                                          fontSize:'26px'
+                                          color:'rgb(169,169,169)',fontSize:'26px'
                                     }}>{this.state.question.year}-{this.state.question.month}-{this.state.question.day}</p>
                                 </div>
                             </div>
                             <p style={{
-                                  fontSize:'28px',
-                                  marginTop:'24px',
-                                  paddingBottom:'12px'
+                                  fontSize:'28px',marginTop:'24px',paddingBottom:'12px'
                              }}>
                                 {this.state.question.question_desc}
                             </p>
@@ -124,8 +111,7 @@ export default class Solve extends React.Component{
                     {
                         this.state.answers.map((content, index)=>{
                             return (
-                                <div style={{width:'100%',marginLeft:'24px',marginRight:'24px'}}>
-                                    <div style={{width:'100%',height:'3px',backgroundColor:'rgb(235,235,235)'}}/>
+                                <div style={{width:OneDrop.JS_ScreenW-48+'px',marginLeft:'24px',marginRight:'24px'}}>
                                     <div key={index} style={{
                                         display:'flex',paddingTop:'30px',width:'100%'
                                     }}>
@@ -206,10 +192,7 @@ export default class Solve extends React.Component{
                                             </div>
 
                                             <p style={{
-                                                fontSize:'28px',
-                                                marginTop:'24px',
-                                                clear:'both',
-                                                paddingBottom:'12px'
+                                                fontSize:'28px',marginTop:'24px',clear:'both',paddingBottom:'12px'
                                             }}>
                                                 {content.answer_desc}
                                             </p>
@@ -221,34 +204,20 @@ export default class Solve extends React.Component{
                     }
                 </div>
                 <div style={{
-                    position:'fixed',
-                    width:'100%',
-                    height:'70px',
-                    backgroundColor:'white',
-                    left:'0',
-                    bottom:'140px'
+                    position:'fixed',width:OneDrop.JS_ScreenW,height:'120px',backgroundColor:'white',left:'0',bottom:'0',
+                    display:'flex',justifyContent:'center',alignItems:'center'
                 }}>
                     <div style={{
-                        display:'flex',
-                        marginTop:'5px',
-                        paddingLeft:'30px',
-                        paddingRight:'30px'
+                        display:'flex',marginTop:'5px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
+                        justifyContent:'space-between'
                     }}>
-                        <div style={{
-                            display:'flex',
-                            justifyContent:'flex-start',
-                            alignItems:'center',
-                            width:'80px',
-                            height:'80px'
-                        }}>
-                            <img onClick={()=>{
-                                this.props.callback();
-                            }} src="../../../img/weike/main/back.png"/>
-                        </div>
+                        <img onClick={()=>{
+                            this.props.callback();
+                        }} src="../../../img/weike/main/back.png"/>
                         <textarea id="question_answer_solve_commit" contentEditable={true} style={{
-                            display:'flex',flex:'1',height:'40px',fontSize:'28px',borderRadius:'5px',
+                            height:'60px',fontSize:'32px',borderRadius:'5px',width:'475px',
                             borderWidth:'2px',borderColor:'rgb(235,235,235)',padding:'10px',
-                            borderStyle:'solid',marginTop:'7px'
+                            borderStyle:'solid',textAlign:'center',marginLeft:'16px',marginRight:'16px'
                         }}/>
                         <p onClick={()=>{
                             if(this.state.isLoading){
@@ -309,17 +278,9 @@ export default class Solve extends React.Component{
                                 alert('请输入您的答案...');
                             }
                         }} style={{
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            width:'80px',
-                            height:'75px',
-                            fontSize:'30px',
-                            borderColor:'rgb(235,235,235)',
-                            borderRadius:'5px',
-                            borderWidth:'2px',
-                            backgroundColor:'rgb(235,235,235)',
-                            marginLeft:'5px'
+                            display:'flex',justifyContent:'center',alignItems:'center',width:'120px',height:'80px',
+                            fontSize:'30px',borderColor:'rgb(235,235,235)',borderRadius:'5px',borderWidth:'2px',
+                            backgroundColor:'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
                         }}>
                             提交
                         </p>
@@ -328,8 +289,7 @@ export default class Solve extends React.Component{
                 {
                     this.state.isLoading ?
                         <div style={{
-                            position:'fixed',top:'0',left:'0',
-                            width:OneDrop.JS_ScreenW,
+                            position:'fixed',top:'0',left:'0',width:OneDrop.JS_ScreenW,
                             height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
                         }}>
                             <img src="../../../img/weike/home/loading.gif"/>

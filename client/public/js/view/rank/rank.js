@@ -23,7 +23,6 @@ export default class Rank extends React.Component{
                 user_id:REMOTE_WEIXIN_USER_ID
             },
             success:(data)=>{
-                console.log('data:',data);
                 if(data.status === 1){
                     var rank = data.data.rank;
                     var user = data.data.user;
@@ -55,7 +54,7 @@ export default class Rank extends React.Component{
                     this.state.user ?
                         <div style={{
                             height:'140px',paddingLeft:'24px',paddingRight:'24px',backgroundColor:'rgb(241,241,241)',
-                            paddingTop:'30px',paddingBottom:'30px',display:'flex',flexDirection:'row',
+                            display:'flex',flexDirection:'row',marginTop:'-6px',paddingTop:'30px',paddingBottom:'30px',
                             justifyContent:'space-between',alignItems:'center'
                         }}>
                             <div style={{
@@ -65,15 +64,15 @@ export default class Rank extends React.Component{
                                     marginLeft:'42px'
                                 }}>
                                     <img style={{
-                                        width:'76px',height:'76px',borderRadius:'38px'
+                                        width:'88px',height:'88px',borderRadius:'44px'
                                     }} src={this.state.user.headimgurl}/>
                                 </div>
                                 <div style={{
                                     marginLeft:'22px'
                                 }}>
-                                    <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{this.state.user.nickname}</p>
-                                    <p style={{fontSize:'26px',color:'rgb(153,153,153)'}}>第{this.state.user.number ? this.state.user.number+1 : 1}名</p>
-                                    <p style={{fontSize:'20px',color:'rgb(153,153,153)'}}>领导力能量 {this.state.user.leader_value}</p>
+                                    <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>{this.state.user.nickname}</p>
+                                    <p style={{fontSize:'28px',color:'rgb(153,153,153)'}}>第{this.state.user.number ? this.state.user.number+1 : 1}名</p>
+                                    <p style={{fontSize:'22px',color:'rgb(153,153,153)'}}>领导力能量 {this.state.user.leader_value}</p>
                                 </div>
                             </div>
                             <div style={{
@@ -83,8 +82,8 @@ export default class Rank extends React.Component{
                                     display:'flex',flexDirection:'row',alignItems:'flex-end',
                                     marginRight:'40px'
                                 }}>
-                                    <p style={{fontSize:'46px',color:'rgb(23,172,251)',lineHeight:'46px'}}>{this.state.user.fraction}</p>
-                                    <p style={{fontSize:'26px',color:'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
+                                    <p style={{fontSize:'48px',color:'rgb(23,172,251)',lineHeight:'46px'}}>{this.state.user.fraction}</p>
+                                    <p style={{fontSize:'28px',color:'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
                                 </div>
                                 <div style={{
                                     display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'
@@ -115,19 +114,19 @@ export default class Rank extends React.Component{
                                     <div style={{
                                         display:'flex',flexDirection:'row',alignItems:'center'
                                     }}>
-                                        <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{index+1}</p>
+                                        <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>{index+1}</p>
                                         <div style={{
                                             marginLeft:'29px'
                                         }}>
                                             <img style={{
-                                                width:'76px',height:'76px',borderRadius:'38px'
+                                                width:'88px',height:'88px',borderRadius:'44px'
                                             }} src={content.headimgurl}/>
                                         </div>
                                         <div style={{
                                             marginLeft:'22px'
                                         }}>
-                                            <p style={{fontSize:'26px',color:'rgb(0,0,0)'}}>{content.nickname}</p>
-                                            <p style={{fontSize:'20px',color:'rgb(153,153,153)'}}>领导力能量 {content.leader_value}</p>
+                                            <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>{content.nickname}</p>
+                                            <p style={{fontSize:'22px',color:'rgb(153,153,153)'}}>领导力能量 {content.leader_value}</p>
                                         </div>
                                     </div>
                                     <div style={{
@@ -137,8 +136,8 @@ export default class Rank extends React.Component{
                                             display:'flex',flexDirection:'row',alignItems:'flex-end',
                                             marginRight:'40px'
                                         }}>
-                                            <p style={{fontSize:'46px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'46px'}}>{content.fraction}</p>
-                                            <p style={{fontSize:'26px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
+                                            <p style={{fontSize:'48px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'46px'}}>{content.fraction}</p>
+                                            <p style={{fontSize:'28px',color:index<=2 ? 'rgb(247,155,10)':'rgb(23,172,251)',lineHeight:'26px'}}>分</p>
                                         </div>
                                         <div onClick={()=>{
                                             if(this.state.isLoading){

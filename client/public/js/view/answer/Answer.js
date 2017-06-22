@@ -77,7 +77,7 @@ export default class Answer extends React.Component{
         if(this.ISTIMER){
             this.ISTIMER = false;
             setTimeout(()=>{
-                if(this.SCROLLS.length>5  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>180){
+                if(this.SCROLLS.length>3  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>80){
                     let singal = true;
                     for(let i=1;i<this.SCROLLS.length;i++){
                         if(this.SCROLLS[i]<this.SCROLLS[i-1]){
@@ -86,9 +86,10 @@ export default class Answer extends React.Component{
                     }
                     if(singal){
                         $('#drop_push_question').css('top','-120px');
+                        // $('#drop_questions_list').css('marginTop','30px');
                     }
                 }
-                if(this.SCROLLS.length>5  && this.SCROLLS[0]-this.SCROLLS[this.SCROLLS.length-1]>180){
+                if(this.SCROLLS.length>3  && this.SCROLLS[0]-this.SCROLLS[this.SCROLLS.length-1]>30){
                     let singal = true;
                     for(let i=1;i<this.SCROLLS.length;i++){
                         if(this.SCROLLS[i]>this.SCROLLS[i-1]){
@@ -97,11 +98,12 @@ export default class Answer extends React.Component{
                     }
                     if(singal){
                         $('#drop_push_question').css('top','0px');
+                        // $('#drop_questions_list').css('marginTop','110px');
                     }
                 }
                 this.ISTIMER = true;
                 this.SCROLLS = [];
-            },800)
+            },300)
         }
     }
 
@@ -143,12 +145,12 @@ export default class Answer extends React.Component{
                 </div>
 
             </div>
-            <div style={{marginTop:'110px'}}>
+            <div id="drop_questions_list" style={{marginTop:'110px',backgroundColor:'rgb(229,236,242)'}}>
                 {
                     this.state.questions.map((content, index)=>{
                         return (
                             <div  key={index} style={{
-                                paddingTop:'30px',backgroundColor:'white',marginTop:'20px'
+                                paddingTop:'30px',backgroundColor:'white',marginTop:'30px'
                             }}>
                                 <div style={{
                                     display:'block',marginLeft:'24px',marginRight:'24px'
@@ -177,12 +179,11 @@ export default class Answer extends React.Component{
                                         scrollTopNum:document.body.scrollTop
                                     })
                                 }} style={{
-                                    fontSize:'28px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
+                                    fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
                                 }}>
                                     {content.question_desc}
                                 </p>
                                 <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
-
 
                                 <div style={{
                                     display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px',
@@ -194,7 +195,7 @@ export default class Answer extends React.Component{
                                             display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between',
                                             width:'100%'
                                         }}>
-                                            <p style={{fontSize:'24px',color:'rgb(0,0,0)'}}>最赞解答</p>
+                                            <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>最赞解答</p>
                                             <p onClick={()=>{
                                                 window.removeEventListener('scroll', this.handleScroll2);
                                                 this.setState({
@@ -202,14 +203,14 @@ export default class Answer extends React.Component{
                                                     showAnswer:true,
                                                     scrollTopNum:document.body.scrollTop
                                                 })
-                                            }} style={{fontSize:'24px',color:'rgb(0,0,0)'}}>全部解答</p>
+                                            }} style={{fontSize:'28px',color:'rgb(0,0,0)'}}>全部解答</p>
                                         </div>
                                         <div style={{marginTop:'5px'}}>
                                             {
                                                 content.answers.map((cont,idx)=>{
                                                     return (
-                                                        <p key={index} style={{
-                                                            fontSize:'22px',color:'rgb(102,102,102)',marginTop:'10px'
+                                                        <p key={idx} style={{
+                                                            fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
                                                         }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
                                                     )
                                                 })
@@ -240,7 +241,7 @@ export default class Answer extends React.Component{
                                         })
                                     }}>
                                         <img src="../../../../img/weike/question/answer.png"/>
-                                        <p style={{fontSize:'24px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.answer_count}</p>
+                                        <p style={{fontSize:'28px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.answer_count}</p>
                                     </div>
                                     <div style={{
                                         width:'2px',height:'46px',backgroundColor:'rgb(153,153,153)'
@@ -291,7 +292,7 @@ export default class Answer extends React.Component{
                                         width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
                                     }}>
                                         <img src={content.appreciate_status===0 ? '../../../../img/weike/question/appreciate.png':'../../../../img/weike/question/appreciated.png'}/>
-                                        <p style={{fontSize:'24px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.appreciate_count}</p>
+                                        <p style={{fontSize:'28px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.appreciate_count}</p>
                                     </div>
                                 </div>
                                 <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)'}}/>

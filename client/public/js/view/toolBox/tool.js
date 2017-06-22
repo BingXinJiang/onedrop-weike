@@ -28,9 +28,10 @@ export default class Tool extends React.Component{
                 flexWrap:'wrap'
             }}>
                 <span onClick={()=>{
-                    this.setState({
-                        selected:'evaluation'
-                    })
+                    // this.setState({
+                    //     selected:'evaluation'
+                    // })
+                    window.open(OneDrop.EVALUATION_URL);
                 }} style={{...spanStyle}}>
                     <img src="../../../img/weike/tool/evaluation.png"/>
                 </span>
