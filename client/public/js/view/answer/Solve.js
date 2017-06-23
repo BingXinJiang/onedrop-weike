@@ -215,9 +215,9 @@ export default class Solve extends React.Component{
                             this.props.callback();
                         }} src="../../../img/weike/main/back.png"/>
                         <textarea id="question_answer_solve_commit" contentEditable={true} style={{
-                            height:'60px',fontSize:'32px',borderRadius:'5px',width:'475px',
+                            height:'60px',fontSize:'32px',borderRadius:'5px',width:'475px',resize:'none',
                             borderWidth:'2px',borderColor:'rgb(235,235,235)',padding:'10px',
-                            borderStyle:'solid',textAlign:'center',marginLeft:'16px',marginRight:'16px'
+                            borderStyle:'solid',marginLeft:'16px',marginRight:'16px'
                         }}/>
                         <p onClick={()=>{
                             if(this.state.isLoading){
