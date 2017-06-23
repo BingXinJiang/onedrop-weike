@@ -12,11 +12,10 @@ import {
 import OneDrop from '../../const/onedrop';
 
 import EveryDrop from '../drop/LastDrop';
-import Question from '../question/Question';
 import Rank from '../rank/rank';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
-import MyDrop from '../drop/mine/MyDrop';
+import MyDrop from '../drop/mine/MyStudy';
 import Introduction from './Introduction';
 
 class Main extends React.Component{

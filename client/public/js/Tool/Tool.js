@@ -42,5 +42,62 @@ module.exports = {
             t += sec.toFixed(0);
         }
         return t;
+    },
+    generateRndomPointArr : function (cW,cH,radius,num) {
+        var resultArr = [];
+        var pondArr = [];
+        var newPondArr = [];
+
+        //找到平面中所有的点，放入一个池子
+        for(var i=0; i<cW; i++){
+            for(var j=0; j<cH; j++){
+                var point = {};
+                point.x = i;
+                point.y = j;
+                pondArr.push(point);
+            }
+        }
+
+        newPondArr = pondArr;
+
+        while (resultArr.length<num){
+            //计算出池子的长度,作为随机的标准
+            var pondL = newPondArr.length;
+
+            //随机找出一个点
+            var randNum = Math.floor(Math.random()*pondL);
+            var randPoint = newPondArr[randNum];
+
+            //将该数点加入结果池
+            resultArr.push({x:randPoint.x,y:randPoint.y});
+
+            //将池子里所有与该点距离接近的点从池子里去掉
+            var pondTmp = [];
+            for(var i=0;i<newPondArr.length;i++){
+                var point = newPondArr[i];
+                var distance = (randPoint.x-point.x)*(randPoint.x-point.x) + (randPoint.y-point.y)*(randPoint.y-point.y);
+                if(distance > radius*radius){
+                    pondTmp.push({x:point.x,y:point.y});
+                }
+            }
+            //将临时数组赋值给新数组
+            newPondArr = pondTmp;
+        }
+        return resultArr;
+    },
+    getColorArr:function (num) {
+        var colorArr = [
+            'rgb(31,106,212)',
+            'rgb(182,197,120)',
+            'rgb(108,204,187)',
+            'rgb(40,157,231)',
+            'rgb(171,156,30)'
+        ];
+        var resultArr = [];
+        for(var i=0;i<num;i++){
+            var randomNum = Math.floor(Math.random()*5);
+            resultArr.push(colorArr[randomNum]);
+        }
+        return colorArr;
     }
 }
