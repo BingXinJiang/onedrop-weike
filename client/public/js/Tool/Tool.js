@@ -83,7 +83,8 @@ module.exports = {
             //将临时数组赋值给新数组
             newPondArr = pondTmp;
         }
-        return resultArr;
+        var correctArr = getCorrectArr(resultArr);
+        return correctArr;
     },
     getColorArr:function (num) {
         var colorArr = [
@@ -100,4 +101,54 @@ module.exports = {
         }
         return colorArr;
     }
+}
+function getCorrectArr(pointArr) {
+    //156*156 30  78
+    //114*114 28  57
+    //100*100 24  50
+    //88*88   20  44
+    // 2,3,3,2
+    var newArr = [];
+    var colorArr = [
+        'rgb(31,106,212)',
+        'rgb(182,197,120)',
+        'rgb(108,204,187)',
+        'rgb(40,157,231)',
+        'rgb(171,156,30)'
+    ];
+    for(var i=0;i<pointArr.length;i++){
+        var point = {
+            x:0,
+            y:0,
+            color:'',
+            width:0,
+            wordSize:0
+        }
+        var color = colorArr[Math.floor(Math.random()*5)];
+        var po = pointArr[i];
+        if(i===0 || i===1){
+            point.x = po.x-78;
+            point.y = po.y-78;
+            point.width = 156;
+            point.wordSize=30;
+        }else if(i===2 || i===3 || i===4){
+            point.x = po.x-57;
+            point.y = po.y-57;
+            point.width = 114;
+            point.wordSize=28;
+        }else if(i===5 || i===6 || i===7){
+            point.x = po.x-50;
+            point.y = po.y-50;
+            point.width = 100;
+            point.wordSize=24;
+        }else{
+            point.x = po.x-44;
+            point.y = po.y-44;
+            point.width = 88;
+            point.wordSize=20;
+        }
+        point.color = color;
+        newArr.push(point);
+    }
+    return newArr;
 }

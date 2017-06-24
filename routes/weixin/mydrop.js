@@ -27,6 +27,58 @@ function responseDataErr(res) {
 }
 
 /**
+ * 获取用户学习过的课程、学习过的课程对应的标签、该标签对应的学习过的课程数
+ *      参数: user_id
+ * */
+router.post('/labels',function (req,res,next) {
+    var user_id = req.body.user_id;
+    
+    var query_sql = "select m.label_learn_count,m.label_id,n.label_name from " +
+        "(select count(1)label_learn_count,label_id from " +
+        "(select a.section_id,b.label_id from " +
+        "(select section_id from schedule_learn where user_id='"+user_id+"' and is_learn=1)as a " +
+        "left join " +
+        "(select section_id,label_id from course_label)as b on a.section_id=b.section_id)as t group by label_id order by label_learn_count desc) as m " +
+        "left join " +
+        "(select label_id,label_name from label)as n on m.label_id=n.label_id";
+    // console.log('query_sql:',query_sql);
+    query(query_sql,function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else {
+            var response = {
+                status:1,
+                data:valls
+            }
+            res.json(response);
+        }
+    })
+});
+/**
+ * 获取某一个label对应的所有课程
+ *      参数:label_id
+ * */
+router.post('/label/sections',function (req,res,next) {
+    var label_id = req.body.label_id;
+
+    var query_sql = "select a.section_id,b.section_name,b.section_voice from " +
+        "(select section_id from course_label where label_id="+label_id+")as a " +
+        "left join " +
+        "(select section_id,section_name,section_voice from course_section)as b on a.section_id=b.section_id";
+    query(query_sql,function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:valls
+            }
+            res.json(response);
+        }
+    })
+})
+
+/**
  * 获取个人信息，我的个人头像，我的领导力值，我的水滴数，我的提问，我的回答，我的留言，我的一滴(完整学习的课程数)
  *
  * 我的领导力值计算标准：细则页面自赞评分加总。

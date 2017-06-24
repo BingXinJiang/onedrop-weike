@@ -17,7 +17,9 @@ export default class Drop extends React.Component{
             isAppreciateMine:false,
             isShowAppreciateMine:false,
             appreciate_course_num:0,
-            isLoading:false
+            isLoading:false,
+
+            isShowAppreciateBefore:true
         };
         this.chooseHight = (section)=>{
             var htext = section.htext[0];
@@ -287,6 +289,7 @@ export default class Drop extends React.Component{
                             </div>
                             : null
                     }
+
 
                     <div style={{
                         backgroundColor:'rgb(235,235,235)',
