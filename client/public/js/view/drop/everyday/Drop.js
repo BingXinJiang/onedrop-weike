@@ -6,6 +6,9 @@ import OneDrop from '../../../const/onedrop';
 import DropAudio from '../../view/DropAudio';
 import async from 'async';
 
+const courseSpeaks = ['有点差','一般','良好','超赞','棒极了'];
+const mineSpeaks = ['一级','二级','三级','四级','五级'];
+
 export default class Drop extends React.Component{
     constructor(props){
         super(props);
@@ -19,7 +22,12 @@ export default class Drop extends React.Component{
             appreciate_course_num:0,
             isLoading:false,
 
-            isShowAppreciateBefore:true
+            isShowAppreciateBefore:true,//appreciate_status
+            courseNum:0,//course_num
+            mineNum:0,//mine_num
+
+            chooseCourseNum:0,
+            chooseMineNum:0
         };
         this.chooseHight = (section)=>{
             var htext = section.htext[0];
@@ -91,18 +99,47 @@ export default class Drop extends React.Component{
                         }
                     }
                 })
+            },
+            function (callback) {
+                self.setState({
+                    isLoading:true
+                })
+                $.ajax({
+                    url:OneDrop.base_url+'/appreciate/course',
+                    dataType:'json',
+                    method:'POST',
+                    data:{
+                        user_id:REMOTE_WEIXIN_USER_ID,
+                        section_id:self.props.sectionId
+                    },
+                    success:(data)=>{
+                        if(data.status===1){
+                            callback(null, data.data);
+                        }else{
+                            callback('请求点赞状态失败!');
+                        }
+                    }
+                })
             }
         ],function (err,results) {
             if(err){
                 alert(err);
+                self.setState({
+                    isLoading:false
+                })
             }else{
                 var course = results[0];
                 var comments = results[1];
+                var state = results[2];
                 self.setState({
                     course:course,
                     comments:comments,
                     appreciate_course_num:course.appreciate_course_num,
-                    isLoading:false
+                    isLoading:false,
+
+                    isShowAppreciateBefore:state.appreciate_status ? false : true,
+                    courseNum:state.course_num,
+                    mineNum:state.mine_num
                 })
             }
         })
@@ -290,9 +327,139 @@ export default class Drop extends React.Component{
                             : null
                     }
 
+                    <div style={{
+                        width:'100%'
+                    }}>
+                        <div style={{width:'100%',height:'30px',backgroundColor:'rgb(222,232,240)'}}/>
+                        <div>
+                            {
+                                this.state.isShowAppreciateBefore ?
+                                    <div style={{
+                                        width:'100%',display:'flex',flexDirection:'column',backgroundColor:'white',alignItems:'center'
+                                    }}>
+                                        <p style={{marginTop:'80px',fontSize:'30px',color:'rgb(51,51,51)'}}>本课程如何,动动手指,为老师献花!</p>
+                                        <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
+                                            {
+                                                ['','','','',''].map((con,idx)=>{
+                                                    if(idx+1>this.state.chooseCourseNum){
+                                                        return(
+                                                            <img style={{marginLeft:'30px'}} onClick={()=>{
+                                                                this.setState({
+                                                                    chooseCourseNum:idx+1
+                                                                })
+                                                            }} key={idx} src="../../../../img/weike/detail/course_num.png"/>
+                                                        )
+                                                    }else{
+                                                        return(
+                                                            <img style={{marginLeft:'30px'}} onClick={()=>{
+                                                                this.setState({
+                                                                    chooseCourseNum:idx+1
+                                                                })
+                                                            }} key={idx} src="../../../../img/weike/detail/course_num_d.png"/>
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                            {
+                                                this.state.chooseCourseNum != 0 ?
+                                                    <p style={{
+                                                        marginLeft:'30px',fontSize:'26px',color:'rgb(51,51,51)'
+                                                    }}>{courseSpeaks[this.state.chooseCourseNum-1]}</p> : null
+                                            }
+                                        </div>
+                                        <p style={{marginTop:'62px',fontSize:'30px',color:'rgb(51,51,51)'}}>学完本篇课程,领导力有没有提升呢?</p>
+                                        <p style={{fontSize:'30px',color:'rgb(51,51,51)'}}>动动手指,为自己领导力助力!</p>
+                                        <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
+                                            {
+                                                ['','','','',''].map((con,idx)=>{
+                                                    if(idx+1>this.state.chooseMineNum){
+                                                        return(
+                                                            <img style={{marginLeft:'30px'}} onClick={()=>{
+                                                                this.setState({
+                                                                    chooseMineNum:idx+1
+                                                                })
+                                                            }} key={idx} src="../../../../img/weike/detail/user_num.png"/>
+                                                        )
+                                                    }else{
+                                                        return(
+                                                            <img style={{marginLeft:'30px'}} onClick={()=>{
+                                                                this.setState({
+                                                                    chooseMineNum:idx+1
+                                                                })
+                                                            }} key={idx} src="../../../../img/weike/detail/user_num_d.png"/>
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                            {
+                                                this.state.chooseMineNum != 0 ?
+                                                    <p style={{
+                                                        marginLeft:'30px',fontSize:'26px',color:'rgb(51,51,51)'
+                                                    }}>{mineSpeaks[this.state.chooseMineNum-1]}</p> : null
+                                            }
+                                        </div>
+                                        <div onClick={()=>{
+                                            if(this.state.isLoading){
+                                                return;
+                                            }
+                                            this.setState({
+                                                isLoading:true
+                                            })
+                                            $.ajax({
+                                                url:OneDrop.base_url+'/appreciate/mycourse',
+                                                dataType:'json',
+                                                method:'POST',
+                                                data:{
+                                                    user_id:REMOTE_WEIXIN_USER_ID,
+                                                    section_id:this.props.sectionId,
+                                                    course_num:this.state.chooseCourseNum,
+                                                    mine_num:this.state.chooseMineNum
+                                                },
+                                                success:(data)=>{
+                                                    if(data.status === 1){
+                                                        this.setState({
+                                                            isShowAppreciateBefore:false,
+                                                            courseNum:this.state.courseNum+this.state.chooseCourseNum,
+                                                            mineNum:this.state.chooseMineNum,
+                                                            isLoading:false
+                                                        })
+                                                    }else{
+                                                       this.setState({
+                                                            isLoading:false
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                        }} style={{
+                                            width:'251px',height:'80px',backgroundColor:'rgb(23,172,151)',borderRadius:'10px',
+                                            display:'flex',justifyContent:'center',alignItems:'center',marginBottom:'80px',marginTop:'62px'
+                                        }}>
+                                            <p style={{fontSize:'30px',color:'white'}}>提交</p>
+                                        </div>
+                                    </div>
+                                    :
+                                    <div style={{width:'100%',backgroundColor:'white'}}>
+                                        <div style={{
+                                            width:OneDrop.JS_ScreenW-48+'px',display:'flex',flexDirection:'column',alignItems:'center',
+                                            borderColor:'rgb(153,153,153)',borderWidth:'2px',borderStyle:'solid',marginLeft:'24px',marginTop: '40px',
+                                            marginBottom:'40px'
+                                        }}>
+                                            <p style={{marginTop:'40px',fontSize:'30px',color:'rgb(51,51,51)'}}>
+                                                本篇课程老师共获得献花<span style={{fontSize:'48px',color:'rgb(238,33,33)'}}>{this.state.courseNum}</span><span>
+                                                <img src="../../../../img/weike/detail/course_num_d.png"/>
+                                            </span></p>
+                                            <p style={{marginBottom:'40px',marginTop:'24px',fontSize:'30px',color:'rgb(51,51,51)'}}>
+                                                学了本篇课程我的领导力得到<span style={{fontSize:'48px',color:'rgb(23,172,25)'}}>{this.state.mineNum}</span><span>
+                                                <img src="../../../../img/weike/detail/user_num_d.png"/>
+                                            </span>助力</p>
+                                        </div>
+                                    </div>
+                            }
+                        </div>
+                    </div>
 
                     <div style={{
-                        backgroundColor:'rgb(235,235,235)',
+                        backgroundColor:'rgb(222,232,240)',
                         display:'flex',
                         flexDirection:'column',
                         paddingTop:'55px',
@@ -358,84 +525,152 @@ export default class Drop extends React.Component{
                     </div>
 
                     <div style={{
-                        position:'fixed',
-                        left:'0',
-                        bottom:'0',
-                        backgroundColor:'white',
-                        height:'110px',
-                        display:'flex',
-                        flexDirection:'row',
-                        width:'100%',
-                        justifyContent:'space-between'
-                    }}>
-                        <div onClick={()=>{
-                            if(this.state.isLoading){
-                                return;
-                            }
-                            self.props.callback();
-                        }} style={{
-                            ...tabStyle
+                            position:'fixed',width:OneDrop.JS_ScreenW,height:'120px',backgroundColor:'white',left:'0',bottom:'0',
+                            display:'flex',justifyContent:'center',alignItems:'center'
                         }}>
-                            <img src="../../../../img/weike/onedrop/back.png"/>
-                        </div>
-                        <div onClick={()=>{
-                            if(this.state.isLoading){
-                                return;
-                            }
-                            if(this.state.isShowAppreciateMine){
-                                return;
-                            }
-                            this.setState({
-                                isShowConnectEach:true
-                            })
-                        }} style={{
-                            ...tabStyle
+                        <div style={{
+                            display:'flex',marginTop:'5px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
+                            justifyContent:'space-between'
                         }}>
-                            <img src="../../../../img/weike/onedrop/connect.png"/>
-                        </div>
-                        <div onClick={()=>{
-                            if(this.state.isLoading){
-                                return;
-                            }
-                            if(this.state.isAppreciateCourse){return;}
-                            if(this.state.course){
-                                this.setState({
-                                    isLoading:true
-                                })
-                                $.ajax({
-                                url:OneDrop.base_url+'/onedrop/appreciate/course',
-                                dataType:'json',
-                                method:'POST',
-                                data:{
-                                    user_id:REMOTE_WEIXIN_USER_ID,
-                                    section_id:self.props.sectionId
-                                },
-                                success:(data)=>{
-                                    if(data.status === 1){
-                                        self.setState({
-                                            isAppreciateCourse:true,
-                                            appreciate_course_num:this.state.appreciate_course_num+1,
-                                            isLoading:false
-                                        })
-                                    }else{
-                                        alert('点赞失败!');
-                                    }
+                            <img onClick={()=>{
+                                if(this.state.isLoading){
+                                    return;
                                 }
-                            })
+                                this.props.callback();
+                            }} src="../../../img/weike/main/back.png"/>
+                        <textarea id="every_day_drop_comment" contentEditable={true} style={{
+                            height:'60px',fontSize:'32px',borderRadius:'5px',width:'475px',resize:'none',
+                            borderWidth:'2px',borderColor:'rgb(235,235,235)',padding:'10px',
+                            borderStyle:'solid',marginLeft:'16px',marginRight:'16px'
+                        }}/>
+                            <p onClick={()=>{
+                            if(this.state.isLoading){
+                                        return;
+                                    }
+                                    //提交评论
+                                    var comment = $('#every_day_drop_comment').val().trim();
+                                    if(comment){
+                                        if(this.state.course){
+                                            // var section_id = self.state.nowSectionId;
+                                            this.setState({
+                                                isLoading:true
+                                            })
+                                            $.ajax({
+                                                url:OneDrop.base_ip+'/main/section/comment',
+                                                dataType:'json',
+                                                method:'POST',
+                                                data:{
+                                                    user_id:REMOTE_WEIXIN_USER_ID,
+                                                    section_id:self.props.sectionId,
+                                                    comment:comment
+                                                },
+                                                success:(data)=>{
+                                                    if(data.status===1){
+                                                        $('#every_day_drop_comment').val('');
+                                                        self.setState({
+                                                            isShowConnectEach:false,
+                                                            isLoading:false
+                                                        })
+                                                    }else{
+                                                        alert('评论失败!');
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    }else{
+                                        alert('请先输入评论,再提交您的评论!');
+                                    }
+                        }} style={{
+                            display:'flex',justifyContent:'center',alignItems:'center',width:'120px',height:'80px',
+                            fontSize:'30px',borderColor:'rgb(235,235,235)',borderRadius:'5px',borderWidth:'2px',
+                            backgroundColor:'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
+                        }}>
+                                提交
+                            </p>
+                        </div>
+                    </div>
+
+                    {
+                        true ? null :
+                            <div style={{
+                                position:'fixed',
+                                left:'0',
+                                bottom:'0',
+                                backgroundColor:'white',
+                                height:'110px',
+                                display:'flex',
+                                flexDirection:'row',
+                                width:'100%',
+                                justifyContent:'space-between'
+                            }}>
+                                <div onClick={()=>{
+                                        if(this.state.isLoading){
+                                            return;
+                                        }
+                                self.props.callback();
+                                }} style={{
+                                    ...tabStyle
+                                }}>
+                                    <img src="../../../../img/weike/onedrop/back.png"/>
+                                </div>
+                                <div onClick={()=>{
+                                    if(this.state.isLoading){
+                                        return;
+                                    }
+                                    if(this.state.isShowAppreciateMine){
+                                        return;
+                                    }
+                                    this.setState({
+                                        isShowConnectEach:true
+                                    })
+                                }} style={{
+                                    ...tabStyle
+                                }}>
+                                    <img src="../../../../img/weike/onedrop/connect.png"/>
+                                </div>
+                                <div onClick={()=>{
+                                    if(this.state.isLoading){
+                                        return;
+                                    }
+                                    if(this.state.isAppreciateCourse){return;}
+                                    if(this.state.course){
+                                        this.setState({
+                                            isLoading:true
+                                        })
+                                    $.ajax({
+                                    url:OneDrop.base_url+'/onedrop/appreciate/course',
+                                    dataType:'json',
+                                    method:'POST',
+                                    data:{
+                                        user_id:REMOTE_WEIXIN_USER_ID,
+                                        section_id:self.props.sectionId
+                                    },
+                                    success:(data)=>{
+                                        if(data.status === 1){
+                                            self.setState({
+                                                isAppreciateCourse:true,
+                                                appreciate_course_num:this.state.appreciate_course_num+1,
+                                                isLoading:false
+                                            })
+                                        }else{
+                                            alert('点赞失败!');
+                                        }
+                                    }
+                                })
                             }
                         }} style={{
                             ...tabStyle
                         }}>
-                            <div style={{position:'relative'}}>
-                                <img src={this.state.isAppreciateCourse ? "../../../../img/weike/onedrop/appreciate_course_selected.png":"../../../../img/weike/onedrop/appreciate_course.png"}/>
+                                    <div style={{position:'relative'}}>
+                                        <img src={this.state.isAppreciateCourse ? "../../../../img/weike/onedrop/appreciate_course_selected.png":"../../../../img/weike/onedrop/appreciate_course.png"}/>
 
-                                    <p style={{position:'absolute',left:'38px',top:'0px',
+                                        <p style={{position:'absolute',left:'38px',top:'0px',
                                     fontSize:'28px',color:appreciate_num_color,lineHeight:'30px'
                                     }}>{this.state.appreciate_course_num}</p>
 
-                            </div>
-                        </div>
-                        <div onClick={()=>{
+                                    </div>
+                                </div>
+                                <div onClick={()=>{
                             if(this.state.isLoading){
                                 return;
                             }
@@ -448,13 +683,14 @@ export default class Drop extends React.Component{
                         }} style={{
                             ...tabStyle
                         }}>
-                            <img src={this.state.isAppreciateMine ? "../../../../img/weike/onedrop/appreciate_me_selected.png" : "../../../../img/weike/onedrop/appreciate_me.png"}/>
-                        </div>
-                    </div>
+                                    <img src={this.state.isAppreciateMine ? "../../../../img/weike/onedrop/appreciate_me_selected.png" : "../../../../img/weike/onedrop/appreciate_me.png"}/>
+                                </div>
+                            </div>
+                    }
                 </div>
 
                 {
-                    this.state.isShowConnectEach ?
+                    this.state.isShowConnectEach && false ?
                         <div style={{
                             position:'fixed',
                             left:'0',
@@ -559,7 +795,7 @@ export default class Drop extends React.Component{
                         : null
                 }
                 {
-                    this.state.isShowAppreciateMine ?
+                    this.state.isShowAppreciateMine && false ?
                         <div style={{
                             position:'fixed',
                             left:'15%',

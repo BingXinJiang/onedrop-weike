@@ -117,4 +117,125 @@ router.post('/answer',function (req,res,next) {
     appreciate(user_id,query_sql,insert_sql,del_sql,res);
 })
 
+/**
+ * 获取某节课程的鲜花总数,和特定用户对该课程的点赞与自我评价状态
+ *      参数:课程ID section_id
+ *          用户ID user_id
+ * */
+router.post('/course',function (req,res,next) {
+    var section_id = req.body.section_id;
+    var user_id = req.body.user_id;
+
+    var query_sql1 = "select sum(appreciate_value)appreciate_course_count from appreciate_course where section_id="+section_id;
+    var query_sql2 = "select count(1)appreciate_status from appreciate_mine where section_id="+section_id+" and user_id='"+user_id+"'";
+    var query_sql3 = "select appreciate_value from appreciate_mine where section_id="+section_id+" and user_id='"+user_id+"'";
+
+    var course_num = 0;
+    var mine_num = 0;
+    var appreciate_status = 0;
+
+    query(query_sql1, function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            if(valls.length > 0){
+                var co = valls[0];
+                if(co.appreciate_course_count){
+                    course_num = co.appreciate_course_count;
+                }
+            }
+            query(query_sql2,function (qerr,valls,fields) {
+                if(qerr){
+                    responseDataErr(res);
+                }else{
+                    if(valls.length > 0 && valls[0].appreciate_status){
+                        appreciate_status = 1;
+                        query(query_sql3,function (qerr,valls,fields) {
+                            if(qerr){
+                                responseDataErr(res);
+                            }else{
+                                var mine = valls[0];
+                                mine_num = mine.appreciate_value;
+                                var response = {
+                                    status:1,
+                                    data:{
+                                        course_num : course_num,
+                                        mine_num : mine_num,
+                                        appreciate_status : appreciate_status
+                                    }
+                                }
+                                res.json(response);
+                            }
+                        })
+                    }else{
+                        var response = {
+                            status:1,
+                            data:{
+                                course_num : course_num,
+                                mine_num : mine_num,
+                                appreciate_status : appreciate_status
+                            }
+                        }
+                        res.json(response);
+                    }
+
+                }
+            })
+        }
+    })
+})
+/**
+ * 用户提交给课程的献花数,和对自己的评价数
+ *      参数: user_id  //用户ID
+ *           section_id  //课程ID
+ *           course_num  // 用户给课程的献花数
+ *           mine_num    // 用户给自己的自评数
+ * */
+router.post('/mycourse',function (req,res,next) {
+    var user_id = req.body.user_id;
+    var section_id = req.body.section_id;
+    var course_num = req.body.course_num;
+    var mine_num = req.body.mine_num;
+
+    var appreciate_id = (new Date()).valueOf() + '' + parseInt(Math.random()*100000);
+
+    var insert_sql1 = "insert into appreciate_course(appreciate_id,user_id,section_id,appreciate_time,appreciate_value) " +
+        "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now(),"+course_num+")";
+    var insert_sql2 = "insert into appreciate_mine(appreciate_id,user_id,section_id,appreciate_time,appreciate_value) " +
+        "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now(),"+mine_num+")";
+
+    async.parallel([
+        function (callback) {
+            query(insert_sql1,function (qerr,valls,fields) {
+                if(qerr){
+                    callback(qerr);
+                }else{
+                    callback(null);
+                }
+            })
+        },
+        function (callback) {
+            query(insert_sql2,function (qerr,valls,fields) {
+                if(qerr){
+                    callback(qerr);
+                }else{
+                    callback(null);
+                }
+            })
+        }
+    ],function (err,results) {
+        if(err){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:{
+                    msg:'success'
+                }
+            }
+            res.json(response);
+        }
+    })
+})
+
 module.exports = router;
