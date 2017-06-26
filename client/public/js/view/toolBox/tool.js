@@ -44,7 +44,7 @@ export default class Tool extends React.Component{
                         this.setState({
                             isShowMes:false
                         })
-                    },1000)
+                    },3000)
                 }} style={{...spanStyle}}>
                     <img src="../../../img/weike/tool/xin.png"/>
                 </span>
@@ -56,7 +56,7 @@ export default class Tool extends React.Component{
                         this.setState({
                             isShowMes:false
                         })
-                    },1000)
+                    },3000)
                 }} style={{...spanStyle}}>
                     <img src="../../../img/weike/tool/nao.png"/>
                 </span>
@@ -68,7 +68,7 @@ export default class Tool extends React.Component{
                         this.setState({
                             isShowMes:false
                         })
-                    },1000)
+                    },3000)
                 }} style={{...spanStyle}}>
                     <img src="../../../img/weike/tool/ti.png"/>
                 </span>
