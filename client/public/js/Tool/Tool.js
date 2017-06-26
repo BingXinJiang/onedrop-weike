@@ -44,46 +44,58 @@ module.exports = {
         return t;
     },
     generateRndomPointArr : function (cW,cH,radius,num) {
-        var resultArr = [];
-        var pondArr = [];
-        var newPondArr = [];
-
-        //找到平面中所有的点，放入一个池子
-        for(var i=0; i<cW; i++){
-            for(var j=0; j<cH; j++){
-                var point = {};
-                point.x = i;
-                point.y = j;
-                pondArr.push(point);
-            }
-        }
-
-        newPondArr = pondArr;
-
-        while (resultArr.length<num){
-            //计算出池子的长度,作为随机的标准
-            var pondL = newPondArr.length;
-
-            //随机找出一个点
-            var randNum = Math.floor(Math.random()*pondL);
-            var randPoint = newPondArr[randNum];
-
-            //将该数点加入结果池
-            resultArr.push({x:randPoint.x,y:randPoint.y});
-
-            //将池子里所有与该点距离接近的点从池子里去掉
-            var pondTmp = [];
-            for(var i=0;i<newPondArr.length;i++){
-                var point = newPondArr[i];
-                var distance = (randPoint.x-point.x)*(randPoint.x-point.x) + (randPoint.y-point.y)*(randPoint.y-point.y);
-                if(distance > radius*radius){
-                    pondTmp.push({x:point.x,y:point.y});
-                }
-            }
-            //将临时数组赋值给新数组
-            newPondArr = pondTmp;
-        }
-        var correctArr = getCorrectArr(resultArr);
+        // var resultArr = [];
+        // var pondArr = [];
+        // var newPondArr = [];
+        //
+        // //找到平面中所有的点，放入一个池子
+        // for(var i=0; i<cW; i++){
+        //     for(var j=0; j<cH; j++){
+        //         var point = {};
+        //         point.x = i;
+        //         point.y = j;
+        //         pondArr.push(point);
+        //     }
+        // }
+        //
+        // newPondArr = pondArr;
+        //
+        // while (resultArr.length<num){
+        //     //计算出池子的长度,作为随机的标准
+        //     var pondL = newPondArr.length;
+        //
+        //     //随机找出一个点
+        //     var randNum = Math.floor(Math.random()*pondL);
+        //     var randPoint = newPondArr[randNum];
+        //
+        //     //将该数点加入结果池
+        //     resultArr.push({x:randPoint.x,y:randPoint.y});
+        //
+        //     //将池子里所有与该点距离接近的点从池子里去掉
+        //     var pondTmp = [];
+        //     for(var i=0;i<newPondArr.length;i++){
+        //         var point = newPondArr[i];
+        //         var distance = (randPoint.x-point.x)*(randPoint.x-point.x) + (randPoint.y-point.y)*(randPoint.y-point.y);
+        //         if(distance > radius*radius){
+        //             pondTmp.push({x:point.x,y:point.y});
+        //         }
+        //     }
+        //     //将临时数组赋值给新数组
+        //     newPondArr = pondTmp;
+        // }
+        // console.log(resultArr);
+        // var correctArr = getCorrectArr(resultArr);
+        var correctArr = getCorrectArr([
+            { x: 4, y: 34 },
+            { x: 183, y: 483 },
+            { x: 71, y: 737 },
+            { x: 189, y: 184 },
+            { x: 27, y: 437 },
+            { x: 367, y: 184 },
+            { x: 397, y: 431 },
+            { x: 423, y: 618 },
+            { x: 557, y: 437 },
+            { x: 557, y: 431 } ]);
         return correctArr;
     },
     getColorArr:function (num) {

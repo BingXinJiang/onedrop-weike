@@ -40,6 +40,7 @@ export default class MyStudy extends React.Component{
             isLoading:true
         })
         this.labelUnitArrPoint = Tool.generateRndomPointArr(cW,cH,radius,num);
+        
         $.ajax({
             url:OneDrop.base_url+'/mydrop/labels',
             dataType:'json',
