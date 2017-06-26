@@ -83,6 +83,9 @@ class Main extends React.Component{
                 selectedTab:'everydrop'
             })
         },false);
+
+        var img = document.createElement('img');
+        img.src='../../../../img/weike/mine/tree.jpg';
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';

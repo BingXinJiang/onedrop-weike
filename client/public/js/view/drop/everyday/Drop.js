@@ -361,7 +361,7 @@ export default class Drop extends React.Component{
                                                 })
                                             }
                                             {
-                                                this.state.chooseCourseNum != 0 ?
+                                                this.state.chooseCourseNum !== 0 ?
                                                     <p style={{
                                                         marginLeft:'30px',fontSize:'26px',color:'rgb(51,51,51)'
                                                     }}>{courseSpeaks[this.state.chooseCourseNum-1]}</p> : null
@@ -392,7 +392,7 @@ export default class Drop extends React.Component{
                                                 })
                                             }
                                             {
-                                                this.state.chooseMineNum != 0 ?
+                                                this.state.chooseMineNum !== 0 ?
                                                     <p style={{
                                                         marginLeft:'30px',fontSize:'26px',color:'rgb(51,51,51)'
                                                     }}>{mineSpeaks[this.state.chooseMineNum-1]}</p> : null
@@ -539,9 +539,10 @@ export default class Drop extends React.Component{
                                 this.props.callback();
                             }} src="../../../img/weike/main/back.png"/>
                         <textarea id="every_day_drop_comment" contentEditable={true} style={{
-                            height:'60px',fontSize:'32px',borderRadius:'5px',width:'475px',resize:'none',
-                            borderWidth:'2px',borderColor:'rgb(235,235,235)',padding:'10px',
-                            borderStyle:'solid',marginLeft:'16px',marginRight:'16px'
+                            height:'80px',fontSize:'32px',width:'475px',outline:'none',
+                            borderBottomWidth:'2px',borderBottomColor:'rgb(229,236,242)',paddingLeft:'10px',
+                            borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
+                            borderRightWidth:'0'
                         }}/>
                             <p onClick={()=>{
                             if(this.state.isLoading){
@@ -572,13 +573,13 @@ export default class Drop extends React.Component{
                                                             isLoading:false
                                                         })
                                                     }else{
-                                                        alert('评论失败!');
+                                                        alert('交手失败!');
                                                     }
                                                 }
                                             })
                                         }
                                     }else{
-                                        alert('请先输入评论,再提交您的评论!');
+                                        alert('请先输入内容,再提交!');
                                     }
                         }} style={{
                             display:'flex',justifyContent:'center',alignItems:'center',width:'120px',height:'80px',
@@ -590,7 +591,7 @@ export default class Drop extends React.Component{
                         </div>
                     </div>
 
-                    {
+                    {/*
                         true ? null :
                             <div style={{
                                 position:'fixed',
@@ -686,10 +687,10 @@ export default class Drop extends React.Component{
                                     <img src={this.state.isAppreciateMine ? "../../../../img/weike/onedrop/appreciate_me_selected.png" : "../../../../img/weike/onedrop/appreciate_me.png"}/>
                                 </div>
                             </div>
-                    }
+                    */}
                 </div>
 
-                {
+                {/*
                     this.state.isShowConnectEach && false ?
                         <div style={{
                             position:'fixed',
@@ -793,8 +794,8 @@ export default class Drop extends React.Component{
 
                         </div>
                         : null
-                }
-                {
+                */}
+                {/*
                     this.state.isShowAppreciateMine && false ?
                         <div style={{
                             position:'fixed',
@@ -857,7 +858,7 @@ export default class Drop extends React.Component{
                         </div>
                         :
                         null
-                }
+                */}
                 {
                     this.state.isLoading ?
                         <div style={{

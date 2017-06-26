@@ -11,7 +11,7 @@ export default class MyStudy extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isLoading:true,
+            isLoading:false,
             labels:[],
 
             isShowLabelCourse:false,
@@ -26,11 +26,19 @@ export default class MyStudy extends React.Component{
         this.getLabelCourses = this.getLabelCourses.bind(this);
     }
 
+    componentWillMount(){
+        // var img = document.createElement('img');
+        // img.src='../../../../img/weike/mine/tree.jpg';
+    }
+
     componentDidMount(){
         const cW = OneDrop.JS_ScreenW-160;
         const cH = OneDrop.JS_ScreenH*2-107-300-160;
         const radius = 160;
         const num = 10;
+        this.setState({
+            isLoading:true
+        })
         this.labelUnitArrPoint = Tool.generateRndomPointArr(cW,cH,radius,num);
         $.ajax({
             url:OneDrop.base_url+'/mydrop/labels',
@@ -40,7 +48,6 @@ export default class MyStudy extends React.Component{
                 user_id:REMOTE_WEIXIN_USER_ID
             },
             success:(data)=>{
-                console.log('labels:',data);
                 if(data.status === 1){
                     this.setState({
                         labels:data.data,
@@ -72,7 +79,6 @@ export default class MyStudy extends React.Component{
                 label_id:label_id
             },
             success:(data)=>{
-                console.log('labelCourses:',data);
                 if(data.status === 1){
                     this.setState({
                         isLabelLoading:false,
@@ -94,18 +100,20 @@ export default class MyStudy extends React.Component{
 
     render(){
         return(
-            <div>
+            <div style={{overflowX:'hidden'}}>
                 <div onClick={()=>{
                     this.setState({
                         isShowLabelCourse:false
                     })
                 }} style={{
-                    width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2-107+'px',backgroundColor:'orange',
-                    backgroundImage:'url(../../../../img/weike/mine/tree.jpg)',backgroundSize:'100% 100%',overflow:'hidden'
+                    width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH2+'px',position:'relative',overflow:'hidden'
                 }}>
+                    <img style={{
+                        width:'100%',height:'91%',position:'absolute',left:'0',top:'0'
+                    }} src="../../../../img/weike/mine/tree.jpg"/>
                     <div style={{
-                        width:OneDrop.JS_ScreenW-160+'px',height:OneDrop.JS_ScreenH*2-107-300-160+'px',overflow:'visible',
-                        marginTop:'280px',marginLeft:'80px',position:'relative'
+                        width:OneDrop.JS_ScreenW-160+'px',height:OneDrop.JS_ScreenH*2-100-300-160+'px',overflow:'visible',
+                        marginTop:'240px',marginLeft:'80px',position:'relative'
                     }}>
                         {
                             this.state.labels.map((content,index)=>{
@@ -165,11 +173,11 @@ export default class MyStudy extends React.Component{
                 {
                     this.state.isShowLabelCourse ?
                         <div style={{
-                            position: 'absolute',left:'24px',bottom:'107px',width:OneDrop.JS_ScreenW-48+'px',
+                            position: 'absolute',left:'24px',bottom:'77px',width:OneDrop.JS_ScreenW-48+'px',
                             height:'700px',backgroundColor:'rgb(194,209,226)',borderTopLeftRadius:'38px',
                             borderTopRightRadius:'38px'
                         }}>
-                            <div>
+                            <div style={{marginBottom:'30px'}}>
                                 <div style={{
                                     width:'100%',height:'120px',display:'flex',alignItems:'center'
                                 }}>

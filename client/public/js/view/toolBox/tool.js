@@ -9,7 +9,8 @@ export default class Tool extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            selected:'tool' //1.tool 2、evaluation 3、plan
+            selected:'tool', //1.tool 2、evaluation 3、plan
+            isShowMes:false
         }
     }
     render(){
@@ -35,13 +36,42 @@ export default class Tool extends React.Component{
                 }} style={{...spanStyle}}>
                     <img src="../../../img/weike/tool/evaluation.png"/>
                 </span>
-                {/*<span onClick={()=>{*/}
-                    {/*this.setState({*/}
-                        {/*selected:'plan'*/}
-                    {/*})*/}
-                {/*}} style={{...spanStyle}}>*/}
-                    {/*<img src="../../../img/weike/tool/punch_card.png"/>*/}
-                {/*</span>*/}
+                <span onClick={()=>{
+                    this.setState({
+                        isShowMes:true
+                    })
+                    setTimeout(()=>{
+                        this.setState({
+                            isShowMes:false
+                        })
+                    },1000)
+                }} style={{...spanStyle}}>
+                    <img src="../../../img/weike/tool/xin.png"/>
+                </span>
+                <span onClick={()=>{
+                    this.setState({
+                        isShowMes:true
+                    })
+                    setTimeout(()=>{
+                        this.setState({
+                            isShowMes:false
+                        })
+                    },1000)
+                }} style={{...spanStyle}}>
+                    <img src="../../../img/weike/tool/nao.png"/>
+                </span>
+                <span onClick={()=>{
+                    this.setState({
+                        isShowMes:true
+                    })
+                    setTimeout(()=>{
+                        this.setState({
+                            isShowMes:false
+                        })
+                    },1000)
+                }} style={{...spanStyle}}>
+                    <img src="../../../img/weike/tool/ti.png"/>
+                </span>
             </div>
         return (
             <div>
@@ -59,6 +89,13 @@ export default class Tool extends React.Component{
                                 return toolBox;
                         }
                     })()
+                }
+                {
+                    this.state.isShowMes ?
+                        <div style={{position:'absolute',display:'flex',width:'100%',justifyContent:'center',left:'0',top:'320px'}}>
+                            <img src="../../../img/weike/tool/no.jpg"/>
+                        </div>
+                        : null
                 }
             </div>
         )

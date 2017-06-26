@@ -12,7 +12,7 @@ export default class Question extends React.Component{
         var self = this;
         return (
             <div style={{width:'100%',position:'fixed',top:'0',left:'0',height:OneDrop.JS_ScreenH*2,
-                backgroundColor:'rgb(235,235,235)'
+                backgroundColor:'white'
             }}>
                 <div style={{
                     display:'flex',
@@ -64,13 +64,13 @@ export default class Question extends React.Component{
                             }
                         }} style={{
                             backgroundColor:'rgb(18,144,249)',fontSize:'34px',color:'white',textAlign:'center',
-                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'98px',marginLeft:'24px'
+                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'118px',marginLeft:'24px'
                         }}>提交</p>
                         <p onClick={()=>{
                             self.props.callback();
                         }} style={{
                             backgroundColor:'rgb(200,200,200)',fontSize:'34px',color:'white',textAlign:'center',
-                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'98px',marginLeft:'24px',
+                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'118px',marginLeft:'24px',
                             marginTop:'30px'
                         }}>取消</p>
                     </div>

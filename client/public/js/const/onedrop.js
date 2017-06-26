@@ -4,13 +4,13 @@
 
 module.exports = {
 
-    base_ip:'http://192.168.2.100:3001/weixin',
-    base_url:'http://192.168.2.100:3001',
-    res_ip:'http://192.168.2.100:3001',
+    // base_ip:'http://192.168.2.100:3001/weixin',
+    // base_url:'http://192.168.2.100:3001',
+    // res_ip:'http://192.168.2.100:3001',
 
-    // base_ip:'http://192.168.1.29:3001/weixin',
-    // base_url:'http://192.168.1.29:3001',
-    // res_ip:'http://192.168.1.29:3001',
+    base_ip:'http://192.168.1.29:3001/weixin',
+    base_url:'http://192.168.1.29:3001',
+    res_ip:'http://192.168.1.29:3001',
 
 
     // base_ip:'http://www.cvwisdom.com/weixin',
@@ -28,6 +28,7 @@ module.exports = {
     JS_ScreenW:document.body.clientWidth,//屏幕宽度
     JS_ScreenH:screen.height,
     JS_WindowH:document.body.clientHeight,
+    JS_ScreenH2:document.documentElement.clientHeight,
 
     // EVALUATION_URL:'http://uat.tts.i-select.cn/validate.aspx?sid=5073',
 
