@@ -12,7 +12,7 @@ export default class Question extends React.Component{
         var self = this;
         return (
             <div style={{width:'100%',position:'fixed',top:'0',left:'0',height:OneDrop.JS_ScreenH*2,
-                backgroundColor:'white'
+                backgroundColor:'white',zIndex:'99'
             }}>
                 <div style={{
                     display:'flex',

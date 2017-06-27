@@ -77,7 +77,7 @@ export default class Answer extends React.Component{
         if(this.ISTIMER){
             this.ISTIMER = false;
             setTimeout(()=>{
-                if(this.SCROLLS.length>3  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>40){
+                if(this.SCROLLS.length>3  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>80){
                     let singal = true;
                     for(let i=1;i<this.SCROLLS.length;i++){
                         if(this.SCROLLS[i]<this.SCROLLS[i-1]){
@@ -124,7 +124,7 @@ export default class Answer extends React.Component{
     }
     render(){
         const Question =
-        <div>
+        <div style={{backgroundColor:'rgb(229,236,242)'}}>
             <div id="drop_push_question" style={{
                 position:'fixed',left:'0',top:'0',
                 width:'100%',height:'100px',backgroundColor:'white',paddingTop:'20px'
@@ -143,9 +143,9 @@ export default class Answer extends React.Component{
                     <p style={{fontSize:'28px',color:'rgb(167,167,167)',marginLeft:'15px'}}>提出你的问题！！！</p>
                     <img style={{marginRight:'15px'}} src="../../../../img/weike/question/commit.png"/>
                 </div>
-
             </div>
-            <div id="drop_questions_list" style={{marginTop:'110px',backgroundColor:'rgb(229,236,242)'}}>
+            {/*<div style={{marginTop:'110px',width:'100%',height:'30px',backgroundColor:'rgb(229,236,242)'}}/>*/}
+            <div id="drop_questions_list" style={{backgroundColor:'rgb(229,236,242)',marginTop:'150px'}}>
                 {
                     this.state.questions.map((content, index)=>{
                         return (
