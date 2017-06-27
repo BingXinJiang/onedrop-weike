@@ -206,12 +206,12 @@ export default class Solve extends React.Component{
                     }
                 </div>
                 <div style={{
-                    position:'fixed',width:OneDrop.JS_ScreenW,height:'120px',backgroundColor:'white',left:'0',bottom:'0',
-                    display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'
+                    position:'fixed',width:OneDrop.JS_ScreenW,height:'110px',backgroundColor:'white',left:'0',bottom:'0',
+                    display:'flex',alignItems:'center',flexDirection:'column'
                 }}>
                     <div style={{width:'100%',height:'1px',backgroundColor:'rgb(134,134,134)'}}/>
                     <div style={{
-                        display:'flex',marginTop:'5px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
+                        display:'flex',marginTop:'20px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
                         justifyContent:'space-between'
                     }}>
                         <img onClick={()=>{
@@ -228,8 +228,8 @@ export default class Solve extends React.Component{
                                 })
                             }
                         }} contentEditable={true} style={{
-                            height:'80px',fontSize:'32px',width:'475px',outline:'none',
-                            borderBottomWidth:'2px',borderBottomColor:'rgb(229,236,242)',paddingLeft:'10px',
+                            height:'80px',fontSize:'32px',width:'455px',outline:'none',
+                            borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
                             borderRightWidth:'0'
                         }}/>

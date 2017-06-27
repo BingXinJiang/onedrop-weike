@@ -114,17 +114,17 @@ export default class DropAudio extends React.Component{
 
                             if(audio.paused || !this.state.playing){
 
-                                // wx.ready(function() {
-                                //   audio.play();
-                                //   self.setState({
-                                //         playing:true
-                                //     })
-                                // })
-
-                                audio.play();
-                                self.setState({
-                                    playing:true
+                                wx.ready(function() {
+                                  audio.play();
+                                  self.setState({
+                                        playing:true
+                                    })
                                 })
+
+                                // audio.play();
+                                // self.setState({
+                                //     playing:true
+                                // })
 
 
                             }else{

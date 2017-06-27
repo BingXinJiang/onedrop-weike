@@ -92,7 +92,9 @@ export default class Tool extends React.Component{
                 }
                 {
                     this.state.isShowMes ?
-                        <div style={{position:'absolute',display:'flex',width:'100%',justifyContent:'center',left:'0',top:'320px'}}>
+                        <div style={{position:'absolute',display:'flex',width:'100%',justifyContent:'center',left:'0',top:'320px'
+
+                        }}>
                             <img src="../../../img/weike/tool/no.jpg"/>
                         </div>
                         : null
