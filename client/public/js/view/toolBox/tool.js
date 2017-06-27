@@ -19,7 +19,7 @@ export default class Tool extends React.Component{
             justifyContent:'center',
             alignItems:'center',
             width:OneDrop.JS_ScreenW/3+'px',
-            marginBottom:'30px'
+            marginBottom:'80px'
         }
         const toolBox =
             <div style={{

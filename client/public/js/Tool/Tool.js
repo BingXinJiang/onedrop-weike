@@ -86,16 +86,16 @@ module.exports = {
         // console.log(resultArr);
         // var correctArr = getCorrectArr(resultArr);
         var correctArr = getCorrectArr([
-            { x: 4, y: 34 },
-            { x: 183, y: 483 },
-            { x: 71, y: 737 },
-            { x: 189, y: 184 },
-            { x: 27, y: 437 },
-            { x: 367, y: 184 },
-            { x: 397, y: 431 },
-            { x: 423, y: 618 },
-            { x: 557, y: 437 },
-            { x: 557, y: 431 } ]);
+            { x: 449-80, y: 423 },
+            { x: 145-80, y: 604 },
+            { x: 644-80, y: 560 },
+            { x: 294-80, y: 274 },
+            { x: 591-80, y: 136 },
+            { x: 108-80, y: 80 },
+            { x: 136-80, y: 382 },
+            { x: 355-80, y: 80 },
+            { x: 443-80, y: 625 },
+            { x: 646-80, y: 326 } ]);
         return correctArr;
     },
     getColorArr:function (num) {

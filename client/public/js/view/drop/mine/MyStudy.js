@@ -132,6 +132,9 @@ export default class MyStudy extends React.Component{
                                         <div key={index} onClick={(e)=>{
                                             e.stopPropagation();
                                             this.getLabelCourses(content.label_id);
+                                            this.setState({
+                                                labelName:content.label_name
+                                            })
                                         }} style={{...conSty}}>
                                             <p style={{...wordSty}}>{content.label_name}</p>
                                         </div>
@@ -141,6 +144,9 @@ export default class MyStudy extends React.Component{
                                         <div key={index} onClick={(e)=>{
                                             e.stopPropagation();
                                             this.getLabelCourses(content.label_id);
+                                            this.setState({
+                                                labelName:content.label_name
+                                            })
                                         }} style={{...conSty}}>
                                             <p style={{...wordSty}}>{content.label_name.substr(0,2)}</p>
                                             <p style={{...wordSty}}>{content.label_name.substr(2,3)}</p>
@@ -151,6 +157,9 @@ export default class MyStudy extends React.Component{
                                         <div key={index} onClick={(e)=>{
                                             e.stopPropagation();
                                             this.getLabelCourses(content.label_id);
+                                            this.setState({
+                                                labelName:content.label_name
+                                            })
                                         }} style={{...conSty}}>
                                             <p style={{...wordSty}}>{content.label_name.substr(0,3)}</p>
                                             <p style={{...wordSty}}>{content.label_name.substr(3,3)}</p>
@@ -182,7 +191,7 @@ export default class MyStudy extends React.Component{
                                 <div style={{
                                     width:'100%',height:'120px',display:'flex',alignItems:'center'
                                 }}>
-                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}>领导力原则({this.state.labelCourses.length})</p>
+                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}>{this.state.labelName}({this.state.labelCourses.length})</p>
                                 </div>
                                 <div style={{width:'100%',height:'30px',backgroundColor:'rgb(172,183,194)'}}/>
                                 <div style={{overflowX:'scroll',height:'550px'}}>

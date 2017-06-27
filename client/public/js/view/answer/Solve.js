@@ -12,7 +12,9 @@ export default class Solve extends React.Component{
         this.state = {
             question:null,
             answers:[],
-            isLoading:true
+            isLoading:true,
+
+            commitBtnStatus:false
         }
     }
 
@@ -205,8 +207,9 @@ export default class Solve extends React.Component{
                 </div>
                 <div style={{
                     position:'fixed',width:OneDrop.JS_ScreenW,height:'120px',backgroundColor:'white',left:'0',bottom:'0',
-                    display:'flex',justifyContent:'center',alignItems:'center'
+                    display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'
                 }}>
+                    <div style={{width:'100%',height:'1px',backgroundColor:'rgb(134,134,134)'}}/>
                     <div style={{
                         display:'flex',marginTop:'5px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
                         justifyContent:'space-between'
@@ -214,14 +217,24 @@ export default class Solve extends React.Component{
                         <img onClick={()=>{
                             this.props.callback();
                         }} src="../../../img/weike/main/back.png"/>
-                        <textarea id="question_answer_solve_commit" contentEditable={true} style={{
+                        <textarea id="question_answer_solve_commit" onChange={(event)=>{
+                            if(event.target.value){
+                                this.setState({
+                                    commitBtnStatus:true
+                                })
+                            }else{
+                                this.setState({
+                                    commitBtnStatus:false
+                                })
+                            }
+                        }} contentEditable={true} style={{
                             height:'80px',fontSize:'32px',width:'475px',outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(229,236,242)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
                             borderRightWidth:'0'
                         }}/>
                         <p onClick={()=>{
-                            if(this.state.isLoading){
+                            if(this.state.isLoading || !this.state.commitBtnStatus){
                                 return;
                             }
                             var answer = $('#question_answer_solve_commit').val();
@@ -256,7 +269,8 @@ export default class Solve extends React.Component{
                                                         if(data.status === 1){
                                                             self.setState({
                                                                 answers:data.data,
-                                                                isLoading:false
+                                                                isLoading:false,
+                                                                commitBtnStatus:false
                                                             })
                                                         }else{
                                                             self.setState({
@@ -281,7 +295,7 @@ export default class Solve extends React.Component{
                         }} style={{
                             display:'flex',justifyContent:'center',alignItems:'center',width:'120px',height:'80px',
                             fontSize:'30px',borderColor:'rgb(235,235,235)',borderRadius:'5px',borderWidth:'2px',
-                            backgroundColor:'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
+                            backgroundColor:this.state.commitBtnStatus ? 'rgb(23,172,251)':'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
                         }}>
                             提交
                         </p>

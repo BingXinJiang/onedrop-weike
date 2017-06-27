@@ -20,7 +20,7 @@ export default class Question extends React.Component{
                     backgroundColor:'white',
                     marginTop:'0',
                     alignItems:'center',
-                    height:'700px'
+                    height:'900px'
                 }}>
                     <textarea id="question_ask_commit" placeholder="请输入您要问的内容..." autofocus='autofocus'
                        style={{
@@ -30,7 +30,7 @@ export default class Question extends React.Component{
                     >
                     </textarea>
                     <div style={{
-                        display:'flex',width:'100%',height:'80px',justifyContent:'center',marginTop:'62px',
+                        display:'flex',width:'100%',height:'260px',justifyContent:'center',marginTop:'62px',
                         flexDirection:'column'
                     }}>
                         <p onClick={()=>{
@@ -64,13 +64,15 @@ export default class Question extends React.Component{
                             }
                         }} style={{
                             backgroundColor:'rgb(18,144,249)',fontSize:'34px',color:'white',textAlign:'center',
-                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'118px',marginLeft:'24px'
+                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'90px',marginLeft:'24px',
+                            display:'flex',alignItems:'center',justifyContent:'center'
                         }}>提交</p>
                         <p onClick={()=>{
                             self.props.callback();
                         }} style={{
                             backgroundColor:'rgb(200,200,200)',fontSize:'34px',color:'white',textAlign:'center',
-                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'118px',marginLeft:'24px',
+                            borderRadius:'10px',width:OneDrop.JS_ScreenW-48 + 'px',height:'90px',marginLeft:'24px',
+                            display:'flex',alignItems:'center',justifyContent:'center',
                             marginTop:'30px'
                         }}>取消</p>
                     </div>

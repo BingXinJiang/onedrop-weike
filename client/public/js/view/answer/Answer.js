@@ -77,7 +77,7 @@ export default class Answer extends React.Component{
         if(this.ISTIMER){
             this.ISTIMER = false;
             setTimeout(()=>{
-                if(this.SCROLLS.length>3  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>80){
+                if(this.SCROLLS.length>3  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>40){
                     let singal = true;
                     for(let i=1;i<this.SCROLLS.length;i++){
                         if(this.SCROLLS[i]<this.SCROLLS[i-1]){
@@ -89,7 +89,7 @@ export default class Answer extends React.Component{
                         // $('#drop_questions_list').css('marginTop','30px');
                     }
                 }
-                if(this.SCROLLS.length>3  && this.SCROLLS[0]-this.SCROLLS[this.SCROLLS.length-1]>30){
+                if(this.SCROLLS.length>2  && this.SCROLLS[0]-this.SCROLLS[this.SCROLLS.length-1]>15){
                     let singal = true;
                     for(let i=1;i<this.SCROLLS.length;i++){
                         if(this.SCROLLS[i]>this.SCROLLS[i-1]){
