@@ -56,7 +56,7 @@ export default class DropAudio extends React.Component{
             $('#drop_progress').css('width',curTime/duration*300+'px');
         }, 1000)
         audio.addEventListener('ended',()=>{
-           self.commitLearnStatus(100);
+           // self.commitLearnStatus(100);
            self.setState({
                playing:false
            })
