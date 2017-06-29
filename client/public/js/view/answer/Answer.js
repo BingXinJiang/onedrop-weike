@@ -144,7 +144,6 @@ export default class Answer extends React.Component{
                     <img style={{marginRight:'15px'}} src="../../../../img/weike/question/commit.png"/>
                 </div>
             </div>
-            {/*<div style={{marginTop:'110px',width:'100%',height:'30px',backgroundColor:'rgb(229,236,242)'}}/>*/}
             <div id="drop_questions_list" style={{backgroundColor:'rgb(229,236,242)',marginTop:'150px'}}>
                 {
                     this.state.questions.map((content, index)=>{
@@ -152,100 +151,26 @@ export default class Answer extends React.Component{
                             <div  key={index} style={{
                                 paddingTop:'30px',backgroundColor:'white',marginTop:'30px'
                             }}>
-                                <div style={{
-                                    display:'block',marginLeft:'24px',marginRight:'24px'
-                                }}>
-                                    <img style={{
-                                        width:'90px',height:'90px',borderRadius:'45px',float:'left',marginRight:'16px'
-                                    }} src={content.headimgurl}/>
+                                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                                     <div style={{
-                                        display:'block'
+                                        display:'flex',marginLeft:'24px',marginRight:'24px'
                                     }}>
-                                        <p style={{
-                                            color:'rgb(127,127,127)',
-                                            fontSize:'28px'
-                                        }}>{content.nickname}</p>
-                                        <p style={{
-                                            color:'rgb(169,169,169)',
-                                            fontSize:'26px'
-                                        }}>{content.year+'-'+content.month+'-'+content.day}</p>
-                                    </div>
-                                </div>
-                                <p onClick={()=>{
-                                    window.removeEventListener('scroll', this.handleScroll2);
-                                    this.setState({
-                                        question_id:content.question_id,
-                                        showAnswer:true,
-                                        scrollTopNum:document.body.scrollTop
-                                    })
-                                }} style={{
-                                    fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
-                                }}>
-                                    {content.question_desc}
-                                </p>
-                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
-
-                                <div style={{
-                                    display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px',
-                                    justifyContent:'space-between'
-                                }}>
-                                    <div style={{width:'3px',backgroundColor:'rgb(153,153,153)'}}/>
-                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'20px',width:'98%'}}>
+                                        <img style={{
+                                            width:'90px',height:'90px',borderRadius:'45px',float:'left',marginRight:'16px'
+                                        }} src={content.headimgurl}/>
                                         <div style={{
-                                            display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between',
-                                            width:'100%'
+                                            display:'block'
                                         }}>
-                                            <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>最赞解答</p>
-                                            <p onClick={()=>{
-                                                window.removeEventListener('scroll', this.handleScroll2);
-                                                this.setState({
-                                                    question_id:content.question_id,
-                                                    showAnswer:true,
-                                                    scrollTopNum:document.body.scrollTop
-                                                })
-                                            }} style={{fontSize:'28px',color:'rgb(0,0,0)'}}>全部解答</p>
-                                        </div>
-                                        <div style={{marginTop:'5px'}}>
-                                            {
-                                                content.answers.map((cont,idx)=>{
-                                                    return (
-                                                        <p key={idx} style={{
-                                                            fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
-                                                        }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
-                                                    )
-                                                })
-                                            }
-                                            {
-                                                content.answers.length === 0 ?
-                                                    <img src="../../../../img/weike/question/noanswer.jpg"/> : null
-                                            }
+                                            <p style={{
+                                                color:'rgb(127,127,127)',
+                                                fontSize:'28px'
+                                            }}>{content.nickname}</p>
+                                            <p style={{
+                                                color:'rgb(169,169,169)',
+                                                fontSize:'26px'
+                                            }}>{content.year+'-'+content.month+'-'+content.day}</p>
                                         </div>
                                     </div>
-                                </div>
-
-
-                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
-                                <div style={{
-                                    width:'100%',height:'90px',display:'flex',
-                                    flexDirection:'row',justifyContent:'center',alignItems:'center'
-                                }}>
-                                    <div style={{
-                                        display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
-                                        width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
-                                    }} onClick={()=>{
-                                        window.removeEventListener('scroll', this.handleScroll2);
-                                        this.setState({
-                                            question_id:content.question_id,
-                                            showAnswer:true,
-                                            scrollTopNum:document.body.scrollTop
-                                        })
-                                    }}>
-                                        <img src="../../../../img/weike/question/answer.png"/>
-                                        <p style={{fontSize:'28px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.answer_count}</p>
-                                    </div>
-                                    <div style={{
-                                        width:'2px',height:'46px',backgroundColor:'rgb(153,153,153)'
-                                    }}/>
                                     <div onClick={()=>{
                                         //对问题点赞
                                         if(this.state.isLoading){
@@ -288,12 +213,68 @@ export default class Answer extends React.Component{
                                             }
                                         })
                                     }} style={{
-                                        display:'flex',flexDirection:'row',justifyContent:'center',alignItems:'center',
-                                        width:(OneDrop.JS_ScreenW-60)+'px',height:'78px'
+                                        display:'flex',flexDirection:'row',justifyContent:'flex-end',alignItems:'center',
+                                        width:'100px',height:'100%',marginRight:'24px'
                                     }}>
                                         <img src={content.appreciate_status===0 ? '../../../../img/weike/question/appreciate.png':'../../../../img/weike/question/appreciated.png'}/>
                                         <p style={{fontSize:'28px',color:'rgb(51,51,51)',marginLeft:'5px'}}>{content.appreciate_count}</p>
                                     </div>
+                                </div>
+
+                                <p onClick={()=>{
+                                    window.removeEventListener('scroll', this.handleScroll2);
+                                    this.setState({
+                                        question_id:content.question_id,
+                                        showAnswer:true,
+                                        scrollTopNum:document.body.scrollTop
+                                    })
+                                }} style={{
+                                    fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
+                                }}>
+                                    {content.question_desc}
+                                </p>
+                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
+
+                                <div style={{
+                                    display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px',
+                                    justifyContent:'space-between'
+                                }}>
+                                    <div style={{width:'3px',backgroundColor:'rgb(153,153,153)'}}/>
+                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'20px',width:'98%'}}>
+                                        <div style={{
+                                            display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between',
+                                            width:'100%'
+                                        }}>
+                                            <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>最赞解答</p>
+                                        </div>
+                                        <div style={{marginTop:'5px'}}>
+                                            {
+                                                content.answers.map((cont,idx)=>{
+                                                    return (
+                                                        <p key={idx} style={{
+                                                            fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
+                                                        }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
+                                                    )
+                                                })
+                                            }
+                                            {
+                                                content.answers.length === 0 ?
+                                                    <img src="../../../../img/weike/question/noanswer.jpg"/> : null
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{width:'100%',height:'76px',display:'flex',justifyContent:'center',alignItems:'center',
+                                    borderTopStyle:'solid',borderTopWidth:'1px',borderTopColor:'rgb(153,153,153)',marginTop:'37px'
+                                }} onClick={()=>{
+                                    window.removeEventListener('scroll', this.handleScroll2);
+                                    this.setState({
+                                        question_id:content.question_id,
+                                        showAnswer:true,
+                                        scrollTopNum:document.body.scrollTop
+                                    })
+                                }}>
+                                    <p  style={{fontSize:'28px',color:'rgb(0,0,0)'}}>查看全部解答</p>
                                 </div>
                                 <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)'}}/>
                             </div>

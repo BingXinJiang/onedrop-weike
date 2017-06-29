@@ -12,13 +12,21 @@ export default class Solve extends React.Component{
         this.state = {
             question:null,
             answers:[],
+            answersTime:[],
+            answersAppreciate:[],
+            isAppreciateAnswersShow:0,
             isLoading:true,
 
             commitBtnStatus:false
-        }
+        };
+        this.getQuestionAndAnswers = this.getQuestionAndAnswers.bind(this);
     }
 
     componentDidMount() {
+        this.getQuestionAndAnswers();
+    }
+
+    getQuestionAndAnswers(){
         var self = this;
         async.parallel([
             (callback)=>{
@@ -55,6 +63,24 @@ export default class Solve extends React.Component{
                         }
                     }
                 })
+            },
+            (callback)=>{
+                $.ajax({
+                    url:OneDrop.base_url+'/answer/question/answers2',
+                    dataType:'json',
+                    method:'POST',
+                    data:{
+                        question_id:self.props.question_id,
+                        user_id:REMOTE_WEIXIN_USER_ID
+                    },
+                    success:function (data) {
+                        if(data.status === 1){
+                            callback(null, data.data);
+                        }else{
+                            callback('数据错误4');
+                        }
+                    }
+                })
             }
         ], function (err, results) {
             if(err){
@@ -65,9 +91,12 @@ export default class Solve extends React.Component{
             }else{
                 var question = results[0];
                 var answers = results[1];
+                var answersTime = results[2];
                 self.setState({
                     question:question,
-                    answers:answers,
+                    answers:self.state.isAppreciateAnswersShow===0 ? answers : answersTime,
+                    answersAppreciate:answers,
+                    answersTime:answersTime,
                     isLoading:false
                 })
             }
@@ -77,7 +106,7 @@ export default class Solve extends React.Component{
     render(){
         var self = this;
         return (
-            <div style={{zIndex:'999'}}>
+            <div style={{zIndex:'999',backgroundColor:'rgb(229,236,242)'}}>
                 {
                     this.state.question ?
                         <div style={{
@@ -109,7 +138,34 @@ export default class Solve extends React.Component{
                         :null
                 }
 
-                <div style={{marginTop:'20px',width:OneDrop.JS_ScreenW,backgroundColor:'white'}}>
+                <div style={{marginTop:'20px',width:'100%',height:'76px',display:'flex'}}>
+                    {
+                        ['最赞回复','最新回复'].map((content,index)=>{
+                            return (
+                                <div onClick={()=>{
+                                    if(index === 0){
+                                        this.setState({
+                                            answers:this.state.answersAppreciate,
+                                            isAppreciateAnswersShow:0
+                                        })
+                                    }
+                                    if(index === 1){
+                                        this.setState({
+                                            answers:this.state.answersTime,
+                                            isAppreciateAnswersShow:1
+                                        })
+                                    }
+                                }} style={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center',
+                                    borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'1px',backgroundColor:'rgb(240,240,240)'
+                                }}>
+                                    <p style={{fontSize:'26px',color:this.state.isAppreciateAnswersShow===index ? 'rgb(23,172,251)':'rgb(51,51,51)'}}>{content}</p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+
+                <div style={{width:OneDrop.JS_ScreenW,backgroundColor:'white'}}>
                     {
                         this.state.answers.map((content, index)=>{
                             return (
@@ -227,11 +283,11 @@ export default class Solve extends React.Component{
                                     commitBtnStatus:false
                                 })
                             }
-                        }} contentEditable={true} style={{
-                            height:'80px',fontSize:'32px',width:'455px',outline:'none',
+                        }} placeholder="我要回答..." contentEditable={true} style={{
+                            height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.62,outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
-                            borderRightWidth:'0'
+                            borderRightWidth:'0',paddingTop:'25px'
                         }}/>
                         <p onClick={()=>{
                             if(this.state.isLoading || !this.state.commitBtnStatus){
@@ -246,6 +302,9 @@ export default class Solve extends React.Component{
                                         isLoading:true
                                     })
                                     //提交答案
+                                    async.parallel([],function (err,results) {
+
+                                    })
                                     $.ajax({
                                         url:OneDrop.base_url+'/answer/reply',
                                         dataType:'json',
@@ -258,28 +317,10 @@ export default class Solve extends React.Component{
                                         success:function(data) {
                                             if(data.status===1){
                                                 $('#question_answer_solve_commit').val('');
-                                                $.ajax({
-                                                    url:OneDrop.base_url+'/answer/question/answers',
-                                                    dataType:'json',
-                                                    method:'POST',
-                                                    data:{
-                                                        question_id:self.props.question_id
-                                                    },
-                                                    success:function (data) {
-                                                        if(data.status === 1){
-                                                            self.setState({
-                                                                answers:data.data,
-                                                                isLoading:false,
-                                                                commitBtnStatus:false
-                                                            })
-                                                        }else{
-                                                            self.setState({
-                                                                isLoading:false
-                                                            })
-                                                            alert('数据错误2');
-                                                        }
-                                                    }
+                                                self.setState({
+                                                    commitBtnStatus:false
                                                 })
+                                                self.getQuestionAndAnswers();
                                             }else{
                                                 self.setState({
                                                     isLoading:false

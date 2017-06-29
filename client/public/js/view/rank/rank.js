@@ -10,7 +10,9 @@ export default class Rank extends React.Component{
         this.state = {
             isLoading:true,
             rank:[],
-            user:null
+            user:null,
+
+            isShowPrompt:false
         }
     }
 
@@ -26,6 +28,7 @@ export default class Rank extends React.Component{
                 if(data.status === 1){
                     var rank = data.data.rank;
                     var user = data.data.user;
+                    console.log('rank:',rank);
                     this.setState({
                         rank:rank,
                         user:user,
@@ -46,9 +49,20 @@ export default class Rank extends React.Component{
             <div style={{
                 width:OneDrop.JS_ScreenW,marginBottom:'130px'
             }}>
-                <img style={{
-                    width:OneDrop.JS_ScreenW,height:'300px'
-                }} src="../../../../img/weike/rank/banner.jpg"/>
+                <div style={{
+                    width:OneDrop.JS_ScreenW,height:'300px',position:'relative'
+                }}>
+                    <img style={{
+                        width:OneDrop.JS_ScreenW,height:'300px'
+                    }} src="../../../../img/weike/rank/banner.jpg"/>
+                    <p onClick={()=>{
+                        this.setState({
+                            isShowPrompt:true
+                        })
+                    }} style={{
+                        position:'absolute',top:'30px',right:'24px',fontSize:'30px',color:'white'
+                    }}>积分规则</p>
+                </div>
 
                 {
                     this.state.user ?
@@ -193,6 +207,22 @@ export default class Rank extends React.Component{
                         })
                     }
                 </div>
+                {
+                    this.state.isShowPrompt ?
+                        <div onClick={()=>{
+                            this.setState({
+                                isShowPrompt:false
+                            })
+                        }} style={{
+                            position:'absolute',zIndex:'99',left:'0',top:'0',
+                            width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.4)',
+                            display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../../img/weike/rank/promot.png"/>
+                        </div>
+                        :
+                        null
+                }
                 {
                     this.state.isLoading ?
                         <div style={{

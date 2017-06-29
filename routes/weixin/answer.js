@@ -90,6 +90,18 @@ router.post('/questions', function (req, res, next) {
             "left join " +
             "(select count(*)appreciate_status,question_id from appreciate_question where user_id='"+user_id+"' group by question_id)as e on a.question_id=e.question_id";
     }
+    if(key_id === -1){
+        query_sql = "select a.question_id,year(a.up_time)year,month(a.up_time)month,day(a.up_time)day,a.*,b.nickname,b.headimgurl," +
+            "c.answer_count,d.appreciate_count,e.appreciate_status from " +
+            "(select * from question)a left join " +
+            "(select * from user)b on a.user_id=b.user_id left join " +
+            "(select count(*)answer_count,question_id from answer group by question_id)as c on a.question_id=c.question_id left join " +
+            "(select count(*)appreciate_count,question_id from appreciate_question group by question_id)as d on a.question_id=d.question_id " +
+            "left join " +
+            "(select count(*)appreciate_status,question_id from appreciate_question where user_id='"+user_id+"' group by question_id)as e " +
+            "on a.question_id=e.question_id " +
+            "order by d.appreciate_count desc limit "+(page-1)*10+","+page*10;
+    }
     // console.log(query_sql);
     query(query_sql, function (qerr, valls, fields) {
         if(qerr){
@@ -115,7 +127,7 @@ router.post('/questions', function (req, res, next) {
                         "(select user_id,nickname from user)as b on a.user_id=b.user_id " +
                         "left join " +
                         "(select answer_id,count(*)appreciate_count from appreciate_answer group by answer_id)as c on a.answer_id=c.answer_id) " +
-                        "order by c.appreciate_count desc limit 0,2";
+                        "order by c.appreciate_count desc limit 0,3";
                     // console.log('query_question_sql:',query_question_sql);
                     query(query_question_sql,function (qerr,valls,fields) {
                         if(qerr){
@@ -210,7 +222,7 @@ router.post('/question/detail', function (req, res, next) {
     })
 })
 /**
- * 查看某一问题对应的所有答案，按时间倒序排列
+ * 查看某一问题对应的所有答案，按点赞数量排序
  * 参数：question_id  149500987801845931  149500987801845931
  *      user_id
  * */
@@ -229,6 +241,46 @@ router.post('/question/answers', function (req, res, next) {
         "left join " +
         "(select count(*)appreciate_count,answer_id from appreciate_answer group by answer_id)as d on a.answer_id=d.answer_id) " +
         "order by d.appreciate_count desc";
+    // console.log('query_sql:', query_sql);
+    query(query_sql, function (qerr, valls, next) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var answers = [];
+            valls.map(function (content) {
+                content.appreciate_status = content.appreciate_status ? content.appreciate_status : 0;
+                content.appreciate_count = content.appreciate_count ? content.appreciate_count : 0;
+                answers.push(content);
+            })
+            var response = {
+                status:1,
+                data:answers
+            }
+            res.json(response);
+        }
+    })
+})
+
+/**
+ * 查看某一问题对应的所有答案，按时间倒序排序
+ * 参数：question_id  149500987801845931  149500987801845931
+ *      user_id
+ * */
+
+router.post('/question/answers2', function (req, res, next) {
+    var question_id = req.body.question_id;
+    var user_id = req.body.user_id;
+
+    var query_sql = "select year(a.answer_time)year,month(a.answer_time)month,day(a.answer_time)day,a.answer_id," +
+        "a.answer_desc,b.nickname,b.headimgurl,c.appreciate_status,d.appreciate_count from " +
+        "((select * from answer where question_id='"+question_id+"')as a " +
+        "left join " +
+        "(select user_id,headimgurl,nickname from user)as b on a.user_id=b.user_id " +
+        "left join " +
+        "(select count(*)appreciate_status,answer_id from appreciate_answer where user_id='"+user_id+"' group by answer_id)as c on a.answer_id=c.answer_id " +
+        "left join " +
+        "(select count(*)appreciate_count,answer_id from appreciate_answer group by answer_id)as d on a.answer_id=d.answer_id) " +
+        "order by a.answer_time desc";
     // console.log('query_sql:', query_sql);
     query(query_sql, function (qerr, valls, next) {
         if(qerr){

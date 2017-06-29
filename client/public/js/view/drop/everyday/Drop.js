@@ -551,11 +551,11 @@ export default class Drop extends React.Component{
                                     commitBtnStatus:false
                                 })
                             }
-                        }} contentEditable={true} style={{
-                            height:'80px',fontSize:'32px',width:'455px',outline:'none',
+                        }} placeholder="与作者交交手吧！" contentEditable={true} style={{
+                            height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.62,outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
-                            borderRightWidth:'0'
+                            borderRightWidth:'0',paddingTop:'25px'
                         }}/>
                             <p onClick={()=>{
                             if(this.state.isLoading || !this.state.commitBtnStatus){
@@ -600,7 +600,7 @@ export default class Drop extends React.Component{
                             fontSize:'30px',borderColor:'rgb(235,235,235)',borderRadius:'5px',borderWidth:'2px',
                             backgroundColor:this.state.commitBtnStatus ? 'rgb(23,172,251)':'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
                         }}>
-                                提交
+                                交手
                             </p>
                         </div>
                     </div>

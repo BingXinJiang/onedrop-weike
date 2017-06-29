@@ -20,7 +20,9 @@ export default class MyStudy extends React.Component{
             labelName:'',
 
             isShowEverydayDrop:false,
-            section_id:0
+            section_id:0,
+
+            isShowPrompt:false
         };
         this.labelUnitArrPoint = [];
         this.getLabelCourses = this.getLabelCourses.bind(this);
@@ -50,10 +52,18 @@ export default class MyStudy extends React.Component{
             },
             success:(data)=>{
                 if(data.status === 1){
-                    this.setState({
-                        labels:data.data,
-                        isLoading:false
-                    })
+                    if(data.data.length<=0){
+                        this.setState({
+                            labels:data.data,
+                            isLoading:false,
+                            isShowPrompt:true
+                        })
+                    }else{
+                        this.setState({
+                            labels:data.data,
+                            isLoading:false
+                        })
+                    }
                 }else{
                     this.setState({
                         isLoading:false
@@ -234,6 +244,22 @@ export default class MyStudy extends React.Component{
                             }
                         </div>
                         : null
+                }
+                {
+                    this.state.isShowPrompt ?
+                        <div onClick={()=>{
+                            this.setState({
+                                isShowPrompt:false
+                            })
+                        }} style={{
+                            position:'absolute',zIndex:'99',left:'0',top:'0',
+                            width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.4)',
+                            display:'flex',justifyContent:'center',alignItems:'center'
+                        }}>
+                            <img src="../../../../img/weike/mine/point.png"/>
+                        </div>
+                        :
+                        null
                 }
                 {
                     this.state.isLoading ?

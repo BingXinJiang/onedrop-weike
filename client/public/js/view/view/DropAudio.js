@@ -53,7 +53,7 @@ export default class DropAudio extends React.Component{
                 curTime:parseInt(curTime),
                 leftTime:parseInt(duration-curTime)
             })
-            $('#drop_progress').css('width',curTime/duration*300+'px');
+            $('#drop_progress').css('width',curTime/duration*OneDrop.JS_ScreenW*0.42+'px');
         }, 1000)
         audio.addEventListener('ended',()=>{
            // self.commitLearnStatus(100);
@@ -217,7 +217,7 @@ export default class DropAudio extends React.Component{
                                     color:'rgb(134,135,136)'
                                 }}>{Tool.convertSec(parseInt(Number(this.state.curTime)))}</p>
                                 <div style={{
-                                    width:'300px',height:'20px',backgroundColor:'rgb(211,211,211)',position:'relative',borderRadius:'10px'
+                                    width:OneDrop.JS_ScreenW*0.42,height:'20px',backgroundColor:'rgb(211,211,211)',position:'relative',borderRadius:'10px'
                                 }}>
                                     <div id="drop_progress" style={{
                                         position:'absolute',top:'0',left:'0',height:'100%',backgroundColor:'rgb(255,158,21)',
