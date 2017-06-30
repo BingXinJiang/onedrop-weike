@@ -98,7 +98,7 @@ export default class Answer extends React.Component{
                         }
                     }
                     if(singal){
-                        $('#drop_push_question').css('top','-140px');
+                        $('#drop_push_question').css('top','-170px');
                         // $('#drop_questions_list').css('marginTop','30px');
                     }
                 }
@@ -144,7 +144,7 @@ export default class Answer extends React.Component{
         <div style={{backgroundColor:'rgb(229,236,242)'}}>
             <div id="drop_push_question" style={{
                 position:'fixed',left:'0',top:'0',display:'flex',justifyContent:'space-between',alignItems:'center',
-                width:'100%',height:'120px',backgroundColor:'white',paddingTop:'20px'
+                width:'100%',height:'150px',backgroundColor:'white',paddingTop:'20px'
             }}>
                 <textarea id="drop_push_question_in" placeholder="提出你的问题！！！" onChange={(event)=>{
                     if(event.target.value){
@@ -153,9 +153,9 @@ export default class Answer extends React.Component{
                         })
                     }
                 }} style={{
-                    marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'55px',
+                    marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'70px',
                     borderRadius:'10px',borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'2px',
-                    width:(OneDrop.JS_ScreenW-130)+'px',fontSize:'28px',paddingLeft:'8px',paddingTop:'15px'
+                    width:(OneDrop.JS_ScreenW-130)+'px',fontSize:'28px',paddingLeft:'8px',paddingTop:'30px'
                 }}>
                 </textarea>
                 <p onClick={()=>{
@@ -197,6 +197,10 @@ export default class Answer extends React.Component{
                                                 isLoading:false
                                             })
                                             this.getQuestions(this, 1, 0);
+                                        }else{
+                                            this.setState({
+                                                isLoading:false
+                                            })
                                         }
                                     }else{
                                         this.setState({
@@ -220,7 +224,7 @@ export default class Answer extends React.Component{
             </div>
 
             <div style={{width:'100%',height:'76px',display:'flex',
-                marginTop:'140px'
+                marginTop:'170px'
             }}>
                 {
                     ['最赞问题','最新问题'].map((content,index)=>{
