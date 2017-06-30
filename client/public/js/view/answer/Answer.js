@@ -19,7 +19,12 @@ export default class Answer extends React.Component{
             question_id:0,
             isNoMoreQuestion:false,
             isLoading:false,
-            scrollTopNum:0
+            scrollTopNum:0,
+
+            isShowByAppreciateRank:true,
+            isAppreciateQuestionsShow:0,
+
+            isCanCommitQuestion:false
         };
         this.ISBACK = false;
         this.ISTIMER = true;
@@ -44,11 +49,12 @@ export default class Answer extends React.Component{
                     if(data.status === 1){
                         if(data.data.length<=0){
                             self.setState({
-                                isNoMoreQuestion:true
+                                isNoMoreQuestion:true,
+                                isLoading:false
                             })
                         }else{
                             var lastOne = data.data[data.data.length-1];
-                            var lastKeyId = lastOne.key_id;
+                            var lastKeyId = self.state.isShowByAppreciateRank ? -1 : lastOne.key_id;
                             self.setState({
                                 questions:self.state.questions.concat(data.data),
                                 key_id:lastKeyId,
@@ -57,6 +63,9 @@ export default class Answer extends React.Component{
                             })
                         }
                     }else{
+                        self.setState({
+                            isLoading:false
+                        })
                         alert('数据错误');
                     }
                 }
@@ -70,7 +79,11 @@ export default class Answer extends React.Component{
             if(this.state.isNoMoreQuestion){
                 return;
             }
-            this.getQuestions(this, this.state.page, this.state.key_id);
+            if(this.state.isShowByAppreciateRank){
+                this.getQuestions(this, this.state.page, -1);
+            }else{
+                this.getQuestions(this, this.state.page, this.state.key_id);
+            }
         }
         // console.log('document.body.scrollTop:',document.body.scrollTop);
         this.SCROLLS.push(document.body.scrollTop);
@@ -85,7 +98,7 @@ export default class Answer extends React.Component{
                         }
                     }
                     if(singal){
-                        $('#drop_push_question').css('top','-120px');
+                        $('#drop_push_question').css('top','-140px');
                         // $('#drop_questions_list').css('marginTop','30px');
                     }
                 }
@@ -108,7 +121,11 @@ export default class Answer extends React.Component{
     }
 
     componentDidMount() {
-        this.getQuestions(this, 1, 0);
+        if(this.state.isShowByAppreciateRank){
+            this.getQuestions(this, 1, -1);
+        }else{
+            this.getQuestions(this, 1, 0);
+        }
         window.addEventListener('scroll', this.handleScroll2);
     }
 
@@ -126,25 +143,126 @@ export default class Answer extends React.Component{
         const Question =
         <div style={{backgroundColor:'rgb(229,236,242)'}}>
             <div id="drop_push_question" style={{
-                position:'fixed',left:'0',top:'0',
-                width:'100%',height:'100px',backgroundColor:'white',paddingTop:'20px'
+                position:'fixed',left:'0',top:'0',display:'flex',justifyContent:'space-between',alignItems:'center',
+                width:'100%',height:'120px',backgroundColor:'white',paddingTop:'20px'
             }}>
-                <div onClick={()=>{
-                    window.removeEventListener('scroll', this.handleScroll2);
-                    this.setState({
-                        showQuestion:true
-                    })
+                <textarea id="drop_push_question_in" placeholder="提出你的问题！！！" onChange={(event)=>{
+                    if(event.target.value){
+                        this.setState({
+                            isCanCommitQuestion:true
+                        })
+                    }
                 }} style={{
-                    marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'60px',
+                    marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'55px',
                     borderRadius:'10px',borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'2px',
-                    width:(OneDrop.JS_ScreenW-48)+'px',fontSize:'28px',
-                    display:'flex',justifyContent:'space-between',alignItems:'center'
+                    width:(OneDrop.JS_ScreenW-130)+'px',fontSize:'28px',paddingLeft:'8px',paddingTop:'15px'
                 }}>
-                    <p style={{fontSize:'28px',color:'rgb(167,167,167)',marginLeft:'15px'}}>提出你的问题！！！</p>
-                    <img style={{marginRight:'15px'}} src="../../../../img/weike/question/commit.png"/>
-                </div>
+                </textarea>
+                <p onClick={()=>{
+                    if(this.state.isLoading){
+                        return;
+                    }
+                    if(!this.state.isCanCommitQuestion){
+                        return;
+                    }
+                    var question_des = $('#drop_push_question_in').val();
+                    if(question_des){
+                        if(question_des.length>0){
+                            //发起post请求,提交问题
+                            this.setState({
+                                isLoading:true
+                            })
+                            $.ajax({
+                                url:OneDrop.base_url+'/answer/ask',
+                                dataType:'json',
+                                method:'POST',
+                                data:{
+                                    user_id:REMOTE_WEIXIN_USER_ID,
+                                    question_des:question_des
+                                },
+                                success:(data)=> {
+                                    if(data.status === 1){
+                                        $('#drop_push_question_in').val('');
+                                        if(!this.state.isShowByAppreciateRank){
+                                            this.setState({
+                                                page:1,
+                                                key_id:0,
+                                                questions:[],
+                                                question_id:0,
+                                                isNoMoreQuestion:false,
+                                                scrollTopNum:0,
+                                                isShowByAppreciateRank:false,
+                                                isAppreciateQuestionsShow:1,
+                                                isCanCommitQuestion:false,
+                                                isLoading:false
+                                            })
+                                            this.getQuestions(this, 1, 0);
+                                        }
+                                    }else{
+                                        this.setState({
+                                            isLoading:false
+                                        })
+                                        alert('网络错误,请重新提交!!!');
+                                    }
+                                }
+
+                            })
+                        }else{
+                            alert('请先输入您的问题...');
+                        }
+                    }else{
+                        alert('请先输入您的问题...');
+                    }
+                }} style={{
+                    width:'110px',height:'70px',backgroundColor:this.state.isCanCommitQuestion ? 'rgb(23,172,251)':'rgb(200,200,200)',color:'rgb(51,51,51)',display:'flex',
+                    marginRight:'24px',borderRadius:'10px',justifyContent:'center',alignItems:'center',fontSize:'26px'
+                }}>提问</p>
             </div>
-            <div id="drop_questions_list" style={{backgroundColor:'rgb(229,236,242)',marginTop:'150px'}}>
+
+            <div style={{width:'100%',height:'76px',display:'flex',
+                marginTop:'140px'
+            }}>
+                {
+                    ['最赞问题','最新问题'].map((content,index)=>{
+                        return (
+                            <div onClick={()=>{
+                                if(index===0){
+                                    this.setState({
+                                        page:1,
+                                        key_id:0,
+                                        questions:[],
+                                        question_id:0,
+                                        isNoMoreQuestion:false,
+                                        scrollTopNum:0,
+                                        isShowByAppreciateRank:true,
+                                        isAppreciateQuestionsShow:0
+                                    })
+                                    this.getQuestions(this, 1, -1);
+                                }
+                                if(index===1){
+                                    this.setState({
+                                        page:1,
+                                        key_id:0,
+                                        questions:[],
+                                        question_id:0,
+                                        isNoMoreQuestion:false,
+                                        scrollTopNum:0,
+                                        isShowByAppreciateRank:false,
+                                        isAppreciateQuestionsShow:1
+                                    })
+                                    this.getQuestions(this, 1, 0);
+                                }
+                            }} style={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center',
+                                borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'1px',backgroundColor:'rgb(240,240,240)'
+                            }}>
+                                <p style={{fontSize:'26px',color:this.state.isAppreciateQuestionsShow===index ? 'rgb(23,172,251)':'rgb(51,51,51)'}}>{content}</p>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+
+            <div id="drop_questions_list" style={{backgroundColor:'rgb(229,236,242)',marginTop:'30px'}}>
                 {
                     this.state.questions.map((content, index)=>{
                         return (

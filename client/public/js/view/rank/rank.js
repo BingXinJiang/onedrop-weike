@@ -28,7 +28,6 @@ export default class Rank extends React.Component{
                 if(data.status === 1){
                     var rank = data.data.rank;
                     var user = data.data.user;
-                    console.log('rank:',rank);
                     this.setState({
                         rank:rank,
                         user:user,
@@ -60,7 +59,8 @@ export default class Rank extends React.Component{
                             isShowPrompt:true
                         })
                     }} style={{
-                        position:'absolute',top:'30px',right:'24px',fontSize:'30px',color:'white'
+                        position:'absolute',top:'30px',right:'24px',fontSize:'30px',color:'white',textDecoration:'underline',
+                        paddingBottom:'2px'
                     }}>积分规则</p>
                 </div>
 

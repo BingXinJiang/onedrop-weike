@@ -100,7 +100,7 @@ router.post('/questions', function (req, res, next) {
             "left join " +
             "(select count(*)appreciate_status,question_id from appreciate_question where user_id='"+user_id+"' group by question_id)as e " +
             "on a.question_id=e.question_id " +
-            "order by d.appreciate_count desc limit "+(page-1)*10+","+page*10;
+            "order by d.appreciate_count desc,a.up_time desc limit "+(page-1)*10+","+page*10;
     }
     // console.log(query_sql);
     query(query_sql, function (qerr, valls, fields) {
