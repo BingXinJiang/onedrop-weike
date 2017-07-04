@@ -215,10 +215,37 @@ export default class Rank extends React.Component{
                             })
                         }} style={{
                             position:'absolute',zIndex:'99',left:'0',top:'0',
-                            width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.4)',
+                            width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.6)',
                             display:'flex',justifyContent:'center',alignItems:'center'
                         }}>
-                            <img src="../../../../img/weike/rank/promot.png"/>
+                            <div style={{
+                                display:'flex',flexDirection:'column',alignItems:'center',borderRadius:'20px',
+                                backgroundColor:'white',width:OneDrop.JS_ScreenW-104+'px'
+                            }}>
+                                <img style={{width:'100%'}} src="../../../img/weike/rank/pro.png"/>
+                                <p style={{
+                                    paddingLeft:'36px',paddingRight:'36px',fontSize:'28px',lineHeight:'44px',color:'rgb(102,102,102)',
+                                    marginTop:'53px'
+                                }}>
+                                    每完成一滴领导力细则学习
+                                </p>
+                                <p style={{
+                                    fontSize:'28px',color:'rgb(102,102,102)',marginTop:'32px',lineHeight:'44px'
+                                }}>
+                                    增长10积分
+                                </p>
+                                <p onClick={()=>{
+                                    this.setState({
+                                        isShowPrompt:false
+                                    })
+                                }} style={{
+                                    fontSize:'28px',color:'rgb(255,255,255)',width:'322px',height:'70px',borderRadius:'10px',
+                                    backgroundColor:'rgb(49,149,215)',display:'flex',justifyContent:'center',alignItems:'center',
+                                    marginTop:'52px',marginBottom:'46px'
+                                }}>
+                                    朕知道了
+                                </p>
+                            </div>
                         </div>
                         :
                         null

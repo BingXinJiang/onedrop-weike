@@ -128,6 +128,9 @@ export default class MyStudy extends React.Component{
                     }}>
                         {
                             this.state.labels.map((content,index)=>{
+                                if(index>=10){
+                                    return null;
+                                }
                                 var point = this.labelUnitArrPoint[index];
                                 const conSty = {
                                     position:'absolute',top:point.y+'px',left:point.x+'px',backgroundColor:point.color,
@@ -253,10 +256,37 @@ export default class MyStudy extends React.Component{
                             })
                         }} style={{
                             position:'absolute',zIndex:'99',left:'0',top:'0',
-                            width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.4)',
+                            width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.6)',
                             display:'flex',justifyContent:'center',alignItems:'center'
                         }}>
-                            <img src="../../../../img/weike/mine/point.png"/>
+                            <div style={{
+                                display:'flex',flexDirection:'column',alignItems:'center',borderRadius:'20px',
+                                backgroundColor:'white',width:OneDrop.JS_ScreenW-104+'px'
+                            }}>
+                                <img style={{width:'100%'}} src="../../../../img/weike/mine/promot.png"/>
+                                <p style={{
+                                    paddingLeft:'36px',paddingRight:'36px',fontSize:'28px',lineHeight:'44px',color:'rgb(102,102,102)',
+                                    marginTop:'27px'
+                                }}>
+                                    欢迎进入我的一滴，您的个人领导力技能成长树！您的每一次学习足迹都是一次自我的蜕变！点击树上的标签可快速回顾您已经学习过的内容。
+                                </p>
+                                <p style={{
+                                    fontSize:'22px',color:'rgb(102,102,102)',marginTop:'32px'
+                                }}>
+                                    注意：学习过课程之后标签才会出现在这里哟！
+                                </p>
+                                <p onClick={()=>{
+                                    this.setState({
+                                        isShowPrompt:false
+                                    })
+                                }} style={{
+                                    fontSize:'28px',color:'rgb(255,255,255)',width:'322px',height:'70px',borderRadius:'10px',
+                                    backgroundColor:'rgb(49,149,215)',display:'flex',justifyContent:'center',alignItems:'center',
+                                    marginTop:'22px',marginBottom:'46px'
+                                }}>
+                                    朕知道了
+                                </p>
+                            </div>
                         </div>
                         :
                         null

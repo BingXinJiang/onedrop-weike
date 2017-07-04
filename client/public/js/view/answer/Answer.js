@@ -27,8 +27,8 @@ export default class Answer extends React.Component{
             isCanCommitQuestion:false
         };
         this.ISBACK = false;
-        this.ISTIMER = true;
-        this.SCROLLS = [];
+        // this.ISTIMER = true;
+        // this.SCROLLS = [];
         this.getQuestions = (self, page, key_id)=>{
             if(this.state.isLoading){
                 return;
@@ -86,6 +86,7 @@ export default class Answer extends React.Component{
             }
         }
         // console.log('document.body.scrollTop:',document.body.scrollTop);
+        /*
         this.SCROLLS.push(document.body.scrollTop);
         if(this.ISTIMER){
             this.ISTIMER = false;
@@ -118,6 +119,7 @@ export default class Answer extends React.Component{
                 this.SCROLLS = [];
             },300)
         }
+        */
     }
 
     componentDidMount() {
@@ -142,89 +144,108 @@ export default class Answer extends React.Component{
     render(){
         const Question =
         <div style={{backgroundColor:'rgb(229,236,242)'}}>
-            <div id="drop_push_question" style={{
-                position:'fixed',left:'0',top:'0',display:'flex',justifyContent:'space-between',alignItems:'center',
-                width:'100%',height:'150px',backgroundColor:'white',paddingTop:'20px'
-            }}>
-                <textarea id="drop_push_question_in" placeholder="提出你的问题！！！" onChange={(event)=>{
-                    if(event.target.value){
-                        this.setState({
-                            isCanCommitQuestion:true
-                        })
-                    }
-                }} style={{
-                    marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'70px',
-                    borderRadius:'10px',borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'2px',
-                    width:(OneDrop.JS_ScreenW-130)+'px',fontSize:'28px',paddingLeft:'8px',paddingTop:'30px'
+            <div>
+                <div id="drop_push_question" style={{
+                    display:'flex',flexDirection:'column',
+                    width:'100%',backgroundColor:'rgba(0,0,0,0)',paddingTop:'24px'
                 }}>
-                </textarea>
-                <p onClick={()=>{
-                    if(this.state.isLoading){
-                        return;
-                    }
-                    if(!this.state.isCanCommitQuestion){
-                        return;
-                    }
-                    var question_des = $('#drop_push_question_in').val();
-                    if(question_des){
-                        if(question_des.length>0){
-                            //发起post请求,提交问题
+                    <div style={{
+                        display:'flex',marginLeft:'24px',marginRight:'24px'
+                    }}>
+                        <img src="../../../img/weike/question/up_question.png"/>
+                        <p style={{
+                            fontSize:'24px',color:'rgb(51,51,51)',lineHeight:'40px',marginLeft:'26px'
+                        }}>
+                            "学而不思则罔"--领导力的提升需要我们不断在实践中反思，问出真正有深度的问题。有问就有答，所有人帮助所有人
+                            才是正确的互联网学习姿势。
+                        </p>
+                    </div>
+                    <textarea id="drop_push_question_in" placeholder="抛出你的问题，召唤大咖一起来作答" onChange={(event)=>{
+                        if(event.target.value){
                             this.setState({
-                                isLoading:true
+                                isCanCommitQuestion:true
                             })
-                            $.ajax({
-                                url:OneDrop.base_url+'/answer/ask',
-                                dataType:'json',
-                                method:'POST',
-                                data:{
-                                    user_id:REMOTE_WEIXIN_USER_ID,
-                                    question_des:question_des
-                                },
-                                success:(data)=> {
-                                    if(data.status === 1){
-                                        $('#drop_push_question_in').val('');
-                                        if(!this.state.isShowByAppreciateRank){
-                                            this.setState({
-                                                page:1,
-                                                key_id:0,
-                                                questions:[],
-                                                question_id:0,
-                                                isNoMoreQuestion:false,
-                                                scrollTopNum:0,
-                                                isShowByAppreciateRank:false,
-                                                isAppreciateQuestionsShow:1,
-                                                isCanCommitQuestion:false,
-                                                isLoading:false
-                                            })
-                                            this.getQuestions(this, 1, 0);
+                        }else{
+                            this.setState({
+                                isCanCommitQuestion:false
+                            })
+                        }
+                    }} style={{
+                        marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'120px',
+                        borderRadius:'10px',borderStyle:'solid',borderColor:'rgb(23,172,251)',borderWidth:'1px',
+                        width:OneDrop.JS_ScreenW-48+'px',fontSize:'24px',paddingLeft:'8px',color:'rgb(153,153,153)',paddingTop:'5px'
+                    }}>
+                    </textarea>
+                    <p onClick={()=>{
+                        if(this.state.isLoading){
+                            return;
+                        }
+                        if(!this.state.isCanCommitQuestion){
+                            return;
+                        }
+                        var question_des = $('#drop_push_question_in').val();
+                        if(question_des){
+                            if(question_des.length>0){
+                                //发起post请求,提交问题
+                                this.setState({
+                                    isLoading:true
+                                })
+                                $.ajax({
+                                    url:OneDrop.base_url+'/answer/ask',
+                                    dataType:'json',
+                                    method:'POST',
+                                    data:{
+                                        user_id:REMOTE_WEIXIN_USER_ID,
+                                        question_des:question_des
+                                    },
+                                    success:(data)=> {
+                                        if(data.status === 1){
+                                            $('#drop_push_question_in').val('');
+                                            if(!this.state.isShowByAppreciateRank){
+                                                this.setState({
+                                                    page:1,
+                                                    key_id:0,
+                                                    questions:[],
+                                                    question_id:0,
+                                                    isNoMoreQuestion:false,
+                                                    scrollTopNum:0,
+                                                    isShowByAppreciateRank:false,
+                                                    isAppreciateQuestionsShow:1,
+                                                    isCanCommitQuestion:false,
+                                                    isLoading:false
+                                                })
+                                                this.getQuestions(this, 1, 0);
+                                            }else{
+                                                this.setState({
+                                                    isCanCommitQuestion:false,
+                                                    isLoading:false
+                                                })
+                                            }
                                         }else{
                                             this.setState({
                                                 isLoading:false
                                             })
+                                            alert('网络错误,请重新提交!!!');
                                         }
-                                    }else{
-                                        this.setState({
-                                            isLoading:false
-                                        })
-                                        alert('网络错误,请重新提交!!!');
                                     }
-                                }
 
-                            })
+                                })
+                            }else{
+                                alert('请先输入您的问题...');
+                            }
                         }else{
                             alert('请先输入您的问题...');
                         }
-                    }else{
-                        alert('请先输入您的问题...');
-                    }
-                }} style={{
-                    width:'110px',height:'70px',backgroundColor:this.state.isCanCommitQuestion ? 'rgb(23,172,251)':'rgb(200,200,200)',color:'rgb(51,51,51)',display:'flex',
-                    marginRight:'24px',borderRadius:'10px',justifyContent:'center',alignItems:'center',fontSize:'26px'
-                }}>提问</p>
+                    }} style={{
+                        width:'110px',height:'70px',backgroundColor:this.state.isCanCommitQuestion ? 'rgb(44,156,232)':'white',color:this.state.isCanCommitQuestion ? 'white':'rgb(23,172,251)',display:'flex',
+                        marginLeft:OneDrop.JS_ScreenW-110-24+'px',borderRadius:'10px',justifyContent:'center',alignItems:'center',fontSize:'26px',borderStyle:'solid',borderWidth:this.state.isCanCommitQuestion ? '0':'1px',
+                        borderColor:'rgb(23,172,251)'
+                    }}>提问</p>
+                </div>
             </div>
 
-            <div style={{width:'100%',height:'76px',display:'flex',
-                marginTop:'170px'
+            <div style={{width:OneDrop.JS_ScreenW-48+'px',height:'102px',display:'flex',
+                marginTop:'17px',backgroundColor:'white',paddingTop:'36px',paddingLeft:'24px',paddingRight:'24px'
             }}>
                 {
                     ['最赞问题','最新问题'].map((content,index)=>{
@@ -256,10 +277,11 @@ export default class Answer extends React.Component{
                                     })
                                     this.getQuestions(this, 1, 0);
                                 }
-                            }} style={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center',
-                                borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'1px',backgroundColor:'rgb(240,240,240)'
+                            }} style={{width:'50%',height:'78px',display:'flex',justifyContent:'center',alignItems:'center',
+                                borderStyle:'solid',borderColor:'rgb(73,172,251)',borderWidth:'1px',backgroundColor:this.state.isAppreciateQuestionsShow===index ? 'rgb(44,156,232)':'white',
+
                             }}>
-                                <p style={{fontSize:'26px',color:this.state.isAppreciateQuestionsShow===index ? 'rgb(23,172,251)':'rgb(51,51,51)'}}>{content}</p>
+                                <p style={{fontSize:'26px',color:this.state.isAppreciateQuestionsShow===index ? 'rgb(254,254,254)':'rgb(73,172,251)'}}>{content}</p>
                             </div>
                         )
                     })
@@ -428,6 +450,11 @@ export default class Answer extends React.Component{
                 backgroundColor:'rgb(235,235,235)',
                 marginBottom:'120px'
             }}>
+                <img onClick={()=>{
+                    document.body.scrollTop = 0;
+                }} style={{
+                    position:'fixed',right:'24px',bottom:'200px'
+                }} src="../../../img/weike/question/totop.png"/>
                 {
                     this.state.showAnswer ? <Solve callback={()=>{
                         this.ISBACK = true;

@@ -146,6 +146,7 @@ export default class Drop extends React.Component{
             }
         })
     }
+
     render(){
         var self = this;
         var myArticle = null;
@@ -160,7 +161,9 @@ export default class Drop extends React.Component{
             alignItems:'center'
         }
         return(
-            <div style={{
+            <div onTouchStart={(e)=>{
+                $('#every_day_drop_comment').blur();
+            }} style={{
                 position:'absolute',
                 width:OneDrop.JS_ScreenW,
                 height:OneDrop.JS_ScreenH*2,
@@ -369,7 +372,7 @@ export default class Drop extends React.Component{
                                                     }}>{courseSpeaks[this.state.chooseCourseNum-1]}</p> : null
                                             }
                                         </div>
-                                        <p style={{marginTop:'62px',fontSize:'30px',color:'rgb(51,51,51)'}}>学完本篇课程,领导力有没有提升呢?</p>
+                                        <p style={{marginTop:'62px',fontSize:'30px',color:'rgb(51,51,51)'}}>学完本则一滴,领导力有没有提升呢?</p>
                                         <p style={{fontSize:'30px',color:'rgb(51,51,51)'}}>动动手指,为自己领导力助力!</p>
                                         <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
                                             {
@@ -447,11 +450,11 @@ export default class Drop extends React.Component{
                                             marginBottom:'40px'
                                         }}>
                                             <p style={{marginTop:'40px',fontSize:'30px',color:'rgb(51,51,51)'}}>
-                                                本篇课程老师共获得献花<span style={{fontSize:'48px',color:'rgb(238,33,33)'}}>{this.state.courseNum}</span><span>
+                                                本则一滴老师共获得献花<span style={{fontSize:'48px',color:'rgb(238,33,33)'}}>{this.state.courseNum}</span><span>
                                                 <img src="../../../../img/weike/detail/course_num_d.png"/>
                                             </span></p>
                                             <p style={{marginBottom:'40px',marginTop:'24px',fontSize:'30px',color:'rgb(51,51,51)'}}>
-                                                学了本篇课程我的领导力得到<span style={{fontSize:'48px',color:'rgb(23,172,25)'}}>{this.state.mineNum}</span><span>
+                                                学了本则一滴我的领导力得到<span style={{fontSize:'48px',color:'rgb(23,172,251)'}}>{this.state.mineNum}</span><span>
                                                 <img src="../../../../img/weike/detail/user_num_d.png"/>
                                             </span>助力</p>
                                         </div>
@@ -526,7 +529,7 @@ export default class Drop extends React.Component{
                         </div>
                     </div>
 
-                    <div style={{
+                    <div id="every_day_drop_comment_container" style={{
                             position:'fixed',width:OneDrop.JS_ScreenW+'px',height:'110px',backgroundColor:'white',left:'0',bottom:'0',
                             display:'flex',alignItems:'center',flexDirection:'column'
                         }}>
@@ -535,7 +538,7 @@ export default class Drop extends React.Component{
                             display:'flex',marginTop:'20px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
                             justifyContent:'space-between'
                         }}>
-                            <img onClick={()=>{
+                            <img onClick={(e)=>{
                                 if(this.state.isLoading){
                                     return;
                                 }
@@ -551,7 +554,11 @@ export default class Drop extends React.Component{
                                     commitBtnStatus:false
                                 })
                             }
-                        }} placeholder="与作者交交手吧！" contentEditable={true} style={{
+                        }} onFocus={()=>{
+
+                        }} onBlur={()=>{
+
+                        }} placeholder="与大家交交手吧！" contentEditable={true} style={{
                             height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.62,outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',

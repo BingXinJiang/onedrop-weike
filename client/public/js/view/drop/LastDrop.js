@@ -166,7 +166,7 @@ export default class LastDrop extends React.Component{
                                                         backgroundImage:'url(../../../img/weike/onedrop/day.jpg)',
                                                         width:'100%',height:'80px'
                                                     }}>
-                                                        <p style={{fontSize:'30px',color:'rgb(23,172,251)',letterSpacing:'8px'}}>{index===0 ? '今/日/课/程' : index===1 ? '昨/日/课/程' : '更/多/课/程'}</p>
+                                                        <p style={{fontSize:'30px',color:'rgb(23,172,251)',letterSpacing:'8px'}}>{index===0 ? '今/日/一/滴' : index===1 ? '昨/日/一/滴' : '更/多/一/滴'}</p>
                                                     </div> : null
                                             }
                                             <div style={{

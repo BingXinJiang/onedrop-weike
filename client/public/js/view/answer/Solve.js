@@ -106,7 +106,9 @@ export default class Solve extends React.Component{
     render(){
         var self = this;
         return (
-            <div style={{zIndex:'999',backgroundColor:'rgb(229,236,242)'}}>
+            <div onTouchStart={(e)=>{
+                $('#question_answer_solve_commit').blur();
+            }} style={{zIndex:'999',backgroundColor:'rgb(229,236,242)'}}>
                 {
                     this.state.question ?
                         <div style={{

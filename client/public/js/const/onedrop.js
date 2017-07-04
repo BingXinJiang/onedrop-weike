@@ -8,9 +8,9 @@ module.exports = {
     // base_url:'http://192.168.2.100:3001',
     // res_ip:'http://192.168.2.100:3001',
 
-    base_ip:'http://192.168.1.29:3001/weixin',
-    base_url:'http://192.168.1.29:3001',
-    res_ip:'http://192.168.1.29:3001',
+    base_ip:'http://192.168.1.45:3001/weixin',
+    base_url:'http://192.168.1.45:3001',
+    res_ip:'http://192.168.1.45:3001',
 
 
     // base_ip:'http://www.cvwisdom.com/weixin',
