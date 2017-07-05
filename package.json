@@ -25,6 +25,8 @@
     "react-dom": "^15.4.2",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-swiper": "^0.1.5",
+    "react-swipes": "^1.0.6",
     "react-weui": "^1.0.3",
     "request": "^2.81.0",
     "serve-favicon": "~2.3.2",

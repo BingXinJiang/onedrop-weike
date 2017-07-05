@@ -90,7 +90,7 @@ router.post('/commit',function (req,res,next) {
                     res.json(response);
                 }else{
                     //该邀请码有效，且未被使用，更新数据
-                    var updata_sql = "update member_list set user_id='"+user_id+"',used=1 where code='"+code+"'";
+                    var updata_sql = "update member_list set user_id='"+user_id+"',used=1,open_time=Now() where code='"+code+"'";
                     query(updata_sql,function (qerr,valls,fields) {
                         if(qerr){
                             responseDataErr(res);

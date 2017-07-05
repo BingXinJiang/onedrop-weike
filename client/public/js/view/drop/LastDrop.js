@@ -18,10 +18,18 @@ export default class LastDrop extends React.Component{
             scrollTopNum:0,
             page:1,
             isNoMoreCourse:false,
-            isLoading:false
+            isLoading:false,
+
+            left:0,
+            canGoToPro:true
         };
         this.getCourses = this.getCourses.bind(this);
         this.handleScroll1 = this.handleScroll1.bind(this);
+        this.cardTimer = null;
+        this.leftPoint1 = 0;
+        this.leftPoint2 = 0;
+
+
     }
 
     getCourses(self,page){
@@ -99,6 +107,32 @@ export default class LastDrop extends React.Component{
             }
         })
         window.addEventListener('scroll', this.handleScroll1);
+
+        this.cardTimer = setInterval(()=>{
+            // var unit = OneDrop.JS_ScreenW/150.0;
+            // if(this.state.left === 0 && this.leftPoint1 < 100) {
+            //     this.leftPoint1++;
+            // }else if(this.leftPoint1 >= 100 && this.state.left>-OneDrop.JS_ScreenW){
+            //     this.setState({
+            //         left:this.state.left - unit
+            //     })
+            // }else if(OneDrop.JS_ScreenW-1>=this.state.left && this.leftPoint2<100){
+            //     this.leftPoint1 = 0;
+            //     this.leftPoint2++;
+            // }else if(OneDrop.JS_ScreenW-1>=this.state.left && this.leftPoint2>=100){
+            //     this.leftPoint2=0;
+            //     this.setState({
+            //         left:0
+            //     })
+            // }else{
+            //     // this.setState({
+            //     //     left:this.state.left - unit
+            //     // })
+            // }
+            this.setState({
+                canGoToPro:!this.state.canGoToPro
+            })
+        },4000)
     }
     handleScroll1(event){
         if(Number(document.body.clientHeight-document.body.scrollTop)<=1335){
@@ -108,9 +142,9 @@ export default class LastDrop extends React.Component{
             this.getCourses(this, this.state.page);
         }
     }
-
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll1);
+        this.cardTimer = null;
     }
     render(){
         return (
@@ -122,7 +156,35 @@ export default class LastDrop extends React.Component{
                             width:OneDrop.JS_ScreenW,
                             paddingBottom:'110px'
                         }}>
-                            <div onClick={()=>{
+                            {/*<div style={{*/}
+                                {/*width:OneDrop.JS_ScreenW,height:'360px',position:'relative'*/}
+                            {/*}}>*/}
+                                {/*<div style={{*/}
+                                    {/*position:'absolute',width:OneDrop.JS_ScreenW*2,height:'360px',left:this.state.left+'px',top:'0',*/}
+                                    {/*display:'flex',*/}
+                                {/*}}>*/}
+                                    {/*<img onClick={()=>{*/}
+                                        {/*if(this.state.isLoading){*/}
+                                            {/*return;*/}
+                                        {/*}*/}
+                                        {/*window.removeEventListener('scroll', this.handleScroll1);*/}
+                                        {/*this.setState({*/}
+                                            {/*isShowLeadPage:true*/}
+                                        {/*})*/}
+                                    {/*}} style={{*/}
+                                        {/*width:OneDrop.JS_ScreenW,*/}
+                                        {/*height:'360px'*/}
+                                    {/*}} src="../../../img/weike/home/home_banner.jpg"/>*/}
+                                    {/*<img style={{*/}
+                                        {/*width:OneDrop.JS_ScreenW,*/}
+                                        {/*height:'360px'*/}
+                                    {/*}} src="../../../img/weike/home/banner.jpg"/>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                            <img onClick={()=>{
+                                if(!this.state.canGoToPro){
+                                    return;
+                                }
                                 if(this.state.isLoading){
                                     return;
                                 }
@@ -130,12 +192,10 @@ export default class LastDrop extends React.Component{
                                 this.setState({
                                     isShowLeadPage:true
                                 })
-                            }}>
-                                <img style={{
-                                    width:OneDrop.JS_ScreenW,
-                                    height:'360px'
-                                }} src="../../../img/weike/home/home_banner.jpg"/>
-                            </div>
+                            }} style={{
+                                width:OneDrop.JS_ScreenW,
+                                height:'360px'
+                            }} src={this.state.canGoToPro ? "../../../img/weike/home/home_banner.jpg" : "../../../img/weike/home/banner.jpg"} />
                             {
                                 this.state.courses.map((content,index)=>{
                                     return(
