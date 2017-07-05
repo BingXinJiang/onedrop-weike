@@ -131,9 +131,6 @@ export default class LastDrop extends React.Component{
                                     [0,1].map((content,index)=>{
                                         if(content === 0){
                                             return  <img onClick={()=>{
-                                                if(!this.state.canGoToPro){
-                                                    return;
-                                                }
                                                 if(this.state.isLoading){
                                                     return;
                                                 }
