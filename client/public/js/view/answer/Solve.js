@@ -140,7 +140,35 @@ export default class Solve extends React.Component{
                         :null
                 }
 
-                <div style={{marginTop:'20px',width:'100%',height:'76px',display:'flex'}}>
+                {/*<div style={{marginTop:'20px',width:'100%',height:'76px',display:'flex'}}>*/}
+                    {/*{*/}
+                        {/*['最赞回复','最新回复'].map((content,index)=>{*/}
+                            {/*return (*/}
+                                {/*<div onClick={()=>{*/}
+                                    {/*if(index === 0){*/}
+                                        {/*this.setState({*/}
+                                            {/*answers:this.state.answersAppreciate,*/}
+                                            {/*isAppreciateAnswersShow:0*/}
+                                        {/*})*/}
+                                    {/*}*/}
+                                    {/*if(index === 1){*/}
+                                        {/*this.setState({*/}
+                                            {/*answers:this.state.answersTime,*/}
+                                            {/*isAppreciateAnswersShow:1*/}
+                                        {/*})*/}
+                                    {/*}*/}
+                                {/*}} style={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center',*/}
+                                    {/*borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'1px',backgroundColor:'rgb(240,240,240)'*/}
+                                {/*}}>*/}
+                                    {/*<p style={{fontSize:'26px',color:this.state.isAppreciateAnswersShow===index ? 'rgb(23,172,251)':'rgb(51,51,51)'}}>{content}</p>*/}
+                                {/*</div>*/}
+                            {/*)*/}
+                        {/*})*/}
+                    {/*}*/}
+                {/*</div>*/}
+
+                <div style={{width:OneDrop.JS_ScreenW-48+'px',height:'102px',display:'flex',
+                    marginTop:'17px',backgroundColor:'white',paddingTop:'36px',paddingLeft:'24px',paddingRight:'24px'}}>
                     {
                         ['最赞回复','最新回复'].map((content,index)=>{
                             return (
@@ -157,15 +185,17 @@ export default class Solve extends React.Component{
                                             isAppreciateAnswersShow:1
                                         })
                                     }
-                                }} style={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center',
-                                    borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'1px',backgroundColor:'rgb(240,240,240)'
+                                }} style={{width:'50%',height:'78px',display:'flex',justifyContent:'center',alignItems:'center',
+                                    borderStyle:'solid',borderColor:'rgb(73,172,251)',borderWidth:'1px',backgroundColor:this.state.isAppreciateAnswersShow===index ? 'rgb(44,156,232)':'white',
+
                                 }}>
-                                    <p style={{fontSize:'26px',color:this.state.isAppreciateAnswersShow===index ? 'rgb(23,172,251)':'rgb(51,51,51)'}}>{content}</p>
+                                    <p style={{fontSize:'26px',color:this.state.isAppreciateAnswersShow===index ? 'rgb(254,254,254)':'rgb(73,172,251)'}}>{content}</p>
                                 </div>
                             )
                         })
                     }
                 </div>
+
 
                 <div style={{width:OneDrop.JS_ScreenW,backgroundColor:'white'}}>
                     {

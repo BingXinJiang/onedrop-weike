@@ -9,6 +9,8 @@ import async from 'async';
 const courseSpeaks = ['有点差','一般','良好','超赞','棒极了'];
 const mineSpeaks = ['一级','二级','三级','四级','五级'];
 
+import {TextArea} from 'react-weui'
+
 export default class Drop extends React.Component{
     constructor(props){
         super(props);
@@ -342,7 +344,7 @@ export default class Drop extends React.Component{
                                     <div style={{
                                         width:'100%',display:'flex',flexDirection:'column',backgroundColor:'white',alignItems:'center'
                                     }}>
-                                        <p style={{marginTop:'80px',fontSize:'30px',color:'rgb(51,51,51)'}}>本课程如何,动动手指,为老师献花!</p>
+                                        <p style={{marginTop:'80px',fontSize:'30px',color:'rgb(51,51,51)'}}>本则一滴如何,动动手指,为老师献花!</p>
                                         <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
                                             {
                                                 ['','','','',''].map((con,idx)=>{
@@ -373,7 +375,7 @@ export default class Drop extends React.Component{
                                             }
                                         </div>
                                         <p style={{marginTop:'62px',fontSize:'30px',color:'rgb(51,51,51)'}}>学完本则一滴,领导力有没有提升呢?</p>
-                                        <p style={{fontSize:'30px',color:'rgb(51,51,51)'}}>动动手指,为自己领导力助力!</p>
+                                        <p style={{fontSize:'30px',color:'rgb(51,51,51)'}}>动动手指,提升领导力!</p>
                                         <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
                                             {
                                                 ['','','','',''].map((con,idx)=>{
@@ -450,13 +452,13 @@ export default class Drop extends React.Component{
                                             marginBottom:'40px'
                                         }}>
                                             <p style={{marginTop:'40px',fontSize:'30px',color:'rgb(51,51,51)'}}>
-                                                本则一滴老师共获得献花<span style={{fontSize:'48px',color:'rgb(238,33,33)'}}>{this.state.courseNum}</span><span>
-                                                <img src="../../../../img/weike/detail/course_num_d.png"/>
+                                                本则一滴老师共获得献花<span style={{fontSize:'48px',color:'rgb(238,33,33)',marginLeft:'5px'}}>{this.state.courseNum}</span><span>
+                                                <img style={{marginLeft:'5px',marginRight:'5px'}} src="../../../../img/weike/detail/course_num_d.png"/>
                                             </span></p>
                                             <p style={{marginBottom:'40px',marginTop:'24px',fontSize:'30px',color:'rgb(51,51,51)'}}>
-                                                学了本则一滴我的领导力得到<span style={{fontSize:'48px',color:'rgb(23,172,251)'}}>{this.state.mineNum}</span><span>
-                                                <img src="../../../../img/weike/detail/user_num_d.png"/>
-                                            </span>助力</p>
+                                                学了本则一滴我的领导力得到<span style={{fontSize:'48px',color:'rgb(23,172,251)',marginLeft:'5px'}}>{this.state.mineNum}</span><span>
+                                                <img style={{marginLeft:'5px',marginRight:'5px'}} src="../../../../img/weike/detail/user_num_d.png"/>
+                                            </span>成长</p>
                                         </div>
                                     </div>
                             }
@@ -554,16 +556,13 @@ export default class Drop extends React.Component{
                                     commitBtnStatus:false
                                 })
                             }
-                        }} onFocus={()=>{
-
-                        }} onBlur={()=>{
-
                         }} placeholder="与大家交交手吧！" contentEditable={true} style={{
                             height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.62,outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
                             borderRightWidth:'0',paddingTop:'25px'
                         }}/>
+
                             <p onClick={()=>{
                             if(this.state.isLoading || !this.state.commitBtnStatus){
                                         return;

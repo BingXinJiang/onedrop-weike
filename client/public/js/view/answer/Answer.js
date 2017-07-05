@@ -426,6 +426,11 @@ export default class Answer extends React.Component{
                     })
                 }
             </div>
+            <img onClick={()=>{
+                document.body.scrollTop = 0;
+            }} style={{
+                position:'fixed',right:'24px',bottom:'200px'
+            }} src="../../../img/weike/question/totop.png"/>
             {
                 this.state.showQuestion ? <Ques callback={()=>{
                     window.addEventListener('scroll', this.handleScroll2);
@@ -450,11 +455,6 @@ export default class Answer extends React.Component{
                 backgroundColor:'rgb(235,235,235)',
                 marginBottom:'120px'
             }}>
-                <img onClick={()=>{
-                    document.body.scrollTop = 0;
-                }} style={{
-                    position:'fixed',right:'24px',bottom:'200px'
-                }} src="../../../img/weike/question/totop.png"/>
                 {
                     this.state.showAnswer ? <Solve callback={()=>{
                         this.ISBACK = true;
