@@ -153,12 +153,14 @@ export default class Solve extends React.Component{
                                             answers:this.state.answersAppreciate,
                                             isAppreciateAnswersShow:0
                                         })
+                                        this.getQuestionAndAnswers();
                                     }
                                     if(index === 1){
                                         this.setState({
                                             answers:this.state.answersTime,
                                             isAppreciateAnswersShow:1
                                         })
+                                        this.getQuestionAndAnswers();
                                     }
                                 }} style={{width:'50%',height:'78px',display:'flex',justifyContent:'center',alignItems:'center',
                                     borderStyle:'solid',borderColor:'rgb(73,172,251)',borderWidth:'1px',backgroundColor:this.state.isAppreciateAnswersShow===index ? 'rgb(44,156,232)':'white',
