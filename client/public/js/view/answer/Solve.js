@@ -285,7 +285,7 @@ export default class Solve extends React.Component{
                             this.setState({
                                 isShowConnectReply:true
                             })
-                        }}  placeholder="我要回答..." contentEditable={false} style={{
+                        }}  placeholder="我要回复..." contentEditable={false} style={{
                             height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.78,outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
