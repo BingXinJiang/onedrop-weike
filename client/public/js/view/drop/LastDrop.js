@@ -193,16 +193,21 @@ export default class LastDrop extends React.Component{
                                                     display:'flex',
                                                     flexDirection:'row'
                                                 }}>
-                                                    <img style={{
-                                                        width:'48px',
-                                                        height:'48px',
-                                                        borderRadius:'24px',
-                                                        marginTop:'8px'
-                                                    }} src={OneDrop.res_ip+content.teacher_head}/>
+                                                    <div style={{
+                                                            width:'48px'
+                                                        }}>
+                                                        <img style={{
+                                                            width:'48px',
+                                                            height:'48px',
+                                                            borderRadius:'24px',
+                                                            marginTop:'8px'
+                                                        }} src={OneDrop.res_ip+content.teacher_head}/>
+                                                    </div>
                                                     <p style={{
                                                         fontSize:'40px',
                                                         color:'rgb(0,0,0)',
-                                                        marginLeft:'20px'
+                                                        marginLeft:'20px',
+                                                        display:'block'
                                                     }}>{content.section_name}</p>
                                                 </div>
                                                 <p style={{
