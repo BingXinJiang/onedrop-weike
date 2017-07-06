@@ -295,7 +295,9 @@ export default class Solve extends React.Component{
                 </div>
                 {
                     this.state.isShowConnectReply ?
-                        <div style={{
+                        <div onTouchStart={(e)=>{
+                            e.preventDefault();
+                        }} style={{
                             position:'absolute',width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,left:'0',top:'0',
                             backgroundColor:'rgba(0,0,0,0.4)',
                         }}>

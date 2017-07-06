@@ -572,7 +572,9 @@ export default class Drop extends React.Component{
                 }} src="../../../../img/weike/onedrop/back2.png"/>
                 {
                     this.state.isShowConnectReply ?
-                        <div style={{
+                        <div onTouchStart={(e)=>{
+                            e.preventDefault();
+                        }} style={{
                             position:'absolute',width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,left:'0',top:'0',
                             backgroundColor:'rgba(0,0,0,0.4)',
                         }}>
