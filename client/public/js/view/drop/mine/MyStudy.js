@@ -22,7 +22,8 @@ export default class MyStudy extends React.Component{
             isShowEverydayDrop:false,
             section_id:0,
 
-            isShowPrompt:false
+            isShowPrompt:false,
+
         };
         this.labelUnitArrPoint = [];
         this.getLabelCourses = this.getLabelCourses.bind(this);
@@ -197,14 +198,14 @@ export default class MyStudy extends React.Component{
                     this.state.isShowLabelCourse ?
                         <div style={{
                             position: 'absolute',left:'24px',bottom:'77px',width:OneDrop.JS_ScreenW-48+'px',
-                            height:'700px',backgroundColor:'rgb(194,209,226)',borderTopLeftRadius:'38px',
+                            height:'700px',backgroundColor:'white',borderTopLeftRadius:'38px',
                             borderTopRightRadius:'38px'
                         }}>
                             <div style={{marginBottom:'30px'}}>
                                 <div style={{
                                     width:'100%',height:'120px',display:'flex',alignItems:'center'
                                 }}>
-                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}>{this.state.labelName}({this.state.labelCourses.length})</p>
+                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}>标签：{this.state.labelName}({this.state.labelCourses.length})</p>
                                 </div>
                                 <div style={{width:'100%',height:'30px',backgroundColor:'rgb(172,183,194)'}}/>
                                 <div style={{overflowX:'scroll',height:'550px'}}>
@@ -257,11 +258,12 @@ export default class MyStudy extends React.Component{
                         }} style={{
                             position:'absolute',zIndex:'99',left:'0',top:'0',
                             width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.6)',
-                            display:'flex',justifyContent:'center',alignItems:'center'
+                            display:'flex',justifyContent:'center'
                         }}>
                             <div style={{
                                 display:'flex',flexDirection:'column',alignItems:'center',borderRadius:'20px',
-                                backgroundColor:'white',width:OneDrop.JS_ScreenW-104+'px'
+                                backgroundColor:'white',width:OneDrop.JS_ScreenW-104+'px',height:'620px',
+                                marginTop:'35%'
                             }}>
                                 <img style={{width:'100%'}} src="../../../../img/weike/mine/promot.png"/>
                                 <p style={{

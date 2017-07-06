@@ -24,7 +24,9 @@ export default class Answer extends React.Component{
             isShowByAppreciateRank:true,
             isAppreciateQuestionsShow:0,
 
-            isCanCommitQuestion:false
+            isCanCommitQuestion:false,
+
+            isShowConnectReply:false
         };
         this.ISBACK = false;
         // this.ISTIMER = true;
@@ -129,6 +131,7 @@ export default class Answer extends React.Component{
             this.getQuestions(this, 1, 0);
         }
         window.addEventListener('scroll', this.handleScroll2);
+        // console.log('width:',OneDrop.JS_ScreenW);
     }
 
     componentWillUnmount() {
@@ -156,8 +159,7 @@ export default class Answer extends React.Component{
                         <p style={{
                             fontSize:'24px',color:'rgb(51,51,51)',lineHeight:'40px',marginLeft:'26px'
                         }}>
-                            "学而不思则罔"--领导力的提升需要我们不断在实践中反思，问出真正有深度的问题。有问就有答，所有人帮助所有人
-                            才是正确的互联网学习姿势。
+                            "学而不思则罔"--领导力的提升需要我们不断在实践中反思，问出真正有深度的问题。有问就有答，所有人帮助所有人才是正确的互联网学习姿势。
                         </p>
                     </div>
                     <textarea id="drop_push_question_in" placeholder="抛出你的问题，召唤大咖一起来作答" onChange={(event)=>{
@@ -173,7 +175,7 @@ export default class Answer extends React.Component{
                     }} style={{
                         marginLeft:'24px',marginRight:'24px',marginTop:'20px',marginBottom:'15px',height:'120px',
                         borderRadius:'10px',borderStyle:'solid',borderColor:'rgb(23,172,251)',borderWidth:'1px',
-                        width:OneDrop.JS_ScreenW-48+'px',fontSize:'24px',paddingLeft:'8px',color:'rgb(153,153,153)',paddingTop:'5px'
+                        width:OneDrop.JS_ScreenW-48-5-5+'px',fontSize:'24px',paddingLeft:'8px',color:'rgb(153,153,153)',paddingTop:'5px'
                     }}>
                     </textarea>
                     <p onClick={()=>{
@@ -240,7 +242,7 @@ export default class Answer extends React.Component{
                         width:'110px',height:'70px',backgroundColor:this.state.isCanCommitQuestion ? 'rgb(44,156,232)':'white',color:this.state.isCanCommitQuestion ? 'white':'rgb(23,172,251)',display:'flex',
                         marginLeft:OneDrop.JS_ScreenW-110-24+'px',borderRadius:'10px',justifyContent:'center',alignItems:'center',fontSize:'26px',borderStyle:'solid',borderWidth:this.state.isCanCommitQuestion ? '0':'1px',
                         borderColor:'rgb(23,172,251)'
-                    }}>提问</p>
+                    }}>提交</p>
                 </div>
             </div>
 
@@ -365,60 +367,74 @@ export default class Answer extends React.Component{
                                     </div>
                                 </div>
 
-                                <p onClick={()=>{
+                                <div onClick={()=>{
                                     window.removeEventListener('scroll', this.handleScroll2);
                                     this.setState({
                                         question_id:content.question_id,
                                         showAnswer:true,
-                                        scrollTopNum:document.body.scrollTop
+                                        scrollTopNum:document.body.scrollTop,
+                                        isShowConnectReply:false
                                     })
-                                }} style={{
-                                    fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
                                 }}>
-                                    {content.question_desc}
-                                </p>
-                                <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
+                                    <p  style={{
+                                        fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
+                                    }}>
+                                        {content.question_desc}
+                                    </p>
+                                    <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)',marginTop:'40px'}}/>
 
-                                <div style={{
-                                    display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px',
-                                    justifyContent:'space-between'
-                                }}>
-                                    <div style={{width:'3px',backgroundColor:'rgb(153,153,153)'}}/>
-                                    <div style={{display:'flex',flexDirection:'column',marginLeft:'20px',width:'98%'}}>
-                                        <div style={{
-                                            display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between',
-                                            width:'100%'
-                                        }}>
-                                            <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>最赞解答</p>
-                                        </div>
-                                        <div style={{marginTop:'5px'}}>
-                                            {
-                                                content.answers.map((cont,idx)=>{
-                                                    return (
-                                                        <p key={idx} style={{
-                                                            fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
-                                                        }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
-                                                    )
-                                                })
-                                            }
-                                            {
-                                                content.answers.length === 0 ?
-                                                    <img src="../../../../img/weike/question/noanswer.jpg"/> : null
-                                            }
+                                    <div style={{
+                                        display:'flex',flexDirection:'row',marginTop:'40px',marginLeft:'24px',marginRight:'24px',
+                                        justifyContent:'space-between'
+                                    }}>
+                                        <div style={{width:'3px',backgroundColor:'rgb(153,153,153)'}}/>
+                                        <div style={{display:'flex',flexDirection:'column',marginLeft:'20px',width:'98%'}}>
+                                            <div style={{
+                                                display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between',
+                                                width:'100%'
+                                            }}>
+                                                <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>最赞回复</p>
+                                            </div>
+                                            <div style={{marginTop:'5px'}}>
+                                                {
+                                                    content.answers.map((cont,idx)=>{
+                                                        return (
+                                                            <p key={idx} style={{
+                                                                fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
+                                                            }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
+                                                        )
+                                                    })
+                                                }
+                                                {
+                                                    content.answers.length === 0 ?
+                                                        <img src="../../../../img/weike/question/noanswer.jpg"/> : null
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{width:'100%',height:'76px',display:'flex',justifyContent:'center',alignItems:'center',
-                                    borderTopStyle:'solid',borderTopWidth:'1px',borderTopColor:'rgb(153,153,153)',marginTop:'37px'
-                                }} onClick={()=>{
-                                    window.removeEventListener('scroll', this.handleScroll2);
-                                    this.setState({
-                                        question_id:content.question_id,
-                                        showAnswer:true,
-                                        scrollTopNum:document.body.scrollTop
-                                    })
-                                }}>
-                                    <p  style={{fontSize:'28px',color:'rgb(0,0,0)'}}>查看全部解答</p>
+                                <div style={{width:'100%',height:'76px',display:'flex',justifyContent:'space-between',alignItems:'center',
+                                    borderTopStyle:'solid',borderTopWidth:'1px',borderTopColor:'rgb(153,153,153)',marginTop:'37px',
+                                }} >
+                                    <p onClick={()=>{
+                                        window.removeEventListener('scroll', this.handleScroll2);
+                                        this.setState({
+                                            question_id:content.question_id,
+                                            showAnswer:true,
+                                            scrollTopNum:document.body.scrollTop,
+                                            isShowConnectReply:false
+                                        })
+                                    }} style={{fontSize:'28px',color:'rgb(0,0,0)',width:'50%',textAlign:'center'}}>查看全部</p>
+                                    <div style={{width:'1px',height:'70%',backgroundColor:'rgb(153,153,153)'}}/>
+                                    <p onClick={()=>{
+                                        window.removeEventListener('scroll', this.handleScroll2);
+                                        this.setState({
+                                            question_id:content.question_id,
+                                            showAnswer:true,
+                                            scrollTopNum:document.body.scrollTop,
+                                            isShowConnectReply:true
+                                        })
+                                    }} style={{fontSize:'28px',color:'rgb(0,0,0)',width:'50%',textAlign:'center'}}>我要回复</p>
                                 </div>
                                 <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)'}}/>
                             </div>
@@ -429,7 +445,7 @@ export default class Answer extends React.Component{
             <img onClick={()=>{
                 document.body.scrollTop = 0;
             }} style={{
-                position:'fixed',right:'24px',bottom:'200px'
+                position:'fixed',right:OneDrop.JS_ScreenW===640 ? '88px':'24px',bottom:'200px'
             }} src="../../../img/weike/question/totop.png"/>
             {
                 this.state.showQuestion ? <Ques callback={()=>{
@@ -463,7 +479,7 @@ export default class Answer extends React.Component{
                         })
                         // document.body.scrollTop = this.state.scrollTopNum;
                         window.addEventListener('scroll', this.handleScroll2);
-                    }} question_id={this.state.question_id}/> : Question
+                    }} isShowConnectReply={this.state.isShowConnectReply} question_id={this.state.question_id}/> : Question
                 }
                 {
                     this.state.isLoading ?

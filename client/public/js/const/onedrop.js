@@ -30,6 +30,8 @@ module.exports = {
     JS_WindowH:document.body.clientHeight,
     JS_ScreenH2:document.documentElement.clientHeight,
 
+    SCREEN_RATE:document.body.clientWidth/750.0, //当前手机与使用尺寸之间的比率
+
     // EVALUATION_URL:'http://uat.tts.i-select.cn/validate.aspx?sid=5073',
 
     EVALUATION_URL:'http://tts.i-select.cn/validate.aspx?sid=5916',

@@ -17,7 +17,9 @@ export default class Solve extends React.Component{
             isAppreciateAnswersShow:0,
             isLoading:true,
 
-            commitBtnStatus:false
+            commitBtnStatus:false,
+
+            isShowConnectReply:this.props.isShowConnectReply
         };
         this.getQuestionAndAnswers = this.getQuestionAndAnswers.bind(this);
     }
@@ -108,7 +110,7 @@ export default class Solve extends React.Component{
         return (
             <div onTouchStart={(e)=>{
                 $('#question_answer_solve_commit').blur();
-            }} style={{zIndex:'999',backgroundColor:'rgb(229,236,242)'}}>
+            }} style={{zIndex:'999',backgroundColor:'rgb(229,236,242)',width:OneDrop.JS_ScreenW}}>
                 {
                     this.state.question ?
                         <div style={{
@@ -139,33 +141,6 @@ export default class Solve extends React.Component{
                         </div>
                         :null
                 }
-
-                {/*<div style={{marginTop:'20px',width:'100%',height:'76px',display:'flex'}}>*/}
-                    {/*{*/}
-                        {/*['最赞回复','最新回复'].map((content,index)=>{*/}
-                            {/*return (*/}
-                                {/*<div onClick={()=>{*/}
-                                    {/*if(index === 0){*/}
-                                        {/*this.setState({*/}
-                                            {/*answers:this.state.answersAppreciate,*/}
-                                            {/*isAppreciateAnswersShow:0*/}
-                                        {/*})*/}
-                                    {/*}*/}
-                                    {/*if(index === 1){*/}
-                                        {/*this.setState({*/}
-                                            {/*answers:this.state.answersTime,*/}
-                                            {/*isAppreciateAnswersShow:1*/}
-                                        {/*})*/}
-                                    {/*}*/}
-                                {/*}} style={{width:'50%',height:'100%',display:'flex',justifyContent:'center',alignItems:'center',*/}
-                                    {/*borderStyle:'solid',borderColor:'rgb(153,153,153)',borderWidth:'1px',backgroundColor:'rgb(240,240,240)'*/}
-                                {/*}}>*/}
-                                    {/*<p style={{fontSize:'26px',color:this.state.isAppreciateAnswersShow===index ? 'rgb(23,172,251)':'rgb(51,51,51)'}}>{content}</p>*/}
-                                {/*</div>*/}
-                            {/*)*/}
-                        {/*})*/}
-                    {/*}*/}
-                {/*</div>*/}
 
                 <div style={{width:OneDrop.JS_ScreenW-48+'px',height:'102px',display:'flex',
                     marginTop:'17px',backgroundColor:'white',paddingTop:'36px',paddingLeft:'24px',paddingRight:'24px'}}>
@@ -305,75 +280,112 @@ export default class Solve extends React.Component{
                         <img onClick={()=>{
                             this.props.callback();
                         }} src="../../../img/weike/main/back.png"/>
-                        <textarea id="question_answer_solve_commit" onChange={(event)=>{
-                            if(event.target.value){
-                                this.setState({
-                                    commitBtnStatus:true
-                                })
-                            }else{
-                                this.setState({
-                                    commitBtnStatus:false
-                                })
-                            }
-                        }} placeholder="我要回答..." contentEditable={true} style={{
-                            height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.62,outline:'none',
+                        <textarea  id="question_answer_solve_commit1" onClick={()=>{
+                            $('html').css('overflow','hidden');
+                            this.setState({
+                                isShowConnectReply:true
+                            })
+                        }}  placeholder="我要回答..." contentEditable={false} style={{
+                            height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.78,outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
                             borderRightWidth:'0',paddingTop:'25px'
                         }}/>
-                        <p onClick={()=>{
-                            if(this.state.isLoading || !this.state.commitBtnStatus){
-                                return;
-                            }
-                            var answer = $('#question_answer_solve_commit').val();
-                            if(answer){
-                                if(answer===''){
-                                    alert('请输入您的答案...');
-                                }else{
-                                    this.setState({
-                                        isLoading:true
-                                    })
-                                    //提交答案
-                                    async.parallel([],function (err,results) {
-
-                                    })
-                                    $.ajax({
-                                        url:OneDrop.base_url+'/answer/reply',
-                                        dataType:'json',
-                                        method:'POST',
-                                        data:{
-                                            answer_desc:answer,
-                                            user_id:REMOTE_WEIXIN_USER_ID,
-                                            question_id:self.props.question_id
-                                        },
-                                        success:function(data) {
-                                            if(data.status===1){
-                                                $('#question_answer_solve_commit').val('');
-                                                self.setState({
-                                                    commitBtnStatus:false
-                                                })
-                                                self.getQuestionAndAnswers();
-                                            }else{
-                                                self.setState({
-                                                    isLoading:false
-                                                })
-                                                alert('数据错误!');
-                                            }
-                                        }
-                                    })
-                                }
-                            }else{
-                                alert('请输入您的答案...');
-                            }
-                        }} style={{
-                            display:'flex',justifyContent:'center',alignItems:'center',width:'120px',height:'80px',
-                            fontSize:'30px',borderColor:'rgb(235,235,235)',borderRadius:'5px',borderWidth:'2px',
-                            backgroundColor:this.state.commitBtnStatus ? 'rgb(23,172,251)':'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
-                        }}>
-                            提交
-                        </p>
                     </div>
                 </div>
+                {
+                    this.state.isShowConnectReply ?
+                        <div style={{
+                            position:'absolute',width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,left:'0',top:'0',
+                            backgroundColor:'rgba(0,0,0,0.4)',
+                        }}>
+                            <div style={{
+                                width:'100%',height:'264px',backgroundColor:'rgb(229,236,242)',
+                            }}>
+                                <textarea id="question_answer_solve_commit"  autoFocus={true}  placeholder="我要回复..." onChange={(event)=>{
+                                    if(event.target.value){
+                                        this.setState({
+                                            commitBtnStatus:true
+                                        })
+                                    }else{
+                                        this.setState({
+                                            commitBtnStatus:false
+                                        })
+                                    }
+                                }} style={{
+                                    height:'118px',fontSize:'32px',marginLeft:'24px',borderRadius:'10px',
+                                    borderStyle:'solid',marginRight:'24px',borderWidth:'1px',
+                                    marginTop:'24px',width:OneDrop.JS_ScreenW-48-16+'px',padding:'8px'
+                                }}/>
+                                <div style={{marginTop:'15px',height:'65px',display:'flex',justifyContent:'flex-end',
+                                    width:OneDrop.JS_ScreenW-48+'px',marginRight:'24px',marginLeft:'24px'
+                                }}>
+                                    <p style={{
+                                        width:'111px',height:'100%',borderRadius:'10px',borderStyle:'solid',borderWidth:'1px',
+                                        borderColor:'rgb(134,134,134)',display:'flex',justifyContent:'center',alignItems:'center',
+                                        fontSize:'26px',color:'rgb(134,134,134)'
+                                    }} onClick={()=>{
+                                        if(this.state.isLoading){
+                                            return;
+                                        }
+                                        $('html').css('overflow','scroll');
+                                        this.setState({
+                                            isShowConnectReply:false
+                                        })
+                                    }}>取消</p>
+                                    <p style={{
+                                        width:'111px',height:'100%',borderRadius:'10px',borderStyle:'solid',borderWidth:'1px',
+                                        borderColor:'rgb(23,172,251)',display:'flex',justifyContent:'center',alignItems:'center',
+                                        fontSize:'26px',color:!this.state.commitBtnStatus ? 'rgb(23,172,251)' :'white',marginLeft:'16px',
+                                        backgroundColor:!this.state.commitBtnStatus ? 'rgb(229,236,251)':'rgb(23,172,251)'
+                                    }} onClick={()=>{
+                                        if(this.state.isLoading){
+                                            return;
+                                        }
+                                        var answer = $('#question_answer_solve_commit').val();
+                                        if(answer){
+                                            if(answer===''){
+                                                alert('请输入您的答案...');
+                                            }else{
+                                                this.setState({
+                                                    isLoading:true
+                                                })
+                                                //提交答案
+                                                $.ajax({
+                                                    url:OneDrop.base_url+'/answer/reply',
+                                                    dataType:'json',
+                                                    method:'POST',
+                                                    data:{
+                                                        answer_desc:answer,
+                                                        user_id:REMOTE_WEIXIN_USER_ID,
+                                                        question_id:self.props.question_id
+                                                    },
+                                                    success:function(data) {
+                                                        if(data.status===1){
+                                                            $('#question_answer_solve_commit').val('');
+                                                            $('html').css('overflow','scroll');
+                                                            self.setState({
+                                                                commitBtnStatus:false,
+                                                                isShowConnectReply:false
+                                                            })
+                                                            self.getQuestionAndAnswers();
+                                                        }else{
+                                                            self.setState({
+                                                                isLoading:false,
+                                                            })
+                                                            alert('数据错误!');
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }else{
+                                            alert('请输入您的答案...');
+                                        }
+                                    }}>{this.state.isLoading ? '提交中':'提交'}</p>
+                                </div>
+                            </div>
+                        </div> : null
+                }
                 {
                     this.state.isLoading ?
                         <div style={{

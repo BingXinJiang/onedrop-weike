@@ -31,7 +31,10 @@ export default class Drop extends React.Component{
             chooseCourseNum:0,
             chooseMineNum:0,
 
-            commitBtnStatus:false
+            commitBtnStatus:false,
+
+            isShowConnectReply:false,
+
         };
         this.chooseHight = (section)=>{
             var htext = section.htext[0];
@@ -540,345 +543,119 @@ export default class Drop extends React.Component{
                             display:'flex',marginTop:'20px',marginLeft:'24px',marginRight:'24px',alignItems:'center',
                             justifyContent:'space-between'
                         }}>
-                            <img onClick={(e)=>{
-                                if(this.state.isLoading){
-                                    return;
-                                }
-                                this.props.callback();
-                            }} src="../../../img/weike/main/back.png"/>
-                        <textarea id="every_day_drop_comment" onChange={(event)=>{
-                            if(event.target.value){
-                                this.setState({
-                                    commitBtnStatus:true
-                                })
-                            }else{
-                                this.setState({
-                                    commitBtnStatus:false
-                                })
-                            }
-                        }} placeholder="与大家交交手吧！" contentEditable={true} style={{
-                            height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW*0.62,outline:'none',
+                        <textarea id="every_day_drop_comment1" onClick={()=>{
+                            $('html').css('overflow','hidden');
+                            this.setState({
+                                isShowConnectReply:true
+                            })
+                        }} placeholder="与大家交交手吧！" contentEditable={false} style={{
+                            height:'55px',fontSize:'32px',width:OneDrop.JS_ScreenW-48+'px',outline:'none',
                             borderBottomWidth:'2px',borderBottomColor:'rgb(23,172,251)',paddingLeft:'10px',
                             borderStyle:'solid',marginLeft:'16px',marginRight:'16px',borderLeftWidth:'0',borderTopWidth:'0',
                             borderRightWidth:'0',paddingTop:'25px'
                         }}/>
 
-                            <p onClick={()=>{
-                            if(this.state.isLoading || !this.state.commitBtnStatus){
-                                        return;
-                                    }
-                                    //提交评论
-                                    var comment = $('#every_day_drop_comment').val().trim();
-                                    if(comment){
-                                        if(this.state.course){
-                                            // var section_id = self.state.nowSectionId;
-                                            this.setState({
-                                                isLoading:true
-                                            })
-                                            $.ajax({
-                                                url:OneDrop.base_ip+'/main/section/comment',
-                                                dataType:'json',
-                                                method:'POST',
-                                                data:{
-                                                    user_id:REMOTE_WEIXIN_USER_ID,
-                                                    section_id:self.props.sectionId,
-                                                    comment:comment
-                                                },
-                                                success:(data)=>{
-                                                    if(data.status===1){
-                                                        $('#every_day_drop_comment').val('');
-                                                        self.setState({
-                                                            isShowConnectEach:false,
-                                                            isLoading:false,
-                                                            commitBtnStatus:false
-                                                        })
-                                                    }else{
-                                                        alert('交手失败!');
-                                                    }
-                                                }
-                                            })
-                                        }
-                                    }else{
-                                        alert('请先输入内容,再提交!');
-                                    }
-                        }} style={{
-                            display:'flex',justifyContent:'center',alignItems:'center',width:'120px',height:'80px',
-                            fontSize:'30px',borderColor:'rgb(235,235,235)',borderRadius:'5px',borderWidth:'2px',
-                            backgroundColor:this.state.commitBtnStatus ? 'rgb(23,172,251)':'rgb(235,235,235)',marginLeft:'5px',borderStyle:'solid'
-                        }}>
-                                交手
-                            </p>
                         </div>
                     </div>
 
-                    {/*
-                        true ? null :
+
+                </div>
+                <img onClick={()=>{
+                    if(this.state.isLoading){
+                        return;
+                    }
+                    this.props.callback();
+                }} style={{
+                    position:'fixed',
+                    top:'80%',
+                    right:'24px'
+                }} src="../../../../img/weike/onedrop/back2.png"/>
+                {
+                    this.state.isShowConnectReply ?
+                        <div style={{
+                            position:'absolute',width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,left:'0',top:'0',
+                            backgroundColor:'rgba(0,0,0,0.4)',
+                        }}>
                             <div style={{
-                                position:'fixed',
-                                left:'0',
-                                bottom:'0',
-                                backgroundColor:'white',
-                                height:'110px',
-                                display:'flex',
-                                flexDirection:'row',
-                                width:'100%',
-                                justifyContent:'space-between'
+                                width:'100%',height:'264px',backgroundColor:'rgb(229,236,242)',
                             }}>
-                                <div onClick={()=>{
+                                <textarea id="every_day_drop_comment" autoFocus={true}  placeholder="与大家交交手吧！" onChange={(event)=>{
+                                    if(event.target.value){
+                                        this.setState({
+                                            commitBtnStatus:true
+                                        })
+                                    }else{
+                                        this.setState({
+                                            commitBtnStatus:false
+                                        })
+                                    }
+                                }} style={{
+                                    height:'118px',fontSize:'32px',marginLeft:'24px',borderRadius:'10px',
+                                    borderStyle:'solid',marginRight:'24px',borderWidth:'1px',
+                                    marginTop:'24px',width:OneDrop.JS_ScreenW-48-16+'px',padding:'8px'
+                                }}/>
+                                <div style={{marginTop:'15px',height:'65px',display:'flex',justifyContent:'flex-end',
+                                    width:OneDrop.JS_ScreenW-48+'px',marginRight:'24px',marginLeft:'24px'
+                                }}>
+                                    <p style={{
+                                        width:'111px',height:'100%',borderRadius:'10px',borderStyle:'solid',borderWidth:'1px',
+                                        borderColor:'rgb(134,134,134)',display:'flex',justifyContent:'center',alignItems:'center',
+                                        fontSize:'26px',color:'rgb(134,134,134)'
+                                    }} onClick={()=>{
                                         if(this.state.isLoading){
                                             return;
                                         }
-                                self.props.callback();
-                                }} style={{
-                                    ...tabStyle
-                                }}>
-                                    <img src="../../../../img/weike/onedrop/back.png"/>
-                                </div>
-                                <div onClick={()=>{
-                                    if(this.state.isLoading){
-                                        return;
-                                    }
-                                    if(this.state.isShowAppreciateMine){
-                                        return;
-                                    }
-                                    this.setState({
-                                        isShowConnectEach:true
-                                    })
-                                }} style={{
-                                    ...tabStyle
-                                }}>
-                                    <img src="../../../../img/weike/onedrop/connect.png"/>
-                                </div>
-                                <div onClick={()=>{
-                                    if(this.state.isLoading){
-                                        return;
-                                    }
-                                    if(this.state.isAppreciateCourse){return;}
-                                    if(this.state.course){
+                                        $('html').css('overflow','scroll');
                                         this.setState({
-                                            isLoading:true
+                                            isShowConnectReply:false
                                         })
-                                    $.ajax({
-                                    url:OneDrop.base_url+'/onedrop/appreciate/course',
-                                    dataType:'json',
-                                    method:'POST',
-                                    data:{
-                                        user_id:REMOTE_WEIXIN_USER_ID,
-                                        section_id:self.props.sectionId
-                                    },
-                                    success:(data)=>{
-                                        if(data.status === 1){
-                                            self.setState({
-                                                isAppreciateCourse:true,
-                                                appreciate_course_num:this.state.appreciate_course_num+1,
-                                                isLoading:false
-                                            })
-                                        }else{
-                                            alert('点赞失败!');
-                                        }
-                                    }
-                                })
-                            }
-                        }} style={{
-                            ...tabStyle
-                        }}>
-                                    <div style={{position:'relative'}}>
-                                        <img src={this.state.isAppreciateCourse ? "../../../../img/weike/onedrop/appreciate_course_selected.png":"../../../../img/weike/onedrop/appreciate_course.png"}/>
-
-                                        <p style={{position:'absolute',left:'38px',top:'0px',
-                                    fontSize:'28px',color:appreciate_num_color,lineHeight:'30px'
-                                    }}>{this.state.appreciate_course_num}</p>
-
-                                    </div>
-                                </div>
-                                <div onClick={()=>{
-                            if(this.state.isLoading){
-                                return;
-                            }
-                            if(this.state.isAppreciateMine){return;}
-                            if(this.state.isShowConnectEach){return;}
-                            this.setState({
-                                isShowAppreciateMine:true,
-
-                            })
-                        }} style={{
-                            ...tabStyle
-                        }}>
-                                    <img src={this.state.isAppreciateMine ? "../../../../img/weike/onedrop/appreciate_me_selected.png" : "../../../../img/weike/onedrop/appreciate_me.png"}/>
-                                </div>
-                            </div>
-                    */}
-                </div>
-
-                {/*
-                    this.state.isShowConnectEach && false ?
-                        <div style={{
-                            position:'fixed',
-                            left:'0',
-                            top:'0',
-                            width:OneDrop.JS_ScreenW,
-                            height:OneDrop.JS_ScreenH*2,
-                            backgroundColor:'rgb(235,235,235)'
-                        }}>
-                            <div style={{paddingLeft:'24px',paddingRight:'24px',marginTop:'56px'}}>
-                                <p style={{fontSize:'44px'}}>{this.state.course ? this.state.course.section_name : ''}</p>
-                            </div>
-                            <textarea id="every_day_drop_comment" style={{
-                                width:(OneDrop.JS_ScreenW-100) +'px',
-                                fontSize:'24px',
-                                color:'rgb(153,153,153)',
-                                padding:'15px',
-                                height:'400px',
-                                marginLeft:'25px',
-                                marginRight:'25px',
-                                borderWidth:'2px',
-                                borderColor:'white',
-                                marginTop:'56px'
-                            }} placeholder="留言将经过筛选后显示，对所有用户可见"/>
-                            <div style={{
-                                display:'flex',
-                                flexDirection:'column',
-                                marginTop:'38px',
-                                paddingLeft:'24px',
-                                paddingRight:'24px'
-                            }}>
-                                <div onClick={()=>{
-                                    if(this.state.isLoading){
-                                        return;
-                                    }
-                                    //提交评论
-                                    var comment = $('#every_day_drop_comment').val().trim();
-                                    if(comment){
-                                        if(this.state.course){
-                                            // var section_id = self.state.nowSectionId;
-                                            this.setState({
-                                                isLoading:true
-                                            })
-                                            $.ajax({
-                                                url:OneDrop.base_ip+'/main/section/comment',
-                                                dataType:'json',
-                                                method:'POST',
-                                                data:{
-                                                    user_id:REMOTE_WEIXIN_USER_ID,
-                                                    section_id:self.props.sectionId,
-                                                    comment:comment
-                                                },
-                                                success:(data)=>{
-                                                    if(data.status===1){
-                                                        $('#every_day_drop_comment').val('');
-                                                        self.setState({
-                                                            isShowConnectEach:false,
-                                                            isLoading:false
-                                                        })
-                                                    }else{
-                                                        alert('评论失败!');
-                                                    }
-                                                }
-                                            })
-                                        }
-                                    }else{
-                                        alert('请先输入评论,再提交您的评论!');
-                                    }
-                                }} style={{
-                                    width:'100%',
-                                    height:'70px',
-                                    backgroundColor:'rgb(23,172,251)',
-                                    display:'flex',
-                                    justifyContent:'center',
-                                    alignItems:'center',
-                                    borderRadius:'10px',
-                                    marginTop:'38px'
-                                }}>
-                                    <p style={{fontSize:'30px',color:'white'}}>提交</p>
-                                </div>
-                                <div onClick={()=>{
-                                    if(this.state.isLoading){
-                                        return;
-                                    }
-                                    this.setState({
-                                        isShowConnectEach:false
-                                    })
-                                }} style={{
-                                    width:'100%',
-                                    height:'70px',
-                                    backgroundColor:'rgb(208,207,207)',
-                                    display:'flex',
-                                    justifyContent:'center',
-                                    alignItems:'center',
-                                    borderRadius:'10px',
-                                    marginTop: '38px'
-                                }}>
-                                    <p style={{fontSize:'30px',color:'white'}}>取消</p>
-                                </div>
-                            </div>
-
-                        </div>
-                        : null
-                */}
-                {/*
-                    this.state.isShowAppreciateMine && false ?
-                        <div style={{
-                            position:'fixed',
-                            left:'15%',
-                            bottom:'300px',
-                            width:'70%',
-                            height:'450px',
-                            display:'flex',
-                            flexDirection:'column',
-                            backgroundImage:'url(../../../../img/weike/onedrop/appreciate_me_bg.png)',
-                            backgroundSize:'100% 100%'
-                        }}>
-                            <p style={{fontSize:'28px',color:'white',paddingTop:'15px',paddingLeft:'15px',paddingRight:'15px'}}>学了这个课程,你觉得自己的领导力长高了几米呢?</p>
-                            <div style={{
-                                display:'flex',
-                                flexDirection:'column',
-                                width:'100%',
-                                alignItems:'center'
-                            }}>
-                                {
-                                    ['1米','2米','3米','4米','5米'].map((content,index)=>{
-                                        return <p key={index} onClick={()=>{
-                                            if(this.state.isLoading){
-                                                return;
-                                            }
-                                            var appreciate_value = index+1;
+                                    }}>取消</p>
+                                    <p style={{
+                                        width:'111px',height:'100%',borderRadius:'10px',borderStyle:'solid',borderWidth:'1px',
+                                        borderColor:'rgb(23,172,251)',display:'flex',justifyContent:'center',alignItems:'center',
+                                        fontSize:'26px',color:!this.state.commitBtnStatus ? 'rgb(23,172,251)' :'white',marginLeft:'16px',
+                                        backgroundColor:!this.state.commitBtnStatus ? 'rgb(229,236,251)':'rgb(23,172,251)'
+                                    }} onClick={()=>{
+                                        var comment = $('#every_day_drop_comment').val().trim();
+                                        if(comment){
                                             if(this.state.course){
-
-                                            }else{return;}
-                                            this.setState({
-                                                isLoading:true
-                                            })
-                                            $.ajax({
-                                                url:OneDrop.base_url+'/onedrop/appreciate/mine',
-                                                dataType:'json',
-                                                method:'POST',
-                                                data:{
-                                                    user_id:REMOTE_WEIXIN_USER_ID,
-                                                    section_id:self.props.sectionId,
-                                                    appreciate_value:appreciate_value
-                                                },
-                                                success:(data)=>{
-                                                    if(data.status===1){
-                                                        self.setState({
-                                                            isShowAppreciateMine:false,
-                                                            isAppreciateMine:true,
-                                                            isLoading:false
-                                                        })
+                                                // var section_id = self.state.nowSectionId;
+                                                this.setState({
+                                                    isLoading:true
+                                                })
+                                                $.ajax({
+                                                    url:OneDrop.base_ip+'/main/section/comment',
+                                                    dataType:'json',
+                                                    method:'POST',
+                                                    data:{
+                                                        user_id:REMOTE_WEIXIN_USER_ID,
+                                                        section_id:self.props.sectionId,
+                                                        comment:comment
+                                                    },
+                                                    success:(data)=>{
+                                                        if(data.status===1){
+                                                            $('#every_day_drop_comment').val('');
+                                                            $('html').css('overflow','scroll');
+                                                            self.setState({
+                                                                isShowConnectEach:false,
+                                                                isLoading:false,
+                                                                commitBtnStatus:false,
+                                                                isShowConnectReply:false
+                                                            })
+                                                        }else{
+                                                            alert('交手失败!');
+                                                        }
                                                     }
-                                                }
-                                            })
-                                        }} style={{
-                                            fontSize:'30px',
-                                            lineHeight:'63px',
-                                            color:'white'
-                                        }} >{content}</p>
-                                    })
-                                }
+                                                })
+                                            }
+                                        }else{
+                                            alert('请先输入内容,再交手!');
+                                        }
+                                    }}>{this.state.isLoading ? '交手中':'交手'}</p>
+                                </div>
                             </div>
-                        </div>
-                        :
-                        null
-                */}
+                        </div> : null
+                }
                 {
                     this.state.isLoading ?
                         <div style={{
