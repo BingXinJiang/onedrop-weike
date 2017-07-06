@@ -213,6 +213,8 @@ export default class Rank extends React.Component{
                             this.setState({
                                 isShowPrompt:false
                             })
+                        }} onTouchMove={(e)=>{
+                            e.preventDefault();
                         }} style={{
                             position:'absolute',zIndex:'99',left:'0',top:'0',
                             width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,backgroundColor:'rgba(0,0,0,0.6)',
@@ -227,12 +229,12 @@ export default class Rank extends React.Component{
                                     paddingLeft:'36px',paddingRight:'36px',fontSize:'28px',lineHeight:'44px',color:'rgb(102,102,102)',
                                     marginTop:'53px'
                                 }}>
-                                    每完成一滴领导力细则学习
+                                    每日完成一则领导力分享微课
                                 </p>
                                 <p style={{
                                     fontSize:'28px',color:'rgb(102,102,102)',marginTop:'32px',lineHeight:'44px'
                                 }}>
-                                    增长10积分
+                                    可获得10积分
                                 </p>
                                 <p onClick={()=>{
                                     this.setState({
