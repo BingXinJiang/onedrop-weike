@@ -644,6 +644,7 @@ export default class Drop extends React.Component{
                                                                 commitBtnStatus:false,
                                                                 isShowConnectReply:false
                                                             })
+                                                            alert('交手内容经过筛选后才会显示哦!')
                                                         }else{
                                                             alert('交手失败!');
                                                         }

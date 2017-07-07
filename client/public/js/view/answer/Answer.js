@@ -220,8 +220,17 @@ export default class Answer extends React.Component{
                                             }else{
                                                 this.setState({
                                                     isCanCommitQuestion:false,
-                                                    isLoading:false
+                                                    isLoading:false,
+                                                    page:1,
+                                                    key_id:0,
+                                                    questions:[],
+                                                    question_id:0,
+                                                    isNoMoreQuestion:false,
+                                                    scrollTopNum:0,
+                                                    isShowByAppreciateRank:false,
+                                                    isAppreciateQuestionsShow:1
                                                 })
+                                                this.getQuestions(this, 1, 0);
                                             }
                                         }else{
                                             this.setState({
