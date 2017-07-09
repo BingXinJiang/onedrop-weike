@@ -347,7 +347,7 @@ export default class Drop extends React.Component{
                                     <div style={{
                                         width:'100%',display:'flex',flexDirection:'column',backgroundColor:'white',alignItems:'center'
                                     }}>
-                                        <p style={{marginTop:'80px',fontSize:'30px',color:'rgb(51,51,51)'}}>本则一滴如何,动动手指,为老师献花!</p>
+                                        <p style={{marginTop:'80px',fontSize:'30px',color:'rgb(51,51,51)'}}>本则一滴如何? 动动手指, 为老师献花!</p>
                                         <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
                                             {
                                                 ['','','','',''].map((con,idx)=>{
@@ -377,8 +377,8 @@ export default class Drop extends React.Component{
                                                     }}>{courseSpeaks[this.state.chooseCourseNum-1]}</p> : null
                                             }
                                         </div>
-                                        <p style={{marginTop:'62px',fontSize:'30px',color:'rgb(51,51,51)'}}>学完本则一滴,领导力有没有提升呢?</p>
-                                        <p style={{fontSize:'30px',color:'rgb(51,51,51)'}}>动动手指,提升领导力!</p>
+                                        <p style={{marginTop:'62px',fontSize:'30px',color:'rgb(51,51,51)'}}>学完本则一滴, 领导力有没有提升呢?</p>
+                                        <p style={{fontSize:'30px',color:'rgb(51,51,51)'}}>动动手指, 提升领导力!</p>
                                         <div style={{display:'flex',flexDirection:'row',marginTop:'38px'}}>
                                             {
                                                 ['','','','',''].map((con,idx)=>{
