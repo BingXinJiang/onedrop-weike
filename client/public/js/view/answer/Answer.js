@@ -433,7 +433,7 @@ export default class Answer extends React.Component{
                                             scrollTopNum:document.body.scrollTop,
                                             isShowConnectReply:false
                                         })
-                                    }} style={{fontSize:'28px',color:'rgb(0,0,0)',width:'50%',textAlign:'center'}}>查看全部</p>
+                                    }} style={{fontSize:'24px',color:'rgb(73,172,251)',width:'50%',textAlign:'center'}}>查看全部</p>
                                     <div style={{width:'1px',height:'70%',backgroundColor:'rgb(153,153,153)'}}/>
                                     <p onClick={()=>{
                                         window.removeEventListener('scroll', this.handleScroll2);
@@ -443,7 +443,7 @@ export default class Answer extends React.Component{
                                             scrollTopNum:document.body.scrollTop,
                                             isShowConnectReply:true
                                         })
-                                    }} style={{fontSize:'28px',color:'rgb(0,0,0)',width:'50%',textAlign:'center'}}>我要回复</p>
+                                    }} style={{fontSize:'24px',color:'rgb(73,172,251)',width:'50%',textAlign:'center'}}>我要回复</p>
                                 </div>
                                 <div style={{width:OneDrop.JS_ScreenW,height:'1px',backgroundColor:'rgb(153,153,153)'}}/>
                             </div>

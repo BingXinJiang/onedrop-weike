@@ -349,55 +349,9 @@ export default class LeadPage extends React.Component{
                         }
                     </div>
 
-                    <p style={{marginTop:'30px',marginBottom:'120px'}}>--------------------------------------</p>
+                    <p style={{marginTop:'30px',paddingBottom:'120px'}}>--------------------------------------</p>
 
                 </div>
-
-                {/*<div style={{
-                 paddingLeft:'24px',
-                 paddingRight:'24px',
-                 paddingTop:'56px',
-                 paddingBottom:'80px'
-                 }}>
-                 <p style={{
-                 fontSize:'45px',
-                 color:'rgb(51,51,51)'
-                 }}>领导力:人人都得一滴</p>
-                 <div style={{marginTop:'56px'}}>
-                 {
-                 article.map((content,index)=>{
-                 if(index === 6){
-                 return(
-                 <img key={index} style={{
-                 width:'70%',
-                 height:'300px',
-                 marginTop:'30px',
-                 marginLeft:'15%'
-                 }} src="../../../../img/weike/main/pageone1.jpeg"/>
-                 )
-                 }
-                 if(index === 22){
-                 return(
-                 <img key={index} style={{
-                 width:'70%',
-                 height:'300px',
-                 marginTop:'30px',
-                 marginLeft:'15%'
-                 }} src="../../../../img/weike/main/pageone2.jpeg"/>
-                 )
-                 }
-                 return (
-                 <p key={index} style={{
-                 fontSize:'30px',
-                 lineHeight:'40px',
-                 color:'rgb(51,51,51)',
-                 marginTop:'30px'
-                 }}>{content}</p>
-                 )
-                 })
-                 }
-                 </div>
-                 </div>*/}
 
                 <img onClick={()=>{
                     this.props.callback();
