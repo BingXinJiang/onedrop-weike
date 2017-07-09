@@ -162,7 +162,7 @@ export default class Answer extends React.Component{
                             "学而不思则罔"--领导力的提升需要我们不断在实践中反思，问出真正有深度的问题。有问就有答，所有人帮助所有人才是正确的互联网学习姿势。
                         </p>
                     </div>
-                    <textarea id="drop_push_question_in" placeholder="抛出你的问题，召唤大咖一起来作答" onChange={(event)=>{
+                    <textarea id="drop_push_question_in" placeholder="抛出你的问题，召唤大家一起来作答" onChange={(event)=>{
                         if(event.target.value){
                             this.setState({
                                 isCanCommitQuestion:true

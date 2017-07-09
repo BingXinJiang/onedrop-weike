@@ -644,7 +644,7 @@ export default class Drop extends React.Component{
                                                                 commitBtnStatus:false,
                                                                 isShowConnectReply:false
                                                             })
-                                                            alert('交手内容经过筛选后才会显示哦!')
+                                                            alert('感谢交手, 你的一滴感悟和管理经验, 我们会精选, 分享给大家, 就会滴水穿石! 期待您更多的分享哦!');
                                                         }else{
                                                             alert('交手失败!');
                                                         }
