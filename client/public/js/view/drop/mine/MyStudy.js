@@ -205,7 +205,7 @@ export default class MyStudy extends React.Component{
                                 <div style={{
                                     width:'100%',height:'120px',display:'flex',alignItems:'center'
                                 }}>
-                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}>标签：{this.state.labelName}({this.state.labelCourses.length})</p>
+                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}><span style={{color:'rgb(0,0,0)'}}>标签：</span>{this.state.labelName}({this.state.labelCourses.length})</p>
                                 </div>
                                 <div style={{width:'100%',height:'30px',backgroundColor:'rgb(172,183,194)'}}/>
                                 <div style={{overflowX:'scroll',height:'550px'}}>
