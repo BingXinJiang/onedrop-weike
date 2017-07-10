@@ -128,7 +128,7 @@ export default class LastDrop extends React.Component{
                                       slidesToScroll='auto' wrapAround={true}
                             >
                                 {
-                                    [0,1,2,3,4].map((content,index)=>{
+                                    [0,2,3,4].map((content,index)=>{
                                         if(content === 0){
                                             return  <img onClick={()=>{
                                                 if(this.state.isLoading){
@@ -142,9 +142,6 @@ export default class LastDrop extends React.Component{
                                                 width:OneDrop.JS_ScreenW,
                                                 height:'360px'
                                             }} src={"../../../img/weike/home/home_banner.jpg"} />
-                                        }
-                                        else if(content === 1){
-                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner.jpg"/>
                                         }
                                         else if(content === 2){
                                             return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner3.jpg"/>
