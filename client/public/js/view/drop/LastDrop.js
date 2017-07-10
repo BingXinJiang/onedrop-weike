@@ -128,7 +128,7 @@ export default class LastDrop extends React.Component{
                                       slidesToScroll='auto' wrapAround={true}
                             >
                                 {
-                                    [0,1].map((content,index)=>{
+                                    [0,1,2,3,4].map((content,index)=>{
                                         if(content === 0){
                                             return  <img onClick={()=>{
                                                 if(this.state.isLoading){
@@ -143,8 +143,17 @@ export default class LastDrop extends React.Component{
                                                 height:'360px'
                                             }} src={"../../../img/weike/home/home_banner.jpg"} />
                                         }
-                                        else{
+                                        else if(content === 1){
                                             return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner.jpg"/>
+                                        }
+                                        else if(content === 2){
+                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner3.jpg"/>
+                                        }
+                                        else if(content === 3){
+                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner4.jpg"/>
+                                        }
+                                        else if(content === 4){
+                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner5.jpg"/>
                                         }
                                     })
                                 }
