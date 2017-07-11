@@ -13,13 +13,13 @@ module.exports = {
     // res_ip:'http://192.168.1.33:3001',
 
 
-    // base_ip:'http://leader.cvwisdom.com/weixin',
-    // base_url:'http://leader.cvwisdom.com',
-    // res_ip:'http://leader.cvwisdom.com',
+    base_ip:'http://leader.cvwisdom.com/weixin',
+    base_url:'http://leader.cvwisdom.com',
+    res_ip:'http://leader.cvwisdom.com',
 
-    base_ip:'http://drop.cvwisdom.com/weixin',
-    base_url:'http://drop.cvwisdom.com',
-    res_ip:'http://drop.cvwisdom.com',
+    // base_ip:'http://drop.cvwisdom.com/weixin',
+    // base_url:'http://drop.cvwisdom.com',
+    // res_ip:'http://drop.cvwisdom.com',
 
     appId:'wxcb05ae4237186327',//旧
 
