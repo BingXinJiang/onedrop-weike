@@ -7,6 +7,7 @@ import Drop from './everyday/Drop';
 import LeadPage from './everyday/LeadPage';
 import async from 'async';
 import Carousel from 'nuka-carousel';
+import Tool from '../../Tool/Tool';
 
 export default class LastDrop extends React.Component{
     constructor(props){
@@ -214,7 +215,7 @@ export default class LastDrop extends React.Component{
                                                         color:'rgb(0,0,0)',
                                                         marginLeft:'20px',
                                                         display:'block'
-                                                    }}>{content.section_name}</p>
+                                                    }}>{Tool.prefixInteger(content.section_id,3)+' : '+content.section_name}</p>
                                                 </div>
                                                 <p style={{
                                                     marginTop:'28px',

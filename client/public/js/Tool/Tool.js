@@ -25,6 +25,9 @@ module.exports = {
             return false;
         }
     },
+    prefixInteger:function(num,length){
+        return ( "0000000000000000" + num ).substr( -length );
+    },
     convertSec:function (s) {
         var t;
         if(s > -1){
