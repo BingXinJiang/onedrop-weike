@@ -23,9 +23,18 @@ export default class Introduction extends React.Component{
             }}>
                 <div style={{marginTop:'100%',display:'flex',flexDirection:'column',alignItems:'center'}}>
                     <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
+                        <div>
+                            <select id="select_class" style={{width:'250px',height:'80px',fontSize:'30px',color:'white'}}>
+                                <option value="">请选择您的班级</option>
+                                <option value='1'>星蓝项目1班</option>
+                                <option value='2'>星蓝项目2班</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
                         <p style={{
                             fontSize:'30px',color:'white'
-                        }}>请输入您的邀请码</p>
+                        }}>请输入班级密码</p>
                         <input style={{
                             fontSize:'34px',borderWidth:'2px',borderColor:'rgb(87,162,214)',marginTop:'30px',backgroundColor:'rgb(87,162,214)',
                             height:'80px',paddingLeft:'10px',borderStyle:'solid',borderRadius:'5px'
@@ -36,6 +45,15 @@ export default class Introduction extends React.Component{
                     }} onClick={()=>{
                         let user_id = REMOTE_WEIXIN_USER_ID;
                         let phoneNum = $('#phone_num').val()+'';
+                        let class_id = Number($('#select_class').val());
+
+                        if(class_id){
+
+                        }else{
+                            alert('请选择班级！');
+                            return;
+                        }
+
                         self.setState({
                             isLoading:true
                         })
@@ -45,7 +63,8 @@ export default class Introduction extends React.Component{
                             method:'POST',
                             data:{
                                 user_id:user_id,
-                                code:phoneNum
+                                access_code:phoneNum,
+                                class_id:class_id,
                             },
                             success:function(data) {
                                 $('#phone_num').val('');

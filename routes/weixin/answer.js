@@ -186,7 +186,7 @@ router.post('/reply', function (req, res, next) {
                     msg:'您的答案提交成功！'
                 }
             }
-            Tool.addRank(user_id,1,0,function () {
+            Tool.addRank(user_id,2,0,function () {
                 res.json(response);
             },function () {
                 responseDataErr(res);

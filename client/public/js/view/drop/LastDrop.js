@@ -43,6 +43,7 @@ export default class LastDrop extends React.Component{
                 page:page
             },
             success:(data)=>{
+                // console.log('course:',data);
                 if(data.status === 1){
                     var courses = data.data;
                     if(courses.length>0){

@@ -26,7 +26,7 @@ function responseDataErr(res) {
     res.json(response);
 }
 
-function appreciate(user_id,query_sql,insert_sql,del_sql,res) {
+function appreciate(user_id,be_user_id,query_sql,insert_sql,del_sql,res,addNum) {
     query(query_sql,function (qerr,valls,fields) {
         if(qerr){
             responseDataErr(res);
@@ -41,7 +41,12 @@ function appreciate(user_id,query_sql,insert_sql,del_sql,res) {
                             status:1,
                             data:'cancel' //返回值 cancel 代表取消点赞成功
                         }
-                        res.json(response);
+                        addNum = -addNum;
+                        Tool.addRank(be_user_id,Number(addNum),0,function () {
+                            res.json(response);
+                        },function () {
+                            responseDataErr(res);
+                        })
                     }
                 })
             }else{
@@ -54,7 +59,7 @@ function appreciate(user_id,query_sql,insert_sql,del_sql,res) {
                             status:1,
                             data:'done' //返回值 done 代表点赞成功
                         }
-                        Tool.addRank(user_id,0,1,function () {
+                        Tool.addRank(be_user_id,addNum,0,function () {
                             res.json(response);
                         },function () {
                             responseDataErr(res);
@@ -81,7 +86,7 @@ router.post('/rank',function (req,res,next) {
     var del_sql = "delete from appreciate_rank where user_id='"+user_id+"' and " +
         "appreciate_user_id='"+appreciate_user_id+"'";
 
-    appreciate(user_id,query_sql,insert_sql,del_sql,res);
+    appreciate(user_id,user_id,query_sql,insert_sql,del_sql,res,1);
 
 })
 /**
@@ -98,7 +103,16 @@ router.post('/question',function (req,res,next) {
         "values('"+user_id+"','"+question_id+"',Now())";
     var del_sql = "delete from appreciate_question where user_id='"+user_id+"' and question_id='"+question_id+"'";
 
-    appreciate(user_id,query_sql,insert_sql,del_sql,res);
+    //查询被点赞问题的用户ID
+    var question_sql = "select user_id from question where question_id='"+question_id+"'";
+    query(question_sql,function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var be_user_id = valls[0].user_id;
+            appreciate(user_id,be_user_id,query_sql,insert_sql,del_sql,res,1);
+        }
+    })
 })
 /**
  * 给答案点赞
@@ -114,7 +128,16 @@ router.post('/answer',function (req,res,next) {
         "values('"+user_id+"','"+answer_id+"',Now())";
     var del_sql = "delete from appreciate_answer where user_id='"+user_id+"' and answer_id='"+answer_id+"'";
 
-    appreciate(user_id,query_sql,insert_sql,del_sql,res);
+    //查询被点赞答案的用户ID
+    var answer_sql = "select user_id from answer where answer_id='"+answer_id+"'";
+    query(answer_sql,function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var be_user_id = valls[0].user_id;
+            appreciate(user_id,be_user_id,query_sql,insert_sql,del_sql,res,2);
+        }
+    })
 })
 
 /**
@@ -221,6 +244,13 @@ router.post('/mycourse',function (req,res,next) {
                 }else{
                     callback(null);
                 }
+            })
+        },
+        function (callback) {
+            Tool.addRank(user_id,2,0,function () {
+                callback(null);
+            },function () {
+                callback('数据库执行错误！');
             })
         }
     ],function (err,results) {

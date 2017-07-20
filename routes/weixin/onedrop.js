@@ -171,34 +171,57 @@ router.post('/sections', function (req, res, next) {
     var user_id = req.body.user_id;
     var page = req.body.page;
 
-    // var query_sql2 = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name," +
-    //     "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
-    //     "d.comment_count from" +
-    //     " (select * from course_section where open_date<Now() order by open_date desc limit "+(page-1)*10+",10)as a left join " +
-    //     "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
-    //     "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
-    //     "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
-    //     "on a.section_id=d.section_id";
-    var query_sql = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name,a.label_des," +
-        "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
-        "d.comment_count from" +
-        " (select * from course_section where open_date between date_sub((select be_date from user where user_id='"+user_id+"'),interval 1 day) and Now() " +
-        "order by open_date desc limit "+(page-1)*7+",7)as a left join " +
-        "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
-        "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
-        "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
-        "on a.section_id=d.section_id";
-    query(query_sql, function (qerr, valls, fields) {
-        if(qerr){
+    var query_class_open_date = "select open_date from class where class_id=(select class_id from class_user where class_state=1 and user_id='"+user_id+"')";
+
+    //根据班级ID查询项目ID，根据项目ID查询项目所对应的课程ID，推送给用户所有项目所对应的课程
+
+    async.waterfall([
+        function (callback) {
+            query(query_class_open_date,function (qerr,valls,fields) {
+                if(qerr){
+                    callback(qerr);
+                }else{
+                    if(valls.length<=0){
+                        callback('数据执行错误！');
+                    }else{
+                        var class_open_date = valls[0].open_date;
+                        class_open_date = Tool.dateFormat(class_open_date);
+                        callback(null,class_open_date);
+                    }
+                }
+            })
+        },
+        function (class_open_date,callback) {
+            var query_sql = "select a.section_id,a.section_list_img,a.section_intro,a.section_voice,a.section_name,a.label_des," +
+                "a.open_date,year(a.open_date)year,month(a.open_date)month,day(a.open_date)day,b.teacher_head,c.appreciate_count," +
+                "d.comment_count from" +
+                " (select * from course_section where open_date < date_sub((select open_date from course_section order by open_date asc limit 1),interval (select datediff('"+class_open_date+"',Now())-1) day) " +
+                "order by open_date desc limit "+(page-1)*7+",7)as a left join " +
+                "(select * from teacher)as b on a.author_id=b.teacher_id left join " +
+                "(select count(*)appreciate_count,section_id from appreciate_course group by section_id)as c on a.section_id=c.section_id " +
+                "left join (select count(*)comment_count,section_id from comment group by section_id)as d " +
+                "on a.section_id=d.section_id";
+            // console.log('querry_sql:',query_sql);
+            query(query_sql, function (qerr, valls, fields) {
+                if(qerr){
+                    callback(qerr);
+                }else{
+                    callback(null,valls);
+                }
+            })
+        }
+    ], function (err,results) {
+        if(err){
             responseDataErr(res);
         }else{
             var response = {
                 status:1,
-                data:valls
+                data:results
             }
             res.json(response);
         }
     })
+
 })
 
 /**

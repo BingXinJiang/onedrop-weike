@@ -869,7 +869,11 @@ router.post('/main/section/comment', function (req, res, next) {
                             msg:'数据插入成功!'
                         }
                     }
-                    res.json(response);
+                    Tool.addRank(user_id,1,2,function () {
+                        res.json(response);
+                    },function () {
+                        responseDataErr(res);
+                    })
                 }
             })
         }

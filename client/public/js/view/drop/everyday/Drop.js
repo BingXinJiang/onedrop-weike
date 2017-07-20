@@ -520,7 +520,7 @@ export default class Drop extends React.Component{
                                                 <p style={{
                                                     fontSize:'20px',
                                                     color:'rgb(102,102,102)'
-                                                }}>{content.year}年{content.month}月{content.day}日 {content.hour}:{content.minute}:{content.second}:</p>
+                                                }}>{content.year}年{content.month}月{content.day}日 {content.hour}:{content.minute}:{content.second}</p>
                                                 <p style={{
                                                     fontSize:'28px',
                                                     color:'rgb(51,51,51)',

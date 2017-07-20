@@ -56,7 +56,12 @@ router.post('/',function (req,res,next) {
                 }
             }
             if(is_learn === 1){
-                Tool.addRank(user_id,10,5,function () {
+                // Tool.addRank(user_id,10,5,function () {
+                //     res.json(response);
+                // },function () {
+                //     responseDataErr(res);
+                // })
+                getScore(user_id,section_id,function () {
                     res.json(response);
                 },function () {
                     responseDataErr(res);
@@ -66,7 +71,99 @@ router.post('/',function (req,res,next) {
             }
         }
     })
-
 })
+
+function getScore(user_id,section_id,success,faillure) {
+
+    var query_sql = "select datetime from schedule_learn where user_id='"+user_id+"' and section_id="+section_id+" and is_learn=1";
+
+    async.waterfall([
+        function (callback) {
+            Tool.addRank(user_id,1,0,function () {
+                callback(null,'ok');
+            },function () {
+                callback('数据库执行错误');
+            })
+        },
+        function (a,callback) {
+            query(query_sql,function (qerr,valls,fields) {
+                if(qerr){
+                    callback(qerr);
+                }else{
+                    callback(null,valls);
+                }
+            })
+        },
+        function (valls,callback) {
+            if(valls.length===0){
+                callback('数据库执行错误');
+            }else if(valls.length===1){
+                Tool.addRank(user_id,0,10,function () {
+                    callback(null,'ok');
+                },function () {
+                    callback('数据库执行错误');
+                })
+            }else{
+                var first_date = new Date(valls[0].datetime);
+                var last_date = new Date(valls[valls.length-1].datetime);
+
+                var days = Tool.getDaysBetweenTwoDate(first_date,last_date);
+
+                var start_date = null;
+                var end_date = null;
+                var isGo = false;
+                var addValue = 0;
+
+                if(days>=42 && days<=49){
+                    start_date = Tool.getDateFromSomeDate(first_date,42);
+                    end_date = Tool.getDateFromSomeDate(first_date,49);
+                    isGo = true;
+                    addValue = 50;
+                }else if(days>=21 && days<=28){
+                    start_date = Tool.getDateFromSomeDate(first_date,21);
+                    end_date = Tool.getDateFromSomeDate(first_date,28);
+                    isGo = true;
+                    addValue = 30;
+                }else if(days>=7 && days<=14){
+                    start_date = Tool.getDateFromSomeDate(first_date,7);
+                    end_date = Tool.getDateFromSomeDate(first_date,14);
+                    isGo = true;
+                    addValue = 20;
+                }else{
+                    isGo = false;
+                }
+
+                if(isGo){
+                    start_date = Tool.dateFormat(start_date);
+                    end_date = Tool.dateFormat(end_date);
+                    var query_sql = "select * from schedule_learn where user_id='"+user_id+"' and section_id="+section_id+" and is_learn=1 and " +
+                        "datetime between '"+start_date+"' and '"+end_date+"'";
+
+                    query(query_sql, function (qerr, valls, fields) {
+                        if(qerr){
+                            callback(qerr);
+                        }else{
+                            if(valls.length===1){
+                                Tool.addRank(user_id,0,addValue,function () {
+                                    callback(null,'ok');
+                                },function () {
+                                    callback('数据库执行错误');
+                                })
+                            }else{
+                                callback(null);
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    ],function (err,results) {
+        if(err){
+            faillure();
+        }else{
+            success();
+        }
+    })
+}
 
 module.exports = router;

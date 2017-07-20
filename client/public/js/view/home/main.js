@@ -25,8 +25,8 @@ class Main extends React.Component{
             isFirst:true,
             selectedTab:'everydrop',
             showQuestion:false,
-            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ' //仕龙
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I' //彩红
             // userId:'oyMAaxFzeZSuZrIGONamja9ARKPg' //邰宏伟
@@ -47,11 +47,10 @@ class Main extends React.Component{
         }
     }
     componentDidMount(){
-        //第一次进来的时候，询问是否是兴业银行员工，搜集电话号码
 
         var self = this;
         /**
-         * 在这里进行员工身份的识别，包括给员工进行分组，等。。。
+         * 在这里进行班级验证
          * */
         $.ajax({
             url:OneDrop.base_url+'/auth/check',
