@@ -1,6 +1,10 @@
 /**
  * Created by jiangsong on 2017/5/24.
  */
+
+
+//未被使用
+
 import React from 'react';
 import OneDrop from '../../../const/onedrop';
 export default class Plan extends React.Component{

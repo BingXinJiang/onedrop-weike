@@ -2,6 +2,8 @@
  * Created by Administrator on 2017/3/29 0029.
  */
 
+//  文件未被使用
+
 require ('weui');
 require('react-weui/lib/react-weui.min.css');
 import React from 'react';

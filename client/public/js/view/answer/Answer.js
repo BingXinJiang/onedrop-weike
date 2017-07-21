@@ -87,41 +87,6 @@ export default class Answer extends React.Component{
                 this.getQuestions(this, this.state.page, this.state.key_id);
             }
         }
-        // console.log('document.body.scrollTop:',document.body.scrollTop);
-        /*
-        this.SCROLLS.push(document.body.scrollTop);
-        if(this.ISTIMER){
-            this.ISTIMER = false;
-            setTimeout(()=>{
-                if(this.SCROLLS.length>3  && this.SCROLLS[this.SCROLLS.length-1]-this.SCROLLS[0]>80){
-                    let singal = true;
-                    for(let i=1;i<this.SCROLLS.length;i++){
-                        if(this.SCROLLS[i]<this.SCROLLS[i-1]){
-                            singal = false;
-                        }
-                    }
-                    if(singal){
-                        $('#drop_push_question').css('top','-170px');
-                        // $('#drop_questions_list').css('marginTop','30px');
-                    }
-                }
-                if(this.SCROLLS.length>2  && this.SCROLLS[0]-this.SCROLLS[this.SCROLLS.length-1]>15){
-                    let singal = true;
-                    for(let i=1;i<this.SCROLLS.length;i++){
-                        if(this.SCROLLS[i]>this.SCROLLS[i-1]){
-                            singal = false;
-                        }
-                    }
-                    if(singal){
-                        $('#drop_push_question').css('top','0px');
-                        // $('#drop_questions_list').css('marginTop','110px');
-                    }
-                }
-                this.ISTIMER = true;
-                this.SCROLLS = [];
-            },300)
-        }
-        */
     }
 
     componentDidMount() {

@@ -123,7 +123,7 @@ router.get('/main', function(req, res, next) {
                                     }
                                 })
                             }
-                            res.render('weixin',{user_id:user_id, access_token:access_token});
+                            res.render('weixin',{user_id:user_id});
                         }
                     })
                 })
@@ -143,9 +143,8 @@ router.get('/main', function(req, res, next) {
 });
 
 /**
- * 支付客户端签名
- * 参数: access_token
- *      jsapi_ticket
+ * 调取本地jssdk接口，请求签名
+ * 参数: location_url
  * */
 router.post('/main/pay/getsign', function (req, res, next) {
     
@@ -261,567 +260,6 @@ router.post('/main/pay/getsign', function (req, res, next) {
 
 })
 
-/**
- * 获取全部课程列表
- * */
-router.get('/main/getcourse', function (req, res, next) {
-
-    var query_sql = "select * from course order by course_id desc";
-
-    query(query_sql, function(qerr, valls, fields){
-        var courses = [];
-
-        valls.map(function(val){
-            var course = new Course();
-            course.course_id = val.course_id;
-            course.title = val.title;
-            course.background_image = val.background_image;
-            course.price = val.price;
-            course.introduction = val.introduction;
-            course.author = val.author;
-            courses.push(course);
-        });
-        var respose  = {
-            status:1,
-            data:{
-                courses:courses
-            }
-        }
-        res.json(respose);
-    })
-    
-    
-});
-
-/**
- * 判断是否是会员
- * 参数:  user_id
- * 返回值: is_member  0 非会员  1 会员
- * */
-router.post('/main/user/is_member', function (req, res, next) {
-    var user_id = req.body.user_id;
-    // console.log('user_id:', user_id);
-    var ismember_sql = "select * from user where user_id = '" + user_id +"'";
-    query(ismember_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0,
-                data:{
-                    msg:'数据库执行失败'
-                }
-            }
-            res.json(response);
-        }else{
-            if(valls.length<=0){
-                var response = {
-                    status:0,
-                    data:{
-                        msg:'数据库异常'
-                    }
-                }
-                res.json(response);
-            }else{
-                var user = valls[0];
-                var is_member = user.is_member;
-                var response = {
-                    status:1,
-                    data:{
-                        is_member:is_member
-                    }
-                }
-                res.json(response);
-            }
-        }
-    })
-})
-
-/**判断user是否是会员,返回查询结果,如果不存在该用户,将该用户信息插入表
- * 返回字段:status 1:已经存在该用户,返回是否是会员的结果
- *              2:不存在该用户,创建用户,
- * */
-router.post('/main/adduser', function (req, res, next) {
-
-    var user_id = req.body.user_id;
-
-    var search_sql = "select * from user where user_id='"+user_id+"'";
-    var add_sql = "insert into user values('" +user_id+"',0,0);";
-
-    query(search_sql, function (qeer, valls, fields) {
-        if(qeer){
-            // console.log(qeer);
-        }else {
-            if(valls.length>0){
-                //已经存在该user_id的用户
-                var user = valls[0];
-                var is_member = user.is_member;
-
-                var response = {
-                    status:1,
-                    data:{
-                        is_member:is_member
-                    }
-                }
-                res.json(response);
-            }else{
-                //该user_id的用户不存在,插入数据库创建新用户
-                query(add_sql, function (qeer, valls, fields) {
-                    if(qeer){
-
-                    }else{
-                        // console.log('新用户创建成功!'+user_id);
-                        var response = {
-                            status:2,
-                            data:{}
-                        }
-                        res.json(response);
-                    }
-                })
-            }
-        }
-    })
-});
-
-/**
- * 非会员用户购买呢课程
- * 参数: user_id   course_id
- * 返回: status  0 失败    1 成功
- * */
-router.post('/main/buy_course', function (req, res, next) {
-    var user_id = req.body.user_id;
-    var course_id = req.body.course_id;
-    // console.log('购买课程,支付成功记录-- user_id:'+user_id+'   course_id:'+course_id+'   time:'+ new Date());
-    //获取表中order_id最大的字段
-    var get_max_sql = "SELECT * FROM order_course ORDER BY order_id DESC LIMIT 1";
-    query(get_max_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0
-            }
-            res.json(response);
-        }else{
-            var order_sql = "INSERT INTO order_course VALUES(1,'"+user_id+"',"+course_id+",NOW()";
-            if(valls.length<=0){
-                //数据库没有订单,则插入订单编号从1开始
-            }else{
-                var order = valls[0];
-                var max = order.order_id;
-                var new_max = max + 1;
-                order_sql = "INSERT INTO order_course VALUES("+new_max+",'"+user_id+"',"+course_id+",NOW())";
-            }
-            query(order_sql, function (qerr, valls, fields) {
-                if(qerr){
-                    var response = {
-                        status:0
-                    }
-                    res.json(response);
-                }else{
-                    var response = {
-                        status:1
-                    }
-                    res.json(response);
-                }
-            })
-        }
-    })
-})
-
-/**
- * 判断非会员用户是否购买课程
- * 参数: user_id  course_id
- * 返回值: is_buy : 0 没有购买, 1 已经购买
- * */
-router.post('/main/is_buy', function (req, res, next) {
-    var user_id = req.body.user_id;
-    var course_id = req.body.course_id;
-
-    var is_buy_sql = "select * from order_course where user_id='"+user_id+"' and course_id="+course_id;
-
-    query(is_buy_sql, function (qerr, valls, fields) {
-        if(qerr){
-
-        }else{
-            if(valls.length>0 && valls[0].buy_done == 1){
-                var response = {
-                    status:1,
-                    data:{
-                        is_buy:1
-                    }
-                }
-                res.json(response);
-            }else{
-                var response = {
-                    status:1,
-                    data:{
-                        is_buy:0
-                    }
-                }
-                res.json(response);
-            }
-        }
-    })
-
-})
-
-/**
- * 获取课程介绍
- * 参数: user_id   course_id
- * status:1  返回课程详情
- * status:2  返回课程的学习记录
- * */
-router.post('/main/getcoursedetail', function (req, res, next) {
-
-    var user_id = req.body.user_id;
-    var course_id = req.body.course_id;
-
-    //查询课程详情
-    var course_sql = "select * from course where course_id =" + course_id;
-    //查询课程学习进度
-    var schedule_sql = "select * from course_schedule where course_id = " + course_id + " and user_id = '" + user_id+"'" ;
-    //查询章节详情
-    var section_sql = "select * from course_section where course_id = " + course_id +" order by chapter_num, section_num";
-    query(schedule_sql, function (qerr, valls, fields) {
-        if(qerr){
-
-        }else{
-            var single = false;//说明没有学习过
-            if(valls.length<=0){
-
-            }else{
-                if(valls[0].course_section_id === 0){
-
-                }else{
-                    single = true;
-                }
-            }
-
-            if(single){
-                //已经学习过该课程,显示学习界面
-                var schedule = valls[0];
-                var progress = schedule.course_section_id;
-                
-                var response = {
-                    status:2,
-                    data:{
-                        progress:progress
-                    }
-                }
-                res.json(response);
-            }else{
-                //没有该课程的学习记录
-                query(course_sql, function (qerr, valls, fields) {
-                    if(qerr){
-
-                    }else{
-                        var course = valls[0];
-                        query(section_sql, function (qerr, valls, fields) {
-                            if(qerr){
-                                var response = {
-                                    status:0,
-                                    data:{
-                                        msg:'数据库执行错误'
-                                    }
-                                }
-                                res.json(response);
-                            }else{
-                                var courseData = [];
-                                var single = true;
-                                var index = valls[0].chapter_num;
-                                while (single){
-                                    var chapterData = [];
-                                    valls.map(function (section) {
-                                        if(section.chapter_num === index){
-                                            chapterData.push(section);
-                                        }
-                                    })
-                                    index++;
-                                    if(chapterData.length <= 0){
-                                        single = false;
-                                    }else {
-                                        courseData.push(chapterData);
-                                    }
-                                }
-
-                                var response = {
-                                    status:1,
-                                    data:{
-                                        course:course,
-                                        chapters:courseData
-                                    }
-                                }
-                                res.json(response);
-                            }
-                        })
-                    }
-                })
-            }
-        }
-    })
-
-});
-
-/**
- * 获取课程的每个章节,并能体现当前的学习进度
- * 接收字段:
- *        course_id
- *        user_id
- * */
-router.post('/main/getsection', function(req, res, next){
-    
-    var course_id = req.body.course_id;
-    var user_id = req.body.user_id;
-    
-    // var section_sql = "select * from course_section where course_id = " + course_id +" order by chapter_num, section_num";
-    var course_sql = "select detail_bg_image from course where course_id = " + course_id;
-
-    // var section_sql = "select a.*,b.is_learn from (" +
-    //     "(select * from course_section)as a left join " +
-    //     "(select user_id,section_id,is_learn from schedule_learn)as b " +
-    //     "on a.section_id = b.section_id) " +
-    //     "where course_id="+course_id+" and user_id='"+user_id+"' order by chapter_num, section_num";
-
-    var section_sql = "select (Now()>a.open_date)is_open,a.*,b.is_learn from (" +
-        "(select * from course_section)as a left join " +
-        "(select user_id,section_id,is_learn from schedule_learn where user_id='"+user_id+"')as b " +
-        "on a.section_id = b.section_id) " +
-        "where a.course_id="+course_id+" order by a.chapter_num, a.section_num";
-
-    // console.log('section_sql:', section_sql);
-
-    query(section_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0,
-                data:{
-                    msg:'数据库执行错误1'
-                }
-            }
-            res.json(response);
-        }else{
-            var courseData = [];
-            var single = true;
-            var index = valls[0].chapter_num;
-            while (single){
-                var chapterData = [];
-                valls.map(function (section) {
-                    if(section.chapter_num === index){
-                        chapterData.push(section);
-                    }
-                })
-                index++;
-                if(chapterData.length <= 0){
-                    single = false;
-                }else {
-                    courseData.push(chapterData);
-                }
-            }
-            
-            query(course_sql, function (qerr, valls, fields) {
-                if(qerr){
-                    var response = {
-                        status:0,
-                        data:{
-                            msg:'数据库执行错误2'
-                        }
-                    }
-                    res.json(response);
-                }else{
-                    var course_image = '';
-                    if(valls.length>0){
-                        course_image = valls[0].detail_bg_image;
-                    }
-                    var response = {
-                        status:1,
-                        data:{
-                            chapters:courseData,
-                            course_image:course_image
-                        }
-                    }
-                    res.json(response);
-                }
-            })
-
-
-        }
-    })
-});
-
-/**
- * 获取章节的详细信息
- * 参数: section_id
- * */
-router.post('/main/one_section', function (req, res, next) {
-    var section_id = req.body.section_id;
-
-    var search_sql = "select * from course_section where section_id = "+section_id;
-
-    query(search_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0,
-                data:{
-                    msg:'数据库查询失败'
-                }
-            }
-            res.json(response);
-        }else{
-            var section = valls[0];
-            var response = {
-                status:1,
-                data:{
-                    section:section
-                }
-            }
-            res.json(response);
-        }
-    })
-})
-
-/**
- * 成为会员,支付成功后调用接口
- * 参数: user_id
- * */
-router.post('/main/bemember', function (req, res, next) {
-    var user_id = req.body.user_id;
-
-    var user_sql = "update user set is_member = 1, member_datetime = now() where user_id = '" + user_id+"'";
-    // console.log('成为会员:'+user_id+'   '+ new Date());
-    query(user_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0
-            }
-            res.json(response);
-        }else{
-            var response = {
-                status:1
-            }
-            res.json(response);
-        }
-    })
-});
-
-/**
- * 点击我要学习按钮, 在course_schedule表,增加一条记录
- * 参数: user_id   course_id
- * */
-router.post('/main/section/tolearn', function(req, res, next){
-    var user_id = req.body.user_id;
-    var course_id = req.body.course_id;
-
-    var is_learn_sql = "select * from course_schedule where user_id = '"+user_id+"' and course_id = "+course_id;
-    var tolearn_sql = "insert into course_schedule values('"+user_id+"',"+course_id+",0)";
-
-    query(is_learn_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0,
-                data:{
-                    msg:'判断是否学习过课程,数据库查询失败!'
-                }
-            }
-            res.json(response);
-        }else{
-            if(valls.length<=0){
-                query(tolearn_sql, function (qerr, valls, fields) {
-                    if(qerr){
-                        var response = {
-                            status:0,
-                            data:{
-                                msg:'插入数据失败'
-                            }
-                        }
-                        res.json(response);
-                    }else{
-                        var response = {
-                            status:1,
-                            data:{
-                                msg:'数据插入成功!'
-                            }
-                        }
-                        res.json(response);
-                    }
-                })
-            }else{
-                var response = {
-                    status:1,
-                    data:{
-                        msg:'已经存在该条数据!!!'
-                    }
-                }
-                res.json(response);
-            }
-        }
-    })
-
-});
-
-/**
- * 点击某一个课程学习, 更新course_schedule 表
- * 参数: user_id  course_id  course_section_id
- * */
-router.post('/main/section/learn', function (req, res, next) {
-    var user_id = req.body.user_id;
-    var course_id = req.body.course_id;
-    var course_section_id = req.body.course_section_id;
-
-    var search_sql = "select * from course_schedule where user_id='"+user_id+"' and course_id="+course_id;
-    var search2_sql = "select * from schedule_learn where user_id='"+user_id+"' and section_id = "+course_section_id;
-    var learn_sql = "update course_schedule set course_section_id="+course_section_id+" where user_id='"+user_id+"' and course_id="+course_id;
-    var insert_sql = "insert into schedule_learn values('"+user_id+"',"+course_section_id+",1,Now())";
-
-    query(search_sql, function (qerr, valls, fields) {
-        if(qerr){
-            var response = {
-                status:0,
-                data:{
-                    msg:'查询数据失败!'
-                }
-            }
-        }else{
-            if(valls.length<=0){
-                var response = {
-                    status:1,
-                    data:{
-                        msg:'没有学习新课程!'
-                    }
-                }
-                res.json(response);
-            }else {
-                query(learn_sql, function (qerr, valls, fields) {
-                    if(qerr){
-                        var response = {
-                            status:0,
-                            data:{
-                                msg:'获取数据失败!'
-                            }
-                        }
-                        res.json(response);
-                    }else{
-                        query(insert_sql, function (qerr, valls, fields) {
-                            if(qerr){
-                                var response = {
-                                    status:0,
-                                    data:{
-                                        msg:'获取数据失败!'
-                                    }
-                                }
-                                res.json(response);
-                            }else {
-                                var response = {
-                                    status:1,
-                                    data:{
-                                        msg:'数据更新成功!'
-                                    }
-                                }
-                                res.json(response);
-                            }
-                        })
-                    }
-                })
-            }
-        }
-    })
-});
 
 /**
  * 提交评论
@@ -915,14 +353,621 @@ router.post('/main/section/get_comment', function (req, res, next) {
     })
 })
 
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * 获取全部课程列表                                                         未使用
+ * */
+/*
+router.get('/main/getcourse', function (req, res, next) {
+
+    var query_sql = "select * from course order by course_id desc";
+
+    query(query_sql, function(qerr, valls, fields){
+        var courses = [];
+
+        valls.map(function(val){
+            var course = new Course();
+            course.course_id = val.course_id;
+            course.title = val.title;
+            course.background_image = val.background_image;
+            course.price = val.price;
+            course.introduction = val.introduction;
+            course.author = val.author;
+            courses.push(course);
+        });
+        var respose  = {
+            status:1,
+            data:{
+                courses:courses
+            }
+        }
+        res.json(respose);
+    })
+
+
+});  */
+
+/**
+ * 判断是否是会员
+ * 参数:  user_id
+ * 返回值: is_member  0 非会员  1 会员                                      未使用
+ * */
+/*
+router.post('/main/user/is_member', function (req, res, next) {
+    var user_id = req.body.user_id;
+    // console.log('user_id:', user_id);
+    var ismember_sql = "select * from user where user_id = '" + user_id +"'";
+    query(ismember_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0,
+                data:{
+                    msg:'数据库执行失败'
+                }
+            }
+            res.json(response);
+        }else{
+            if(valls.length<=0){
+                var response = {
+                    status:0,
+                    data:{
+                        msg:'数据库异常'
+                    }
+                }
+                res.json(response);
+            }else{
+                var user = valls[0];
+                var is_member = user.is_member;
+                var response = {
+                    status:1,
+                    data:{
+                        is_member:is_member
+                    }
+                }
+                res.json(response);
+            }
+        }
+    })
+})      */
+
+/**判断user是否是会员,返回查询结果,如果不存在该用户,将该用户信息插入表
+ * 返回字段:status 1:已经存在该用户,返回是否是会员的结果
+ *              2:不存在该用户,创建用户,                                                  未使用
+ * */
+/*
+router.post('/main/adduser', function (req, res, next) {
+
+    var user_id = req.body.user_id;
+
+    var search_sql = "select * from user where user_id='"+user_id+"'";
+    var add_sql = "insert into user values('" +user_id+"',0,0);";
+
+    query(search_sql, function (qeer, valls, fields) {
+        if(qeer){
+            // console.log(qeer);
+        }else {
+            if(valls.length>0){
+                //已经存在该user_id的用户
+                var user = valls[0];
+                var is_member = user.is_member;
+
+                var response = {
+                    status:1,
+                    data:{
+                        is_member:is_member
+                    }
+                }
+                res.json(response);
+            }else{
+                //该user_id的用户不存在,插入数据库创建新用户
+                query(add_sql, function (qeer, valls, fields) {
+                    if(qeer){
+
+                    }else{
+                        // console.log('新用户创建成功!'+user_id);
+                        var response = {
+                            status:2,
+                            data:{}
+                        }
+                        res.json(response);
+                    }
+                })
+            }
+        }
+    })
+});      */
+
+/**
+ * 非会员用户购买呢课程
+ * 参数: user_id   course_id
+ * 返回: status  0 失败    1 成功                                         未使用
+ * */
+/*
+router.post('/main/buy_course', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var course_id = req.body.course_id;
+    // console.log('购买课程,支付成功记录-- user_id:'+user_id+'   course_id:'+course_id+'   time:'+ new Date());
+    //获取表中order_id最大的字段
+    var get_max_sql = "SELECT * FROM order_course ORDER BY order_id DESC LIMIT 1";
+    query(get_max_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0
+            }
+            res.json(response);
+        }else{
+            var order_sql = "INSERT INTO order_course VALUES(1,'"+user_id+"',"+course_id+",NOW()";
+            if(valls.length<=0){
+                //数据库没有订单,则插入订单编号从1开始
+            }else{
+                var order = valls[0];
+                var max = order.order_id;
+                var new_max = max + 1;
+                order_sql = "INSERT INTO order_course VALUES("+new_max+",'"+user_id+"',"+course_id+",NOW())";
+            }
+            query(order_sql, function (qerr, valls, fields) {
+                if(qerr){
+                    var response = {
+                        status:0
+                    }
+                    res.json(response);
+                }else{
+                    var response = {
+                        status:1
+                    }
+                    res.json(response);
+                }
+            })
+        }
+    })
+})           */
+
+/**
+ * 判断非会员用户是否购买课程
+ * 参数: user_id  course_id
+ * 返回值: is_buy : 0 没有购买, 1 已经购买                                   未使用
+ * */
+/*
+router.post('/main/is_buy', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var course_id = req.body.course_id;
+
+    var is_buy_sql = "select * from order_course where user_id='"+user_id+"' and course_id="+course_id;
+
+    query(is_buy_sql, function (qerr, valls, fields) {
+        if(qerr){
+
+        }else{
+            if(valls.length>0 && valls[0].buy_done == 1){
+                var response = {
+                    status:1,
+                    data:{
+                        is_buy:1
+                    }
+                }
+                res.json(response);
+            }else{
+                var response = {
+                    status:1,
+                    data:{
+                        is_buy:0
+                    }
+                }
+                res.json(response);
+            }
+        }
+    })
+
+})         */
+
+/**
+ * 获取课程介绍
+ * 参数: user_id   course_id
+ * status:1  返回课程详情
+ * status:2  返回课程的学习记录                                          未使用
+ * */
+/*
+router.post('/main/getcoursedetail', function (req, res, next) {
+
+    var user_id = req.body.user_id;
+    var course_id = req.body.course_id;
+
+    //查询课程详情
+    var course_sql = "select * from course where course_id =" + course_id;
+    //查询课程学习进度
+    var schedule_sql = "select * from course_schedule where course_id = " + course_id + " and user_id = '" + user_id+"'" ;
+    //查询章节详情
+    var section_sql = "select * from course_section where course_id = " + course_id +" order by chapter_num, section_num";
+    query(schedule_sql, function (qerr, valls, fields) {
+        if(qerr){
+
+        }else{
+            var single = false;//说明没有学习过
+            if(valls.length<=0){
+
+            }else{
+                if(valls[0].course_section_id === 0){
+
+                }else{
+                    single = true;
+                }
+            }
+
+            if(single){
+                //已经学习过该课程,显示学习界面
+                var schedule = valls[0];
+                var progress = schedule.course_section_id;
+                
+                var response = {
+                    status:2,
+                    data:{
+                        progress:progress
+                    }
+                }
+                res.json(response);
+            }else{
+                //没有该课程的学习记录
+                query(course_sql, function (qerr, valls, fields) {
+                    if(qerr){
+
+                    }else{
+                        var course = valls[0];
+                        query(section_sql, function (qerr, valls, fields) {
+                            if(qerr){
+                                var response = {
+                                    status:0,
+                                    data:{
+                                        msg:'数据库执行错误'
+                                    }
+                                }
+                                res.json(response);
+                            }else{
+                                var courseData = [];
+                                var single = true;
+                                var index = valls[0].chapter_num;
+                                while (single){
+                                    var chapterData = [];
+                                    valls.map(function (section) {
+                                        if(section.chapter_num === index){
+                                            chapterData.push(section);
+                                        }
+                                    })
+                                    index++;
+                                    if(chapterData.length <= 0){
+                                        single = false;
+                                    }else {
+                                        courseData.push(chapterData);
+                                    }
+                                }
+
+                                var response = {
+                                    status:1,
+                                    data:{
+                                        course:course,
+                                        chapters:courseData
+                                    }
+                                }
+                                res.json(response);
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+
+});            */
+
+/**
+ * 获取课程的每个章节,并能体现当前的学习进度
+ * 接收字段:
+ *        course_id
+ *        user_id                                                     未使用
+ * */
+/*
+router.post('/main/getsection', function(req, res, next){
+    
+    var course_id = req.body.course_id;
+    var user_id = req.body.user_id;
+    
+    // var section_sql = "select * from course_section where course_id = " + course_id +" order by chapter_num, section_num";
+    var course_sql = "select detail_bg_image from course where course_id = " + course_id;
+
+    // var section_sql = "select a.*,b.is_learn from (" +
+    //     "(select * from course_section)as a left join " +
+    //     "(select user_id,section_id,is_learn from schedule_learn)as b " +
+    //     "on a.section_id = b.section_id) " +
+    //     "where course_id="+course_id+" and user_id='"+user_id+"' order by chapter_num, section_num";
+
+    var section_sql = "select (Now()>a.open_date)is_open,a.*,b.is_learn from (" +
+        "(select * from course_section)as a left join " +
+        "(select user_id,section_id,is_learn from schedule_learn where user_id='"+user_id+"')as b " +
+        "on a.section_id = b.section_id) " +
+        "where a.course_id="+course_id+" order by a.chapter_num, a.section_num";
+
+    // console.log('section_sql:', section_sql);
+
+    query(section_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0,
+                data:{
+                    msg:'数据库执行错误1'
+                }
+            }
+            res.json(response);
+        }else{
+            var courseData = [];
+            var single = true;
+            var index = valls[0].chapter_num;
+            while (single){
+                var chapterData = [];
+                valls.map(function (section) {
+                    if(section.chapter_num === index){
+                        chapterData.push(section);
+                    }
+                })
+                index++;
+                if(chapterData.length <= 0){
+                    single = false;
+                }else {
+                    courseData.push(chapterData);
+                }
+            }
+            
+            query(course_sql, function (qerr, valls, fields) {
+                if(qerr){
+                    var response = {
+                        status:0,
+                        data:{
+                            msg:'数据库执行错误2'
+                        }
+                    }
+                    res.json(response);
+                }else{
+                    var course_image = '';
+                    if(valls.length>0){
+                        course_image = valls[0].detail_bg_image;
+                    }
+                    var response = {
+                        status:1,
+                        data:{
+                            chapters:courseData,
+                            course_image:course_image
+                        }
+                    }
+                    res.json(response);
+                }
+            })
+
+
+        }
+    })
+});       */
+
+/**
+ * 获取章节的详细信息
+ * 参数: section_id                                                  未使用
+ * */
+/*
+router.post('/main/one_section', function (req, res, next) {
+    var section_id = req.body.section_id;
+
+    var search_sql = "select * from course_section where section_id = "+section_id;
+
+    query(search_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0,
+                data:{
+                    msg:'数据库查询失败'
+                }
+            }
+            res.json(response);
+        }else{
+            var section = valls[0];
+            var response = {
+                status:1,
+                data:{
+                    section:section
+                }
+            }
+            res.json(response);
+        }
+    })
+})       */
+
+/**
+ * 成为会员,支付成功后调用接口
+ * 参数: user_id                                                       未使用
+ * */
+/*
+router.post('/main/bemember', function (req, res, next) {
+    var user_id = req.body.user_id;
+
+    var user_sql = "update user set is_member = 1, member_datetime = now() where user_id = '" + user_id+"'";
+    // console.log('成为会员:'+user_id+'   '+ new Date());
+    query(user_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0
+            }
+            res.json(response);
+        }else{
+            var response = {
+                status:1
+            }
+            res.json(response);
+        }
+    })
+});     */
+
+/**
+ * 点击我要学习按钮, 在course_schedule表,增加一条记录
+ * 参数: user_id   course_id                                           未使用
+ * */
+/*
+router.post('/main/section/tolearn', function(req, res, next){
+    var user_id = req.body.user_id;
+    var course_id = req.body.course_id;
+
+    var is_learn_sql = "select * from course_schedule where user_id = '"+user_id+"' and course_id = "+course_id;
+    var tolearn_sql = "insert into course_schedule values('"+user_id+"',"+course_id+",0)";
+
+    query(is_learn_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0,
+                data:{
+                    msg:'判断是否学习过课程,数据库查询失败!'
+                }
+            }
+            res.json(response);
+        }else{
+            if(valls.length<=0){
+                query(tolearn_sql, function (qerr, valls, fields) {
+                    if(qerr){
+                        var response = {
+                            status:0,
+                            data:{
+                                msg:'插入数据失败'
+                            }
+                        }
+                        res.json(response);
+                    }else{
+                        var response = {
+                            status:1,
+                            data:{
+                                msg:'数据插入成功!'
+                            }
+                        }
+                        res.json(response);
+                    }
+                })
+            }else{
+                var response = {
+                    status:1,
+                    data:{
+                        msg:'已经存在该条数据!!!'
+                    }
+                }
+                res.json(response);
+            }
+        }
+    })
+
+});       */
+
+/**
+ * 点击某一个课程学习, 更新course_schedule 表
+ * 参数: user_id  course_id  course_section_id                         未使用
+ * */
+/*
+router.post('/main/section/learn', function (req, res, next) {
+    var user_id = req.body.user_id;
+    var course_id = req.body.course_id;
+    var course_section_id = req.body.course_section_id;
+
+    var search_sql = "select * from course_schedule where user_id='"+user_id+"' and course_id="+course_id;
+    var search2_sql = "select * from schedule_learn where user_id='"+user_id+"' and section_id = "+course_section_id;
+    var learn_sql = "update course_schedule set course_section_id="+course_section_id+" where user_id='"+user_id+"' and course_id="+course_id;
+    var insert_sql = "insert into schedule_learn values('"+user_id+"',"+course_section_id+",1,Now())";
+
+    query(search_sql, function (qerr, valls, fields) {
+        if(qerr){
+            var response = {
+                status:0,
+                data:{
+                    msg:'查询数据失败!'
+                }
+            }
+        }else{
+            if(valls.length<=0){
+                var response = {
+                    status:1,
+                    data:{
+                        msg:'没有学习新课程!'
+                    }
+                }
+                res.json(response);
+            }else {
+                query(learn_sql, function (qerr, valls, fields) {
+                    if(qerr){
+                        var response = {
+                            status:0,
+                            data:{
+                                msg:'获取数据失败!'
+                            }
+                        }
+                        res.json(response);
+                    }else{
+                        query(insert_sql, function (qerr, valls, fields) {
+                            if(qerr){
+                                var response = {
+                                    status:0,
+                                    data:{
+                                        msg:'获取数据失败!'
+                                    }
+                                }
+                                res.json(response);
+                            }else {
+                                var response = {
+                                    status:1,
+                                    data:{
+                                        msg:'数据更新成功!'
+                                    }
+                                }
+                                res.json(response);
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+});                 */
+
+
+
 /**
  * 微信支付测试接口
  * 参数: 商品body
  *支付场景:
  *          1、非会员用户购买课程,参数: user_id course_id
- *          2、商品价格,单位为分 price
+ *          2、商品价格,单位为分 price                                  未使用
  * */
 //支付接口: https://api.mch.weixin.qq.com/pay/unifiedorder
+/*
 router.post('/main/real/pay/', function (req, res, next) {
 
     var user_id = req.body.user_id;
@@ -1062,15 +1107,16 @@ router.post('/main/real/pay/', function (req, res, next) {
             }
         }
     })
-});
+});                   */
 /**
  * 微信支付测试接口
  * 参数: 商品body
  *支付场景:
  *          1、非会员用户购买会员,参数: user_id
- *          2、商品价格,单位为分 price
+ *          2、商品价格,单位为分 price                                   未使用
  * */
 //支付接口: https://api.mch.weixin.qq.com/pay/unifiedorder
+/*
 router.post('/main/real/pay_member/', function (req, res, next) {
     var user_id = req.body.user_id;
     var price = req.body.price;
@@ -1207,12 +1253,13 @@ router.post('/main/real/pay_member/', function (req, res, next) {
             }
         }
     })
-});
+});                  */
 
 /**
  * 支付成功回调
- * 场景: 非会员购买课程
+ * 场景: 非会员购买课程                                                 未使用
  * */
+/*
 router.post('/main/real/pay/back', function (req, res, next) {
     // console.log('支付回调返回')
     // console.log('query:',req.query);
@@ -1223,11 +1270,12 @@ router.post('/main/real/pay/back', function (req, res, next) {
         '<return_msg>OK</return_msg></xml>';
     res.send(xmlData);
 
-})
+})       */
 /**
  * 支付成功回调
- * 场景: 非会员购买会员
+ * 场景: 非会员购买会员                                                 未使用
  * */
+/*
 router.post('/main/real/pay/member_back', function (req, res, next) {
     // console.log('支付回调返回')
     // console.log('query:',req.query);
@@ -1237,14 +1285,15 @@ router.post('/main/real/pay/member_back', function (req, res, next) {
         '<return_code>SUCCESS</return_code>' +
         '<return_msg>OK</return_msg></xml>'
     res.send(xmlData);
-})
+})              */
 
 /**
  * 判断用户的状态，
  *   member_status  1.兴业员工，
  *                  2、非兴业员工
- *                  3、第一次登陆
+ *                  3、第一次登陆                                        未使用
  * */
+/*
 router.post('/onedrop/xingye', function (req, res, next) {
     var user_id = req.body.user_id;
     var query_sql = "select is_xingye_member, phone_num from user where user_id = '"+user_id+"'";
@@ -1277,15 +1326,16 @@ router.post('/onedrop/xingye', function (req, res, next) {
             res.send(response);
         }
     })
-})
+})               */
 
 /**
  * 兴业员工或者非兴业员工录入个人的编号
  *          参数： 1、user_id
  *                2、is_xingye_member //0或者1
- *                3、xingye_num //0或者具体的值(有效的电话号码)，
+ *                3、xingye_num //0或者具体的值(有效的电话号码)，                    未使用
  *
  * */
+/*
 router.post('/onedrop/user_info', function (req, res, next) {
     var user_id = req.body.user_id;
     var is_xingye_member = Number(req.body.is_xingye_member);
@@ -1323,6 +1373,5 @@ function responseDataErr(res) {
         }
     }
     res.json(response);
-}
+}           */
 
-module.exports = router;

@@ -1,6 +1,10 @@
 /**
  * Created by jiangsong on 2017/4/10.
  */
+
+
+//文件未被使用
+
 require ('weui');
 require('react-weui/lib/react-weui.min.css');
 import React from 'react';

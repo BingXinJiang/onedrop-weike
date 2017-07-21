@@ -1,6 +1,10 @@
 /**
  * Created by jiangsong on 2017/6/2.
  */
+
+
+//未被使用
+
 import React from 'react';
 import OneDrop from '../../../const/onedrop';
 
