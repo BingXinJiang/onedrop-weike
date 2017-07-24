@@ -25,109 +25,7 @@ function responseDataErr(res) {
     }
     res.json(response);
 }
-/**
- * 获取banner图的链接
- * GET 请求
- * */
-router.get('/active', function (req, res, next) {
-    //查询数据库，找到时间最新的一期active
-    //active_type  1：课程  2：三件事  3：测评
-    var query_sql = "select * from active order by active_time limit 1";
-    query(query_sql, function (qerr, valls, next) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            if(valls.length<=0){
-                responseDataErr(res);
-            }else{
-                var active = valls[0];
-                var response = {
-                    status:1,
-                    data:active
-                }
-                res.json(response);
-            }
-        }
-    })
-})
-/**
- * 获取首页一滴每一天推送的课程
- * 参数：user_id
- * */
-router.post('/section', function (req, res, next) {
-    var user_id = req.body.user_id;
-    // console.log('user_id:', user_id);
 
-    var query_sql = "select year(open_date)year,month(open_date)month,day(open_date)day," +
-        "course_id,section_id,course_author,section_name,section_des,open_date from course_section " +
-        "where open_date<Now() and open_date != 0 order by open_date desc ";
-        // "group by year,month,day";
-
-    // console.log('query_sql:',query_sql);
-    query(query_sql, function (qerr, valls, fields) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            if(valls.length<=0){
-                responseDataErr(res);
-            }else{
-                var newValls = [];
-                valls.map(function (content, index) {
-                    content.calender_time = content.year +'-'+ content.month +'-'+ content.day;
-                    newValls.push(content);
-                })
-
-                var courses = [];
-                var index_time = newValls[0].calender_time;
-                var cells = [];
-                for(var j=0; j<newValls.length; j++){
-                    if(newValls[j].calender_time === index_time){
-                        cells.push(newValls[j]);
-                    }else{
-                        courses.push(cells);
-                        cells = [];
-                        index_time = newValls[j].calender_time;
-                        cells.push(newValls[j]);
-                    }
-                    if(j === newValls.length-1){
-                        courses.push(cells);
-                    }
-                }
-
-                var response = {
-                    status:1,
-                    data:courses
-                }
-                res.json(response);
-            }
-        }
-    })
-})
-
-/**
- * 获取某一小节的详情信息
- * 参数：section_id
- * */
-router.post('/section/detail', function (req, res, next) {
-    var section_id = req.body.section_id;
-
-    var query_sql = "select * from course_section where section_id = "+section_id;
-    query(query_sql, function (qerr, valls, fields) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            if(valls.length<=0){
-                responseDataErr(res);
-            }else{
-                var response = {
-                    status:1,
-                    data:valls[0]
-                }
-                res.json(response);
-            }
-        }
-    })
-})
 
 /**
  * 获取当天推送的某一小节的具体信息
@@ -224,69 +122,205 @@ router.post('/sections', function (req, res, next) {
 
 })
 
-/**
- * 提交自赞的接口
- * 参数： user_id  section_id  appreciate_value
- * */
-router.post('/appreciate/mine', function (req,res,next) {
-    var user_id = req.body.user_id;
-    var section_id = req.body.section_id;
-    var appreciate_value = req.body.appreciate_value;
 
-    //将自赞的数据插入数据库,每个课程,可以给自己多条自赞
-    var appreciate_id = (new Date()).getTime() + '' + parseInt(Math.random()*100000);
-    var insert_sql = "insert into appreciate_mine(" +
-        "appreciate_id,user_id,section_id,appreciate_time,appreciate_value) " +
-        "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now(),"+appreciate_value+")";
-    // console.log('提交自赞的接口执行sql:',insert_sql);
-    query(insert_sql, function (qerr, valls, fields) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            var response = {
-                status:1,
-                data:{
-                    msg:'success'
-                }
-            }
-            Tool.addRank(user_id,1,0,function () {
-                res.json(response);
-            },function () {
-                responseDataErr(res);
-            })
-        }
-    })
-})
-/**
- * 提交给课程点赞的接口
- * 参数: user_id section_id
- * */
-router.post('/appreciate/course', function (req, res, next) {
-    var user_id = req.body.user_id;
-    var section_id = req.body.section_id;
 
-    //给课程点赞,同一个用户,重复进入该页面,可以重复点赞
-    var appreciate_id = (new Date()).getTime() + '' + parseInt(Math.random()*100000);
-    var insert_sql = "insert into appreciate_course(" +
-        "appreciate_id,user_id,section_id,appreciate_time) " +
-        "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now())";
-    query(insert_sql, function (qerr, valls, fields) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            var response = {
-                status:1,
-                data:{
-                    msg:'success'
-                }
-            }
-            Tool.addRank(user_id,1,0,function () {
-                res.json(response);
-            },function () {
-                responseDataErr(res);
-            })
-        }
-    })
-})
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * 获取首页一滴每一天推送的课程
+ * 参数：user_id                                               未使用
+ * */
+/*
+ router.post('/section', function (req, res, next) {
+ var user_id = req.body.user_id;
+ // console.log('user_id:', user_id);
+
+ var query_sql = "select year(open_date)year,month(open_date)month,day(open_date)day," +
+ "course_id,section_id,course_author,section_name,section_des,open_date from course_section " +
+ "where open_date<Now() and open_date != 0 order by open_date desc ";
+ // "group by year,month,day";
+
+ // console.log('query_sql:',query_sql);
+ query(query_sql, function (qerr, valls, fields) {
+ if(qerr){
+ responseDataErr(res);
+ }else{
+ if(valls.length<=0){
+ responseDataErr(res);
+ }else{
+ var newValls = [];
+ valls.map(function (content, index) {
+ content.calender_time = content.year +'-'+ content.month +'-'+ content.day;
+ newValls.push(content);
+ })
+
+ var courses = [];
+ var index_time = newValls[0].calender_time;
+ var cells = [];
+ for(var j=0; j<newValls.length; j++){
+ if(newValls[j].calender_time === index_time){
+ cells.push(newValls[j]);
+ }else{
+ courses.push(cells);
+ cells = [];
+ index_time = newValls[j].calender_time;
+ cells.push(newValls[j]);
+ }
+ if(j === newValls.length-1){
+ courses.push(cells);
+ }
+ }
+
+ var response = {
+ status:1,
+ data:courses
+ }
+ res.json(response);
+ }
+ }
+ })
+ })  */
+
+
+/**
+ * 获取某一小节的详情信息
+ * 参数：section_id                                                 未使用
+ * */
+/*
+ router.post('/section/detail', function (req, res, next) {
+ var section_id = req.body.section_id;
+
+ var query_sql = "select * from course_section where section_id = "+section_id;
+ query(query_sql, function (qerr, valls, fields) {
+ if(qerr){
+ responseDataErr(res);
+ }else{
+ if(valls.length<=0){
+ responseDataErr(res);
+ }else{
+ var response = {
+ status:1,
+ data:valls[0]
+ }
+ res.json(response);
+ }
+ }
+ })
+ })       */
+
+/**
+ * 提交自赞的接口
+ * 参数： user_id  section_id  appreciate_value                 未使用
+ * */
+/*
+ router.post('/appreciate/mine', function (req,res,next) {
+ var user_id = req.body.user_id;
+ var section_id = req.body.section_id;
+ var appreciate_value = req.body.appreciate_value;
+
+ //将自赞的数据插入数据库,每个课程,可以给自己多条自赞
+ var appreciate_id = (new Date()).getTime() + '' + parseInt(Math.random()*100000);
+ var insert_sql = "insert into appreciate_mine(" +
+ "appreciate_id,user_id,section_id,appreciate_time,appreciate_value) " +
+ "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now(),"+appreciate_value+")";
+ // console.log('提交自赞的接口执行sql:',insert_sql);
+ query(insert_sql, function (qerr, valls, fields) {
+ if(qerr){
+ responseDataErr(res);
+ }else{
+ var response = {
+ status:1,
+ data:{
+ msg:'success'
+ }
+ }
+ Tool.addRank(user_id,1,0,function () {
+ res.json(response);
+ },function () {
+ responseDataErr(res);
+ })
+ }
+ })
+ })        */
+
+/**
+ * 提交给课程点赞的接口
+ * 参数: user_id section_id                       未使用
+ * */
+/*
+ router.post('/appreciate/course', function (req, res, next) {
+ var user_id = req.body.user_id;
+ var section_id = req.body.section_id;
+
+ //给课程点赞,同一个用户,重复进入该页面,可以重复点赞
+ var appreciate_id = (new Date()).getTime() + '' + parseInt(Math.random()*100000);
+ var insert_sql = "insert into appreciate_course(" +
+ "appreciate_id,user_id,section_id,appreciate_time) " +
+ "values('"+appreciate_id+"','"+user_id+"',"+section_id+",Now())";
+ query(insert_sql, function (qerr, valls, fields) {
+ if(qerr){
+ responseDataErr(res);
+ }else{
+ var response = {
+ status:1,
+ data:{
+ msg:'success'
+ }
+ }
+ Tool.addRank(user_id,1,0,function () {
+ res.json(response);
+ },function () {
+ responseDataErr(res);
+ })
+ }
+ })
+ })          */
+
+
+/**
+ * 获取banner图的链接
+ * GET 请求                                                      未使用
+ * */
+/*
+ router.get('/active', function (req, res, next) {
+ //查询数据库，找到时间最新的一期active
+ //active_type  1：课程  2：三件事  3：测评
+ var query_sql = "select * from active order by active_time limit 1";
+ query(query_sql, function (qerr, valls, next) {
+ if(qerr){
+ responseDataErr(res);
+ }else{
+ if(valls.length<=0){
+ responseDataErr(res);
+ }else{
+ var active = valls[0];
+ var response = {
+ status:1,
+ data:active
+ }
+ res.json(response);
+ }
+ }
+ })
+ })   */

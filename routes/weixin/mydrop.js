@@ -78,39 +78,59 @@ router.post('/label/sections',function (req,res,next) {
     })
 })
 
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * 获取个人信息，我的个人头像，我的领导力值，我的水滴数，我的提问，我的回答，我的留言，我的一滴(完整学习的课程数)
  *
  * 我的领导力值计算标准：细则页面自赞评分加总。
- * 我的水滴值计算标准：完整学习课程数3分，提出问题2分，发布评论1分，回答问题1分，得分加总
+ * 我的水滴值计算标准：完整学习课程数3分，提出问题2分，发布评论1分，回答问题1分，得分加总                未使用
  * */
-router.post('/',function (req,res,next) {
-    var user_id= req.body.user_id;
+/*
+ router.post('/',function (req,res,next) {
+ var user_id= req.body.user_id;
 
-     var query_sql = "select a.headimgurl,b.question_count,c.answer_count,d.comment_count,e.learn_count,f.appreciate_count from " +
-         "(select user_id,headimgurl from user where user_id='"+user_id+"')as a left join " +
-         "(select user_id,count(*)question_count from question group by user_id)as b on a.user_id=b.user_id left join " +
-         "(select user_id,count(*)answer_count from answer group by user_id)as c on c.user_id=a.user_id left join " +
-         "(select user_id,count(*)comment_count from comment group by user_id)as d on d.user_id=a.user_id left join " +
-         "(select user_id,count(*)learn_count from schedule_learn where is_learn=1 group by user_id)as e on e.user_id=a.user_id left join " +
-         "(select user_id,sum(appreciate_value)appreciate_count from appreciate_mine group by user_id)as f on f.user_id=a.user_id";
+ var query_sql = "select a.headimgurl,b.question_count,c.answer_count,d.comment_count,e.learn_count,f.appreciate_count from " +
+ "(select user_id,headimgurl from user where user_id='"+user_id+"')as a left join " +
+ "(select user_id,count(*)question_count from question group by user_id)as b on a.user_id=b.user_id left join " +
+ "(select user_id,count(*)answer_count from answer group by user_id)as c on c.user_id=a.user_id left join " +
+ "(select user_id,count(*)comment_count from comment group by user_id)as d on d.user_id=a.user_id left join " +
+ "(select user_id,count(*)learn_count from schedule_learn where is_learn=1 group by user_id)as e on e.user_id=a.user_id left join " +
+ "(select user_id,sum(appreciate_value)appreciate_count from appreciate_mine group by user_id)as f on f.user_id=a.user_id";
 
-     query(query_sql, function (qerr, valls, fields) {
-         if(qerr){
-             responseDataErr(res);
-         }else{
-             if(valls.length<=0){
-                 responseDataErr(res);
-             }else{
-                 var user = valls[0];
-                 var response = {
-                     status:1,
-                     data:user
-                 }
-                 res.json(response);
-             }
-         }
-     })
-})
-
-module.exports = router;
+ query(query_sql, function (qerr, valls, fields) {
+ if(qerr){
+ responseDataErr(res);
+ }else{
+ if(valls.length<=0){
+ responseDataErr(res);
+ }else{
+ var user = valls[0];
+ var response = {
+ status:1,
+ data:user
+ }
+ res.json(response);
+ }
+ }
+ })
+ })  */
