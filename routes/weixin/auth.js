@@ -259,16 +259,17 @@ router.post('/commit',function (req,res,next) {
     var access_code = req.body.access_code;
 
     //验证进入班级的人数是否已经到达上限
-    var query_class_sql = "select a.count_num,b.class_num from " +
-        "(select count(1)count_num,class_id from class_user where class_id="+class_id+")as a left join " +
-        "(select class_num,class_id from class)as b on a.class_id=b.class_id";
+
+    var query_class_sql = "select a.count_num,b.class_num,b.class_id,b.access_code from " +
+        "(select * from class where class_id="+class_id+")as b left join " +
+        "(select count(1)count_num,class_id from class_user where class_id="+class_id+")as a on a.class_id=b.class_id";
 
     query(query_class_sql,function (qerr,valls,fields) {
         if(qerr){
             responseDataErr(res);
         }else{
             if(valls.length>0){
-                var count_num = valls[0].count_num;
+                var count_num = valls[0].count_num ? valls[0].count_num : 0;
                 var class_num = valls[0].class_num;
                 if(count_num>=class_num){
                     var response = {

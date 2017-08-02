@@ -86,7 +86,7 @@ router.post('/rank',function (req,res,next) {
     var del_sql = "delete from appreciate_rank where user_id='"+user_id+"' and " +
         "appreciate_user_id='"+appreciate_user_id+"'";
 
-    appreciate(user_id,user_id,query_sql,insert_sql,del_sql,res,1);
+    appreciate(user_id,user_id,query_sql,insert_sql,del_sql,res,0);
 
 })
 /**
@@ -247,11 +247,12 @@ router.post('/mycourse',function (req,res,next) {
             })
         },
         function (callback) {
-            Tool.addRank(user_id,2,0,function () {
-                callback(null);
-            },function () {
-                callback('数据库执行错误！');
-            })
+            // Tool.addRank(user_id,2,0,function () {
+            //     callback(null);
+            // },function () {
+            //     callback('数据库执行错误！');
+            // })
+            callback(null);
         }
     ],function (err,results) {
         if(err){
