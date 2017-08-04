@@ -67,6 +67,7 @@ export default class LastDrop extends React.Component{
 
     componentDidMount() {
         var self =  this;
+        console.log('location_url:',encodeURIComponent('http://leader.cvwisdom.com/weixin/main'));
         async.parallel([
             function (callback) {
                 self.getCourses(self,1);
