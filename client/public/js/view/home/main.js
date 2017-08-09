@@ -25,8 +25,8 @@ class Main extends React.Component{
             isFirst:true,
             selectedTab:'everydrop',
             showQuestion:false,
-            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ' //仕龙
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I' //彩红
             // userId:'oyMAaxFzeZSuZrIGONamja9ARKPg' //邰宏伟
