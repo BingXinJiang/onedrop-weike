@@ -34,7 +34,7 @@ export default class SocketTest extends React.Component{
             })
         })
         this.SOCKET.on('disconnect',function () {
-            
+            self.SOCKET.emit('user login',{user_id:REMOTE_WEIXIN_USER_ID});
         })
     }
     render(){
