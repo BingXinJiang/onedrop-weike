@@ -15,15 +15,18 @@ var SOCKET = function (io,socket) {
         var target_user_id = data.target_user_id;
         var newsocket = DROP_SOCKETS[target_user_id];
         if(!newsocket){
+            console.log('---------');
             socket.emit('new user message',{
                 from_user_id:'系统',
                 message:'对方已离线',
             })
+        }else{
+            console.log('=========');
+            newsocket.emit('new user message',{
+                from_user_id:data.user_id,
+                message:data.message,
+            })
         }
-        newsocket.emit('new user message',{
-            from_user_id:data.user_id,
-            message:data.message,
-        })
     })
 
 }

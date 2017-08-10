@@ -72,7 +72,7 @@ export default class SocketTest extends React.Component{
                     this.SOCKET.emit('new user message',data);
                     var newMessages = this.state.clientMessages;
                     newMessages.push({
-                        from_user_id:REMOTE_WEIXIN_USER_ID,
+                        from_user_id:REMOTE_WEIXIN_USER_ID+'_client',
                         message:message
                     })
                     this.setState({
