@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('onedrop:server');
 var http = require('http');
-
+var SOCKET = require('../Socket');
+global.DROP_SOCKETS = {};
 /**
  * Get port from environment and store in Express.
  */
@@ -24,12 +25,25 @@ app.set('port', port);
 var server = http.createServer(app);
 
 /**
+ * Create Socket server.
+ */
+var io = require('socket.io')(server);
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+
+/**
+ * 创建socket连接
+ */
+io.on('connection',function (socket) {
+    SOCKET(io,socket);
+});
 
 /**
  * Normalize a port into a number, string, or false.

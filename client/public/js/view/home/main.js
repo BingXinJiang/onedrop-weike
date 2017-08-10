@@ -16,7 +16,8 @@ import Rank from '../rank/rank';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
 import MyDrop from '../drop/mine/MyStudy';
-import Introduction from './Introduction';
+// import Introduction from './Introduction';
+import Introduction from './SocketTest';
 
 class Main extends React.Component{
     constructor(props){
@@ -25,8 +26,8 @@ class Main extends React.Component{
             isFirst:true,
             selectedTab:'everydrop',
             showQuestion:false,
-            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxIhIBIZ2lF98NkBc-CkbeyQ' //仕龙
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I' //彩红
             // userId:'oyMAaxFzeZSuZrIGONamja9ARKPg' //邰宏伟
@@ -69,7 +70,8 @@ class Main extends React.Component{
                         })
                     }else{
                         this.setState({
-                            isFirst:false
+                            // isFirst:false
+                            isFirst:true    //test
                         })
                     }
                 }
