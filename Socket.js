@@ -8,6 +8,7 @@ var SOCKET = function (io,socket) {
     //用户登录，将该用户的socket添加到DROP_SOCKETS
     socket.on('user login',function (data) {
         var user_id = data.user_id;
+        socket.user_id = user_id;
         DROP_SOCKETS[user_id] = socket;
     })
 
@@ -27,6 +28,12 @@ var SOCKET = function (io,socket) {
                 message:data.message,
             })
         }
+    })
+
+    socket.on('disconnect',function () {
+        console.log('掉线了！！！')
+        var user_id = socket.user_id;
+        DROP_SOCKETS[user_id] = null;
     })
 
 }

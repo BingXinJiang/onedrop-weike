@@ -27,12 +27,14 @@ export default class SocketTest extends React.Component{
         var self = this;
         this.SOCKET.emit('user login',{user_id:REMOTE_WEIXIN_USER_ID});
         this.SOCKET.on('new user message',function (data) {
-
             var newMessages = self.state.clientMessages;
             newMessages.push(data);
             self.setState({
                 clientMessages:newMessages
             })
+        })
+        this.SOCKET.on('disconnect',function () {
+            
         })
     }
     render(){
