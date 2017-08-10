@@ -10,6 +10,8 @@ var SOCKET = function (io,socket) {
         var user_id = data.user_id;
         socket.user_id = user_id;
         DROP_SOCKETS[user_id] = socket;
+        console.log('login----------------');
+        console.log(io.sockets.sockets);
     })
 
     socket.on('new user message',function (data) {
@@ -34,6 +36,8 @@ var SOCKET = function (io,socket) {
         console.log('掉线了！！！')
         var user_id = socket.user_id;
         DROP_SOCKETS[user_id] = null;
+        console.log('disconnect===================');
+        console.log(io.sockets.sockets);
     })
 
 }
