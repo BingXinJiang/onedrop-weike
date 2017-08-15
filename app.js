@@ -7,8 +7,6 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var courses = require('./routes/courses');
 var weixin = require('./routes/weixin/index');
 var ceping = require('./routes/weixin/ceping');
 var onedrop = require('./routes/weixin/onedrop');
@@ -18,6 +16,8 @@ var learn = require('./routes/weixin/learn');
 var auth = require('./routes/weixin/auth');
 var rank = require('./routes/weixin/rank');
 var appreciate = require('./routes/weixin/appreciate');
+var nolearn = require('./routes/weixin/news/NoLearnCourse');
+var noanswer = require('./routes/weixin/news/NoReadAnswer');
 
 var app = express();
 
@@ -35,8 +35,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client/public')));
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/courses', courses);
 app.use('/weixin', weixin);
 app.use('/ceping', ceping);
 app.use('/onedrop', onedrop);
@@ -46,6 +44,8 @@ app.use('/learn',learn);
 app.use('/auth',auth);
 app.use('/rank',rank);
 app.use('/appreciate',appreciate);
+app.use('/news/learn',nolearn);
+app.use('/news/answer',noanswer);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,8 +5,6 @@ var express = require('express');
 var router = express.Router();
 
 var query = require('../../db/DB');
-var Course = require('../../model/course');
-var Section = require('../../model/section');
 
 var http = require('https');
 var querystring = require('querystring');
@@ -16,6 +14,8 @@ var parseString = require('xml2js').parseString;
 var Tool = require('../tool/Tool');
 
 var async = require('async');
+
+var APPConst = require('../const/APPConst');
 
 var APPID = 'wxcb05ae4237186327'; //旧
 var APPSECRET = '059aead1e040418e4c9cbc1d71675390';
