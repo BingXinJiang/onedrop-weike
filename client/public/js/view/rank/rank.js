@@ -88,7 +88,7 @@ export default class Rank extends React.Component{
                                 }}>
                                     <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>{this.state.user.nickname}</p>
                                     <p style={{fontSize:'28px',color:'rgb(153,153,153)'}}>第{this.state.user.number ? this.state.user.number+1 : 1}名</p>
-                                    <p style={{fontSize:'22px',color:'rgb(153,153,153)'}}>领导力能量 {this.state.user.leader_value}</p>
+
                                 </div>
                             </div>
                             <div style={{

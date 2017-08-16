@@ -524,7 +524,7 @@ export default class Drop extends React.Component{
                                                 <p style={{
                                                     fontSize:'28px',
                                                     color:'rgb(51,51,51)',
-                                                    marginTop:'10px'
+                                                    marginTop:'10px',wordBreak:'break-all'
                                                 }}>{content.comment}</p>
                                             </div>
                                         </div>
