@@ -142,7 +142,6 @@ export default class Rank extends React.Component{
                                             marginLeft:'22px'
                                         }}>
                                             <p style={{fontSize:'28px',color:'rgb(0,0,0)'}}>{content.nickname}</p>
-                                            <p style={{fontSize:'22px',color:'rgb(153,153,153)'}}>领导力能量 {content.leader_value}</p>
                                         </div>
                                     </div>
                                     <div style={{
