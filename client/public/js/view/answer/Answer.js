@@ -351,7 +351,7 @@ export default class Answer extends React.Component{
                                     })
                                 }}>
                                     <p  style={{
-                                        fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px'
+                                        fontSize:'30px',marginTop:'24px',marginRight:'24px',marginLeft:'24px',wordBreak:'break-all'
                                     }}>
                                         {content.question_desc}
                                     </p>
@@ -374,7 +374,7 @@ export default class Answer extends React.Component{
                                                     content.answers.map((cont,idx)=>{
                                                         return (
                                                             <p key={idx} style={{
-                                                                fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px'
+                                                                fontSize:'26px',color:'rgb(102,102,102)',marginTop:'10px',wordBreak:'break-all'
                                                             }}><span style={{color:'rgb(124,189,233)'}}>{cont.nickname}：</span>{cont.answer_desc}</p>
                                                         )
                                                     })

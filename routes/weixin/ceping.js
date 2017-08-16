@@ -133,67 +133,23 @@ router.post('/evaluation', function (req, res, next) {
                 }
                 postData = data;
             }
-            // var options = {
-            //     hostname:HOST_NAME,
-            //     path:'/invitation',
-            //     method:'POST',
-            //     // auth:' cloud-wisdom-uat: FBC659BD-CC1F-424C-A389-4D512632EBCF'
-            //     headers:{
-            //         "Authentication":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
-            //     }
-            // }
-            // console.log('postData:', postData);
             var options = {
-                // auth : {
-                //     'username':'cloud-wisdom-uat',
-                //     'password':'FBC659BD-CC1F-424C-A389-4D512632EBCF',
-                //     'sendImmediately': false
-                // },
                 url: 'http://uat.api.i-select.cn/invitation',
                 headers: {
-                    // "User-Agent":"user-agent",
                     "Content-Type":"application/x-www-form-urlencoded",
                     "Authorization":"Basic Y2xvdWQtd2lzZG9tLXVhdDpGQkM2NTlCRC1DQzFGLTQyNEMtQTM4OS00RDUxMjYzMkVCQ0Y="
                 },
                 method:'POST',
                 form:postData
             }
-            // console.log('options:', options);
             request.post(options, function (err, response, body) {
                 body = JSON.parse(body);
-                // console.log('申请测评链接err:', err);
-                // console.log('申请测评链接body:', body);
                 if(body && body.errorCode == -1){
                     callback(null, body.requestUniqueId);
                 }else{
                     responseDataErr(res);
                 }
             })
-            // var request = http.request(options, function (response) {
-            //     response.setEncoding('utf8');
-            //     response.on('data', function (chunk) {
-            //         // console.log('chunk:', chunk);
-            //         var string = chunk.toString();
-            //         var cleanedString = string.replace(/^\ufeff/i, "").replace(/^\ufffe/i, "");
-            //          cleanedString = cleanedString.replace('\ufeff','');
-            //
-            //         console.log('cleanedString:', cleanedString);
-            //         parseString(cleanedString, function (err, result) {
-            //             console.log('result:', result);
-            //             console.log('err:', err);
-            //             if(err || result==null || result.errorCode != -1 || result == undefined){
-            //                 responseRequestErr(res);
-            //             }else{
-            //                 callback(null,result.RequestUniqueId);
-            //             }
-            //         })
-            //     })
-            // })
-            // request.write(JSON.stringify(postData));
-            // request.on('error', function(e){
-            //     console.log('错误：' + e.message);
-            // });
-            // request.end();
         },
         //第三步：将获取到的数据存储到数据库，用于后续操作
         function (arg1, callback) {

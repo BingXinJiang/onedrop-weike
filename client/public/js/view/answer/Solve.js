@@ -134,7 +134,7 @@ export default class Solve extends React.Component{
                                 </div>
                             </div>
                             <p style={{
-                                  fontSize:'28px',marginTop:'24px',paddingBottom:'12px'
+                                  fontSize:'28px',marginTop:'24px',paddingBottom:'12px',wordBreak:'break-all'
                              }}>
                                 {this.state.question.question_desc}
                             </p>
@@ -259,7 +259,7 @@ export default class Solve extends React.Component{
                                             </div>
 
                                             <p style={{
-                                                fontSize:'28px',marginTop:'24px',clear:'both',paddingBottom:'12px'
+                                                fontSize:'28px',marginTop:'24px',clear:'both',paddingBottom:'12px',wordBreak:'break-all'
                                             }}>
                                                 {content.answer_desc}
                                             </p>

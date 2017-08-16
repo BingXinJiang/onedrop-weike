@@ -135,9 +135,11 @@ class Main extends React.Component{
             isFirst:true,
             isShowHomePage:true, //是否显示提示信息
             // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
-            userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I' //彩红
+            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I' //彩红
             // userId:'oyMAaxFzeZSuZrIGONamja9ARKPg' //邰宏伟
+            // userId:'oyMAaxNt4u8w5ck5YPstFYhOCkag' //何义情
+            // userId:'oyMAaxBIxrgsW21JDmv4XncmoldY' //王婵
         }
         this.hideIntro = this.hideIntro.bind(this);
         this.hideHomePage = this.hideHomePage.bind(this);

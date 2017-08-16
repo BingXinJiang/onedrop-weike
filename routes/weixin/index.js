@@ -250,7 +250,11 @@ router.post('/main/pay/getsign', function (req, res, next) {
                 if(left_second >= 7000*1000){
                     getTicket(true);
                 }else{
-                    paySign(info.jsapi_ticket);
+                    if(info.jsapi_ticket){
+                        paySign(info.jsapi_ticket);
+                    }else{
+                        getTicket(true);
+                    }
                 }
             }else{
                 getTicket(false);
