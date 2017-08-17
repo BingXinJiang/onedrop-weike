@@ -278,34 +278,22 @@ export default class Rank extends React.Component{
                                 width:'100%',
                             }}>
                                 <div style={{display:'flex',justifyContent:'center',width:'100%'}}>
-                                    <p style={{fontSize:'30px'}}>积分/能量值规则说明</p>
+                                    <p style={{fontSize:'30px'}}>积分规则说明</p>
                                 </div>
 
-                                <div style={{
-                                    marginTop:'30px',marginLeft:'30px',marginRight:'30px'
-                                }}>
-                                    <p style={{fontSize:'24px'}}>Q:什么是积分和能量值？积分和能量值有什么区别？</p>
-                                    <p style={{fontSize:'24px'}}>A:积分是学习者参与度、贡献度等行为的量化指标，而能量值是学习者学习技能的量化指标。</p>
-                                </div>
 
                                 <div style={{
                                     marginTop:'30px',marginLeft:'30px',marginRight:'30px'
                                 }}>
                                     <p style={{fontSize:'24px'}}>Q:怎么才能获得积分？</p>
-                                    <p style={{fontSize:'24px',textIndent:'40px'}}>1、每天登陆平台可获得1分，连续5天登陆奖励10积分，连续7天登陆奖励20积分</p>
-                                    <p style={{fontSize:'24px',textIndent:'40px'}}>2、完整学习一篇一滴(听完音频)获得1积分，在课程下方留言获得1积分</p>
-                                    <p style={{fontSize:'24px',textIndent:'40px'}}>3、提出问题可获得1积分，有用户为该问题点赞，每获得一个赞增加1积分</p>
-                                    <p style={{fontSize:'24px',textIndent:'40px'}}>4、对问题提出解答，获得两个积分，该解答每获得一个赞增加2积分</p>
+                                    <p style={{fontSize:'24px',textIndent:'40px'}}>1、第一次完整学习一篇一滴(听完音频) 加 20分， 第二周之内学习1次或1次以上 加 15分，第四周之内学习1次或1次以上 加  10分，第七周之内学习1次或1次以上 加 5分</p>
+                                    <p style={{fontSize:'24px',textIndent:'40px'}}>2、每天登陆平台1分，连续5天登陆学习奖励积分10， 连续7天奖励积分20 </p>
+                                    <p style={{fontSize:'24px',textIndent:'40px'}}>3、学习一滴的过程中，发表留言(交手), 积分加 1   </p>
+                                    <p style={{fontSize:'24px',textIndent:'40px'}}>4、提出一个问题加20分,  每个问题被点赞，积分加1*点赞数 </p>
+                                    <p style={{fontSize:'24px',textIndent:'40px'}}>5、对问题进行解答加20分，回答被点赞，积分加2*点赞数</p>
 
                                 </div>
 
-                                <div style={{
-                                    marginTop:'30px',marginLeft:'30px',marginRight:'30px'
-                                }}>
-                                    <p style={{fontSize:'24px'}}>Q:怎么才能提高能量值？</p>
-                                    <p style={{fontSize:'24px',textIndent:'40px'}}>1、初次完整学习一篇一滴，获得10能量值，第二周重复学习该篇课程获得20能量值，第四周重复学习该能量值获得30积分，第七周重复学习该篇课程获得50能量值，其他时间重复学习，能量值不增加</p>
-                                    <p style={{fontSize:'24px',textIndent:'40px'}}>2、学习课程后发表留言，可得2能量值</p>
-                                </div>
 
                             </div>
 
