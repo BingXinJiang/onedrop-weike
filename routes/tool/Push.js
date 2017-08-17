@@ -124,7 +124,7 @@ module.exports = {
                                                 "msgtype":"text",
                                                 "text":
                                                     {
-                                                        "content":"逻辑思维用小组制进行管理！！"
+                                                        "content":"&#x903B;&#x8F91;&#x601D;&#x7EF4;&#x7528;&#x5C0F;&#x7EC4;&#x5236;&#x8FDB;&#x884C;&#x7BA1;&#x7406;&#xFF01;&#xFF01;"
                                                     }
                                             });
                 console.log('推送信息的主体：',postData);
