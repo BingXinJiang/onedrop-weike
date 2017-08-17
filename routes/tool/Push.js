@@ -185,7 +185,7 @@ module.exports = {
                                 "title":"您有一条新的课程需要学习了，哈哈哈",
                                 "description":"小组制管理是怎么样的呢？？？",
                                 "url":APPConst.APP_ENTER_URL,
-                                "picurl":"....."
+                                "picurl":"http://img4.imgtn.bdimg.com/it/u=2358365614,2227030563&fm=214&gp=0.jpg"
                             }
                         ]
                     }
