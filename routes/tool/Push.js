@@ -20,7 +20,10 @@ function getAccessToken(callback) {
         var options = {
             hostname:'api.weixin.qq.com',
             path:'/cgi-bin/token?grant_type=client_credential&appid='+APPConst.APPID+'&secret='+APPConst.APPSECRET,
-            method:'GET'
+            method:'GET',
+            headers:{
+                'Content-Type':'application/json; charset=utf-8'
+            }
         }
         console.log('我要发起微信的网络请求了....');
         var request = https.request(options, function (response) {
