@@ -133,7 +133,7 @@ module.exports = {
                                                 "msgtype":"text",
                                                 "text":
                                                     {
-                                                        "content":"\u7edd\u5730\u9022\u751f\u5ba2\u6237\u7aef\u5206\u4e09\u5757\u8303\u8fd8\u662f\u6b3e\u5230\u53d1\u8d27\u6848\u4ef6\u56de\u8bbf\u770b\u5bf9\u65b9\u65f6\u95f4\u6ed1\u52a8\u4ed8\u6b3e\u540e"
+                                                        "content":"红颜旧，依然如旧！"
                                                     }
                                             });
                 console.log('推送信息的主体：',postData);
