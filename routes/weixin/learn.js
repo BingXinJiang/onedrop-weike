@@ -79,11 +79,12 @@ function getScore(user_id,section_id,success,faillure) {
 
     async.waterfall([
         function (callback) {
-            Tool.addRank(user_id,0,0,function () {
-                callback(null,'ok');
-            },function () {
-                callback('数据库执行错误');
-            })
+            // Tool.addRank(user_id,0,0,function () {
+            //     callback(null,'ok');
+            // },function () {
+            //     callback('数据库执行错误');
+            // })
+            callback(null,'ok');
         },
         function (a,callback) {
             query(query_sql,function (qerr,valls,fields) {
