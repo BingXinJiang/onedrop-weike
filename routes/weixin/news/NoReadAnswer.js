@@ -14,16 +14,7 @@ var Push = require('../../tool/Push');
 
 
 router.get('/',function (req,res,next) {
-    // Push.pushText('oyMAaxN1hGZuki6cOvwF6OSQ-Ahs','这是推送的第一条消息哦！',function (err) {
-    //     console.log('err',err);
-    //     res.json(err);
-    // },function (result) {
-    //     res.json({
-    //         msg:'成功',
-    //         data:result
-    //     });
-    // })
-    Push.pushGraphic('oyMAaxN1hGZuki6cOvwF6OSQ-Ahs','这是推送的第一条消息哦！',function (err) {
+    Push.pushText('oyMAaxN1hGZuki6cOvwF6OSQ-Ahs','这是推送的第一条消息哦！',function (err) {
         console.log('err',err);
         res.json(err);
     },function (result) {
@@ -32,6 +23,15 @@ router.get('/',function (req,res,next) {
             data:result
         });
     })
+    // Push.pushGraphic('oyMAaxN1hGZuki6cOvwF6OSQ-Ahs','这是推送的第一条消息哦！',function (err) {
+    //     console.log('err',err);
+    //     res.json(err);
+    // },function (result) {
+    //     res.json({
+    //         msg:'成功',
+    //         data:result
+    //     });
+    // })
 })
 
 

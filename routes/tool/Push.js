@@ -124,7 +124,7 @@ module.exports = {
                                                 "msgtype":"text",
                                                 "text":
                                                     {
-                                                        "content":"This is a push message"
+                                                        "content":"this is a message !"
                                                     }
                                             });
                 console.log('推送信息的主体：',postData);
