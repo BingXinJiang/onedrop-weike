@@ -23,7 +23,16 @@ router.get('/',function (req,res,next) {
     //         data:result
     //     });
     // })
-    Push.pushGraphic('oyMAaxN1hGZuki6cOvwF6OSQ-Ahs','这是推送的第一条消息哦！',function (err) {
+    // Push.pushGraphic('oyMAaxN1hGZuki6cOvwF6OSQ-Ahs','这是推送的第一条消息哦！',function (err) {
+    //     console.log('err',err);
+    //     res.json(err);
+    // },function (result) {
+    //     res.json({
+    //         msg:'成功',
+    //         data:result
+    //     });
+    // })
+    Push.pushGraphic('oyMAaxD884kfJA1EHMBTX8Y5bm9I','这是推送的第一条消息哦！',function (err) {
         console.log('err',err);
         res.json(err);
     },function (result) {
