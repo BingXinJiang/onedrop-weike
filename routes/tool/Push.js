@@ -77,6 +77,33 @@ function getAccessToken(callback) {
     })
 }
 
+function push(postData,token,callback) {
+    var options = {
+        hostname:'api.weixin.qq.com',
+        path:'/cgi-bin/message/custom/send?access_token='+token,
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json; charset=utf-8',
+            'Content-Length': postData.length
+        }
+    }
+    var request = https.request(options, function (response) {
+        response.setEncoding('utf8');
+        response.on('data', function (response) {
+            var receiveData = JSON.parse(response);
+            console.log('我接收到推送完的数据了：',receiveData);
+            callback(null,receiveData);
+        })
+    })
+    request.on('error', function(e){
+        if(e){
+            callback(e);
+        }
+    });
+    request.write(postData);
+    request.end();
+}
+
 module.exports = {
 
     pushText:function (user_id,content,fail,success) {
@@ -101,30 +128,32 @@ module.exports = {
                                                     }
                                             });
                 console.log('推送信息的主体：',postData);
-                var options = {
-                    hostname:'api.weixin.qq.com',
-                    path:'/cgi-bin/message/custom/send?access_token='+token,
-                    method:'POST',
-                    headers:{
-                        'Content-Type':'application/json; charset=utf-8',
-                        'Content-Length': postData.length
-                    }
-                }
-                var request = https.request(options, function (response) {
-                    response.setEncoding('utf8');
-                    response.on('data', function (response) {
-                        var receiveData = JSON.parse(response);
-                        console.log('我接收到推送完的数据了：',receiveData);
-                        callback(null,receiveData);
-                    })
-                })
-                request.on('error', function(e){
-                    if(e){
-                        callback(e);
-                    }
-                });
-                request.write(postData);
-                request.end();
+
+                push(postData,token,callback);
+                // var options = {
+                //     hostname:'api.weixin.qq.com',
+                //     path:'/cgi-bin/message/custom/send?access_token='+token,
+                //     method:'POST',
+                //     headers:{
+                //         'Content-Type':'application/json; charset=utf-8',
+                //         'Content-Length': postData.length
+                //     }
+                // }
+                // var request = https.request(options, function (response) {
+                //     response.setEncoding('utf8');
+                //     response.on('data', function (response) {
+                //         var receiveData = JSON.parse(response);
+                //         console.log('我接收到推送完的数据了：',receiveData);
+                //         callback(null,receiveData);
+                //     })
+                // })
+                // request.on('error', function(e){
+                //     if(e){
+                //         callback(e);
+                //     }
+                // });
+                // request.write(postData);
+                // request.end();
             }
         ],function (err,result) {
             if(err){
@@ -135,8 +164,44 @@ module.exports = {
         })
     },
 
-    pushGraphic:function () {
-        
+    pushGraphic:function (user_id,content,fail,success) {
+        async.waterfall([
+            function (callback) {
+                getAccessToken(function (err,access_token) {
+                    if(err){
+                        callback(err);
+                    }else{
+                        callback(null,access_token);
+                    }
+                })
+            },
+            function (token,callback) {
+                var postData = JSON.stringify({
+                    "touser":user_id,
+                    "msgtype":"news",
+                    "news":{
+                        "articles": [
+                            {
+                                "title":"This is yun guhui news",
+                                "description":"To learn is very good!",
+                                "url":APPConst.APP_ENTER_URL,
+                                "picurl":"....."
+                            }
+                        ]
+                    }
+                });
+                console.log('推送信息的主体：',postData);
+
+                push(postData,token,callback);
+
+            }
+        ],function (err,result) {
+            if(err){
+                fail(err);
+            }else {
+                success(result);
+            }
+        })
     }
 
 }
