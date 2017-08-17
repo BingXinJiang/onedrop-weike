@@ -78,12 +78,21 @@ function getAccessToken(callback) {
 }
 
 function push(postData,token,callback) {
+    // var options = {
+    //     hostname:'api.weixin.qq.com',
+    //     path:'/cgi-bin/message/custom/send?access_token='+token,
+    //     method:'POST',
+    //     headers:{
+    //         'Content-Type':'application/json; charset=utf-8',
+    //         'Content-Length': postData.length
+    //     }
+    // }
     var options = {
         hostname:'api.weixin.qq.com',
         path:'/cgi-bin/message/custom/send?access_token='+token,
         method:'POST',
         headers:{
-            'Content-Type':'application/json; charset=utf-8',
+            'Content-Type':'x-www-form-urlencoded; charset=utf-8',
             'Content-Length': postData.length
         }
     }
