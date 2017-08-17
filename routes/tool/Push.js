@@ -182,8 +182,8 @@ module.exports = {
                     "news":{
                         "articles": [
                             {
-                                "title":"This is yun guhui news",
-                                "description":"To learn is very good!",
+                                "title":"您有一条新的课程需要学习了，哈哈哈",
+                                "description":"小组制管理是怎么样的呢？？？",
                                 "url":APPConst.APP_ENTER_URL,
                                 "picurl":"....."
                             }
