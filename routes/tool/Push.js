@@ -14,7 +14,6 @@ var APPConst = require('../const/APPConst');
 
 function getAccessToken(callback) {
 
-    console.log('---------------');
     //调用微信API获取access_token
     function getToken() {
         var options = {
@@ -25,7 +24,6 @@ function getAccessToken(callback) {
                 'Content-Type':'application/json; charset=utf-8'
             }
         }
-        console.log('我要发起微信的网络请求了....');
         var request = https.request(options, function (response) {
             response.setEncoding('utf8');
             response.on('data', function (response) {
@@ -36,7 +34,7 @@ function getAccessToken(callback) {
                 var querry_sql = "update info_const2 set datetime=Now(), access_token='"+access_token+"'";
                 query(querry_sql, function (qerr, valls, fields) {
                     if(qerr){
-                        callback(qerr)
+                        callback(qerr);
                     }else {
                         callback(null,access_token);
                     }
@@ -92,28 +90,34 @@ module.exports = {
                         console.log('111111111111111111111111');
                         callback(err);
                     }else{
+                        console.log('请求回来的token：',access_token);
                         callback(null,access_token);
                     }
                 })
             },
             function (token,callback) {
+                var postData = JSON.stringify({
+                                                "touser":user_id,
+                                                "msgtype":"text",
+                                                "text":
+                                                    {
+                                                        "content":content
+                                                    }
+                                            });
                 var options = {
                     hostname:'api.weixin.qq.com',
                     path:'/cgi-bin/message/custom/send?access_token='+token,
-                    method:'POST'
-                }
-                var postData = {
-                    "touser":user_id,
-                    "msgtype":"text",
-                    "text":
-                        {
-                            "content":content
-                        }
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json; charset=utf-8',
+                        'Content-Length': postData.length
+                    }
                 }
                 var request = https.request(options, function (response) {
                     response.setEncoding('utf8');
                     response.on('data', function (response) {
                         var receiveData = JSON.parse(response);
+                        console.log('我接收到推送完的数据了：',receiveData);
                         callback(null,receiveData);
                     })
                 })
@@ -122,7 +126,7 @@ module.exports = {
                         callback(e);
                     }
                 });
-                request.write(JSON.stringify(postData));
+                request.write(postData);
                 request.end();
             }
         ],function (err,result) {
