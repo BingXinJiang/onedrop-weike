@@ -44,7 +44,6 @@ function getAccessToken(callback) {
         })
         request.on('error', function(e){
             if(e){
-                console.log('444444444444444444444444');
                 callback(e);
             }
         });
@@ -71,7 +70,6 @@ function getAccessToken(callback) {
                         callback(null,token);
                     }
                 }else{
-                    console.log('33333333333333333333333333333333');
                     getToken();
                 }
             }
@@ -87,10 +85,8 @@ module.exports = {
             function (callback) {
                 getAccessToken(function (err,access_token) {
                     if(err){
-                        console.log('111111111111111111111111');
                         callback(err);
                     }else{
-                        console.log('请求回来的token：',access_token);
                         callback(null,access_token);
                     }
                 })
@@ -104,6 +100,7 @@ module.exports = {
                                                         "content":content
                                                     }
                                             });
+                console.log('推送信息的主体：',postData);
                 var options = {
                     hostname:'api.weixin.qq.com',
                     path:'/cgi-bin/message/custom/send?access_token='+token,
@@ -131,7 +128,6 @@ module.exports = {
             }
         ],function (err,result) {
             if(err){
-                console.log('2222222222222222222222222');
                 fail(err);
             }else {
                 success(result);
