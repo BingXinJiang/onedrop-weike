@@ -21,21 +21,21 @@ export default class Promot extends React.Component{
             clientMessages:[],
             myarray:['1','2','3']
         }
-        this.SOCKET = io();
+        // this.SOCKET = io();
     }
     componentDidMount(){
         var self = this;
-        this.SOCKET.emit('user login',{user_id:REMOTE_WEIXIN_USER_ID});
-        this.SOCKET.on('new user message',function (data) {
-            var newMessages = self.state.clientMessages;
-            newMessages.push(data);
-            self.setState({
-                clientMessages:newMessages
-            })
-        })
-        this.SOCKET.on('disconnect',function () {
-            self.SOCKET.emit('user login',{user_id:REMOTE_WEIXIN_USER_ID});
-        })
+        // this.SOCKET.emit('user login',{user_id:REMOTE_WEIXIN_USER_ID});
+        // this.SOCKET.on('new user message',function (data) {
+        //     var newMessages = self.state.clientMessages;
+        //     newMessages.push(data);
+        //     self.setState({
+        //         clientMessages:newMessages
+        //     })
+        // })
+        // this.SOCKET.on('disconnect',function () {
+        //     self.SOCKET.emit('user login',{user_id:REMOTE_WEIXIN_USER_ID});
+        // })
     }
     render(){
         return(
@@ -64,23 +64,23 @@ export default class Promot extends React.Component{
                     </FormCell>
                 </Form>
                 <Button onClick={()=>{
-                    var message = $('#socket_test_area').val();
-                    if(!message) return;
-                    var data = {
-                        user_id:REMOTE_WEIXIN_USER_ID,
-                        target_user_id:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
-                        message:message
-                    }
-                    this.SOCKET.emit('new user message',data);
-                    var newMessages = this.state.clientMessages;
-                    newMessages.push({
-                        from_user_id:REMOTE_WEIXIN_USER_ID+'_client',
-                        message:message
-                    })
-                    this.setState({
-                        clientMessages:newMessages
-                    })
-                    $('#socket_test_area').val('');
+                    // var message = $('#socket_test_area').val();
+                    // if(!message) return;
+                    // var data = {
+                    //     user_id:REMOTE_WEIXIN_USER_ID,
+                    //     target_user_id:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs',
+                    //     message:message
+                    // }
+                    // this.SOCKET.emit('new user message',data);
+                    // var newMessages = this.state.clientMessages;
+                    // newMessages.push({
+                    //     from_user_id:REMOTE_WEIXIN_USER_ID+'_client',
+                    //     message:message
+                    // })
+                    // this.setState({
+                    //     clientMessages:newMessages
+                    // })
+                    // $('#socket_test_area').val('');
                 }}>发送消息</Button>
             </div>
         )

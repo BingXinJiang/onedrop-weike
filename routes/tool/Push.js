@@ -21,11 +21,13 @@ function getAccessToken(callback) {
             path:'/cgi-bin/token?grant_type=client_credential&appid='+APPConst.APPID+'&secret='+APPConst.APPSECRET,
             method:'GET'
         }
+        console.log('我要发起微信的网络请求了....');
         var request = https.request(options, function (response) {
             response.setEncoding('utf8');
             response.on('data', function (response) {
                 var receiveData = JSON.parse(response);
                 var access_token = receiveData.access_token;
+                console.log('这是请求返回的数据：', receiveData);
                 //对获取到的access_token 进行存储
                 var querry_sql = "update info_const2 set datetime=Now(), access_token='"+access_token+"'";
                 query(querry_sql, function (qerr, valls, fields) {
