@@ -51,7 +51,7 @@ router.post('/ask', function (req, res, next) {
                     msg:'问题提交成功，请耐心等待解答...'
                 }
             }
-            Tool.addRank(user_id,1,0,function () {
+            Tool.addRank(user_id,20,0,function () {
                 res.json(response);
             },function () {
                 responseDataErr(res);
@@ -186,7 +186,7 @@ router.post('/reply', function (req, res, next) {
                     msg:'您的答案提交成功！'
                 }
             }
-            Tool.addRank(user_id,2,0,function () {
+            Tool.addRank(user_id,20,0,function () {
                 res.json(response);
             },function () {
                 responseDataErr(res);

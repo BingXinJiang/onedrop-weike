@@ -79,7 +79,7 @@ function getScore(user_id,section_id,success,faillure) {
 
     async.waterfall([
         function (callback) {
-            Tool.addRank(user_id,1,0,function () {
+            Tool.addRank(user_id,0,0,function () {
                 callback(null,'ok');
             },function () {
                 callback('数据库执行错误');
@@ -98,7 +98,7 @@ function getScore(user_id,section_id,success,faillure) {
             if(valls.length===0){
                 callback('数据库执行错误');
             }else if(valls.length===1){
-                Tool.addRank(user_id,0,10,function () {
+                Tool.addRank(user_id,20,10,function () {
                     callback(null,'ok');
                 },function () {
                     callback('数据库执行错误');
@@ -118,17 +118,17 @@ function getScore(user_id,section_id,success,faillure) {
                     start_date = Tool.getDateFromSomeDate(first_date,42);
                     end_date = Tool.getDateFromSomeDate(first_date,49);
                     isGo = true;
-                    addValue = 50;
+                    addValue = 15;
                 }else if(days>=21 && days<=28){
                     start_date = Tool.getDateFromSomeDate(first_date,21);
                     end_date = Tool.getDateFromSomeDate(first_date,28);
                     isGo = true;
-                    addValue = 30;
+                    addValue = 10;
                 }else if(days>=7 && days<=14){
                     start_date = Tool.getDateFromSomeDate(first_date,7);
                     end_date = Tool.getDateFromSomeDate(first_date,14);
                     isGo = true;
-                    addValue = 20;
+                    addValue = 5;
                 }else{
                     isGo = false;
                 }
@@ -144,7 +144,7 @@ function getScore(user_id,section_id,success,faillure) {
                             callback(qerr);
                         }else{
                             if(valls.length===1){
-                                Tool.addRank(user_id,0,addValue,function () {
+                                Tool.addRank(user_id,addValue,addValue,function () {
                                     callback(null,'ok');
                                 },function () {
                                     callback('数据库执行错误');
