@@ -92,7 +92,7 @@ function push(postData,token,callback) {
         path:'/cgi-bin/message/custom/send?access_token='+token,
         method:'POST',
         headers:{
-            'Content-Type':'application/json',
+            'Content-Type':'application/json; encoding=utf-8',
             'Content-Length': postData.length
         }
     }
