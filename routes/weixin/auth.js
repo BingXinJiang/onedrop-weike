@@ -170,6 +170,11 @@ router.post('/commit',function (req,res,next) {
     var class_id = req.body.class_id;
     var access_code = req.body.access_code;
 
+    if(!user_id){
+        responseDataErr(res);
+        return;
+    }
+
     //验证进入班级的人数是否已经到达上限
 
     var query_class_sql = "select a.count_num,b.class_num,b.class_id,b.access_code from " +

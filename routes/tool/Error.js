@@ -12,5 +12,15 @@ module.exports = {
             }
         }
         res.json(response);
+    },
+    //验证user_id
+    responseCheckUserIdNull:function (res) {
+        var response = {
+            status:0,
+            data:{
+                msg:'user_id不能为空！'
+            }
+        }
+        res.json(response);
     }
 }

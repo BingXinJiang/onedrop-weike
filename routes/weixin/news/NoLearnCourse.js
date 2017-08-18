@@ -8,6 +8,10 @@ var async = require('async');
 var Error = require('../../tool/Error');
 var Tool = require('../../tool/Tool');
 
+/**
+ * 获取未学习的课程                      -------------文档2.0
+ * */
+
 router.post('/',function (req,res,next) {
 
     var user_id = req.body.user_id;
@@ -60,21 +64,6 @@ router.post('/',function (req,res,next) {
             res.json(response);
         }
     })
-
-
-
-    /*
-    //从学习记录中选择出 已经学习过的对应课程的 section_id  去重
-
-     select * from () where section_id not in
-     (
-     select distinct a.section_id from
-     (select * from schedule_learn where user_id='oyMAaxN1hGZuki6cOvwF6OSQ-Ahs' and is_learn=1)as a
-     )
-     order by open_date
-
-     " (select * from course_section where open_date < date_sub((select open_date from course_section order by open_date asc limit 1),interval (select datediff('"+class_open_date+"',Now())-1) day) "
-     */
 
 
 })

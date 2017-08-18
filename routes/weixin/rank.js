@@ -13,24 +13,20 @@ var querystring = require('querystring');
 var crypto = require('crypto');
 var parseString = require('xml2js').parseString;
 var Tool = require('../tool/Tool');
-
+var Error = require('../tool/Error');
 var async = require('async');
 
-function responseDataErr(res) {
-    var response = {
-        status:0,
-        data:{
-            msg:'数据库执行错误'
-        }
-    }
-    res.json(response);
-}
 /**
  * 请求排行榜数据
  *  参数 user_id
  * */
 router.post('/',function (req,res,next) {
     var user_id = req.body.user_id;
+
+    if(!user_id){
+        Error.responseCheckUserIdNull(res);
+        return;
+    }
 
     var query_sql = "select a.user_id,a.fraction,a.leader_value,b.headimgurl,b.nickname,c.appreciate_count,d.appreciate_status from " +
         "(select user_id,fraction,leader_value from user_value order by fraction desc limit 30)as a left join " +
@@ -69,7 +65,7 @@ router.post('/',function (req,res,next) {
         }
     ],function (err,results) {
         if(err){
-            responseDataErr(res);
+            Error.responseDataErr(res);
         }else{
             var response = {
                 status:1,
@@ -82,6 +78,44 @@ router.post('/',function (req,res,next) {
         }
     })
 
+})
+
+/**
+ * 请求个人的积分情况，                                   ----------文档2.0
+ * 参数：user_id
+ * 返回值：
+ * */
+router.post('/fraction',function (req,res,next) {
+
+    var user_id = req.body.user_id;
+
+    if(!user_id){
+        Error.responseCheckUserIdNull(res);
+    }
+
+    var query_sql = "select A.nickname,A.headimgurl,B.fraction from " +
+        "(select user_id,nickname,headimgurl from user where user_id='"+user_id+"')as A " +
+        "left join " +
+        "(select user_id,fraction from user_value)as B " +
+        "on A.user_id = B.user_id";
+
+    // console.log('query_sql:',query_sql);
+
+    query(query_sql,function (qerr,valls,fields) {
+        if(qerr){
+            Error.responseDataErr(res);
+        }else{
+            if(valls.length<=0){
+                Error.responseDataErr(res);
+            }else{
+                var response = {
+                    status:1,
+                    data:valls[0]
+                }
+                res.json(response);
+            }
+        }
+    })
 })
 
 module.exports = router;
