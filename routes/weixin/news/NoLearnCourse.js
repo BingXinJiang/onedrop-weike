@@ -37,7 +37,7 @@ router.post('/',function (req,res,next) {
             })
         },
         function (class_open_date,callback) {
-            var query_sql = "select A.section_id,A.section_name,A.section_intro,A.open_date from " +
+            var query_sql = "select A.section_id,A.section_name,A.section_intro,A.open_date,A.section_voice from " +
                 " (select * from course_section where open_date < date_sub((select open_date from course_section" +
                 " order by open_date asc limit 1),interval (select datediff('"+class_open_date+"',Now())-1) day))as A " +
                 "where A.section_id not in " +

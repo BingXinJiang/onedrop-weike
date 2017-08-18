@@ -227,15 +227,6 @@ export default class LastDrop extends React.Component{
                                                 <p style={{
                                                     fontSize:'22px',color:'rgb(131,131,131)',marginTop:'10px'
                                                 }}>{content.label_des}</p>
-                                                {
-                                                    /*
-                                                     <p style={{
-                                                     marginTop:'18px',
-                                                     fontSize:'20px',
-                                                     color:'rgb(131,131,131)'
-                                                     }}>{content.year}年{content.month}月{content.day}日</p>
-                                                    * */
-                                                }
 
                                                 <div style={{position:'relative'}}>
                                                     <img style={{height:'300px',width:'100%',

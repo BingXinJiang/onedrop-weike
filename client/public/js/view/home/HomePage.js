@@ -4,6 +4,8 @@
 
 import React from 'react';
 import OneDrop from '../../const/onedrop';
+import Drop from '../drop/everyday/Drop';
+import Answer from '../answer/Solve';
 
 const wordStyle = {
     color:'rgb(51,51,51)',fontSize:'28px',wordBreak:'break-all'
@@ -105,7 +107,7 @@ class NoLearnCourse extends React.PureComponent{
     constructor(props){
         super(props);
         this.state={
-            loadingState:0,
+            loadingState:0, // 1正在加载
             courses:[]
         }
         this.page = 1;
@@ -174,6 +176,16 @@ class NoLearnCourse extends React.PureComponent{
                                 <div key={idx} style={{
                                     display:'flex',marginLeft:'30px',marginRight:'30px',
                                     marginTop:'20px'
+                                }} onClick={()=>{
+                                    if(this.state.loadingState === 1){
+                                        return;
+                                    }
+                                    var audio = document.createElement('audio');
+                                    audio.preload = 'auto';
+                                    audio.src = content.section_voice;
+                                    audio.id = 'che_dan_de_yin_pin'+content.section_id;
+                                    OneDrop.AUDIO = audio;
+                                    this.props.callback(content.section_id);
                                 }}>
                                     <div style={{
                                         backgroundColor:'gray',display:'flex',flexDirection:'column',flex:'1'
@@ -416,46 +428,89 @@ class NoReadAnswer extends React.PureComponent{
 /**
  * 主框架模块
  * */
+class GoDrops extends React.PureComponent{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        return(
+            <div style={{
+                width:'120px',height:'120px',borderRadius:'60px',overflow:'hidden',backgroundColor:'rgb(23,172,251)',
+                display:'flex',justifyContent:'center',alignItems:'center',position:'fixed',top:'70%',right:'0'
+            }} onClick={this.props.callback}>
+                <p style={{color:'white',fontSize:'28px'}}>首页</p>
+            </div>
+        )
+    }
+}
 export default class HomePage extends React.PureComponent{
 
     constructor(props){
         super(props);
         this.state = {
-            isLoading:false
+            isLoading:false,
+            show:0    // 0  默认未学习页，1 Drop一滴学习页  2  答案页面
         }
+        this.sectionId = 0;
+        this.back = this.back.bind(this);
+        this.goToDrop = this.goToDrop.bind(this);
+    }
+    //从问答页或者一滴学习页返回
+    back(){
+        this.setState({
+            show:0
+        })
+    }
+    //跳转到一滴学习页
+    goToDrop(sectionId){
+        this.sectionId = sectionId;
+        this.setState({
+            show:1
+        })
     }
 
     render(){
         return (
             <div>
-                <div style={{
-                    width:OneDrop.JS_ScreenW
-                }}>
-                    <div style={{
-                        width:'100%',display:'flex',justifyContent:'center',marginTop:'40px'
-                    }}>
-                        <p style={{
-                            color:'rgb(51,51,51)',fontSize:'32px'
-                        }}>每日一滴，滴水穿石</p>
-                    </div>
-                </div>
-                {LINE}
-                <User/>
-                {LINE}
-                <NoLearnCourse/>
-                {LINE}
-                <NoReadQuestion/>
-                {LINE}
-                <NoReadAnswer/>
                 {
-                    this.state.isLoading ?
-                        <div style={{
-                            position:'fixed',top:'0',left:'0',width:OneDrop.JS_ScreenW,
-                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
-                        }}>
-                            <img src="../../../img/weike/home/loading.gif"/>
-                        </div>
-                        : null
+                    this.state.show === 1 ?
+                        <Drop sectionId={this.sectionId} callback={this.back}/>
+                        :
+                        this.state.show === 2 ?
+                            <Answer/>
+                            :
+                            <div>
+                                <div style={{
+                                    width:OneDrop.JS_ScreenW
+                                }}>
+                                    <div style={{
+                                        width:'100%',display:'flex',justifyContent:'center',marginTop:'40px'
+                                    }}>
+                                        <p style={{
+                                            color:'rgb(51,51,51)',fontSize:'32px'
+                                        }}>每日一滴，滴水穿石</p>
+                                    </div>
+                                </div>
+                                {LINE}
+                                <User/>
+                                {LINE}
+                                <NoLearnCourse callback={this.goToDrop}/>
+                                {LINE}
+                                <NoReadQuestion/>
+                                {LINE}
+                                <NoReadAnswer/>
+                                {
+                                    this.state.isLoading ?
+                                        <div style={{
+                                            position:'fixed',top:'0',left:'0',width:OneDrop.JS_ScreenW,
+                                            height:OneDrop.JS_ScreenH*2,display:'flex',justifyContent:'center',alignItems:'center'
+                                        }}>
+                                            <img src="../../../img/weike/home/loading.gif"/>
+                                        </div>
+                                        : null
+                                }
+                                <GoDrops callback={this.props.callback}/>
+                            </div>
                 }
             </div>
         )

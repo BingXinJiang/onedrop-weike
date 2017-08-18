@@ -2,6 +2,11 @@
  * Created by jiangsong on 2017/4/3.
  */
 
+//常用蓝：rgb(23,172,251)
+//字体：rgb(51,51,51)
+//间隔灰色背景：rgb(209,209,209)
+//cell背景灰：rgb(241,241,241)
+
 module.exports = {
 
     // base_ip:'http://192.168.2.100:3001/weixin',
