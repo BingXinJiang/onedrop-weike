@@ -15,7 +15,7 @@ var APPConst = require('../routes/const/APPConst');
  */
 
 // var port = normalizePort(process.env.PORT || '3001');
-var nowPort = APPConst.IS_DEV_ENV ? '3002' : '3001'
+var nowPort = IS_DEV_ENV_SERVER ? '3002' : '3001'
 var port = normalizePort(process.env.PORT || nowPort);
 // var port = normalizePort('80');
 app.set('port', port);

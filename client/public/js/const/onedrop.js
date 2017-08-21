@@ -10,6 +10,10 @@
 global.IS_DEV_ENV = true;
 // global.IS_DEV_ENV = false;
 
+global.DEV_ENV_LINK='http://drop.cvwisdom.com/html/get_weixin_code.html?appid=wxcb05ae4237186327&scope=snsapi_base&state=leader&redirect_uri=http://leader.cvwisdom.com/weixin/main',
+global.PRO_ENV_LINK='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcb05ae4237186327&redirect_uri=http://drop.cvwisdom.com/weixin/main&response_type=code&scope=snsapi_userinfo#wechat_redirect',
+
+
 module.exports = {
 
     // base_ip:'http://192.168.2.100:3001/weixin',
@@ -42,13 +46,10 @@ module.exports = {
 
     AUDIO:null,
 
-    DEV_ENV_LINK:'http://drop.cvwisdom.com/html/get_weixin_code.html?appid=wxcb05ae4237186327&scope=snsapi_base&state=leader&redirect_uri=http://leader.cvwisdom.com/weixin/main',
-    PRO_ENV_LINK:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcb05ae4237186327&redirect_uri=http://drop.cvwisdom.com/weixin/main&response_type=code&scope=snsapi_userinfo#wechat_redirect',
-
     //分享到朋友圈
     shareToMomentsTitle:'每日一滴，滴水穿石，你领导力旅途中的水和氧！',
-    shareToMomentsLink:IS_DEV_ENV ? this.DEV_ENV_LINK:this.PRO_ENV_LINK,
-    shareToMomentsImgUrl:this.res_ip+'/images/imgs/yunguhui.jpg',
+    shareToMomentsLink:IS_DEV_ENV ? DEV_ENV_LINK:PRO_ENV_LINK,
+    shareToMomentsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com':'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
     shareToMomentsSuccess:()=>{
 
     },
@@ -59,8 +60,8 @@ module.exports = {
     //分享给朋友
     shareToFriendsTitle:'每日一滴，滴水穿石，你领导力旅途中的水和氧！',
     shareToFriendsDesc:'我在一滴学到了很有用的领导力知识，快来跟我一起学习吧！',
-    shareToFriendsLink:IS_DEV_ENV ? this.DEV_ENV_LINK:this.PRO_ENV_LINK,
-    shareToFriendsImgUrl:this.res_ip+'/images/imgs/yunguhui.jpg',
+    shareToFriendsLink:IS_DEV_ENV ? DEV_ENV_LINK:PRO_ENV_LINK,
+    shareToFriendsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com':'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
     shareToFriendsType:'link',
     shareToFriendsDataUrl:'',
     shareToFriendsSuccess:()=>{

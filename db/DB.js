@@ -5,7 +5,7 @@ var congig = {
 	host: '119.23.24.122',
 	user: 'root',   
 	password: 'JSong1213556',
-	database:APPConst.IS_DEV_ENV ? 'test' : 'test3',
+	database:IS_DEV_ENV_SERVER ? 'test' : 'test3',
 	port: 3306  
 }
 
