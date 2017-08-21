@@ -118,6 +118,72 @@ module.exports = {
             resultArr.push(colorArr[randomNum]);
         }
         return colorArr;
+    },
+    /**
+     * 获取使用JSSDK的签名
+     * */
+    getJSSDKPaySign:function (locationUrl,fail) {
+        $.ajax({
+            url:OneDrop.base_ip + '/main/pay/getsign',
+            dataType:'json',
+            method:'POST',
+            data:{
+                location_url:locationUrl
+            },
+            success:function (data) {
+                if(data.status === 0){
+                    fail();
+                }
+                var payData = data.data;
+                wx.config({
+                    debug:false,
+                    appId:OneDrop.appId,
+                    timestamp:payData.timestamp,
+                    nonceStr:payData.nonceStr,
+                    signature:payData.signature,
+                    jsApiList:[
+                        'chooseWXPay',
+                        'onMenuShareTimeline',
+                        'onMenuShareAppMessage'
+                    ]
+                })
+            }
+        })
+    },
+    /**
+     * 分享到朋友圈
+     * */
+    shareToMoments:function(obj){
+        wx.onMenuShareTimeline({
+            title:obj.title ? obj.title : OneDrop.shareToMomentsTitle,
+            link:obj.link ? obj.link : OneDrop.shareToMomentsLink,
+            imgUrl:obj.imgUrl,
+            success:()=>{
+                obj.success ? obj.success() : OneDrop.shareToMomentsSuccess();
+            },
+            cancel:()=>{
+                obj.cancel ? obj.cancel() : OneDrop.shareToMomentsCancel();
+            }
+        })
+    },
+    /**
+     * 分享给朋友
+     * */
+    shareToFriends:function (obj) {
+        wx.onMenuShareAppMessage({
+            title:obj.title ? obj.title : OneDrop.shareToFriendsTitle,
+            desc:obj.desc ? obj.desc : OneDrop.shareToFriendsDesc,
+            link:obj.link ? obj.link : OneDrop.shareToFriendsLink,
+            imgUrl:obj.imgUrl ? obj.imgUrl : OneDrop.shareToFriendsImgUrl,
+            type:obj.type ? obj.type : OneDrop.shareToFriendsType,
+            dataUrl:obj.dataUrl ? obj.dataUrl : OneDrop.shareToFriendsDataUrl,
+            success:()=>{
+                obj.success ? obj.success() : OneDrop.shareToFriendsSuccess();
+            },
+            cancel:()=>{
+                obj.cancel ? obj.cancel() : OneDrop.shareToFriendsCancel();
+            }
+        })
     }
 }
 function getCorrectArr(pointArr) {

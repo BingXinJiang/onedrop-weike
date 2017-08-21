@@ -4,7 +4,7 @@
 import React from 'react';
 import OneDrop from '../../const/onedrop';
 import Evaluation from './evalution/Evaluation';
-import Plan from './plan/plan';
+import APPTool from '../../Tool/Tool';
 export default class Tool extends React.Component{
     constructor(props){
         super(props);
@@ -12,6 +12,17 @@ export default class Tool extends React.Component{
             selected:'tool', //1.tool 2、evaluation 3、plan
             isShowMes:false
         }
+    }
+    componentDidMount(){
+        APPTool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+
+        })
+        APPTool.shareToMoments({
+
+        })
+        APPTool.shareToFriends({
+
+        })
     }
     render(){
         const spanStyle = {

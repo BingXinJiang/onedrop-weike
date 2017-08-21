@@ -67,7 +67,6 @@ export default class LastDrop extends React.Component{
 
     componentDidMount() {
         var self =  this;
-        console.log('location_url:',encodeURIComponent('http://leader.cvwisdom.com/weixin/main'));
         async.parallel([
             function (callback) {
                 self.getCourses(self,1);
@@ -133,7 +132,7 @@ export default class LastDrop extends React.Component{
                                 {
                                     [0,2,3,4].map((content,index)=>{
                                         if(content === 0){
-                                            return  <img onClick={()=>{
+                                            return  <img key={index} onClick={()=>{
                                                 if(this.state.isLoading){
                                                     return;
                                                 }
@@ -147,13 +146,13 @@ export default class LastDrop extends React.Component{
                                             }} src={"../../../img/weike/home/home_banner.jpg"} />
                                         }
                                         else if(content === 2){
-                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner3.jpg"/>
+                                            return <img key={index} style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner3.jpg"/>
                                         }
                                         else if(content === 3){
-                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner4.jpg"/>
+                                            return <img key={index} style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner4.jpg"/>
                                         }
                                         else if(content === 4){
-                                            return <img style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner5.jpg"/>
+                                            return <img key={index} style={{width:OneDrop.JS_ScreenW,height:'360px'}} src="../../../img/weike/home/banner5.jpg"/>
                                         }
                                     })
                                 }

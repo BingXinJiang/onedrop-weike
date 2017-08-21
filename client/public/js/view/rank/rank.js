@@ -3,6 +3,7 @@
  */
 import React from 'React';
 import OneDrop from '../../const/onedrop';
+import Tool from '../../Tool/Tool';
 
 
 export default class Rank extends React.Component{
@@ -42,6 +43,15 @@ export default class Rank extends React.Component{
                     alert('数据错误!');
                 }
             }
+        })
+        Tool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+
+        })
+        Tool.shareToMoments({
+
+        })
+        Tool.shareToFriends({
+
         })
     }
 

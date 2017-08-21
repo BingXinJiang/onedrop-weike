@@ -6,13 +6,14 @@ import React from 'react';
 import OneDrop from '../../const/onedrop';
 import Drop from '../drop/everyday/Drop';
 import Answer from '../answer/Solve';
+import Tool from '../../Tool/Tool';
 
 const wordStyle = {
     color:'rgb(51,51,51)',fontSize:'28px',wordBreak:'break-all'
 }
 
 const LINE = <div style={{
-                width:'100%',height:'20px',backgroundColor:'rgb(153,153,153)',marginTop:'30px'
+                width:'100%',height:'20px',backgroundColor:'rgb(209,209,209)',marginTop:'30px'
             }}/>
 
 const CourseLoadingState = [
@@ -288,6 +289,11 @@ class NoReadQuestion extends React.PureComponent{
                                 <div key={idx} style={{
                                     display:'flex',marginLeft:'30px',marginRight:'30px',
                                     marginTop:'20px'
+                                }} onClick={()=>{
+                                    if(this.state.loadingState === 1){
+                                        return;
+                                    }
+                                    this.props.callback(content.question_id);
                                 }}>
                                     <div style={{
                                         backgroundColor:'orange',display:'flex',flex:'1'
@@ -393,6 +399,11 @@ class NoReadAnswer extends React.PureComponent{
                                 <div key={idx} style={{
                                     display:'flex',marginLeft:'30px',marginRight:'30px',
                                     marginTop:'20px'
+                                }} onClick={()=>{
+                                    if(this.state.loadingState === 1){
+                                        return;
+                                    }
+                                    this.props.callback(content.question_id);
                                 }}>
                                     <div style={{
                                         backgroundColor:'orange',display:'flex',flex:'1'
@@ -426,7 +437,7 @@ class NoReadAnswer extends React.PureComponent{
     }
 }
 /**
- * 主框架模块
+ * 跳转到首页
  * */
 class GoDrops extends React.PureComponent{
     constructor(props){
@@ -443,6 +454,9 @@ class GoDrops extends React.PureComponent{
         )
     }
 }
+/**
+ * 主框架模块
+ * */
 export default class HomePage extends React.PureComponent{
 
     constructor(props){
@@ -452,8 +466,10 @@ export default class HomePage extends React.PureComponent{
             show:0    // 0  默认未学习页，1 Drop一滴学习页  2  答案页面
         }
         this.sectionId = 0;
+        this.questionId = '';
         this.back = this.back.bind(this);
         this.goToDrop = this.goToDrop.bind(this);
+        this.goToAnswer = this.goToAnswer.bind(this);
     }
     //从问答页或者一滴学习页返回
     back(){
@@ -468,6 +484,25 @@ export default class HomePage extends React.PureComponent{
             show:1
         })
     }
+    //跳转到问答页面
+    goToAnswer(questionId){
+        this.questionId = questionId;
+        this.setState({
+            show:2
+        })
+    }
+
+    componentDidMount(){
+        Tool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+
+        })
+        Tool.shareToMoments({
+
+        })
+        Tool.shareToFriends({
+
+        })
+    }
 
     render(){
         return (
@@ -477,7 +512,8 @@ export default class HomePage extends React.PureComponent{
                         <Drop sectionId={this.sectionId} callback={this.back}/>
                         :
                         this.state.show === 2 ?
-                            <Answer/>
+                            <Answer question_id={this.questionId} isAppreciateAnswersShow={1}
+                                    isShowConnectReply={false} callback={this.back}/>
                             :
                             <div>
                                 <div style={{
@@ -496,9 +532,9 @@ export default class HomePage extends React.PureComponent{
                                 {LINE}
                                 <NoLearnCourse callback={this.goToDrop}/>
                                 {LINE}
-                                <NoReadQuestion/>
+                                <NoReadQuestion callback={this.goToAnswer}/>
                                 {LINE}
-                                <NoReadAnswer/>
+                                <NoReadAnswer callback={this.goToAnswer}/>
                                 {
                                     this.state.isLoading ?
                                         <div style={{

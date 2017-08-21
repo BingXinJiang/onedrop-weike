@@ -7,14 +7,16 @@
 var app = require('../app');
 var debug = require('debug')('onedrop:server');
 var http = require('http');
-var SOCKET = require('../Socket');
-global.DROP_SOCKETS = {};
+var APPConst = require('../routes/const/APPConst');
+// var SOCKET = require('../Socket');
+// global.DROP_SOCKETS = {};
 /**
  * Get port from environment and store in Express.
  */
 
 // var port = normalizePort(process.env.PORT || '3001');
-var port = normalizePort(process.env.PORT || '3002');
+var nowPort = APPConst.IS_DEV_ENV ? '3002' : '3001'
+var port = normalizePort(process.env.PORT || nowPort);
 // var port = normalizePort('80');
 app.set('port', port);
 
@@ -27,7 +29,7 @@ var server = http.createServer(app);
 /**
  * Create Socket server.
  */
-var io = require('socket.io')(server);
+// var io = require('socket.io')(server);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -41,9 +43,9 @@ server.on('listening', onListening);
 /**
  * 创建socket连接
  */
-io.on('connection',function (socket) {
-    SOCKET(io,socket);
-});
+// io.on('connection',function (socket) {
+//     SOCKET(io,socket);
+// });
 
 /**
  * Normalize a port into a number, string, or false.

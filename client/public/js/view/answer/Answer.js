@@ -6,6 +6,7 @@ import React from 'React';
 import Solve from './Solve';
 import Ques from '../question/Question';
 import OneDrop from '../../const/onedrop';
+import Tool from '../../Tool/Tool';
 
 export default class Answer extends React.Component{
     constructor(props){
@@ -97,6 +98,15 @@ export default class Answer extends React.Component{
         }
         window.addEventListener('scroll', this.handleScroll2);
         // console.log('width:',OneDrop.JS_ScreenW);
+        Tool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+
+        })
+        Tool.shareToMoments({
+
+        })
+        Tool.shareToFriends({
+
+        })
     }
 
     componentWillUnmount() {
@@ -226,7 +236,7 @@ export default class Answer extends React.Component{
                 {
                     ['最赞问题','最新问题'].map((content,index)=>{
                         return (
-                            <div onClick={()=>{
+                            <div key={index} onClick={()=>{
                                 if(index===0){
                                     this.setState({
                                         page:1,

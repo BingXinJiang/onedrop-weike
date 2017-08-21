@@ -34,16 +34,10 @@ export default class DropAudio extends React.Component{
                 }
             })
         }
-
-        // this.mypositionX = 0;
-        // this.mytransformX = 0;
-        // this.mythisWidth = 0;
     }
 
     componentDidMount() {
         var self = this;
-        // var section = '#che_dan_de_yin_pin'+self.props.sectionId;
-        // var audio = $(section)[0];
         var audio = OneDrop.AUDIO;
         this.audioTimer = setInterval(()=>{
             var duration = audio.duration;
@@ -65,8 +59,6 @@ export default class DropAudio extends React.Component{
 
     componentWillUnmount(){
         clearInterval(this.audioTimer);
-        // var section = '#che_dan_de_yin_pin'+this.props.sectionId;
-        // var audio = $(section)[0];
         var audio = OneDrop.AUDIO;
         var duration = audio.duration;
         var curTime = audio.currentTime;
@@ -80,10 +72,6 @@ export default class DropAudio extends React.Component{
 
     render(){
         var self = this;
-        // var videoShow = document.getElementById("audioPlayControll");
-        // var videoShowPositionX1 = $(videoShow).offset().left;
-        // var videoShowFa = document.getElementById("audioPlayContainer");
-        // var videoShowPositionX1Fa = $(videoShow).offset().left;
         return(
 
                 <div style={{
@@ -108,8 +96,6 @@ export default class DropAudio extends React.Component{
                                marginLeft:'24px'
                         }} onClick={()=>{
 
-                            // var section = '#che_dan_de_yin_pin'+self.props.sectionId;
-                            // var audio = $(section)[0];
                             var audio = OneDrop.AUDIO;
 
                             if(audio.paused || !this.state.playing){
@@ -146,71 +132,6 @@ export default class DropAudio extends React.Component{
                                 color:'rgb(0,0,0)',
                                 // marginTop:'25px'
                             }}>{this.props.sectionName}</p>
-                            {/*
-                            <div style={{
-                                display:'flex',flexDirection:'row',alignItems:'center'
-                            }}>
-                                <p style={{
-                                    fontSize:'28px',
-                                    color:'rgb(134,135,136)',
-                                }}>{Tool.convertSec(parseInt(Number(this.state.duration)))}</p>
-                                <div id="audioPlayContainer" style={{
-                                    width:'300px',height:'30px',marginLeft:'25px',marginRight:'25px',
-                                    display:'flex',flexDirection:'row',alignItems:'center'
-                                }}>
-                                    <div style={{
-                                        width:'200px',height:'5px',backgroundColor:'green'
-                                    }}/>
-                                    <div id="audioPlayControll" onTouchStart={(e)=>{
-                                        e.preventDefault();
-                                        if(e.targetTouches.length == 1){
-                                            var touch = e.targetTouches[0];
-                                            this.mypositionX = touch.pageX;
-                                            //确定本次拖动transform的初始值
-                                            var transformStr = videoShow.style.transform;
-                                            transformStr = transformStr.substring(11);
-                                            var index = transformStr.lastIndexOf("p");
-                                            transformStr = transformStr.substring(0, index);
-                                            this.mytransformX = parseInt(transformStr);
-                                            //确定本次拖动的div宽度值
-                                            var widthStr = videoShow.style.width;
-                                            this.mythisWidth = parseInt(widthStr.substring(0,widthStr.lastIndexOf("p")));
-                                        }
-                                    }} onTouchMove={(e)=>{
-                                        e.preventDefault();
-                                        if(e.targetTouches.length == 1){
-                                            var touch = e.targetTouches[0];
-                                            videoShow.style.transform = 'translateX('+(this.transformX+touch.pageX-this.positionX)+'px)';
-                                            $(videoShow).css("width",this.mythisWidth+this.mypositionX-touch.pageX);
-                                        }
-                                    }} onTouchEnd={(e)=>{
-                                        e.preventDefault();
-                                        if($(videoShowFa).offset().left>videoShowPositionX1){
-                                            videoShow.style.transform = 'translateX('+(videoShowPositionX1)+'px)';
-                                            //此时恢复初始状态
-                                            $(videoShow).css("width",videoShowWidth);
-                                        }
-                                        // 最后一个标签的位置,父元素右上角坐标值
-                                        var videoItem2 = videoItems[videoItems.length-1];
-                                        var videoItemPositionX = $(videoItem2).offset().left+$(videoItem2).width();
-                                        if(videoItemPositionX<videoShowPositionX2){
-                                            //此时展示最后三个元素,宽度为最大宽度
-                                            videoShow.style.transform = 'translateX('+(0-(videoShowWidth/3)*(videoItems.length-3))+'px)';
-                                            $(videoShow).css("width",videoShowWidth/3*videoItems.length);
-                                        }
-                                    }} style={{
-                                        width:'30px',height:'30px',borderRadius:'15px',backgroundColor:'orange'
-                                    }}/>
-                                    <div style={{
-                                        width:'70px',height:'5px',backgroundColor:'blue'
-                                    }}/>
-                                </div>
-                                <p style={{
-                                    fontSize:'28px',
-                                    color:'rgb(134,135,136)',
-                                }}>{Tool.convertSec(parseInt(Number(this.state.leftTime)))}</p>
-                            </div>
-                            */}
                             <div style={{display:'flex',alignItems:'center'}}>
                                 <p style={{
                                     fontSize:'28px',marginRight:'15px',

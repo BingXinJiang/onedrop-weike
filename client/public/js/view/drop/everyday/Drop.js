@@ -48,12 +48,14 @@ export default class Drop extends React.Component{
                     texts.map((txt,idx)=>{
 
                         return  <span key={idx}>
-                            <span>{txt}</span>
-                            {
-                                idx === 0 ? <span key={idx} style={{color:'rgb(117,193,241)',fontWeight:'bold'}}>{htext}</span>
-                                    : null
-                            }
-                        </span>
+                                    <span>{txt}</span>
+                                    {
+                                        idx === 0 ? <span key={idx} style={{color:'rgb(117,193,241)',fontWeight:'bold'}}>
+                                            {htext}
+                                            </span>
+                                            : null
+                                    }
+                                </span>
 
                     })
                 }
@@ -290,7 +292,7 @@ export default class Drop extends React.Component{
                                                                     )
                                                                 }
                                                                 return (
-                                                                    <div>
+                                                                    <div key={idx}>
                                                                         {
                                                                             myArticle.image.map((img,indx)=>{
                                                                                 if(index==img.part && idx==img.section){

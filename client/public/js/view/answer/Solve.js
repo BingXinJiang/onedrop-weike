@@ -14,7 +14,7 @@ export default class Solve extends React.Component{
             answers:[],
             answersTime:[],
             answersAppreciate:[],
-            isAppreciateAnswersShow:0,
+            isAppreciateAnswersShow:this.props.isAppreciateAnswersShow ? 1 : 0,
             isLoading:true,
 
             commitBtnStatus:false,
@@ -147,7 +147,7 @@ export default class Solve extends React.Component{
                     {
                         ['最赞回复','最新回复'].map((content,index)=>{
                             return (
-                                <div onClick={()=>{
+                                <div key={index} onClick={()=>{
                                     if(index === 0){
                                         this.setState({
                                             answers:this.state.answersAppreciate,
@@ -174,12 +174,16 @@ export default class Solve extends React.Component{
                 </div>
 
 
-                <div style={{width:OneDrop.JS_ScreenW,backgroundColor:'white'}}>
+                <div style={{width:OneDrop.JS_ScreenW,backgroundColor:'white',
+                    marginBottom:location.href.split('/')[location.href.split('/').length-1]==='main' ? '133px' : '0'
+                }}>
                     {
                         this.state.answers.map((content, index)=>{
                             return (
-                                <div style={{width:OneDrop.JS_ScreenW-48+'px',marginLeft:'24px',marginRight:'24px'}}>
-                                    <div key={index} style={{
+                                <div key={index} style={{
+                                    width:OneDrop.JS_ScreenW-48+'px',marginLeft:'24px',marginRight:'24px'
+                                }}>
+                                    <div style={{
                                         display:'flex',paddingTop:'30px',width:'100%'
                                     }}>
                                         <div style={{

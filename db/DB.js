@@ -1,11 +1,11 @@
 var mysql = require('mysql');
+var APPConst = require('../routes/const/APPConst');
 
 var congig = {
 	host: '119.23.24.122',
 	user: 'root',   
 	password: 'JSong1213556',
-	// database:'test3',
-    database:'test',
+	database:APPConst.IS_DEV_ENV ? 'test' : 'test3',
 	port: 3306  
 }
 

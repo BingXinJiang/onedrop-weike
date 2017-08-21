@@ -79,7 +79,9 @@ router.post('/question',function (req,res,next) {
         "on A.question_id=B.question_id)as M " +
         "where M.answer_count > 0 " +
         "order by M.last_answer_time desc " +
-        "limit "+(page-1)*page+",3";
+        "limit "+(page-1)*3+",3";
+
+    // console.log('query_sql:',query_sql);
 
     async.parallel([
         function (callback) {
@@ -186,7 +188,7 @@ router.post('/answer',function (req,res,next) {
     */
 
     var query_sql = "select A.question_id,C.question_desc,B.last_answer_time,B.answer_count from " +
-        "((select question_id from answer where user_id='"+user_id+"')as A " +
+        "((select question_id from answer where user_id='"+user_id+"' group by question_id)as A " +
         "left join " +
         "(select question_id,max(answer_time)last_answer_time,count(1)answer_count from answer group by question_id) as B " +
         "on A.question_id = B.question_id " +
