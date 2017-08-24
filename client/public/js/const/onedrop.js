@@ -20,14 +20,14 @@ module.exports = {
     // base_url:'http://192.168.2.100:3001',
     // res_ip:'http://192.168.2.100:3001',
 
-    // base_ip:'http://192.168.1.37:3002/weixin',
-    // base_url:'http://192.168.1.37:3002',
-    // res_ip:'http://192.168.1.37:3002',
+    base_ip:'http://192.168.1.37:3002/weixin',
+    base_url:'http://192.168.1.37:3002',
+    res_ip:'http://192.168.1.37:3002',
 
 
-    base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
-    base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
-    res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    // base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
+    // base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    // res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
 
     appId:'wxcb05ae4237186327',//旧
 
@@ -49,7 +49,7 @@ module.exports = {
     //分享到朋友圈
     shareToMomentsTitle:'每日一滴，滴水穿石，你领导力旅途中的水和氧！',
     shareToMomentsLink:IS_DEV_ENV ? DEV_ENV_LINK:PRO_ENV_LINK,
-    shareToMomentsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com':'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
+    shareToMomentsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com'+'/images/imgs/yunguhui.jpg' : 'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
     shareToMomentsSuccess:()=>{
 
     },
@@ -61,7 +61,7 @@ module.exports = {
     shareToFriendsTitle:'每日一滴，滴水穿石，你领导力旅途中的水和氧！',
     shareToFriendsDesc:'我在一滴学到了很有用的领导力知识，快来跟我一起学习吧！',
     shareToFriendsLink:IS_DEV_ENV ? DEV_ENV_LINK:PRO_ENV_LINK,
-    shareToFriendsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com':'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
+    shareToFriendsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com'+'/images/imgs/yunguhui.jpg' : 'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
     shareToFriendsType:'link',
     shareToFriendsDataUrl:'',
     shareToFriendsSuccess:()=>{

@@ -59,7 +59,7 @@ export default class Introduction extends React.Component{
                                     {
                                         CLASS.map((content,index)=>{
                                             return (
-                                                <div style={{height:'60px',display:'flex',justifyContent:'center',alignItems:'center'
+                                                <div key={index} style={{height:'60px',display:'flex',justifyContent:'center',alignItems:'center'
                                                 }} onClick={()=>{
                                                     this.setState({
                                                         isShowSeclect:false,

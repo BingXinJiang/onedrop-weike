@@ -175,35 +175,44 @@ router.post('/commit',function (req,res,next) {
         return;
     }
 
-    //验证进入班级的人数是否已经到达上限
 
-    var query_class_sql = "select a.count_num,b.class_num,b.class_id,b.access_code from " +
-        "(select * from class where class_id="+class_id+")as b left join " +
-        "(select count(1)count_num,class_id from class_user where class_id="+class_id+")as a on a.class_id=b.class_id";
+    console.log('access_code:',access_code);
+    if(access_code === 'YUNGUHUITEST1'){
+        console.log('验证密码是测试密码');
+        class_id = 999;
+        check();
+    }else{
+        //验证进入班级的人数是否已经到达上限
 
-    query(query_class_sql,function (qerr,valls,fields) {
-        if(qerr){
-            responseDataErr(res);
-        }else{
-            if(valls.length>0){
-                var count_num = valls[0].count_num ? valls[0].count_num : 0;
-                var class_num = valls[0].class_num;
-                if(count_num>=class_num){
-                    var response = {
-                        status:0,
-                        data:{
-                            msg:'该班级学员人数已满，请选择新的班级！'
+        var query_class_sql = "select a.count_num,b.class_num,b.class_id,b.access_code from " +
+            "(select * from class where class_id="+class_id+")as b left join " +
+            "(select count(1)count_num,class_id from class_user where class_id="+class_id+")as a on a.class_id=b.class_id";
+
+        query(query_class_sql,function (qerr,valls,fields) {
+            if(qerr){
+                responseDataErr(res);
+            }else{
+                if(valls.length>0){
+                    var count_num = valls[0].count_num ? valls[0].count_num : 0;
+                    var class_num = valls[0].class_num;
+                    if(count_num>=class_num){
+                        var response = {
+                            status:0,
+                            data:{
+                                msg:'该班级学员人数已满，请选择新的班级！'
+                            }
                         }
+                        res.json(response);
+                    }else {
+                        check();
                     }
-                    res.json(response);
                 }else {
                     check();
                 }
-            }else {
-                check();
             }
-        }
-    })
+        })
+    }
+
     //验证class_id access_code 是否正确
     function check() {
         var check_sql = "select * from class where class_id="+class_id+" and access_code='"+access_code+"'";
