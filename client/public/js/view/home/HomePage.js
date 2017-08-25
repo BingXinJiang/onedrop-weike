@@ -7,19 +7,37 @@ import OneDrop from '../../const/onedrop';
 import Drop from '../drop/everyday/Drop';
 import Answer from '../answer/Solve';
 import Tool from '../../Tool/Tool';
+import Style from '../../const/Style';
 
 const wordStyle = {
-    color:'rgb(51,51,51)',fontSize:'28px',wordBreak:'break-all'
+    color:Style.wordColor,fontSize:Style.wordSize,wordBreak:'break-all'
 }
 
 const LINE = <div style={{
-                width:'100%',height:'20px',backgroundColor:'rgb(209,209,209)',marginTop:'30px'
+                width:'100%',height:'20px',backgroundColor:Style.lineGray,marginTop:'30px'
             }}/>
 
+const btnStyle = {
+    ...wordStyle,color:'white',backgroundColor:Style.bgBlue,width:'320px',height:'50px',
+    display:'flex',justifyContent:'center',alignItems:'center',borderRadius:'2px'
+}
+
+const bottomLine = <div style={{
+    width:'100%',backgroundColor:Style.lineGray,height:'1px'
+}}/>
+
+const circle =(idx)=> <div style={{width:'60px',height:'60px',backgroundColor:Style.bgGray,borderRadius:'40px',
+                    overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center'
+                }}>
+                    <p style={{...wordStyle}}>
+                        {idx+1}
+                    </p>
+                </div>
+
 const CourseLoadingState = [
-    '更多未学习课程',
-    '正在加载课程...',
-    '没有更多课程...'
+    '更多未学习一滴',
+    '正在加载一滴...',
+    '没有更多一滴...'
 ]
 
 const QuestionLoadingState = [
@@ -89,11 +107,12 @@ class User extends React.PureComponent{
                     }} src={this.state.headimgurl}/>
                 </div>
                 <div style={{
-                    display:'flex',flexDirection:'column',justifyContent:'center',
-                    backgroundColor:'orange'
+                    display:'flex',flexDirection:'column',justifyContent:'center'
                 }}>
                     <p style={{...wordStyle}}>{this.state.nickname}</p>
-                    <p style={{...wordStyle}}>我的积分：{this.state.fraction}分</p>
+                    <p style={{...wordStyle}}>我的积分：
+                        <span style={{color:Style.green}}>{this.state.fraction}分</span>
+                    </p>
                 </div>
             </div>
         )
@@ -163,45 +182,74 @@ class NoLearnCourse extends React.PureComponent{
     render(){
         return (
             <div style={{
-                width:'100%',marginTop:'40px'
+                width:'100%'
             }}>
                 <div style={{
-                    width:'100%',height:'60px',display:'flex',alignItems:'center'
+                    width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'center'
                 }}>
-                    <p style={{...wordStyle,marginLeft:'30px'}}>我的每日一滴(未学习)</p>
+                    <span style={{width:'70px',height:'2px',backgroundColor:Style.green}}/>
+                    <p style={{...wordStyle,marginLeft:'20px',marginRight:'20px'}}>我的每日一滴</p>
+                    <span style={{width:'70px',height:'2px',backgroundColor:Style.green}}/>
                 </div>
+                {bottomLine}
                 <div>
                     {
                         this.state.courses.map((content,idx)=>{
                             return (
                                 <div key={idx} style={{
-                                    display:'flex',marginLeft:'30px',marginRight:'30px',
-                                    marginTop:'20px'
-                                }} onClick={()=>{
-                                    if(this.state.loadingState === 1){
-                                        return;
-                                    }
-                                    var audio = document.createElement('audio');
-                                    audio.preload = 'auto';
-                                    audio.src = content.section_voice;
-                                    audio.id = 'che_dan_de_yin_pin'+content.section_id;
-                                    OneDrop.AUDIO = audio;
-                                    this.props.callback(content.section_id);
+                                    width:'100%',backgroundColor:'white',height:'121px'
                                 }}>
                                     <div style={{
-                                        backgroundColor:'gray',display:'flex',flexDirection:'column',flex:'1'
+                                        display:'flex',marginLeft:'30px',marginRight:'30px',alignItems:'center',
+                                        height:'120px'
+                                    }} onClick={()=>{
+                                        if(this.state.loadingState === 1){
+                                            return;
+                                        }
+                                        var audio = document.createElement('audio');
+                                        audio.preload = 'auto';
+                                        audio.src = content.section_voice;
+                                        audio.id = 'che_dan_de_yin_pin'+content.section_id;
+                                        OneDrop.AUDIO = audio;
+                                        this.props.callback(content.section_id);
                                     }}>
-                                        <p style={{...wordStyle}}>{content.section_name}</p>
-                                        <p style={{...wordStyle}}>{content.section_intro}</p>
+                                        <div style={{
+                                            display:'flex',flex:'1'
+                                        }}>
+                                            <div style={{width:'60px',height:'60px',backgroundColor:Style.bgGray,borderRadius:'40px',
+                                                overflow:'hidden',display:'flex',justifyContent:'center',alignItems:'center'
+                                            }}>
+                                                <p style={{...wordStyle}}>
+                                                    {idx===0 ? <span style={{...wordStyle,color:'red',fontSize:'22px'}}>最新</span>:idx+1}
+                                                </p>
+                                            </div>
+                                            <p style={{...wordStyle,display:'flex',alignItems:'center',marginLeft:'18px'}}>
+                                                {content.section_name}
+                                            </p>
+                                        </div>
+                                        <div style={{
+                                            width:'180px',display:'flex',justifyContent:'center',alignItems:'center',
+                                            marginLeft:'20px'
+                                        }}>
+                                            <div style={{
+                                                width:'180px',height:'60px',display:'flex',justifyContent:'flex-start',alignItems:'center',
+                                                backgroundColor:Style.bgGray,borderRadius:'30px',overflow:'hidden'
+                                            }}>
+                                                <div style={{width:'58px',height:'58px',display:'flex',justifyContent:'center',alignItems:'center',
+                                                    backgroundColor:Style.bgGray,borderRadius:'29px',overflow:'hidden',borderStyle:'solid',
+                                                    borderColor:Style.green,borderWidth:'1px'
+                                                }}>
+                                                    <img style={{
+                                                        width:'40px'
+                                                    }} src="../../../img/weike/homepage/learn.png"/>
+                                                </div>
+                                                <p style={{
+                                                    ...wordStyle,marginLeft:'20px',fontSize:'24px'
+                                                }}>去学习</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div style={{
-                                        width:'150px',display:'flex',justifyContent:'center',alignItems:'center',
-                                        backgroundColor:'orange',marginLeft:'20px'
-                                    }}>
-                                        <p style={{
-                                            ...wordStyle
-                                        }}>去学习</p>
-                                    </div>
+                                    {bottomLine}
                                 </div>
                             )
                         })
@@ -210,7 +258,9 @@ class NoLearnCourse extends React.PureComponent{
                 <div style={{
                     width:'100%',height:'60px',display:'flex',alignItems:'center',justifyContent:'center',marginTop:'30px'
                 }} onClick={this.getCourse}>
-                    <p style={{...wordStyle}}>{CourseLoadingState[this.state.loadingState]}</p>
+                    <p style={{...btnStyle}}>
+                        {CourseLoadingState[this.state.loadingState]}
+                    </p>
                 </div>
             </div>
         )
@@ -275,43 +325,58 @@ class NoReadQuestion extends React.PureComponent{
     render(){
         return(
             <div style={{
-                width:'100%',marginTop:'40px'
+                width:'100%'
             }}>
                 <div style={{
-                    width:'100%',height:'60px',display:'flex',alignItems:'center'
+                    width:'100%',height:'80px',display:'flex',alignItems:'center'
                 }}>
                     <p style={{...wordStyle,marginLeft:'30px'}}>我的问题</p>
                 </div>
+                {bottomLine}
                 <div>
                     {
                         this.state.questions.map((content,idx)=>{
                             return (
                                 <div key={idx} style={{
-                                    display:'flex',marginLeft:'30px',marginRight:'30px',
-                                    marginTop:'20px'
-                                }} onClick={()=>{
-                                    if(this.state.loadingState === 1){
-                                        return;
-                                    }
-                                    this.props.callback(content.question_id);
+                                    width:'100%',height:'150px'
                                 }}>
                                     <div style={{
-                                        backgroundColor:'orange',display:'flex',flex:'1'
+                                        display:'flex',marginLeft:'30px',marginRight:'30px',height:'149px',alignItems:'center'
+                                    }} onClick={()=>{
+                                        if(this.state.loadingState === 1){
+                                            return;
+                                        }
+                                        this.props.callback(content.question_id);
                                     }}>
-                                        <p style={{
-                                            ...wordStyle
-                                        }}>{content.question_desc}</p>
+                                        <div style={{
+                                            display:'flex',flex:'1',alignItems:'center'
+                                        }}>
+                                            {circle(idx)}
+                                            <p style={{
+                                                ...wordStyle,marginLeft:'20px'
+                                            }}>{content.question_desc}</p>
+                                        </div>
+                                        <div style={{
+                                            display:'flex',flexDirection:'column',marginLeft:'20px',
+                                            width:'120px',justifyContent:'flex-end',alignItems:'center'
+                                        }}>
+                                            <div style={{
+                                                display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',
+                                                position:'relative'
+                                            }}>
+                                                {
+                                                    content.hasNew ?
+                                                        <span style={{
+                                                            width:'16px',height:'16px',backgroundColor:'red',borderRadius:'8px',overflow:'hidden',
+                                                            position:'absolute',top:'0',right:'0'
+                                                        }}/> : null
+                                                }
+                                                <img style={{width:'60px'}} src="../../../img/weike/homepage/comment.png"/>
+                                            </div>
+                                            <p style={{...wordStyle,color:content.hasNew ? 'red':Style.wordColor}}>{content.answer_count}回答</p>
+                                        </div>
                                     </div>
-                                    <div style={{
-                                        backgroundColor:'gray',display:'flex',flexDirection:'column',marginLeft:'20px',
-                                        width:'150px',justifyContent:'center',alignItems:'center'
-                                    }}>
-                                        <p style={{...wordStyle, color:'red',fontSize:'18px'}}>
-                                            {content.hasNew === 1 ? '新回答' : ''}
-                                        </p>
-                                        <p style={{...wordStyle}}>{content.answer_count}</p>
-                                        <p style={{...wordStyle}}>个回答</p>
-                                    </div>
+                                    {bottomLine}
                                 </div>
                             )
                         })
@@ -320,7 +385,7 @@ class NoReadQuestion extends React.PureComponent{
                 <div style={{
                     width:'100%',height:'60px',display:'flex',alignItems:'center',justifyContent:'center',marginTop:'30px'
                 }} onClick={this.getQuestions}>
-                    <p style={{...wordStyle}}>{QuestionLoadingState[this.state.loadingState]}</p>
+                    <p style={{...btnStyle}}>{QuestionLoadingState[this.state.loadingState]}</p>
                 </div>
             </div>
         )
@@ -385,43 +450,58 @@ class NoReadAnswer extends React.PureComponent{
     render(){
         return(
             <div style={{
-                width:'100%',marginTop:'40px'
+                width:'100%'
             }}>
                 <div style={{
-                    width:'100%',height:'60px',display:'flex',alignItems:'center'
+                    width:'100%',height:'80px',display:'flex',alignItems:'center'
                 }}>
                     <p style={{...wordStyle,marginLeft:'30px'}}>我参与回答的问题</p>
                 </div>
+                {bottomLine}
                 <div>
                     {
                         this.state.questions.map((content,idx)=>{
                             return (
                                 <div key={idx} style={{
-                                    display:'flex',marginLeft:'30px',marginRight:'30px',
-                                    marginTop:'20px'
-                                }} onClick={()=>{
-                                    if(this.state.loadingState === 1){
-                                        return;
-                                    }
-                                    this.props.callback(content.question_id);
+                                    width:'100%',height:'150px'
                                 }}>
                                     <div style={{
-                                        backgroundColor:'orange',display:'flex',flex:'1'
+                                        display:'flex',marginLeft:'30px',marginRight:'30px',height:'149px',alignItems:'center'
+                                    }} onClick={()=>{
+                                        if(this.state.loadingState === 1){
+                                            return;
+                                        }
+                                        this.props.callback(content.question_id);
                                     }}>
-                                        <p style={{
-                                            ...wordStyle
-                                        }}>{content.question_desc}</p>
+                                        <div style={{
+                                            display:'flex',flex:'1',alignItems:'center'
+                                        }}>
+                                            {circle(idx)}
+                                            <p style={{
+                                                ...wordStyle,marginLeft:'20px'
+                                            }}>{content.question_desc}</p>
+                                        </div>
+                                        <div style={{
+                                            display:'flex',flexDirection:'column',marginLeft:'20px',
+                                            width:'120px',justifyContent:'flex-end',alignItems:'center'
+                                        }}>
+                                            <div style={{
+                                                display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',
+                                                position:'relative'
+                                            }}>
+                                                {
+                                                    content.hasNew ?
+                                                        <span style={{
+                                                            width:'16px',height:'16px',backgroundColor:'red',borderRadius:'8px',overflow:'hidden',
+                                                            position:'absolute',top:'0',right:'0'
+                                                        }}/> : null
+                                                }
+                                                <img style={{width:'60px'}} src="../../../img/weike/homepage/comment.png"/>
+                                            </div>
+                                            <p style={{...wordStyle,color:content.hasNew ? 'red':Style.wordColor}}>{content.answer_count}回答</p>
+                                        </div>
                                     </div>
-                                    <div style={{
-                                        backgroundColor:'gray',display:'flex',flexDirection:'column',marginLeft:'20px',
-                                        width:'150px',justifyContent:'center',alignItems:'center'
-                                    }}>
-                                        <p style={{...wordStyle, color:'red',fontSize:'18px'}}>
-                                            {content.hasNew === 1 ? '新回答' : ''}
-                                        </p>
-                                        <p style={{...wordStyle}}>{content.answer_count}</p>
-                                        <p style={{...wordStyle}}>个回答</p>
-                                    </div>
+                                    {bottomLine}
                                 </div>
                             )
                         })
@@ -430,7 +510,7 @@ class NoReadAnswer extends React.PureComponent{
                 <div style={{
                     width:'100%',height:'60px',display:'flex',alignItems:'center',justifyContent:'center',marginTop:'30px',
                 }} onClick={this.getQuestions}>
-                    <p style={{...wordStyle}}>{AnswerLoadingState[this.state.loadingState]}</p>
+                    <p style={{...btnStyle}}>{AnswerLoadingState[this.state.loadingState]}</p>
                 </div>
             </div>
         )
@@ -517,7 +597,7 @@ export default class HomePage extends React.PureComponent{
                             :
                             <div>
                                 <div style={{
-                                    width:OneDrop.JS_ScreenW
+                                    width:OneDrop.JS_ScreenW,marginBottom:'40px'
                                 }}>
                                     <div style={{
                                         width:'100%',display:'flex',justifyContent:'center',marginTop:'40px'
