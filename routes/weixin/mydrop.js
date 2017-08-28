@@ -78,6 +78,53 @@ router.post('/label/sections',function (req,res,next) {
     })
 })
 
+/**
+ * 根据学习天数,查询某个人应该获得的勋章       2.0
+ * */
+router.post('/medal',function (req,res,next) {
+    var user_id = req.body.user_id;
+    if(!user_id){
+        responseDataErr(res);
+    }
+    var query_sql = "select count(1)learnCount from schedule_learn where user_id='"+user_id+"' and is_learn=1 group by date(datetime)";
+    query(query_sql,function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var days = valls.length;
+            var response = {
+                status:1,
+                data:days
+            }
+            res.json(response);
+        }
+    })
+})
+
+/**
+ * 上传用户真实姓名
+ * */
+router.post('/name',function (req,res,next) {
+    var user_id = req.body.user_id;
+    var user_name = req.body.user_name;
+    if(!user_id){
+        responseDataErr(res);
+    }
+    var update_sql = "update user set username='"+user_name+"' where user_id='"+user_id+"'";
+    query(update_sql,function (qerr,valls,fields) {
+        if(qerr){
+            responseDataErr(res);
+        }else{
+            var response = {
+                status:1,
+                data:{
+                    msg:'success'
+                }
+            }
+            res.json(response);
+        }
+    })
+})
 
 
 module.exports = router;

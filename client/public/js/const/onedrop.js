@@ -11,18 +11,18 @@ global.PRO_ENV_LINK='https://open.weixin.qq.com/connect/oauth2/authorize?appid=w
 
 module.exports = {
 
-    // base_ip:'http://192.168.2.100:3001/weixin',
-    // base_url:'http://192.168.2.100:3001',
-    // res_ip:'http://192.168.2.100:3001',
+    // base_ip:'http://192.168.2.101:3002/weixin',
+    // base_url:'http://192.168.2.101:3002',
+    // res_ip:'http://192.168.2.101:3002',
 
-    base_ip:'http://192.168.1.37:3002/weixin',
-    base_url:'http://192.168.1.37:3002',
-    res_ip:'http://192.168.1.37:3002',
+    // base_ip:'http://192.168.1.37:3002/weixin',
+    // base_url:'http://192.168.1.37:3002',
+    // res_ip:'http://192.168.1.37:3002',
 
 
-    // base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
-    // base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
-    // res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
+    base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
 
     appId:'wxcb05ae4237186327',//旧
 

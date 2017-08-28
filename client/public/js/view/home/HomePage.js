@@ -154,7 +154,7 @@ class NoLearnCourse extends React.PureComponent{
         }).then((response)=>{
             return response.json();
         }).then((res)=>{
-            console.log('未学课程：',res);
+            // console.log('未学课程：',res);
             if(res.status === 1){
                 var courses = res.data;
                 var loadingState = 0;
@@ -299,7 +299,7 @@ class NoReadQuestion extends React.PureComponent{
         }).then((response)=>{
             return response.json();
         }).then((res)=>{
-            console.log('我的问题：',res);
+            // console.log('我的问题：',res);
             if(res.status === 1){
                 var questions = res.data;
                 var loadingState = 0;
@@ -424,7 +424,7 @@ class NoReadAnswer extends React.PureComponent{
         }).then((response)=>{
             return response.json();
         }).then((res)=>{
-            console.log('我的回答：',res);
+            // console.log('我的回答：',res);
             if(res.status === 1){
                 var questions = res.data;
                 var loadingState = 0;
@@ -600,14 +600,13 @@ export default class HomePage extends React.PureComponent{
                                     width:OneDrop.JS_ScreenW,marginBottom:'40px'
                                 }}>
                                     <div style={{
-                                        width:'100%',display:'flex',justifyContent:'center',marginTop:'40px'
+                                        width:'100%',display:'flex',justifyContent:'center'
                                     }}>
-                                        <p style={{
-                                            color:'rgb(51,51,51)',fontSize:'32px'
-                                        }}>每日一滴，滴水穿石</p>
+                                        <img style={{
+                                            width:'100%',height:'360px'
+                                        }} src="../../../img/weike/homepage/top.jpg"/>
                                     </div>
                                 </div>
-                                {LINE}
                                 <User/>
                                 {LINE}
                                 <NoLearnCourse callback={this.goToDrop}/>
