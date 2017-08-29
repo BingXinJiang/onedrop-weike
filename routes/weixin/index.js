@@ -85,6 +85,9 @@ router.get('/main', function(req, res, next) {
                     /**
                      * 判断是否登陆过,如果没有登陆过,将用户信息写入数据库,如果登陆过,根据微信返回内容更新用户信息
                      * */
+
+                    console.log('微信请求的用户信息：',userData);
+
                     var user_id = userData.openid;
                     var nickname = userData.nickname;
                     var sex = userData.sex;

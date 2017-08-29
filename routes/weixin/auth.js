@@ -175,8 +175,7 @@ router.post('/commit',function (req,res,next) {
         return;
     }
 
-
-    console.log('access_code:',access_code);
+    // console.log('access_code:',access_code);
     if(access_code === 'YUNGUHUITEST1'){
         console.log('验证密码是测试密码');
         class_id = 999;
