@@ -78,6 +78,9 @@ router.get('/main', function(req, res, next) {
                 path:'/sns/userinfo?'+user_data,
                 method:'GET'
             };
+
+            console.log('微信请求回来的token信息：',returnData);
+            
             var userRequest = http.request(user_options, function (response) {
                 response.setEncoding('utf8');
                 response.on('data', function(chunk){
