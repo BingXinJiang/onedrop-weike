@@ -338,10 +338,10 @@ class NoReadQuestion extends React.PureComponent{
                         this.state.questions.map((content,idx)=>{
                             return (
                                 <div key={idx} style={{
-                                    width:'100%',height:'150px'
+                                    width:'100%',height:'171px'
                                 }}>
                                     <div style={{
-                                        display:'flex',marginLeft:'30px',marginRight:'30px',height:'149px',alignItems:'center'
+                                        display:'flex',marginLeft:'30px',marginRight:'30px',height:'170px',alignItems:'center'
                                     }} onClick={()=>{
                                         if(this.state.loadingState === 1){
                                             return;
@@ -353,7 +353,9 @@ class NoReadQuestion extends React.PureComponent{
                                         }}>
                                             {circle(idx)}
                                             <p style={{
-                                                ...wordStyle,marginLeft:'20px'
+                                                ...wordStyle,marginLeft:'20px',lineHeight:'50px',height:'150px',overflow:'hidden',
+                                                display:'flex',wordBreak:'break-all',
+                                                textAlign:'left',flex:'1'
                                             }}>{content.question_desc}</p>
                                         </div>
                                         <div style={{
@@ -463,10 +465,10 @@ class NoReadAnswer extends React.PureComponent{
                         this.state.questions.map((content,idx)=>{
                             return (
                                 <div key={idx} style={{
-                                    width:'100%',height:'150px'
+                                    width:'100%',height:'171px'
                                 }}>
                                     <div style={{
-                                        display:'flex',marginLeft:'30px',marginRight:'30px',height:'149px',alignItems:'center'
+                                        display:'flex',marginLeft:'30px',marginRight:'30px',height:'170px',alignItems:'center'
                                     }} onClick={()=>{
                                         if(this.state.loadingState === 1){
                                             return;
@@ -478,7 +480,9 @@ class NoReadAnswer extends React.PureComponent{
                                         }}>
                                             {circle(idx)}
                                             <p style={{
-                                                ...wordStyle,marginLeft:'20px'
+                                                ...wordStyle,marginLeft:'20px',lineHeight:'50px',height:'150px',overflow:'hidden',
+                                                display:'flex',wordBreak:'break-all',
+                                                textAlign:'left',flex:'1'
                                             }}>{content.question_desc}</p>
                                         </div>
                                         <div style={{

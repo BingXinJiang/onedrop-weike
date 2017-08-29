@@ -15,9 +15,9 @@ module.exports = {
     // base_url:'http://192.168.2.101:3002',
     // res_ip:'http://192.168.2.101:3002',
 
-    // base_ip:'http://192.168.1.37:3002/weixin',
-    // base_url:'http://192.168.1.37:3002',
-    // res_ip:'http://192.168.1.37:3002',
+    // base_ip:'http://192.168.1.32:3002/weixin',
+    // base_url:'http://192.168.1.32:3002',
+    // res_ip:'http://192.168.1.32:3002',
 
 
     base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',

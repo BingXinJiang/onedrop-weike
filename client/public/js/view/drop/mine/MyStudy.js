@@ -44,7 +44,7 @@ class Medal extends React.Component{
     }
     render(){
         return(
-            <div style={{position:'absolute',width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,
+            <div style={{position:'absolute',width:OneDrop.JS_ScreenW,height:(OneDrop.JS_ScreenH*2-2*64)+'px',
                             backgroundColor:'white',left:'0',top:'0',zIndex:'998'
                         }}>
                 <div style={{position:'relative',width:'100%',height:'100%'
