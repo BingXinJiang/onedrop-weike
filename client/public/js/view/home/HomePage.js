@@ -454,7 +454,7 @@ class NoReadAnswer extends React.PureComponent{
     render(){
         return(
             <div style={{
-                width:'100%'
+                width:'100%',marginBottom:'60px'
             }}>
                 <div style={{
                     width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'center'
@@ -605,7 +605,7 @@ export default class HomePage extends React.PureComponent{
                             :
                             <div>
                                 <div style={{
-                                    width:OneDrop.JS_ScreenW,marginBottom:'40px'
+                                    width:OneDrop.JS_ScreenW
                                 }}>
                                     <div style={{
                                         width:'100%',display:'flex',justifyContent:'center'
