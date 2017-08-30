@@ -12,7 +12,8 @@ export default class DropAudio extends React.Component{
             playing:false,
             duration:0,
             curTime:0,
-            leftTime:0
+            leftTime:0,
+            learnPercent:0
         };
         this.audioTimer = null;
         this.commitLearnStatus = (percent)=>{
@@ -42,10 +43,12 @@ export default class DropAudio extends React.Component{
         this.audioTimer = setInterval(()=>{
             var duration = audio.duration;
             var curTime = audio.currentTime;
+            var learnPercent = (curTime/duration).toFixed(2)*100;
             this.setState({
                 duration:parseInt(duration),
                 curTime:parseInt(curTime),
-                leftTime:parseInt(duration-curTime)
+                leftTime:parseInt(duration-curTime),
+                learnPercent:this.state.learnPercent>=learnPercent ? this.state.learnPercent : learnPercent
             })
             $('#drop_progress').css('width',curTime/duration*OneDrop.JS_ScreenW*0.42+'px');
         }, 1000)
@@ -63,8 +66,8 @@ export default class DropAudio extends React.Component{
         var duration = audio.duration;
         var curTime = audio.currentTime;
         if(curTime && curTime>0){
-            var learn_percent = (curTime/duration).toFixed(2)*100;
-            this.commitLearnStatus(learn_percent);
+            // var learn_percent = (curTime/duration).toFixed(2)*100;
+            this.commitLearnStatus(this.state.learnPercent);
         }
         audio.pause();
         audio.currentTime = 0;
