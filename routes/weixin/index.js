@@ -156,7 +156,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
     
     var url = req.body.location_url;
 
-    console.log('签名的url:',url);
+    // console.log('签名的url:',url);
 
     function sha1 (text) {
         return crypto.createHash('sha1').update(text, 'utf8').digest('hex');
@@ -190,7 +190,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
             token_response.on('data', function (token_res) {
                 var receive_token = JSON.parse(token_res);
 
-                console.log('receive_token', receive_token);
+                // console.log('receive_token', receive_token);
 
                 var access_token = receive_token.access_token;
 
@@ -203,7 +203,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
                     response.setEncoding('utf8');
                     response.on('data', function (response) {
                         var receiveData = JSON.parse(response);
-                        console.log('receiveData:', receiveData);
+                        // console.log('receiveData:', receiveData);
                         var jsapi_ticket = receiveData.ticket;
 
                         //对获取到的access_token 和  jsapi_ticket  进行存储
