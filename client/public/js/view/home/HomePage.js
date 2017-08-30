@@ -581,7 +581,7 @@ export default class HomePage extends React.PureComponent{
     }
 
     componentDidMount(){
-        Tool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+        Tool.getJSSDKPaySign(location.href.split('#')[0],()=>{
 
         })
         Tool.shareToMoments({
