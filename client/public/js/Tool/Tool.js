@@ -154,41 +154,45 @@ module.exports = {
      * 分享到朋友圈
      * */
     shareToMoments:function(obj){
-        console.log('要被分享到朋友圈了！');
-        wx.onMenuShareTimeline({
-            title:obj.title ? obj.title : OneDrop.shareToMomentsTitle,
-            link:obj.link ? obj.link : OneDrop.shareToMomentsLink,
-            imgUrl:obj.imgUrl,
-            success:()=>{
-                console.log('分享朋友圈成功！');
-                obj.success ? obj.success() : OneDrop.shareToMomentsSuccess();
-            },
-            cancel:()=>{
-                console.log('分享朋友圈失败！');
-                obj.cancel ? obj.cancel() : OneDrop.shareToMomentsCancel();
-            }
+        wx.ready(()=>{
+            console.log('要被分享到朋友圈了！');
+            wx.onMenuShareTimeline({
+                title:obj.title ? obj.title : OneDrop.shareToMomentsTitle,
+                link:obj.link ? obj.link : OneDrop.shareToMomentsLink,
+                imgUrl:obj.imgUrl,
+                success:()=>{
+                    console.log('分享朋友圈成功！');
+                    obj.success ? obj.success() : OneDrop.shareToMomentsSuccess();
+                },
+                cancel:()=>{
+                    console.log('分享朋友圈失败！');
+                    obj.cancel ? obj.cancel() : OneDrop.shareToMomentsCancel();
+                }
+            })
         })
     },
     /**
      * 分享给朋友
      * */
     shareToFriends:function (obj) {
-        console.log('要被分享到朋友了！');
-        wx.onMenuShareAppMessage({
-            title:obj.title ? obj.title : OneDrop.shareToFriendsTitle,
-            desc:obj.desc ? obj.desc : OneDrop.shareToFriendsDesc,
-            link:obj.link ? obj.link : OneDrop.shareToFriendsLink,
-            imgUrl:obj.imgUrl ? obj.imgUrl : OneDrop.shareToFriendsImgUrl,
-            type:obj.type ? obj.type : OneDrop.shareToFriendsType,
-            dataUrl:obj.dataUrl ? obj.dataUrl : OneDrop.shareToFriendsDataUrl,
-            success:()=>{
-                console.log('分享朋友成功！');
-                obj.success ? obj.success() : OneDrop.shareToFriendsSuccess();
-            },
-            cancel:()=>{
-                console.log('分享朋友成功！');
-                obj.cancel ? obj.cancel() : OneDrop.shareToFriendsCancel();
-            }
+        wx.ready(()=>{
+            console.log('要被分享到朋友了！');
+            wx.onMenuShareAppMessage({
+                title:obj.title ? obj.title : OneDrop.shareToFriendsTitle,
+                desc:obj.desc ? obj.desc : OneDrop.shareToFriendsDesc,
+                link:obj.link ? obj.link : OneDrop.shareToFriendsLink,
+                imgUrl:obj.imgUrl ? obj.imgUrl : OneDrop.shareToFriendsImgUrl,
+                type:obj.type ? obj.type : OneDrop.shareToFriendsType,
+                dataUrl:obj.dataUrl ? obj.dataUrl : OneDrop.shareToFriendsDataUrl,
+                success:()=>{
+                    console.log('分享朋友成功！');
+                    obj.success ? obj.success() : OneDrop.shareToFriendsSuccess();
+                },
+                cancel:()=>{
+                    console.log('分享朋友成功！');
+                    obj.cancel ? obj.cancel() : OneDrop.shareToFriendsCancel();
+                }
+            })
         })
     }
 }

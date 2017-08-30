@@ -187,7 +187,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
             token_response.setEncoding('utf8');
             token_response.on('data', function (token_res) {
                 var receive_token = JSON.parse(token_res);
-                // console.log('receive_token', receive_token);
+                console.log('receive_token', receive_token);
 
                 var access_token = receive_token.access_token;
 
@@ -200,12 +200,8 @@ router.post('/main/pay/getsign', function (req, res, next) {
                     response.setEncoding('utf8');
                     response.on('data', function (response) {
                         var receiveData = JSON.parse(response);
-                        // console.log('receiveData:', receiveData);
+                        console.log('receiveData:', receiveData);
                         var jsapi_ticket = receiveData.ticket;
-                        // var timestamp = parseInt(Date.parse(new Date())/1000).toString();
-                        // var nonceStr = 'onedrop' + parseInt(Math.random()*1000000);
-                        // var beforeSignStr = 'jsapi_ticket='+jsapi_ticket+'&noncestr='+nonceStr+'&timestamp='+timestamp+'&url='+url;
-                        // var signature = sha1(beforeSignStr);
 
                         //对获取到的access_token 和  jsapi_ticket  进行存储
                         var querry_sql = "update info_const set datetime=Now(), access_token='"+access_token+"',jsapi_ticket='"+jsapi_ticket+"'";
