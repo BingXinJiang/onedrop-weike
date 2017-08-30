@@ -102,7 +102,7 @@ router.post('/medal',function (req,res,next) {
 })
 
 /**
- * 上传用户真实姓名
+ * 上传用户真实姓名                    2.0
  * */
 router.post('/name',function (req,res,next) {
     var user_id = req.body.user_id;

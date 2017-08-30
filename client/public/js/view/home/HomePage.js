@@ -328,9 +328,11 @@ class NoReadQuestion extends React.PureComponent{
                 width:'100%'
             }}>
                 <div style={{
-                    width:'100%',height:'80px',display:'flex',alignItems:'center'
+                    width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'center'
                 }}>
-                    <p style={{...wordStyle,marginLeft:'30px'}}>我的问题</p>
+                    <span style={{width:'70px',height:'2px',backgroundColor:Style.green}}/>
+                    <p style={{...wordStyle,marginLeft:'20px',marginRight:'20px'}}>我的问题</p>
+                    <span style={{width:'70px',height:'2px',backgroundColor:Style.green}}/>
                 </div>
                 {bottomLine}
                 <div>
@@ -455,9 +457,11 @@ class NoReadAnswer extends React.PureComponent{
                 width:'100%'
             }}>
                 <div style={{
-                    width:'100%',height:'80px',display:'flex',alignItems:'center'
+                    width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'center'
                 }}>
-                    <p style={{...wordStyle,marginLeft:'30px'}}>我参与回答的问题</p>
+                    <span style={{width:'70px',height:'2px',backgroundColor:Style.green}}/>
+                    <p style={{...wordStyle,marginLeft:'20px',marginRight:'20px'}}>我参与回答的问题</p>
+                    <span style={{width:'70px',height:'2px',backgroundColor:Style.green}}/>
                 </div>
                 {bottomLine}
                 <div>
