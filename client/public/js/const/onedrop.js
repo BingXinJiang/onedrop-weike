@@ -6,10 +6,12 @@
 global.IS_DEV_ENV = false;
 
 global.DEV_ENV_LINK='http://drop.cvwisdom.com/html/get_weixin_code.html?appid=wxcb05ae4237186327&scope=snsapi_base&state=leader&redirect_uri=http://leader.cvwisdom.com/weixin/main',
-global.PRO_ENV_LINK='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcb05ae4237186327&redirect_uri=http://drop.cvwisdom.com/weixin/main&response_type=code&scope=snsapi_userinfo#wechat_redirect',
+// global.PRO_ENV_LINK='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcb05ae4237186327&redirect_uri=http://drop.cvwisdom.com/weixin/main&response_type=code&scope=snsapi_userinfo#wechat_redirect',
+
+global.PRO_ENV_LINK='http://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcb05ae4237186327&redirect_uri=http://drop.cvwisdom.com/weixin/main&response_type=code&scope=snsapi_userinfo#wechat_redirect',
 
 
-module.exports = {
+    module.exports = {
 
     // base_ip:'http://192.168.2.101:3002/weixin',
     // base_url:'http://192.168.2.101:3002',
