@@ -156,6 +156,8 @@ router.post('/main/pay/getsign', function (req, res, next) {
     
     var url = req.body.location_url;
 
+    console.log('签名的url:',url);
+
     function sha1 (text) {
         return crypto.createHash('sha1').update(text, 'utf8').digest('hex');
     }
