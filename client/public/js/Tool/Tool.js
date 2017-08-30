@@ -155,11 +155,10 @@ module.exports = {
      * */
     shareToMoments:function(obj){
         wx.ready(()=>{
-            console.log('要被分享到朋友圈了！');
             wx.onMenuShareTimeline({
                 title:obj.title ? obj.title : OneDrop.shareToMomentsTitle,
                 link:obj.link ? obj.link : OneDrop.shareToMomentsLink,
-                imgUrl:obj.imgUrl,
+                imgUrl:obj.imgUrl ? obj.imgUrl : OneDrop.shareToMomentsImgUrl,
                 success:()=>{
                     console.log('分享朋友圈成功！');
                     obj.success ? obj.success() : OneDrop.shareToMomentsSuccess();
@@ -176,7 +175,6 @@ module.exports = {
      * */
     shareToFriends:function (obj) {
         wx.ready(()=>{
-            console.log('要被分享到朋友了！');
             wx.onMenuShareAppMessage({
                 title:obj.title ? obj.title : OneDrop.shareToFriendsTitle,
                 desc:obj.desc ? obj.desc : OneDrop.shareToFriendsDesc,
@@ -189,7 +187,7 @@ module.exports = {
                     obj.success ? obj.success() : OneDrop.shareToFriendsSuccess();
                 },
                 cancel:()=>{
-                    console.log('分享朋友成功！');
+                    console.log('分享朋友失败！');
                     obj.cancel ? obj.cancel() : OneDrop.shareToFriendsCancel();
                 }
             })
