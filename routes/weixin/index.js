@@ -187,6 +187,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
             token_response.setEncoding('utf8');
             token_response.on('data', function (token_res) {
                 var receive_token = JSON.parse(token_res);
+
                 console.log('receive_token', receive_token);
 
                 var access_token = receive_token.access_token;
@@ -249,7 +250,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
                 var info = valls[0];
                 var left_second = (new Date()).getTime() - (new Date(info.datetime)).getTime();
 
-                if(left_second >= 7000*1000){
+                if(true || left_second >= 7000*1000){
                     getTicket(true);
                 }else{
                     if(info.jsapi_ticket){
