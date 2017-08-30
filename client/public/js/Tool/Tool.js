@@ -136,7 +136,7 @@ module.exports = {
                 }
                 var payData = data.data;
                 wx.config({
-                    debug:false,
+                    debug:true,
                     appId:OneDrop.appId,
                     timestamp:payData.timestamp,
                     nonceStr:payData.nonceStr,
