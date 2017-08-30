@@ -223,7 +223,7 @@ class NoLearnCourse extends React.PureComponent{
                                                     {idx===0 ? <span style={{...wordStyle,color:'red',fontSize:'22px'}}>最新</span>:idx+1}
                                                 </p>
                                             </div>
-                                            <p style={{...wordStyle,display:'flex',alignItems:'center',marginLeft:'18px'}}>
+                                            <p style={{...wordStyle,display:'flex',alignItems:'center',marginLeft:'18px',flex:1}}>
                                                 {content.section_name}
                                             </p>
                                         </div>
