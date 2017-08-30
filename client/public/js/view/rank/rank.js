@@ -44,7 +44,7 @@ export default class Rank extends React.Component{
                 }
             }
         })
-        Tool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+        Tool.getJSSDKPaySign(location.href.split('#')[0],()=>{
 
         })
         Tool.shareToMoments({

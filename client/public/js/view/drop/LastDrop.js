@@ -66,44 +66,20 @@ export default class LastDrop extends React.Component{
     }
 
     componentDidMount() {
-        var self =  this;
-        async.parallel([
-            function (callback) {
-                self.getCourses(self,1);
-            },
-            function (callback) {
-                $.ajax({
-                    url:OneDrop.base_ip + '/main/pay/getsign',
-                    dataType:'json',
-                    method:'POST',
-                    data:{
-                        location_url:encodeURIComponent(location.href.split('#')[0])
-                    },
-                    success:function (data) {
-                        if(data.status === 0){
-                            callback('执行错误');
-                        }
-                        var payData = data.data;
-                        wx.config({
-                            debug:false,
-                            appId:OneDrop.appId,
-                            timestamp:payData.timestamp,
-                            nonceStr:payData.nonceStr,
-                            signature:payData.signature,
-                            jsApiList:[
-                                'chooseWXPay'
-                            ]
-                        })
-                    }
-                })
-            }
-        ], function (err,results) {
-            if(err){
-                alert(err);
-            }
-        })
+
+        this.getCourses(this,1);
+
         window.addEventListener('scroll', this.handleScroll1);
 
+        Tool.getJSSDKPaySign(location.href.split('#')[0],()=>{
+
+        })
+        Tool.shareToMoments({
+
+        })
+        Tool.shareToFriends({
+
+        })
     }
     handleScroll1(event){
         if(Number(document.body.clientHeight-document.body.scrollTop)<=1335){

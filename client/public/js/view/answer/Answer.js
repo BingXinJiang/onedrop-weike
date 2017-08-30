@@ -98,7 +98,7 @@ export default class Answer extends React.Component{
         }
         window.addEventListener('scroll', this.handleScroll2);
         // console.log('width:',OneDrop.JS_ScreenW);
-        Tool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+        Tool.getJSSDKPaySign(location.href.split('#')[0],()=>{
 
         })
         Tool.shareToMoments({

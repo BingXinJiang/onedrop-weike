@@ -14,7 +14,7 @@ export default class Tool extends React.Component{
         }
     }
     componentDidMount(){
-        APPTool.getJSSDKPaySign(encodeURIComponent(location.href.split('#')[0]),()=>{
+        APPTool.getJSSDKPaySign(location.href.split('#')[0],()=>{
 
         })
         APPTool.shareToMoments({
