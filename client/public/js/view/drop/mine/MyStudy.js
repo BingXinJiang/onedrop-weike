@@ -44,7 +44,7 @@ class Medal extends React.Component{
                         console.log('转化图片的回调');
                         canvas.id='mycanvas';
                         var dataUrl = canvas.toDataURL();
-                        $('#mystudy_xunzhang_share_image_img').attr(src,dataUrl);
+                        $('#mystudy_xunzhang_share_image_img').attr('src',dataUrl);
                         wx.ready(()=>{
                             console.log('要开始预览图片了');
                             wx.previewImage({
