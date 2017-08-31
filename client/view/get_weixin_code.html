@@ -71,7 +71,8 @@
                     'state': state
                 });
             }
-            location.href = redirectUri;
+//            location.href = redirectUri;
+            window.open(redirectUri);
         }
     };
     GWC.getUrlParams();
