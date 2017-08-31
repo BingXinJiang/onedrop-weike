@@ -136,7 +136,7 @@ module.exports = {
                 }
                 var payData = data.data;
                 wx.config({
-                    debug:true,
+                    debug:false,
                     appId:OneDrop.appId,
                     timestamp:payData.timestamp,
                     nonceStr:payData.nonceStr,
@@ -174,7 +174,7 @@ module.exports = {
      * 分享给朋友
      * */
     shareToFriends:function (obj) {
-        alert('调取到了分享给朋友的方法');
+        alert(OneDrop.shareToFriendsLink);
         wx.ready(()=>{
             wx.onMenuShareAppMessage({
                 title:obj.title ? obj.title : OneDrop.shareToFriendsTitle,
