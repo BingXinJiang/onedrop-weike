@@ -58,7 +58,7 @@ global.PRO_ENV_LINK='https://open.weixin.qq.com/connect/oauth2/authorize?appid=w
     shareToFriendsTitle:'每日一滴，滴水穿石，你领导力旅途中的水和氧！',
     shareToFriendsDesc:'我在一滴学到了很有用的领导力知识，快来跟我一起学习吧！',
     shareToFriendsLink:IS_DEV_ENV ? DEV_ENV_LINK:PRO_ENV_LINK,
-    shareToFriendsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com'+'/images/imgs/yunguhui.jpg' : 'http://drop.cvwisdom.com'+'/images/imgs/yunguhui.jpg',
+    shareToFriendsImgUrl:IS_DEV_ENV ? 'http://leader.cvwisdom.com/images/imgs/yunguhui.jpg' : 'http://drop.cvwisdom.com/images/imgs/yunguhui.jpg',
     shareToFriendsType:'link',
     shareToFriendsDataUrl:'',
     shareToFriendsSuccess:()=>{
