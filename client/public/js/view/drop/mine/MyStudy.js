@@ -35,13 +35,13 @@ class Medal extends React.Component{
         }).then((response)=>{
             return response.json();
         }).then((res)=>{
-            console.log('抓化图片开始！');
+            // console.log('抓化图片开始！');
             if(this.state.hasGetName){
                 html2canvas($('#mystudy_xunzhang_share_image_div'),{
                     allowTaint: true,
                     taintTest: false,
                     onrendered:(canvas)=>{
-                        console.log('转化图片的回调');
+                        // console.log('转化图片的回调');
                         canvas.id='mycanvas';
                         var dataUrl = canvas.toDataURL();
                         $('#mystudy_xunzhang_share_image_img').attr('src',dataUrl);
