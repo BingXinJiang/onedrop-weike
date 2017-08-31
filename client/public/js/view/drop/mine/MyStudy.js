@@ -45,13 +45,13 @@ class Medal extends React.Component{
                         canvas.id='mycanvas';
                         var dataUrl = canvas.toDataURL();
                         $('#mystudy_xunzhang_share_image_img').attr('src',dataUrl);
-                        wx.ready(()=>{
-                            console.log('要开始预览图片了');
-                            wx.previewImage({
-                                current: dataUrl,
-                                urls: [dataUrl]
-                            })
-                        })
+                        // wx.ready(()=>{
+                        //     console.log('要开始预览图片了');
+                        //     wx.previewImage({
+                        //         current: dataUrl,
+                        //         urls: [dataUrl]
+                        //     })
+                        // })
                     }
                 })
             }
