@@ -35,7 +35,26 @@ class Medal extends React.Component{
         }).then((response)=>{
             return response.json();
         }).then((res)=>{
-
+            console.log('抓化图片开始！');
+            if(this.state.hasGetName){
+                html2canvas($('#mystudy_xunzhang_share_image_div'),{
+                    allowTaint: true,
+                    taintTest: false,
+                    onrendered:(canvas)=>{
+                        console.log('转化图片的回调');
+                        canvas.id='mycanvas';
+                        var dataUrl = canvas.toDataURL();
+                        // $('#mystudy_xunzhang_share_image_img').attr(src,dataUrl);
+                        wx.ready(()=>{
+                            console.log('要开始预览图片了');
+                            wx.previewImage({
+                                current: dataUrl,
+                                urls: [dataUrl]
+                            })
+                        })
+                    }
+                })
+            }
         })
         this.setState({
             hasGetName:true,
@@ -44,12 +63,12 @@ class Medal extends React.Component{
     }
     render(){
         return(
-            <div style={{position:'absolute',width:OneDrop.JS_ScreenW,height:(OneDrop.JS_ScreenH*2-2*64)+'px',
+            <div id="mystudy_xunzhang_share_image_div" style={{position:'absolute',width:OneDrop.JS_ScreenW,height:(OneDrop.JS_ScreenH*2-2*64)+'px',
                             backgroundColor:'white',left:'0',top:'0',zIndex:'998'
                         }}>
                 <div style={{position:'relative',width:'100%',height:'100%'
                 }}>
-                    <img onClick={this.props.callback} style={{
+                    <img id="mystudy_xunzhang_share_image_img" onClick={this.props.callback} style={{
                                 width:'100%',height:'100%'
                             }} src={"../../../img/weike/medal/medal_"+this.props.medalRank+".jpg"}/>
                     <p style={{position:'absolute',width:'100%',height:'60px',fontSize:'40px',
@@ -174,6 +193,16 @@ export default class MyStudy extends React.Component{
                     alert('网络错误!');
                 }
             }
+        })
+        //分享配置
+        Tool.getJSSDKPaySign(location.href.split('#')[0],()=>{
+
+        })
+        Tool.shareToMoments({
+
+        })
+        Tool.shareToFriends({
+
         })
     }
 

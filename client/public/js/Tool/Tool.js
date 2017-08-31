@@ -144,7 +144,8 @@ module.exports = {
                     jsApiList:[
                         'chooseWXPay',
                         'onMenuShareTimeline',
-                        'onMenuShareAppMessage'
+                        'onMenuShareAppMessage',
+                        'previewImage'   //图片预览
                     ]
                 })
             }
@@ -192,7 +193,16 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+    
+    /**
+     * 将DOM转化为图片
+     * */
+    // getImgFromHtml:function (target,img) {
+    //     html2canvas(target,{
+    //
+    //     })
+    // }
 }
 function getCorrectArr(pointArr) {
     //156*156 30  78
