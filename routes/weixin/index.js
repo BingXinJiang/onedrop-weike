@@ -252,7 +252,7 @@ router.post('/main/pay/getsign', function (req, res, next) {
                 var info = valls[0];
                 var left_second = (new Date()).getTime() - (new Date(info.datetime)).getTime();
 
-                if(true || left_second >= 7000*1000){
+                if(left_second >= 7000*1000){
                     getTicket(true);
                 }else{
                     if(info.jsapi_ticket){
