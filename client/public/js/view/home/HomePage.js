@@ -534,10 +534,10 @@ class GoDrops extends React.PureComponent{
     render(){
         return(
             <div style={{
-                width:'120px',height:'120px',borderRadius:'60px',overflow:'hidden',backgroundColor:'rgb(23,172,251)',
-                display:'flex',justifyContent:'center',alignItems:'center',position:'fixed',top:'70%',right:'0'
+                width:'180px',height:'180px',borderRadius:'90px',overflow:'hidden',backgroundColor:'rgb(23,172,251)',
+                display:'flex',justifyContent:'center',alignItems:'center',position:'fixed',top:'60%',right:'0'
             }} onClick={this.props.callback}>
-                <p style={{color:'white',fontSize:'28px'}}>首页</p>
+                <p style={{color:'white',fontSize:'46px'}}>首页</p>
             </div>
         )
     }

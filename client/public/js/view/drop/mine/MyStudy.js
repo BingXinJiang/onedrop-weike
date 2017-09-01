@@ -250,10 +250,18 @@ export default class MyStudy extends React.Component{
                     <img style={{
                         width:'100%',height:'91%',position:'absolute',left:'0',top:'0'
                     }} src="../../../../img/weike/mine/tree.jpg"/>
-                    <p style={{
-                        position:'absolute',right:'30px',top:'30px',fontSize: '28px',
-                        color:'white'
-                    }} onClick={this.getMyMedal}>获取我的一滴称号</p>
+                    <div style={{
+                        position:'absolute',right:'30px',top:'30px',display:'flex',justifyContent:'center',alignItems:'center',
+                        borderRadius:'10px',borderWidth:'1px',borderColor:'white',borderStyle:'solid',width:'160px',height:'110px',
+                        flexDirection:'column',backgroundColor:'rgb(28,102,207)'
+                    }} onClick={this.getMyMedal}>
+                        <p style={{
+                            fontSize: '28px', color:'white'
+                        }}>获取我的</p>
+                        <p style={{
+                            fontSize: '28px', color:'white'
+                        }}>一滴称号</p>
+                    </div>
                     <div style={{
                         width:OneDrop.JS_ScreenW-160+'px',height:OneDrop.JS_ScreenH*2-100-300-160+'px',overflow:'visible',
                         marginTop:'240px',marginLeft:'80px',position:'relative'
