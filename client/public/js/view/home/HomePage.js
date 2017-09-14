@@ -209,6 +209,7 @@ class NoLearnCourse extends React.PureComponent{
                                         var audio = document.createElement('audio');
                                         audio.preload = 'auto';
                                         audio.src = content.section_voice;
+                                        // audio.src = 'https://mp.weixin.qq.com/cgi-bin/downloadfile?token=1698555111&fileid=502626797';
                                         audio.id = 'che_dan_de_yin_pin'+content.section_id;
                                         OneDrop.AUDIO = audio;
                                         this.props.callback(content.section_id);

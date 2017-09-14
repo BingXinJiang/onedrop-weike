@@ -2,8 +2,8 @@
  * Created by jiangsong on 2017/4/3.
  */
 
-// global.IS_DEV_ENV = true;
-global.IS_DEV_ENV = false;
+global.IS_DEV_ENV = true;
+// global.IS_DEV_ENV = false;
 
 global.DEV_ENV_LINK='http://drop.cvwisdom.com/html/get_weixin_code.html?appid=wxcb05ae4237186327&scope=snsapi_userinfo&state=leader&redirect_uri=http://leader.cvwisdom.com/weixin/main';
 // global.PRO_ENV_LINK='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxcb05ae4237186327&redirect_uri=http://drop.cvwisdom.com/weixin/main&response_type=code&scope=snsapi_userinfo#wechat_redirect',
@@ -17,14 +17,14 @@ global.PRO_ENV_LINK='http://drop.cvwisdom.com/html/get_weixin_code.html?appid=wx
     // base_url:'http://192.168.2.101:3002',
     // res_ip:'http://192.168.2.101:3002',
 
-    // base_ip:'http://192.168.1.32:3002/weixin',
-    // base_url:'http://192.168.1.32:3002',
-    // res_ip:'http://192.168.1.32:3002',
+    base_ip:'http://192.168.1.32:3002/weixin',
+    base_url:'http://192.168.1.32:3002',
+    res_ip:'http://192.168.1.32:3301',
 
 
-    base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
-    base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
-    res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    // base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
+    // base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    // res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
 
     appId:'wxcb05ae4237186327',//旧
 
