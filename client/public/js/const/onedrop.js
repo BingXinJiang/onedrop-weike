@@ -17,14 +17,14 @@ global.PRO_ENV_LINK='http://drop.cvwisdom.com/html/get_weixin_code.html?appid=wx
     // base_url:'http://192.168.2.101:3002',
     // res_ip:'http://192.168.2.101:3002',
 
-    base_ip:'http://192.168.1.32:3002/weixin',
-    base_url:'http://192.168.1.32:3002',
-    res_ip:'http://192.168.1.32:3301',
+    // base_ip:'http://192.168.1.32:3002/weixin',
+    // base_url:'http://192.168.1.32:3002',
+    // res_ip:'http://192.168.1.32:3301',
 
 
-    // base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
-    // base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
-    // res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    base_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com/weixin' : 'http://drop.cvwisdom.com/weixin',
+    base_url:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
+    res_ip:IS_DEV_ENV ? 'http://leader.cvwisdom.com' : 'http://drop.cvwisdom.com',
 
     appId:'wxcb05ae4237186327',//旧
 

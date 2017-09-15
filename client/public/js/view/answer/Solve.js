@@ -276,7 +276,7 @@ export default class Solve extends React.Component{
                 </div>
                 <div style={{
                     position:'fixed',width:OneDrop.JS_ScreenW,height:'110px',backgroundColor:'white',left:'0',bottom:'0',
-                    display:'flex',alignItems:'center',flexDirection:'column'
+                    display:'flex',alignItems:'center',flexDirection:'column',zIndex:'2'
                 }}>
                     <div style={{width:'100%',height:'1px',backgroundColor:'rgb(134,134,134)'}}/>
                     <div style={{
@@ -305,7 +305,7 @@ export default class Solve extends React.Component{
                             e.preventDefault();
                         }} style={{
                             position:'absolute',width:OneDrop.JS_ScreenW,height:OneDrop.JS_ScreenH*2,left:'0',top:'0',
-                            backgroundColor:'rgba(0,0,0,0.4)',
+                            backgroundColor:'rgba(0,0,0,0.4)',zIndex:'3'
                         }}>
                             <div style={{
                                 width:'100%',height:'264px',backgroundColor:'rgb(229,236,242)',

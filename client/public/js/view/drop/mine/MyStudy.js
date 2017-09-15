@@ -6,96 +6,7 @@ import OneDrop from '../../../const/onedrop';
 import Tool from '../../../Tool/Tool';
 import Loading from '../../view/Loading';
 import Drop from '../everyday/Drop';
-import Style from '../../../const/Style';
-
-class Medal extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            hasGetName:false,
-            username:'哈哈哈'
-        }
-        this.pushName = this.pushName.bind(this);
-    }
-    pushName(){
-        var name = $('#mydrop_medal_name').val();
-        if(!name){
-            alert('请输入姓名!');
-            return;
-        }
-        fetch(OneDrop.base_url+'/mydrop/name',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                user_id:REMOTE_WEIXIN_USER_ID,
-                user_name:name
-            })
-        }).then((response)=>{
-            return response.json();
-        }).then((res)=>{
-            // console.log('抓化图片开始！');
-            if(this.state.hasGetName){
-                html2canvas($('#mystudy_xunzhang_share_image_div'),{
-                    allowTaint: true,
-                    taintTest: false,
-                    onrendered:(canvas)=>{
-                        // console.log('转化图片的回调');
-                        canvas.id='mycanvas';
-                        var dataUrl = canvas.toDataURL();
-                        $('#mystudy_xunzhang_share_image_img').attr('src',dataUrl);
-                        // wx.ready(()=>{
-                        //     console.log('要开始预览图片了');
-                        //     wx.previewImage({
-                        //         current: dataUrl,
-                        //         urls: [dataUrl]
-                        //     })
-                        // })
-                    }
-                })
-            }
-        })
-        this.setState({
-            hasGetName:true,
-            username:name
-        })
-    }
-    render(){
-        return(
-            <div id="mystudy_xunzhang_share_image_div" style={{position:'absolute',width:OneDrop.JS_ScreenW,height:(OneDrop.JS_ScreenH*2-2*64)+'px',
-                            backgroundColor:'white',left:'0',top:'0',zIndex:'998'
-                        }}>
-                <div style={{position:'relative',width:'100%',height:'100%'
-                }}>
-                    <img id="mystudy_xunzhang_share_image_img" onClick={this.props.callback} style={{
-                                width:'100%',height:'100%'
-                            }} src={"../../../img/weike/medal/medal_"+this.props.medalRank+".jpg"}/>
-                    <p style={{position:'absolute',width:'100%',height:'60px',fontSize:'40px',
-                        display:'flex',justifyContent:'center',alignItems:'center',left:'0',top:'47%',
-                        color:'black'
-                    }}>{this.state.username}</p>
-                    {
-                        !this.state.hasGetName ?
-                            <div style={{position:'absolute',width:'80%',height:'600px',flexDirection:'column',
-                                display:'flex',justifyContent:'center',alignItems:'center',left:'10%',top:'17%',
-                                backgroundColor:'white',borderRadius:'10px'
-                            }}>
-                                <input id="mydrop_medal_name" style={{fontSize:'34px',width:'400px',height: '80px',
-                                    borderColor:'gray',borderWidth:'1px',borderStyle:'solid'
-                                }} placeholder="输入姓名,获取我的称号!"/>
-                                <p style={{color:Style.wordColor,fontSize:'32px',width:'120px',height:'80px',
-                                    display:'flex',justifyContent:'center',alignItems:'center',backgroundColor:Style.bgBlue,
-                                    marginTop:'30px',borderRadius:'20px'
-                                }} onClick={this.pushName}>获取</p>
-                            </div>
-                            : null
-                    }
-                </div>
-            </div>
-        )
-    }
-}
+import Back from '../../view/Back';
 
 export default class MyStudy extends React.Component{
     constructor(props){
@@ -114,45 +25,14 @@ export default class MyStudy extends React.Component{
 
             isShowPrompt:false,
 
-            medalRank:0,
-            isShowMedal:false
-
         };
         this.labelUnitArrPoint = [];
         this.getLabelCourses = this.getLabelCourses.bind(this);
-        this.getMyMedal = this.getMyMedal.bind(this);
     }
 
-    getMyMedal(){
-        if(this.state.isLoading || this.state.isLabelLoading){
-            return;
-        }
-        fetch(OneDrop.base_url+'/mydrop/medal',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body:JSON.stringify({
-                user_id:REMOTE_WEIXIN_USER_ID
-            })
-        }).then((response)=>{
-            return response.json();
-        }).then((res)=>{
-            if(res.status === 1){
-                var medalRank = res.data;
-                // console.log('medalRank:',medalRank);
-                if(medalRank <= 0){
-                    alert('先学习每日一滴,坚持听完,才能获得称号哟!');
-                }else{
-                    this.setState({
-                        medalRank:medalRank ? medalRank : 1,
-                        isShowMedal:true
-                    })
-                }
-            }else{
-                alert('数据错误!');
-            }
-        })
+    componentWillMount(){
+        var img = document.createElement('img');
+        img.src='../../../../img/weike/mine/tree.jpg';
     }
 
     componentDidMount(){
@@ -250,18 +130,7 @@ export default class MyStudy extends React.Component{
                     <img style={{
                         width:'100%',height:'91%',position:'absolute',left:'0',top:'0'
                     }} src="../../../../img/weike/mine/tree.jpg"/>
-                    <div style={{
-                        position:'absolute',right:'30px',top:'30px',display:'flex',justifyContent:'center',alignItems:'center',
-                        borderRadius:'10px',borderWidth:'1px',borderColor:'white',borderStyle:'solid',width:'160px',height:'110px',
-                        flexDirection:'column',backgroundColor:'rgb(28,102,207)'
-                    }} onClick={this.getMyMedal}>
-                        <p style={{
-                            fontSize: '28px', color:'white'
-                        }}>获取我的</p>
-                        <p style={{
-                            fontSize: '28px', color:'white'
-                        }}>一滴称号</p>
-                    </div>
+                    <Back callback={this.props.callback}/>
                     <div style={{
                         width:OneDrop.JS_ScreenW-160+'px',height:OneDrop.JS_ScreenH*2-100-300-160+'px',overflow:'visible',
                         marginTop:'240px',marginLeft:'80px',position:'relative'
@@ -325,15 +194,6 @@ export default class MyStudy extends React.Component{
                     </div>
                 </div>
                 {
-                    this.state.isShowMedal ?
-                        <Medal medalRank={this.state.medalRank} callback={()=>{
-                            this.setState({
-                                isShowMedal:false
-                            })
-                        }}/>
-                        : null
-                }
-                {
                     this.state.isShowEverydayDrop ?
                         <Drop sectionId={this.state.section_id} callback={()=>{
                             this.setState({
@@ -353,7 +213,10 @@ export default class MyStudy extends React.Component{
                                 <div style={{
                                     width:'100%',height:'120px',display:'flex',alignItems:'center'
                                 }}>
-                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}><span style={{color:'rgb(0,0,0)'}}>标签：</span>{this.state.labelName}({this.state.labelCourses.length})</p>
+                                    <p style={{fontSize:'36px',color:'rgb(23,172,251)',marginLeft:'24px'}}>
+                                        <span style={{color:'rgb(0,0,0)'}}>标签：</span>
+                                        {this.state.labelName}({this.state.labelCourses.length})
+                                    </p>
                                 </div>
                                 <div style={{width:'100%',height:'30px',backgroundColor:'rgb(172,183,194)'}}/>
                                 <div style={{overflowX:'scroll',height:'550px'}}>

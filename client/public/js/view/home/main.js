@@ -12,12 +12,9 @@ import {
 import OneDrop from '../../const/onedrop';
 
 import EveryDrop from '../drop/LastDrop';
-import Rank from '../rank/rank';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
-import MyDrop from '../drop/mine/MyStudy';
 import Introduction from './Introduction';
-import Promot from './Promot';
 import HomePage from './HomePage';
 
 class MainTab extends React.Component{
@@ -27,14 +24,19 @@ class MainTab extends React.Component{
             selectedTab:'everydrop'
         }
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.backInfo){
+            this.setState({
+                selectedTab:'everydrop'
+            })
+        }
+    }
     render(){
-        var tabBtnW = OneDrop.JS_ScreenW/5 + 'px';
+        var tabBtnW = OneDrop.JS_ScreenW/4 + 'px';
         var oneDrop_src = '../../../img/weike/main/day_drop.png';
         var oneDrop_selected_src = '../../../img/weike/main/day_drop_selected.png';
         var course_src = '../../../img/weike/main/my_drop.png';
         var course_selected_src = '../../../img/weike/main/my_drop_selected.png';
-        var question_src = '../../../img/weike/main/rank.png';
-        var question_selected_src = '../../../img/weike/main/rank_selected.png';
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
         var tool_src = '../../../img/weike/main/tool.png';
@@ -44,9 +46,8 @@ class MainTab extends React.Component{
         }
         return(
             <div>
-                <Route exact path='/weixin/main' component={EveryDrop}/>
-                <Route path='/weixin/main/mydrop' component={MyDrop}/>
-                <Route path='/weixin/main/question' component={Rank}/>
+                <Route exact path='/weixin/main' component={HomePage}/>
+                <Route path='/weixin/main/mydrop' component={EveryDrop}/>
                 <Route path='/weixin/main/answer' component={Answer}/>
                 <Route path='/weixin/main/tool' component={ToolBox}/>
 
@@ -79,19 +80,6 @@ class MainTab extends React.Component{
                                 ...linkStyle
                             }} to="/weixin/main/mydrop">
                                 <img src={this.state.selectedTab === 'mydrop' ? course_selected_src : course_src}/>
-                            </Link>
-                        </li>
-                        <li style={{float:'left',width:tabBtnW,
-                            textAlign:'center',listStyleType:'none'
-                        }} onClick={()=>{
-                            this.setState({
-                                selectedTab:'question'
-                            })
-                        }}>
-                            <Link style={{
-                                ...linkStyle
-                            }} to="/weixin/main/question">
-                                <img src={this.state.selectedTab === 'question' ? question_selected_src : question_src}/>
                             </Link>
                         </li>
 
@@ -134,8 +122,9 @@ class Main extends React.Component{
         this.state = {
             isFirst:true,
             isShowHomePage:true, //是否显示提示信息
-            // userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
-            userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
+            backprops:false,
+            userId:REMOTE_WEIXIN_USER_ID //以微信静默授权的方式拿到openid作为userid,
+            // userId:'oyMAaxN1hGZuki6cOvwF6OSQ-Ahs'//嵩
             // userId:'oyMAaxD884kfJA1EHMBTX8Y5bm9I' //彩红
             // userId:'oyMAaxFzeZSuZrIGONamja9ARKPg' //邰宏伟
             // userId:'oyMAaxNt4u8w5ck5YPstFYhOCkag' //何义情
@@ -204,14 +193,13 @@ class Main extends React.Component{
 
         //监听浏览器的返回
         window.addEventListener('popstate',(e)=>{
+            // console.log(this.context.router);
             this.context.router.history.push('/weixin/main');
             this.setState({
-                selectedTab:'everydrop'
+                backprops:true
             })
         },false);
 
-        var img = document.createElement('img');
-        img.src='../../../../img/weike/mine/tree.jpg';
     }
     render(){
         return (
@@ -220,10 +208,7 @@ class Main extends React.Component{
                     this.state.isFirst ?
                         <Introduction callback={this.hideIntro}/>
                         :
-                        this.state.isShowHomePage ?
-                            <HomePage callback={this.hideHomePage}/>
-                            : <MainTab/>
-
+                        <MainTab backInfo={this.state.backprops}/>
                 }
             </div>
         )

@@ -455,7 +455,7 @@ class NoReadAnswer extends React.PureComponent{
     render(){
         return(
             <div style={{
-                width:'100%',marginBottom:'60px'
+                width:'100%',marginBottom:'150px'
             }}>
                 <div style={{
                     width:'100%',height:'100px',display:'flex',alignItems:'center',justifyContent:'center'
@@ -525,26 +525,7 @@ class NoReadAnswer extends React.PureComponent{
         )
     }
 }
-/**
- * 跳转到首页
- * */
-class GoDrops extends React.PureComponent{
-    constructor(props){
-        super(props);
-    }
-    render(){
-        var bg = this.props.isScrolling ? 'rgba(23,172,251,1.0)' : 'rgba(23,172,251,0.4)';
-        var wordBg = this.props.isScrolling ? 'rgba(255,255,255,1.0)' : 'rgba(255,255,255,0.6)';
-        return(
-            <div style={{
-                width:'140px',height:'140px',borderRadius:'70px',overflow:'hidden',backgroundColor:bg,
-                display:'flex',justifyContent:'center',alignItems:'center',position:'fixed',top:'65%',right:'0'
-            }} onClick={this.props.callback}>
-                <p style={{color:wordBg,fontSize:'40px'}}>首页</p>
-            </div>
-        )
-    }
-}
+
 /**
  * 主框架模块
  * */
@@ -562,7 +543,6 @@ export default class HomePage extends React.PureComponent{
         this.back = this.back.bind(this);
         this.goToDrop = this.goToDrop.bind(this);
         this.goToAnswer = this.goToAnswer.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
         this.timer = null;
     }
     //从问答页或者一滴学习页返回
@@ -585,22 +565,7 @@ export default class HomePage extends React.PureComponent{
             show:2
         })
     }
-    //监听页面滚动事件
-    handleScroll(e){
-        if(this.timer){
-            clearTimeout(this.timer);
-        }
-        if(!this.state.isScrolling){
-            this.setState({
-                isScrolling:true
-            })
-        }
-        this.timer = setTimeout(()=>{
-            this.setState({
-                isScrolling:false
-            })
-        },1000)
-    }
+
 
     componentDidMount(){
         Tool.getJSSDKPaySign(location.href.split('#')[0],()=>{
@@ -612,10 +577,8 @@ export default class HomePage extends React.PureComponent{
         Tool.shareToFriends({
 
         })
-        window.addEventListener('scroll', this.handleScroll);
     }
     componentWillUnmount(){
-        window.removeEventListener('scroll', this.handleScroll);
     }
 
     render(){
@@ -658,7 +621,6 @@ export default class HomePage extends React.PureComponent{
                                         </div>
                                         : null
                                 }
-                                <GoDrops isScrolling={this.state.isScrolling} callback={this.props.callback}/>
                             </div>
                 }
             </div>

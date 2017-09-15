@@ -4,7 +4,7 @@
 import React from 'React';
 import OneDrop from '../../const/onedrop';
 import Tool from '../../Tool/Tool';
-
+import Back from '../view/Back';
 
 export default class Rank extends React.Component{
     constructor(props){
@@ -66,6 +66,7 @@ export default class Rank extends React.Component{
                     <img style={{
                         width:OneDrop.JS_ScreenW,height:'300px'
                     }} src="../../../../img/weike/rank/banner.jpg"/>
+                    <Back callback={this.props.callback}/>
                     <p onClick={()=>{
                         this.setState({
                             isShowPrompt2:true

@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/weixin/main/*',function (req,res) {
+    res.redirect('/weixin/main');
+})
+
 module.exports = router;
