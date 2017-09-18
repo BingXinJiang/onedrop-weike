@@ -93,7 +93,7 @@ export default class Medal extends React.PureComponent{
     render(){
         return(
             <div id="mystudy_xunzhang_share_image_div" style={{width:OneDrop.JS_ScreenW,height:(OneDrop.JS_ScreenH*2-2*64)+'px',
-                backgroundColor:'white'
+                backgroundColor:'white',position:'absolute',top:'0',left:'0',zIndex:'2'
             }}>
                 <div style={{position:'relative',width:'100%',height:'100%'
                 }}>
