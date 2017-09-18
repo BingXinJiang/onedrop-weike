@@ -14,6 +14,7 @@ import OneDrop from '../../const/onedrop';
 import EveryDrop from '../drop/LastDrop';
 import Answer from '../answer/Answer';
 import ToolBox from '../toolBox/tool';
+import Rank2 from '../rank/rank2';
 import Introduction from './Introduction';
 import HomePage from './HomePage';
 
@@ -33,14 +34,22 @@ class MainTab extends React.Component{
     }
     render(){
         var tabBtnW = OneDrop.JS_ScreenW/4 + 'px';
-        var oneDrop_src = '../../../img/weike/main/day_drop.png';
-        var oneDrop_selected_src = '../../../img/weike/main/day_drop_selected.png';
-        var course_src = '../../../img/weike/main/my_drop.png';
-        var course_selected_src = '../../../img/weike/main/my_drop_selected.png';
+
+        // var oneDrop_src = '../../../img/weike/main/day_drop.png';
+        // var oneDrop_selected_src = '../../../img/weike/main/day_drop_selected.png';
+        // var course_src = '../../../img/weike/main/my_drop.png';
+        // var course_selected_src = '../../../img/weike/main/my_drop_selected.png';
+
+        var course_src = '../../../img/weike/main/day_drop.png';
+        var course_selected_src = '../../../img/weike/main/day_drop_selected.png';
+        var oneDrop_src = '../../../img/weike/main/my_drop.png';
+        var oneDrop_selected_src = '../../../img/weike/main/my_drop_selected.png';
+
         var answer_src = '../../../img/weike/main/answer.png';
         var answer_selected_src = '../../../img/weike/main/answer_selected.png';
-        var tool_src = '../../../img/weike/main/tool.png';
-        var tool_selected_src = '../../../img/weike/main/tool_selected.png';
+
+        var tool_src = '../../../img/weike/main/rank.png';
+        var tool_selected_src = '../../../img/weike/main/rank_selected.png';
         const linkStyle = {
             width:'100%',height:'100%',display:'flex',justifyContent:'center',marginBottom:'8px'
         }
@@ -49,26 +58,14 @@ class MainTab extends React.Component{
                 <Route exact path='/weixin/main' component={HomePage}/>
                 <Route path='/weixin/main/mydrop' component={EveryDrop}/>
                 <Route path='/weixin/main/answer' component={Answer}/>
-                <Route path='/weixin/main/tool' component={ToolBox}/>
+                <Route path='/weixin/main/tool' component={Rank2}/>
 
                 <div style={{position:'fixed', bottom:'0px',backgroundColor:'white'}}>
                     <div style={{width:OneDrop.JS_ScreenW, height:'2px',
                         backgroundColor:'rgb(235,235,235)'
                     }}/>
                     <ul style={{marginTop:'20px', backgroundColor:'white'}}>
-                        <li style={{float:'left',width:tabBtnW,
-                            textAlign:'center',listStyleType:'none'
-                        }} onClick={()=>{
-                            this.setState({
-                                selectedTab:'everydrop'
-                            })
-                        }}>
-                            <Link style={{
-                                ...linkStyle
-                            }} to="/weixin/main">
-                                <img src={this.state.selectedTab === 'everydrop' ? oneDrop_selected_src : oneDrop_src}/>
-                            </Link>
-                        </li>
+
                         <li style={{float:'left',width:tabBtnW,
                             textAlign:'center',listStyleType:'none'
                         }} onClick={()=>{
@@ -80,6 +77,20 @@ class MainTab extends React.Component{
                                 ...linkStyle
                             }} to="/weixin/main/mydrop">
                                 <img src={this.state.selectedTab === 'mydrop' ? course_selected_src : course_src}/>
+                            </Link>
+                        </li>
+
+                        <li style={{float:'left',width:tabBtnW,
+                            textAlign:'center',listStyleType:'none'
+                        }} onClick={()=>{
+                            this.setState({
+                                selectedTab:'everydrop'
+                            })
+                        }}>
+                            <Link style={{
+                                ...linkStyle
+                            }} to="/weixin/main">
+                                <img src={this.state.selectedTab === 'everydrop' ? oneDrop_selected_src : oneDrop_src}/>
                             </Link>
                         </li>
 
